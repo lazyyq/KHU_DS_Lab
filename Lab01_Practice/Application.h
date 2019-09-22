@@ -23,11 +23,11 @@ public:
 	{
 		m_Command = 0;
 	}
-	
+
 	/**
 	*	destructor.
 	*/
-	~Application()	{}
+	~Application() {}
 
 	/**
 	*	@brief	Program driver.
@@ -66,7 +66,7 @@ public:
 	*	@param	fileName	a filename to open for reading.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
-	int OpenInFile(char *fileName);
+	int OpenInFile(char* fileName);
 
 	/**
 	*	@brief	Open a file by file descriptor as an output file.
@@ -75,7 +75,7 @@ public:
 	*	@param	fileName	a filename to open for writing.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
-	int OpenOutFile(char *fileName);
+	int OpenOutFile(char* fileName);
 
 	/**
 	*	@brief	Open a file as a read mode, read all data on the file, and set list by the data.
@@ -92,7 +92,31 @@ public:
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
 	int WriteDataToFile();
-	
+
+	/**
+	*	@brief	Get and display selected student information from list.
+	*	@pre	None.
+	*	@post	None.
+	*	@return	return 1 if this function works well, otherwise 0.
+	*/
+	void RetrieveStudent();
+
+	/**
+	*	@brief	Delete selected student information from list.
+	*	@pre	None.
+	*	@post	None.
+	*	@return	return 1 if this function works well, otherwise 0.
+	*/
+	void DeleteStudent();
+
+	/**
+	*	@brief	Replace selected student information from list.
+	*	@pre	None.
+	*	@post	None.
+	*	@return	return 1 if this function works well, otherwise 0.
+	*/
+	void Replace();
+
 private:
 	ifstream m_InFile;		///< input file descriptor.
 	ofstream m_OutFile;		///< output file descriptor.

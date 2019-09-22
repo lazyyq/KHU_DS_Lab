@@ -28,7 +28,7 @@ public:
 	/**
 	*	destructor.
 	*/
-	~ArrayList()	{}
+	~ArrayList() {}
 
 	/**
 	*	@brief	Make list empty.
@@ -53,6 +53,8 @@ public:
 	*/
 	bool IsFull();
 
+	bool IsEmpty();
+
 	/**
 	*	@brief	add a new data into list.
 	*	@pre	list should be initialized.
@@ -63,6 +65,33 @@ public:
 	int Add(ItemType data);
 
 	/**
+	*	@brief	Get data from list.
+	*	@pre	List should be initialized.
+	*	@post	Parameter data contains data retrieved from list.
+	*	@param	data	object to contain data retrieved from list.
+	*	@return	Return 1 on success, 0 on failure.
+	*/
+	int Get(ItemType& data);
+
+	/**
+	*	@brief	Delete data from list.
+	*	@pre	List should be initialized.
+	*	@post	Data is deleted from list.
+	*	@param	data	Object containing data to remove.
+	*	@return	return 1 on success, 0 on failure.
+	*/
+	int Delete(ItemType data);
+
+	/**
+	*	@brief	Replace data in list.
+	*	@pre	List should be initialized.
+	*	@post	Selected data is replaced with provided one.
+	*	@param	data	Object containing data to replace.
+	*	@return	return 1 on success, 0 on failure.
+	*/
+	int Replace(ItemType data);
+
+	/**
 	*	@brief	Initialize list iterator.
 	*	@pre	list should be initialized.
 	*	@post	iterator is reset.
@@ -71,7 +100,7 @@ public:
 
 	/**
 	*	@brief	move list iterator to the next item in list and get that item.
-	*	@pre	list and list iterator should not be initialized. 
+	*	@pre	list and list iterator should not be initialized.
 	*	@post	iterator is moved to next item.
 	*	@param	data	get current iterator's item. it does not need to be initialized.
 	*	@return	index of current iterator's item if is not end of list, oterwise return -1.
