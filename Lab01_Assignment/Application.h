@@ -45,19 +45,26 @@ public:
 	int GetCommand();
 
 	/**
+	*	@brief	Make list empty.
+	*	@pre	none.
+	*	@post	clear list.
+	*/
+	void MakeEmpty();
+
+	/**
 	*	@brief	Add new record into list.
 	*	@pre	list should be initialized.
 	*	@post	new record is added into the list.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
-	int AddItem();
+	int AddMusic();
 
 	/**
 	*	@brief	Display all records in the list on screen.
 	*	@pre	none.
 	*	@post	none.
 	*/
-	void DisplayAllItem();
+	void DisplayAllMusic();
 
 	/**
 	*	@brief	Open a file by file descriptor as an input file.
@@ -94,28 +101,28 @@ public:
 	int WriteDataToFile();
 
 	/**
-	*	@brief	Get and display selected student information from list.
+	*	@brief	Get and display selected music information from list.
 	*	@pre	None.
 	*	@post	None.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
-	void RetrieveStudent();
+	void RetrieveMusic();
 
 	/**
-	*	@brief	Delete selected student information from list.
+	*	@brief	Delete selected music information from list.
 	*	@pre	None.
 	*	@post	None.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
-	void DeleteStudent();
+	void DeleteMusic();
 
 	/**
-	*	@brief	Replace selected student information from list.
+	*	@brief	Replace selected music information from list.
 	*	@pre	None.
 	*	@post	None.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
-	void Replace();
+	void ReplaceMusic();
 
 private:
 	ifstream m_InFile;		///< input file descriptor.

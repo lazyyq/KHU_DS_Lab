@@ -10,29 +10,29 @@ void Application::Run()
 
 		switch (m_Command)
 		{
-		case 1:		// read a record and add to list.
-			AddItem();
+		case 1:		// 곡 정보를 입력 받아 리스트에 추가
+			AddMusic();
 			break;
-		case 2:		// display all the records in list on screen.
-			DisplayAllItem();
+		case 2:		// 곡의 고유번호를 입력 받아 리스트에서 삭제
+			DeleteMusic();
 			break;
-		case 3:		// make empty list.
-			m_List.MakeEmpty();
+		case 3:		// 곡 정보를 입력 받아서 리스트에서 해당 곡 정보를 갱신	
+			ReplaceMusic();
 			break;
-		case 4:		// load list data from a file.
+		case 4:		// 입력된 정보로 리스트에서 곡을 찾아서 화면에 출력
+			RetrieveMusic();
+			break;
+		case 5:		// 리스트에 저장된 모든 곡을 화면에 출력
+			DisplayAllMusic();
+			break;
+		case 6: 		// 리스트에 입력된 모든 곡을 삭제
+			MakeEmpty();
+			break;
+		case 7:		// load list data from a file.
 			ReadDataFromFile();
 			break;
-		case 5:		// save list data into a file.
+		case 8:		// save list data into a file.
 			WriteDataToFile();
-			break;
-		case 6:
-			RetrieveStudent();
-			break;
-		case 7:
-			DeleteStudent();
-			break;
-		case 8:
-			Replace();
 			break;
 		case 0:
 			return;
@@ -50,14 +50,14 @@ int Application::GetCommand()
 	int command;
 	cout << endl << endl;
 	cout << "\t---ID -- Command ----- " << endl;
-	cout << "\t   1 : Add item" << endl;
-	cout << "\t   2 : Print all on screen" << endl;
-	cout << "\t   3 : Make empty list" << endl;
-	cout << "\t   4 : Get from file" << endl;
-	cout << "\t   5 : Put to file " << endl;
-	cout << "\t   6 : Retrieve" << endl;
-	cout << "\t   7 : Delete" << endl;
-	cout << "\t   8 : Replace" << endl;
+	cout << "\t   1 : Add music" << endl;
+	cout << "\t   2 : Delete music" << endl;
+	cout << "\t   3 : Replace music" << endl;
+	cout << "\t   4 : Find and display music" << endl;
+	cout << "\t   5 : Display all music" << endl;
+	cout << "\t   6 : Empty list" << endl;
+	cout << "\t   7 : Read list from file" << endl;
+	cout << "\t   8 : Write list to file" << endl;
 	cout << "\t   0 : Quit" << endl;
 
 	cout << endl << "\t Choose a Command--> ";
@@ -68,8 +68,14 @@ int Application::GetCommand()
 }
 
 
+// Make list empty
+void Application::MakeEmpty() {
+	m_List.MakeEmpty();
+}
+
+
 // Add new record into list.
-int Application::AddItem()
+int Application::AddMusic()
 {
 	// 입력받은 레코드를 리스트에 add, 리스트가 full일 경우는 add하지 않고 0을 리턴
 	if (m_List.IsFull())
@@ -84,14 +90,14 @@ int Application::AddItem()
 	m_List.Add(item);
 
 	// 현재 list 출력
-	DisplayAllItem();
+	DisplayAllMusic();
 
 	return 1;
 }
 
 
 // Display all records in the list on screen.
-void Application::DisplayAllItem()
+void Application::DisplayAllMusic()
 {
 	ItemType data;
 
@@ -148,7 +154,7 @@ int Application::ReadDataFromFile()
 	// 파일의 모든 내용을 읽어 list에 추가
 	while (!m_InFile.eof())
 	{
-		// array에 학생들의 정보가 들어있는 structure 저장
+		// array에 음악들의 정보가 들어있는 structure 저장
 		data.ReadDataFromFile(m_InFile);
 		m_List.Add(data);
 	}
@@ -156,7 +162,7 @@ int Application::ReadDataFromFile()
 	m_InFile.close();	// file close
 
 	// 현재 list 출력
-	DisplayAllItem();
+	DisplayAllMusic();
 
 	return 1;
 }
@@ -192,8 +198,8 @@ int Application::WriteDataToFile()
 	return 1;
 }
 
-// Retrieve student information and display
-void Application::RetrieveStudent() {
+// Retrieve music information and display
+void Application::RetrieveMusic() {
 	// Object to temporarily hold id information
 	ItemType data;
 	// Get id to search in list
@@ -211,8 +217,8 @@ void Application::RetrieveStudent() {
 	}
 }
 
-// Delete student from list.
-void Application::DeleteStudent() {
+// Delete music from list.
+void Application::DeleteMusic() {
 	// Object to temporarily hold id information
 	ItemType data;
 	// Get id to delete
@@ -220,8 +226,8 @@ void Application::DeleteStudent() {
 	m_List.Delete(data);
 }
 
-// Replace student with input.
-void Application::Replace() {
+// Replace music with input.
+void Application::ReplaceMusic() {
 	// Object to temporarily hold record
 	ItemType data;
 	// Get record to replace

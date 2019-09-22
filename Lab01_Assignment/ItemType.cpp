@@ -1,7 +1,7 @@
 #include "ItemType.h"
 
 
-// Set student id from keyboard.
+// Set music id from keyboard.
 void ItemType::SetIdFromKB()
 {
 	cout << "\tID : ";
@@ -9,28 +9,55 @@ void ItemType::SetIdFromKB()
 }
 
 
-// Set student name from keyboard.
+// Set music type from keyboard.
+void ItemType::SetTypeFromKB()
+{
+	cout << "\tType : ";
+	cin >> m_Type;
+}
+
+
+// Set music name from keyboard.
 void ItemType::SetNameFromKB()
 {
 	cout << "\tName : ";
-	cin >> m_sName;
+	cin >> m_Name;
 }
 
 
-// Set student address from keyboard.
-void ItemType::SetAddressFromKB()
+// Set music melodizer from keyboard.
+void ItemType::SetMelodizerFromKB()
 {
-	cout << "\tAddress : ";
-	cin >> m_sAddress;
+	cout << "\tMelodizer : ";
+	cin >> m_Melodizer;
 }
 
 
-// Set student record from keyboard.
+// Set music artist from keyboard.
+void ItemType::SetArtistFromKB()
+{
+	cout << "\tArtist : ";
+	cin >> m_Artist;
+}
+
+
+// Set music genre from keyboard.
+void ItemType::SetGenreFromKB()
+{
+	cout << "\tGenre : ";
+	cin >> m_Genre;
+}
+
+
+// Set music record from keyboard.
 void ItemType::SetRecordFromKB()
 {
 	SetIdFromKB();
+	SetTypeFromKB();
 	SetNameFromKB();
-	SetAddressFromKB();
+	SetMelodizerFromKB();
+	SetArtistFromKB();
+	SetGenreFromKB();
 }
 
 
@@ -38,8 +65,11 @@ void ItemType::SetRecordFromKB()
 int ItemType::ReadDataFromFile(ifstream& fin)
 {
 	fin >> m_Id;
-	fin >> m_sName;
-	fin >> m_sAddress;
+	fin >> m_Type;
+	fin >> m_Name;
+	fin >> m_Melodizer;
+	fin >> m_Artist;
+	fin >> m_Genre;
 
 	return 1;
 };
@@ -50,20 +80,23 @@ int ItemType::WriteDataToFile(ofstream& fout)
 {
 	fout << endl;
 	fout << m_Id << " ";
-	fout << m_sName << " ";
-	fout << m_sAddress;
+	fout << m_Type << -1;
+	fout << m_Name << " ";
+	fout << m_Melodizer << " ";
+	fout << m_Artist << " ";
+	fout << m_Genre << -1;
 
 	return 1;
 }
 
 
-// Compare two itemtypes.
-RelationType ItemType::compare(const ItemType& data)
-{
-	if (this->m_Id > data.m_Id)
-		return GREATER;
-	else if (this->m_Id < data.m_Id)
-		return LESS;
-	else
-		return EQUAL;
+// Compare two records
+bool ItemType::operator==(const ItemType& that) const {
+	return this->m_Id.compare(that.m_Id) == 0;
+}
+
+
+// Compare two records
+bool ItemType::operator!=(const ItemType& that) const {
+	return !(*this == that);
 }

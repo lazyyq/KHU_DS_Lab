@@ -53,6 +53,12 @@ public:
 	*/
 	bool IsFull();
 
+	/**
+	*	@brief	Check if list is empty.
+	*	@pre	none.
+	*	@post	none.
+	*	@return	return true if list size is zero, false otherwise.
+	*/
 	bool IsEmpty();
 
 	/**

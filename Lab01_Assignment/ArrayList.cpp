@@ -51,12 +51,12 @@ int ArrayList::Get(ItemType& data) {
 	ResetList();
 	do {
 		GetNextItem(thisData);
-		if (thisData.compare(data) == EQUAL) {
+		if (thisData == data) {
 			// Id matched
 			data = thisData;
 			return 1;
 		}
-	} while (m_CurPointer > -1);
+	} while (m_CurPointer > -1 && m_CurPointer < m_Length - 1);
 
 	return 0;
 }
@@ -68,7 +68,7 @@ int ArrayList::Delete(ItemType data) {
 	ResetList();
 	do {
 		GetNextItem(thisData);
-		if (thisData.compare(data) == EQUAL) {
+		if (thisData == data) {
 			// Id matched
 			while (m_CurPointer < m_Length - 1) {
 				// Backward push data
@@ -80,7 +80,7 @@ int ArrayList::Delete(ItemType data) {
 
 			return 1;
 		}
-	} while (m_CurPointer > -1);
+	} while (m_CurPointer > -1 && m_CurPointer < m_Length - 1);
 
 	return 0;
 }
@@ -92,13 +92,13 @@ int ArrayList::Replace(ItemType data) {
 	ResetList();
 	do {
 		GetNextItem(thisData);
-		if (thisData.compare(data) == EQUAL) {
+		if (thisData == data) {
 			// Id matched
 			// Put found data in parameter data
 			m_Array[m_CurPointer] = data;
 			return 1;
 		}
-	} while (m_CurPointer > -1);
+	} while (m_CurPointer > -1 && m_CurPointer < m_Length - 1);
 
 	return 0;
 }
@@ -113,7 +113,7 @@ void ArrayList::ResetList()
 // move list iterator to the next item in list and get that item.
 int ArrayList::GetNextItem(ItemType& data)
 {
-	m_CurPointer++;	// list pointer 증가
+	m_CurPointer++;	// list pointer 증가	
 	if (m_CurPointer == MAXSIZE)	// end of list이면 -1을 리턴
 		return -1;
 	data = m_Array[m_CurPointer];	// 현재 list pointer의 레코드를 복사
