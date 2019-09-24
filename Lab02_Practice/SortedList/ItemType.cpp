@@ -67,3 +67,24 @@ RelationType ItemType::compare(const ItemType& data)
 	else
 		return EQUAL;
 }
+
+
+// Compare two records
+bool ItemType::operator==(const ItemType& that) const {
+	return this->m_Id == that.m_Id;
+}
+
+
+// Compare two records
+bool ItemType::operator!=(const ItemType& that) const {
+	return !(*this == that);
+}
+bool ItemType::operator>(const ItemType& that) const
+{
+	return this->m_Id > that.m_Id;
+}
+
+bool ItemType::operator<(const ItemType& that) const
+{
+	return this->m_Id < that.m_Id;
+}

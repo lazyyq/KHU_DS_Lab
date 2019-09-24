@@ -217,6 +217,30 @@ public:
 	*/
 	RelationType compare(const ItemType& data);
 
+	/**
+	*	Compare two itemtypes.
+	*	@brief	Compare two item types by item id.
+	*	@pre	two item types should be initialized.
+	*	@post	the target file is included the new item record.
+	*	@param	that	target item for comparing.
+	*	@return	return true if the ids are same, false otherwise.
+	*/
+	bool operator==(const ItemType& that) const;
+
+	/**
+	*	Compare two itemtypes.
+	*	@brief	Compare two item types by item id.
+	*	@pre	two item types should be initialized.
+	*	@post	the target file is included the new item record.
+	*	@param	that	target item for comparing.
+	*	@return	return true if the ids differ, false otherwise.
+	*/
+	bool operator!=(const ItemType& that) const;
+
+	bool operator>(const ItemType& that) const;
+
+	bool operator<(const ItemType& that) const;
+
 protected:
 	int m_Id;			///< student ID.
 	string m_sName;		///< student name.

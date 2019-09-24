@@ -6,7 +6,7 @@
 #include <string>
 using namespace std;
 
-#include "ArrayList.h"
+#include "SortedList.h"
 
 #define FILENAMESIZE 1024
 
@@ -99,28 +99,32 @@ public:
 	*	@post	None.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
-	void RetrieveStudent();
+	void SearchById();
 
 	/**
-	*	@brief	Delete selected student information from list.
+	*	@brief	DeleteItem selected student information from list.
 	*	@pre	None.
 	*	@post	None.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
-	void DeleteStudent();
+	void DeleteItem();
 
 	/**
-	*	@brief	Replace selected student information from list.
+	*	@brief	ReplaceItem selected student information from list.
 	*	@pre	None.
 	*	@post	None.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
-	void Replace();
+	void ReplaceItem();
+
+	void SearchById_BS();
+
+	void SearchByName();
 
 private:
 	ifstream m_InFile;		///< input file descriptor.
 	ofstream m_OutFile;		///< output file descriptor.
-	ArrayList m_List;		///< item list.
+	SortedList m_List;		///< item list.
 	int m_Command;			///< current command number.
 };
 

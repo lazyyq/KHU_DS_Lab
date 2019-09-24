@@ -1,5 +1,5 @@
-#ifndef _UNSORTEDLIST_H
-#define _UNSORTEDLIST_H
+#ifndef _SORTEDLIST_H
+#define _SORTEDLIST_H
 
 #include <iostream>
 #include <fstream>	
@@ -13,22 +13,22 @@ using namespace std;
 /**
 *	array based simple unsorted list.
 */
-class ArrayList
+class SortedList
 {
 public:
 	/**
 	*	default constructor.
 	*/
-	ArrayList()
+	SortedList()
 	{
 		m_Length = 0;
-		ResetList();
+		ResetIterator();
 	}
 
 	/**
 	*	destructor.
 	*/
-	~ArrayList() {}
+	~SortedList() {}
 
 	/**
 	*	@brief	Make list empty.
@@ -71,10 +71,14 @@ public:
 	*	@param	data	object to contain data retrieved from list.
 	*	@return	Return 1 on success, 0 on failure.
 	*/
-	int Get(ItemType& data);
+	int Retrieve_Seq(ItemType& data);
+
+
+	int Retrieve_BS(ItemType& data);
+
 
 	/**
-	*	@brief	Delete data from list.
+	*	@brief	DeleteItem data from list.
 	*	@pre	List should be initialized.
 	*	@post	Data is deleted from list.
 	*	@param	data	Object containing data to remove.
@@ -83,7 +87,7 @@ public:
 	int Delete(ItemType data);
 
 	/**
-	*	@brief	Replace data in list.
+	*	@brief	ReplaceItem data in list.
 	*	@pre	List should be initialized.
 	*	@post	Selected data is replaced with provided one.
 	*	@param	data	Object containing data to replace.
@@ -96,7 +100,7 @@ public:
 	*	@pre	list should be initialized.
 	*	@post	iterator is reset.
 	*/
-	void ResetList();
+	void ResetIterator();
 
 	/**
 	*	@brief	move list iterator to the next item in list and get that item.
@@ -111,6 +115,8 @@ private:
 	ItemType m_Array[MAXSIZE];  ///< list array.
 	int m_Length;				///< number of elements in list.
 	int m_CurPointer;			///< iterator pointer.
+
+	void PushBackward(int startIndex);
 };
 
-#endif	// _UNSORTEDLIST_H
+#endif	// _SORTEDLIST_H

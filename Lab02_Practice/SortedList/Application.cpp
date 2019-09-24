@@ -26,13 +26,19 @@ void Application::Run()
 			WriteDataToFile();
 			break;
 		case 6:
-			RetrieveStudent();
+			SearchById();
 			break;
 		case 7:
-			DeleteStudent();
+			SearchById_BS();
 			break;
 		case 8:
-			Replace();
+			SearchByName();
+			break;
+		case 9:
+			DeleteItem();
+			break;
+		case 10:
+			ReplaceItem();
 			break;
 		case 0:
 			return;
@@ -49,18 +55,21 @@ int Application::GetCommand()
 {
 	int command;
 	cout << endl << endl;
-	cout << "\t---ID -- Command ----- " << endl;
-	cout << "\t   1 : Add item" << endl;
-	cout << "\t   2 : Print all on screen" << endl;
-	cout << "\t   3 : Make empty list" << endl;
-	cout << "\t   4 : Get from file" << endl;
-	cout << "\t   5 : Put to file " << endl;
-	cout << "\t   6 : Retrieve" << endl;
-	cout << "\t   7 : Delete" << endl;
-	cout << "\t   8 : Replace" << endl;
-	cout << "\t   0 : Quit" << endl;
+	cout << "\t   ID   Command" << endl;
+	cout << "\t---------------------------------------" << endl;
+	cout << "\t   1  : Add item" << endl;
+	cout << "\t   2  : Print all on screen" << endl;
+	cout << "\t   3  : Make empty list" << endl;
+	cout << "\t   4  : Get from file" << endl;
+	cout << "\t   5  : Put to file " << endl;
+	cout << "\t   6  : Find with id" << endl;
+	cout << "\t   7  : Find with id using binary search" << endl;
+	cout << "\t   8  : Find with name" << endl;
+	cout << "\t   9  : Delete" << endl;
+	cout << "\t   10 : Replace" << endl;
+	cout << "\t   0  : Quit" << endl;
 
-	cout << endl << "\t Choose a Command--> ";
+	cout << endl << "\t   Choose a Command: ";
 	cin >> command;
 	cout << endl;
 
@@ -74,7 +83,7 @@ int Application::AddItem()
 	// 입력받은 레코드를 리스트에 add, 리스트가 full일 경우는 add하지 않고 0을 리턴
 	if (m_List.IsFull())
 	{
-		cout << "List is full" << endl;
+		cout << "\t\nList is full\n";
 		return 0;
 	}
 
@@ -95,17 +104,19 @@ void Application::DisplayAllItem()
 {
 	ItemType data;
 
-	cout << "\n\tCurrent list" << endl;
+	cout << "\n\tCurrent list\n";
+	cout << "\n\t=======================================\n\n";
 
 	// list의 모든 데이터를 화면에 출력
-	m_List.ResetList();
-	int length = m_List.GetLength();
+	m_List.ResetIterator();
 	int curIndex = m_List.GetNextItem(data);
-	while (curIndex < length && curIndex != -1)
+	while (curIndex > -1)
 	{
 		data.DisplayRecordOnScreen();
 		curIndex = m_List.GetNextItem(data);
 	}
+	
+	cout << "\n\t=======================================\n";
 }
 
 
@@ -176,12 +187,11 @@ int Application::WriteDataToFile()
 		return 0;
 
 	// list 포인터를 초기화
-	m_List.ResetList();
+	m_List.ResetIterator();
 
 	// list의 모든 데이터를 파일에 쓰기
-	int length = m_List.GetLength();
 	int curIndex = m_List.GetNextItem(data);
-	while (curIndex < length && curIndex != -1)
+	while (curIndex > -1)
 	{
 		data.WriteDataToFile(m_OutFile);
 		curIndex = m_List.GetNextItem(data);
@@ -192,39 +202,92 @@ int Application::WriteDataToFile()
 	return 1;
 }
 
+
 // Retrieve student information and display
-void Application::RetrieveStudent() {
+void Application::SearchById(){
 	// Object to temporarily hold id information
 	ItemType data;
 	// Get id to search in list
 	data.SetIdFromKB();
 
 	// Search in list
-	int result = m_List.Get(data);
+	int result = m_List.Retrieve_Seq(data);
 	if (result == 1) {
 		// Found
 		data.DisplayRecordOnScreen();
 	}
 	else {
 		// Not found
-		cout << "\n\tWrong ID\n";
+		cout << "\n\tFailed to find data\n";
 	}
 }
 
-// Delete student from list.
-void Application::DeleteStudent() {
+
+// Same as SearchByID(), but using binary search
+void Application::SearchById_BS() {
+	// Object to temporarily hold id information
+	ItemType data;
+	// Get id to search
+	data.SetIdFromKB();
+	// Get data from list using binary search
+
+	int result = m_List.Retrieve_BS(data);
+	if (result == 1) {
+		data.DisplayRecordOnScreen();
+	}
+	else {
+		cout << "\n\tFailed to find data\n";
+	}
+}
+
+
+// DeleteItem student from list.
+void Application::DeleteItem() {
 	// Object to temporarily hold id information
 	ItemType data;
 	// Get id to delete
 	data.SetIdFromKB();
-	m_List.Delete(data);
+	
+	if (m_List.Delete(data) != 1) {
+		cout << "\n\tFailed to replace data\n";
+	}
 }
 
-// Replace student with input.
-void Application::Replace() {
+
+// ReplaceItem student with input.
+void Application::ReplaceItem(){
 	// Object to temporarily hold record
 	ItemType data;
 	// Get record to replace
 	data.SetRecordFromKB();
-	m_List.Replace(data);
+	
+	if (m_List.Replace(data) != 1) {
+		cout << "\n\tFailed to replace data\n";
+	}
 }
+
+
+// Search data with name
+void Application::SearchByName(){
+	// Object to temporarily hold name information
+	ItemType data;
+	// Get name to search
+	data.SetNameFromKB();
+
+	// Object to hold data from list
+	ItemType item;
+	// Iterate through list
+	m_List.ResetIterator();
+	int curIndex = m_List.GetNextItem(item);
+	while (curIndex > -1)
+	{
+		// Check if retrieved item's name is
+		// substring of data's name
+		if (item.GetName().find(data.GetName())
+			!= std::string::npos) {
+			item.DisplayRecordOnScreen();
+		}
+		curIndex = m_List.GetNextItem(item);
+	}
+}
+
