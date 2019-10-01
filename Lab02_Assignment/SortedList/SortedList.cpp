@@ -57,12 +57,13 @@ int SortedList::Add(ItemType inData)
 	return 1;
 }
 
+// 포지션을 리턴한다고 코멘트에 추가
 // Get data from list using binary search.
 int SortedList::Retrieve(ItemType& data) {
 	if (IsEmpty() || mArray[mLength - 1] < data) {
 		// Either list is empty or its last element's primary key is
 		// smaller than given data's, so no need to check.
-		return 0;
+		return -1;
 	}
 
 	// Reset iterator
@@ -83,11 +84,11 @@ int SortedList::Retrieve(ItemType& data) {
 		else {
 			// item == data
 			data = item;
-			return 1;
+			return mid;
 		}
 	}
 
-	return 0;
+	return -1;
 }
 
 // Delete data from list.
@@ -129,23 +130,16 @@ int SortedList::Replace(ItemType data) {
 		return 0;
 	}
 
-	// Reset iterator
-	ResetIterator();
-
-	ItemType thisData;
-	int curIndex = GetNextItem(thisData);
-	while (curIndex > -1)
-	{
-		if (thisData == data) {
-			// Id matched
-			// ReplaceItem the data in list with provided one
-			mArray[mCurPointer] = data;
-			return 1;
-		}
-		curIndex = GetNextItem(thisData);
+	ItemType item = data;
+	int index = Retrieve(item);
+	if (index != -1) {
+		mArray[index] = data;
+	}
+	else {
+		return 0;
 	}
 
-	return 0;
+	return 1;
 }
 
 // Initialize list iterator.

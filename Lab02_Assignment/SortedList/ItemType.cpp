@@ -1,67 +1,81 @@
 #include "ItemType.h"
 
-// Set music id from keyboard.
+// Set music id from keyboard, where id is string.
 void ItemType::SetIdFromKB()
 {
-	cout << "\tID : ";
-	cin >> mId;
+	cout << setw(ATTR_INDENT_SIZE) << "ID (String) : ";
+	getline(cin, mId);
 }
 
-// Set music type from keyboard.
+// Set music type from keyboard, where type is int.
 void ItemType::SetTypeFromKB()
 {
-	cout << "\tType : ";
+	cout << setw(ATTR_INDENT_SIZE) << "Type (Int) : ";
 	cin >> mType;
+	cin.ignore();
 }
 
-// Set music name from keyboard.
+// Set music name from keyboard, where name is string.
 void ItemType::SetNameFromKB()
 {
-	cout << "\tName : ";
-	cin >> mName;
+	cout << setw(ATTR_INDENT_SIZE) << "Name (String) : ";
+	getline(cin, mName);
 }
 
-// Set music melodizer from keyboard.
+// Set music melodizer from keyboard, where melodizer is string.
 void ItemType::SetMelodizerFromKB()
 {
-	cout << "\tMelodizer : ";
-	cin >> mMelodizer;
+	cout << setw(ATTR_INDENT_SIZE) << "Melodizer (String) : ";
+	getline(cin, mMelodizer);
 }
 
-// Set music artist from keyboard.
+// Set music artist from keyboard, where artist is string
 void ItemType::SetArtistFromKB()
 {
-	cout << "\tArtist : ";
-	cin >> mArtist;
+	cout << setw(ATTR_INDENT_SIZE) << "Artist (String) : ";
+	getline(cin, mArtist);
 }
 
-// Set music genre from keyboard.
+// Set music genre from keyboard, where genre is int.
 void ItemType::SetGenreFromKB()
 {
-	cout << "\tGenre : ";
+	cout << setw(ATTR_INDENT_SIZE) << "Genre (Int) : ";
 	cin >> mGenre;
+	cin.ignore();
 }
 
 // Set music record from keyboard.
 void ItemType::SetRecordFromKB()
 {
-	SetIdFromKB();
 	SetTypeFromKB();
 	SetNameFromKB();
 	SetMelodizerFromKB();
 	SetArtistFromKB();
 	SetGenreFromKB();
+
+	if (this->mId.compare("") == 0) {
+		mId = this->mName + " - " + this->mArtist;
+	}
 }
 
 // Read a record from file.
 int ItemType::ReadDataFromFile(ifstream& fin)
 {
-	fin >> mId;
-	fin >> mType;
-	fin >> mName;
-	fin >> mMelodizer;
-	fin >> mArtist;
-	fin >> mGenre;
+	// Temporary variable to hold string
+	// which will later be converted to int
+	string temp;
+
+	getline(fin, mId);
+	while (mId.length() == 0) {
+		getline(fin, mId);
+	}
+	getline(fin, temp);
+	mType = stoi(temp);
+	getline(fin, mName);
+	getline(fin, mMelodizer);
+	getline(fin, mArtist);
+	getline(fin, temp);
+	mGenre = stoi(temp);
 
 	return 1;
 };
@@ -69,12 +83,12 @@ int ItemType::ReadDataFromFile(ifstream& fin)
 // Write a record into file.
 int ItemType::WriteDataToFile(ofstream& fout)
 {
-	fout << endl;
-	fout << mId << " ";
-	fout << mType << " ";
-	fout << mName << " ";
-	fout << mMelodizer << " ";
-	fout << mArtist << " ";
+	fout << endl << endl;
+	fout << mId << endl;
+	fout << mType << endl;
+	fout << mName << endl;
+	fout << mMelodizer << endl;
+	fout << mArtist << endl;
 	fout << mGenre;
 
 	return 1;

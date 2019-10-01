@@ -64,6 +64,12 @@ int Application::GetCommand()
 
 	cout << endl << "\t Choose a Command--> ";
 	cin >> command;
+	if (cin.fail() == 1) {
+		// Input error
+		cin.clear();
+		command = -1;
+	}
+	cin.ignore();
 	cout << endl;
 
 	return command;
@@ -110,6 +116,7 @@ void Application::DisplayAllMusic()
 	{
 		data.DisplayRecordOnScreen();
 		curIndex = mList.GetNextItem(data);
+		cout << endl;
 	}
 
 	cout << "\n\t=======================================\n";
@@ -144,6 +151,7 @@ int Application::ReadDataFromFile()
 	char filename[FILENAMESIZE];
 	cout << "\n\tEnter Input file Name : ";
 	cin >> filename;
+	cin.ignore();
 
 	// file open, open error가 발생하면 0을 리턴
 	if (!OpenInFile(filename))
@@ -173,6 +181,7 @@ int Application::WriteDataToFile()
 	char filename[FILENAMESIZE];
 	cout << "\n\tEnter Output file Name : ";
 	cin >> filename;
+	cin.ignore();
 
 	// file open, open error가 발생하면 0을 리턴
 	if (!OpenOutFile(filename))
@@ -249,9 +258,8 @@ void Application::SearchByGenre() {
 	// Iterate through list
 	mList.ResetIterator();
 	int curIndex = mList.GetNextItem(item);
-	while (curIndex > -1)
-	{
-		if (item.GetGenre().compare(data.GetGenre()) == 0) {
+	while (curIndex > -1){
+		if (item.GetGenre() == data.GetGenre()) {
 			item.DisplayRecordOnScreen();
 		}
 		curIndex = mList.GetNextItem(item);
@@ -274,7 +282,8 @@ void Application::DeleteMusic() {
 void Application::ReplaceMusic() {
 	// Object to temporarily hold record
 	ItemType data;
-	// Get record to replace
+
+	data.SetIdFromKB();
 	data.SetRecordFromKB();
 
 	if (mList.Replace(data) != 1) {

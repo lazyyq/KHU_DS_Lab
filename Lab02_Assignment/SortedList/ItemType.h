@@ -3,8 +3,11 @@
 #define _ITEMTYPE_H
 
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <string>
+
+#define ATTR_INDENT_SIZE	25
 
 using namespace std;
 
@@ -198,7 +201,7 @@ public:
 	*/
 	void DisplayIdOnScreen()
 	{
-		cout << "\tID   : " << mId << endl;
+		cout << setw(ATTR_INDENT_SIZE) << "ID : " << mId << endl;
 	};
 
 	/**
@@ -208,7 +211,7 @@ public:
 	*/
 	void DisplayTypeOnScreen()
 	{
-		cout << "\tType   : " << mType << endl;
+		cout << setw(ATTR_INDENT_SIZE) << "Type : " << mType << endl;
 	};
 
 	/**
@@ -218,7 +221,7 @@ public:
 	*/
 	void DisplayNameOnScreen()
 	{
-		cout << "\tName   : " << mName << endl;
+		cout << setw(ATTR_INDENT_SIZE) << "Name : " << mName << endl;
 	};
 
 	/**
@@ -228,7 +231,7 @@ public:
 	*/
 	void DisplayMelodizerOnScreen()
 	{
-		cout << "\tMelodizer   : " << mMelodizer << endl;
+		cout << setw(ATTR_INDENT_SIZE) << "Melodizer : " << mMelodizer << endl;
 	};
 
 	/**
@@ -238,7 +241,7 @@ public:
 	*/
 	void DisplayArtistOnScreen()
 	{
-		cout << "\tArtist   : " << mArtist << endl;
+		cout << setw(ATTR_INDENT_SIZE) << "Artist : " << mArtist << endl;
 	};
 
 	/**
@@ -248,7 +251,7 @@ public:
 	*/
 	void DisplayGenreOnScreen()
 	{
-		cout << "\tGenre   : " << mGenre << endl;
+		cout << setw(ATTR_INDENT_SIZE) << "Genre : " << mGenre << endl;
 	};
 
 	/**

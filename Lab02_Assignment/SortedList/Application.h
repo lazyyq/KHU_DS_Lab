@@ -113,6 +113,8 @@ public:
 
 	void SearchByName();
 
+	void SearchByGenre();
+
 	/**
 	*	@brief	Delete selected music information from list.
 	*	@pre	None.
