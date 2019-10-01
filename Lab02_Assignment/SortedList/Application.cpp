@@ -1,14 +1,13 @@
 #include "Application.h"
 
-
 // Program driver.
 void Application::Run()
 {
 	while (1)
 	{
-		m_Command = GetCommand();
+		mCommand = GetCommand();
 
-		switch (m_Command)
+		switch (mCommand)
 		{
 		case 1:		// 곡 정보를 입력 받아 리스트에 추가
 			AddMusic();
@@ -19,19 +18,22 @@ void Application::Run()
 		case 3:		// 곡 정보를 입력 받아서 리스트에서 해당 곡 정보를 갱신	
 			ReplaceMusic();
 			break;
-		case 4:		// 입력된 정보로 리스트에서 곡을 찾아서 화면에 출력
-			RetrieveMusic();
+		case 4:		// 입력된 ID로 리스트에서 곡을 찾아서 화면에 출력
+			SearchById();
 			break;
-		case 5:		// 리스트에 저장된 모든 곡을 화면에 출력
+		case 5:		// 입력된 가수 이름으로 리스트에서 곡을 찾아서 화면에 출력
+			SearchByName();
+			break;
+		case 6:		// 리스트에 저장된 모든 곡을 화면에 출력
 			DisplayAllMusic();
 			break;
-		case 6: 		// 리스트에 입력된 모든 곡을 삭제
+		case 7: 		// 리스트에 입력된 모든 곡을 삭제
 			MakeEmpty();
 			break;
-		case 7:		// load list data from a file.
+		case 8:		// load list data from a file.
 			ReadDataFromFile();
 			break;
-		case 8:		// save list data into a file.
+		case 9:		// save list data into a file.
 			WriteDataToFile();
 			break;
 		case 0:
@@ -43,7 +45,6 @@ void Application::Run()
 	}
 }
 
-
 // Display command on screen and get a input from keyboard.
 int Application::GetCommand()
 {
@@ -53,11 +54,12 @@ int Application::GetCommand()
 	cout << "\t   1 : Add music" << endl;
 	cout << "\t   2 : Delete music" << endl;
 	cout << "\t   3 : Replace music" << endl;
-	cout << "\t   4 : Find and display music" << endl;
-	cout << "\t   5 : Display all music" << endl;
-	cout << "\t   6 : Empty list" << endl;
-	cout << "\t   7 : Read list from file" << endl;
-	cout << "\t   8 : Write list to file" << endl;
+	cout << "\t   4 : Find music by ID" << endl;
+	cout << "\t   5 : Find music by Artist" << endl;
+	cout << "\t   6 : Display all music" << endl;
+	cout << "\t   7 : Empty list" << endl;
+	cout << "\t   8 : Read list from file" << endl;
+	cout << "\t   9 : Write list to file" << endl;
 	cout << "\t   0 : Quit" << endl;
 
 	cout << endl << "\t Choose a Command--> ";
@@ -67,18 +69,16 @@ int Application::GetCommand()
 	return command;
 }
 
-
 // Make list empty
 void Application::MakeEmpty() {
-	m_List.MakeEmpty();
+	mList.MakeEmpty();
 }
-
 
 // Add new record into list.
 int Application::AddMusic()
 {
 	// 입력받은 레코드를 리스트에 add, 리스트가 full일 경우는 add하지 않고 0을 리턴
-	if (m_List.IsFull())
+	if (mList.IsFull())
 	{
 		cout << "List is full" << endl;
 		return 0;
@@ -87,7 +87,7 @@ int Application::AddMusic()
 	ItemType item;
 
 	item.SetRecordFromKB();
-	m_List.Add(item);
+	mList.Add(item);
 
 	// 현재 list 출력
 	DisplayAllMusic();
@@ -95,47 +95,45 @@ int Application::AddMusic()
 	return 1;
 }
 
-
 // Display all records in the list on screen.
 void Application::DisplayAllMusic()
 {
 	ItemType data;
 
-	cout << "\n\tCurrent list" << endl;
+	cout << "\n\tCurrent list\n";
+	cout << "\n\t=======================================\n\n";
 
 	// list의 모든 데이터를 화면에 출력
-	m_List.ResetList();
-	int length = m_List.GetLength();
-	int curIndex = m_List.GetNextItem(data);
-	while (curIndex < length && curIndex != -1)
+	mList.ResetIterator();
+	int curIndex = mList.GetNextItem(data);
+	while (curIndex > -1)
 	{
 		data.DisplayRecordOnScreen();
-		curIndex = m_List.GetNextItem(data);
+		curIndex = mList.GetNextItem(data);
 	}
-}
 
+	cout << "\n\t=======================================\n";
+}
 
 // Open a file by file descriptor as an input file.
 int Application::OpenInFile(char* fileName)
 {
-	m_InFile.open(fileName);	// file open for reading.
+	mInFile.open(fileName);	// file open for reading.
 
 	// 파일 오픈에 성공하면 1, 그렇지 않다면 0을 리턴.
-	if (!m_InFile)	return 0;
+	if (!mInFile)	return 0;
 	else	return 1;
 }
-
 
 // Open a file by file descriptor as an output file.
 int Application::OpenOutFile(char* fileName)
 {
-	m_OutFile.open(fileName);	// file open for writing.
+	mOutFile.open(fileName);	// file open for writing.
 
 	// 파일 오픈에 성공하면 1, 그렇지 않다면 0을 리턴.
-	if (!m_OutFile)	return 0;
+	if (!mOutFile)	return 0;
 	else	return 1;
 }
-
 
 // Open a file as a read mode, read all data on the file, and set list by the data.
 int Application::ReadDataFromFile()
@@ -152,21 +150,20 @@ int Application::ReadDataFromFile()
 		return 0;
 
 	// 파일의 모든 내용을 읽어 list에 추가
-	while (!m_InFile.eof())
+	while (!mInFile.eof())
 	{
 		// array에 음악들의 정보가 들어있는 structure 저장
-		data.ReadDataFromFile(m_InFile);
-		m_List.Add(data);
+		data.ReadDataFromFile(mInFile);
+		mList.Add(data);
 	}
 
-	m_InFile.close();	// file close
+	mInFile.close();	// file close
 
 	// 현재 list 출력
 	DisplayAllMusic();
 
 	return 1;
 }
-
 
 // Open a file as a write mode, and write all data into the file,
 int Application::WriteDataToFile()
@@ -182,38 +179,82 @@ int Application::WriteDataToFile()
 		return 0;
 
 	// list 포인터를 초기화
-	m_List.ResetList();
+	mList.ResetIterator();
 
 	// list의 모든 데이터를 파일에 쓰기
-	int length = m_List.GetLength();
-	int curIndex = m_List.GetNextItem(data);
-	while (curIndex < length && curIndex != -1)
+	int curIndex = mList.GetNextItem(data);
+	while (curIndex > -1)
 	{
-		data.WriteDataToFile(m_OutFile);
-		curIndex = m_List.GetNextItem(data);
+		data.WriteDataToFile(mOutFile);
+		curIndex = mList.GetNextItem(data);
 	}
 
-	m_OutFile.close();	// file close
+	mOutFile.close();	// file close
 
 	return 1;
 }
 
 // Retrieve music information and display
-void Application::RetrieveMusic() {
+void Application::SearchById() {
 	// Object to temporarily hold id information
 	ItemType data;
 	// Get id to search in list
 	data.SetIdFromKB();
 
 	// Search in list
-	int result = m_List.Get(data);
+	int result = mList.Retrieve(data);
 	if (result == 1) {
 		// Found
 		data.DisplayRecordOnScreen();
 	}
 	else {
 		// Not found
-		cout << "\n\tWrong ID\n";
+		cout << "\n\tFailed to find data\n";
+	}
+}
+
+// Search music with name
+void Application::SearchByName() {
+	// Object to temporarily hold name information
+	ItemType data;
+	// Get name to search
+	data.SetNameFromKB();
+
+	// Object to hold data from list
+	ItemType item;
+	// Iterate through list
+	mList.ResetIterator();
+	int curIndex = mList.GetNextItem(item);
+	while (curIndex > -1)
+	{
+		// Check if retrieved item's artist is
+		// substring of data's artist
+		if (item.GetArtist().find(data.GetName())
+			!= std::string::npos) {
+			item.DisplayRecordOnScreen();
+		}
+		curIndex = mList.GetNextItem(item);
+	}
+}
+
+// Search music with name
+void Application::SearchByGenre() {
+	// Object to temporarily hold name information
+	ItemType data;
+	// Get genre to search
+	data.SetGenreFromKB();
+
+	// Object to hold data from list
+	ItemType item;
+	// Iterate through list
+	mList.ResetIterator();
+	int curIndex = mList.GetNextItem(item);
+	while (curIndex > -1)
+	{
+		if (item.GetGenre().compare(data.GetGenre()) == 0) {
+			item.DisplayRecordOnScreen();
+		}
+		curIndex = mList.GetNextItem(item);
 	}
 }
 
@@ -223,7 +264,10 @@ void Application::DeleteMusic() {
 	ItemType data;
 	// Get id to delete
 	data.SetIdFromKB();
-	m_List.Delete(data);
+
+	if (mList.Delete(data) != 1) {
+		cout << "\n\tFailed to replace data\n";
+	}
 }
 
 // Replace music with input.
@@ -232,5 +276,8 @@ void Application::ReplaceMusic() {
 	ItemType data;
 	// Get record to replace
 	data.SetRecordFromKB();
-	m_List.Replace(data);
+
+	if (mList.Replace(data) != 1) {
+		cout << "\n\tFailed to replace data\n";
+	}
 }

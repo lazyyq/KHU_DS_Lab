@@ -6,7 +6,7 @@
 #include <string>
 using namespace std;
 
-#include "ArrayList.h"
+#include "SortedList.h"
 
 #define FILENAMESIZE 1024
 
@@ -21,7 +21,7 @@ public:
 	*/
 	Application()
 	{
-		m_Command = 0;
+		mCommand = 0;
 	}
 
 	/**
@@ -106,7 +106,12 @@ public:
 	*	@post	None.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
-	void RetrieveMusic();
+	void SearchById();
+
+
+
+
+	void SearchByName();
 
 	/**
 	*	@brief	Delete selected music information from list.
@@ -125,10 +130,10 @@ public:
 	void ReplaceMusic();
 
 private:
-	ifstream m_InFile;		///< input file descriptor.
-	ofstream m_OutFile;		///< output file descriptor.
-	ArrayList m_List;		///< item list.
-	int m_Command;			///< current command number.
+	ifstream mInFile;		///< input file descriptor.
+	ofstream mOutFile;		///< output file descriptor.
+	SortedList mList;		///< item list.
+	int mCommand;			///< current command number.
 };
 
 #endif	// _APPLICATION_H

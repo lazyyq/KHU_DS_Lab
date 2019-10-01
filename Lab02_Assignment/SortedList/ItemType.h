@@ -8,12 +8,10 @@
 
 using namespace std;
 
-
 /**
 *	Relation between two items.
 */
 enum RelationType { LESS, GREATER, EQUAL };
-
 
 /**
 *	item information class.
@@ -26,12 +24,12 @@ public:
 	*/
 	ItemType()
 	{
-		m_Id = "";
-		m_Type = -1;
-		m_Name = "";
-		m_Melodizer = "";
-		m_Artist = "";
-		m_Genre = -1;
+		mId = "";
+		mType = -1;
+		mName = "";
+		mMelodizer = "";
+		mArtist = "";
+		mGenre = -1;
 	}
 
 	/**
@@ -47,7 +45,7 @@ public:
 	*/
 	string GetId()
 	{
-		return m_Id;
+		return mId;
 	}
 
 	/**
@@ -58,7 +56,7 @@ public:
 	*/
 	int GetType()
 	{
-		return m_Type;
+		return mType;
 	}
 
 	/**
@@ -69,7 +67,7 @@ public:
 	*/
 	string GetName()
 	{
-		return m_Name;
+		return mName;
 	}
 
 	/**
@@ -80,7 +78,7 @@ public:
 	*/
 	string GetMelodizer()
 	{
-		return m_Melodizer;
+		return mMelodizer;
 	}
 
 	/**
@@ -91,7 +89,7 @@ public:
 	*/
 	string GetArtist()
 	{
-		return m_Artist;
+		return mArtist;
 	}
 
 	/**
@@ -102,7 +100,7 @@ public:
 	*/
 	int GetGenre()
 	{
-		return m_Genre;
+		return mGenre;
 	}
 
 	/**
@@ -113,7 +111,7 @@ public:
 	*/
 	void SetId(string inId)
 	{
-		m_Id = inId;
+		mId = inId;
 	}
 
 	/**
@@ -124,7 +122,7 @@ public:
 	*/
 	void SetType(int inType)
 	{
-		m_Type = inType;
+		mType = inType;
 	}
 
 	/**
@@ -135,7 +133,7 @@ public:
 	*/
 	void SetName(string inName)
 	{
-		m_Name = inName;
+		mName = inName;
 	}
 
 	/**
@@ -146,7 +144,7 @@ public:
 	*/
 	void SetMelodizer(string inMelodizer)
 	{
-		m_Melodizer = inMelodizer;
+		mMelodizer = inMelodizer;
 	}
 
 	/**
@@ -157,7 +155,7 @@ public:
 	*/
 	void SetArtist(string inArtist)
 	{
-		m_Artist = inArtist;
+		mArtist = inArtist;
 	}
 
 	/**
@@ -168,7 +166,7 @@ public:
 	*/
 	void SetGenre(int inGenre)
 	{
-		m_Genre = inGenre;
+		mGenre = inGenre;
 	}
 
 	/**
@@ -200,7 +198,7 @@ public:
 	*/
 	void DisplayIdOnScreen()
 	{
-		cout << "\tID   : " << m_Id << endl;
+		cout << "\tID   : " << mId << endl;
 	};
 
 	/**
@@ -210,7 +208,7 @@ public:
 	*/
 	void DisplayTypeOnScreen()
 	{
-		cout << "\tType   : " << m_Type << endl;
+		cout << "\tType   : " << mType << endl;
 	};
 
 	/**
@@ -220,7 +218,7 @@ public:
 	*/
 	void DisplayNameOnScreen()
 	{
-		cout << "\tName   : " << m_Name << endl;
+		cout << "\tName   : " << mName << endl;
 	};
 
 	/**
@@ -230,7 +228,7 @@ public:
 	*/
 	void DisplayMelodizerOnScreen()
 	{
-		cout << "\tMelodizer   : " << m_Melodizer << endl;
+		cout << "\tMelodizer   : " << mMelodizer << endl;
 	};
 
 	/**
@@ -240,7 +238,7 @@ public:
 	*/
 	void DisplayArtistOnScreen()
 	{
-		cout << "\tArtist   : " << m_Artist << endl;
+		cout << "\tArtist   : " << mArtist << endl;
 	};
 
 	/**
@@ -250,7 +248,7 @@ public:
 	*/
 	void DisplayGenreOnScreen()
 	{
-		cout << "\tGenre   : " << m_Genre << endl;
+		cout << "\tGenre   : " << mGenre << endl;
 	};
 
 	/**
@@ -355,13 +353,21 @@ public:
 	*/
 	bool operator!=(const ItemType& that) const;
 
+	bool operator>(const ItemType& that) const;
+
+	bool operator>=(const ItemType& that) const;
+
+	bool operator<(const ItemType& that) const;
+
+	bool operator<=(const ItemType& that) const;
+
 protected:
-	string m_Id;		///< Music ID.
-	int m_Type;			///< Music type.
-	string m_Name;		///< Music name.
-	string m_Melodizer;	///< Music melodizer.
-	string m_Artist;	///< Music artist.
-	int m_Genre;		///< Music genre.
+	string mId;			///< Music ID.
+	int mType;			///< Music type.
+	string mName;		///< Music name.
+	string mMelodizer;	///< Music melodizer.
+	string mArtist;		///< Music artist.
+	int mGenre;			///< Music genre.
 };
 
 #endif	// _ITEMTYPE_H
