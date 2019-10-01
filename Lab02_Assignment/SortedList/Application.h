@@ -6,7 +6,7 @@
 #include <string>
 using namespace std;
 
-#include "ArrayList.h"
+#include "SortedList.h"
 
 #define FILENAMESIZE 1024
 
@@ -19,10 +19,7 @@ public:
 	/**
 	*	default constructor.
 	*/
-	Application()
-	{
-		m_Command = 0;
-	}
+	Application();
 
 	/**
 	*	destructor.
@@ -101,18 +98,42 @@ public:
 	int WriteDataToFile();
 
 	/**
-	*	@brief	Get and display selected music information from list.
+	*	@brief	Search and display music info with input id from list.
+	*	@pre	None.
+	*	@post	None.
+	*	@return	None.
+	*/
+	void SearchById();
+		   
+	/**
+	*	@brief	Search and display music whose name contains input name from list.
+	*	@pre	None.
+	*	@post	None.
+	*	@return	None.
+	*/
+	void SearchByName();
+
+	/**
+	*	@brief	Search and display music whose artist contains input artist from list.
+	*	@pre	None.
+	*	@post	None.
+	*	@return	None.
+	*/
+	void SearchByArtist();
+
+	/**
+	*	@brief	Search and display music info with input genre from list.
 	*	@pre	None.
 	*	@post	None.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
-	void RetrieveMusic();
+	void SearchByGenre();
 
 	/**
 	*	@brief	Delete selected music information from list.
 	*	@pre	None.
 	*	@post	None.
-	*	@return	return 1 if this function works well, otherwise 0.
+	*	@return	None.
 	*/
 	void DeleteMusic();
 
@@ -120,15 +141,15 @@ public:
 	*	@brief	Replace selected music information from list.
 	*	@pre	None.
 	*	@post	None.
-	*	@return	return 1 if this function works well, otherwise 0.
+	*	@return	None.
 	*/
 	void ReplaceMusic();
 
 private:
-	ifstream m_InFile;		///< input file descriptor.
-	ofstream m_OutFile;		///< output file descriptor.
-	ArrayList m_List;		///< item list.
-	int m_Command;			///< current command number.
+	ifstream mInFile;		///< input file descriptor.
+	ofstream mOutFile;		///< output file descriptor.
+	SortedList mList;		///< item list.
+	int mCommand;			///< current command number.
 };
 
 #endif	// _APPLICATION_H

@@ -18,13 +18,13 @@
     <ClCompile Include="Application.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="ArrayList.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="ItemType.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SortedList.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,10 +32,10 @@
     <ClInclude Include="Application.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="ArrayList.h">
+    <ClInclude Include="ItemType.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="ItemType.h">
+    <ClInclude Include="SortedList.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

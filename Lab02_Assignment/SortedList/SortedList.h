@@ -1,5 +1,5 @@
-#ifndef _UNSORTEDLIST_H
-#define _UNSORTEDLIST_H
+#ifndef _SORTEDLIST_H
+#define _SORTEDLIST_H
 
 #include <iostream>
 #include <fstream>	
@@ -8,27 +8,23 @@ using namespace std;
 
 #include "ItemType.h"
 
-#define MAXSIZE 5
+#define MAXSIZE 10
 
 /**
 *	array based simple unsorted list.
 */
-class ArrayList
+class SortedList
 {
 public:
 	/**
 	*	default constructor.
 	*/
-	ArrayList()
-	{
-		m_Length = 0;
-		ResetList();
-	}
+	SortedList();
 
 	/**
 	*	destructor.
 	*/
-	~ArrayList() {}
+	~SortedList() {}
 
 	/**
 	*	@brief	Make list empty.
@@ -65,44 +61,44 @@ public:
 	*	@brief	add a new data into list.
 	*	@pre	list should be initialized.
 	*	@post	added the new record into the list.
-	*	@param	data	new data.
+	*	@param	inData	new data.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
-	int Add(ItemType data);
+	int Add(ItemType inData);
 
 	/**
 	*	@brief	Get data from list.
 	*	@pre	List should be initialized.
 	*	@post	Parameter data contains data retrieved from list.
-	*	@param	data	object to contain data retrieved from list.
-	*	@return	Return 1 on success, 0 on failure.
+	*	@param	inData	object to contain data retrieved from list.
+	*	@return	Return index of the item on success, -1 on failure.
 	*/
-	int Get(ItemType& data);
+	int Retrieve(ItemType& inData);
 
 	/**
 	*	@brief	Delete data from list.
 	*	@pre	List should be initialized.
 	*	@post	Data is deleted from list.
-	*	@param	data	Object containing data to remove.
+	*	@param	inData	Object containing data to remove.
 	*	@return	return 1 on success, 0 on failure.
 	*/
-	int Delete(ItemType data);
+	int Delete(ItemType& inData);
 
 	/**
 	*	@brief	Replace data in list.
 	*	@pre	List should be initialized.
 	*	@post	Selected data is replaced with provided one.
-	*	@param	data	Object containing data to replace.
+	*	@param	inData	Object containing data to replace.
 	*	@return	return 1 on success, 0 on failure.
 	*/
-	int Replace(ItemType data);
+	int Replace(ItemType inData);
 
 	/**
 	*	@brief	Initialize list iterator.
 	*	@pre	list should be initialized.
 	*	@post	iterator is reset.
 	*/
-	void ResetList();
+	void ResetIterator();
 
 	/**
 	*	@brief	move list iterator to the next item in list and get that item.
@@ -114,9 +110,31 @@ public:
 	int GetNextItem(ItemType& data);
 
 private:
-	ItemType m_Array[MAXSIZE];  ///< list array.
-	int m_Length;				///< number of elements in list.
-	int m_CurPointer;			///< iterator pointer.
+	ItemType mArray[MAXSIZE];  ///< list array.
+	int mLength;				///< number of elements in list.
+	int mCurPointer;			///< iterator pointer.
+	
+	/**
+	*	@brief	Starting from startIndex + 1 to the last index of the list,
+	*			copy each item to the previous index.
+	*	@pre	List should be initialized.
+	*	@post	Each data in (`startIndex` + 1) ... (last index of the list) is
+	*			moved to the previous index.
+	*	@param	startIndex		index to start moving data
+	*	@return	None.
+	*/
+	void PushForward(int startIndex);
+
+	/**
+	*	@brief	Starting from startIndex to the last index - 1 of the list,
+	*			copy each item to the next index.
+	*	@pre	List should be initialized.
+	*	@post	Each data in (`startIndex`) ... (last index of the list - 1) is
+	*			moved to the next index.
+	*	@param	startIndex		index to start moving data
+	*	@return	None.
+	*/
+	void PushBackward(int startIndex);
 };
 
-#endif	// _UNSORTEDLIST_H
+#endif	// _SORTEDLIST_H
