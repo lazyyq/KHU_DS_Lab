@@ -1,5 +1,10 @@
 #include "Application.h"
 
+Application::Application()
+{
+	mCommand = 0;
+}
+
 // Program driver.
 void Application::Run()
 {
@@ -258,7 +263,7 @@ void Application::SearchByGenre() {
 	// Iterate through list
 	mList.ResetIterator();
 	int curIndex = mList.GetNextItem(item);
-	while (curIndex > -1){
+	while (curIndex > -1) {
 		if (item.GetGenre() == data.GetGenre()) {
 			item.DisplayRecordOnScreen();
 		}

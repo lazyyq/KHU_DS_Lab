@@ -19,10 +19,7 @@ public:
 	/**
 	*	default constructor.
 	*/
-	Application()
-	{
-		mCommand = 0;
-	}
+	Application();
 
 	/**
 	*	destructor.

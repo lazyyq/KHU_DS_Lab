@@ -1,5 +1,5 @@
 /**
-*	Lab 1: Implementtaion of a list class using array. 
+*	Lab 1: Implementtaion of a list class using array.
 */
 
 #include "Application.h"

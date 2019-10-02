@@ -19,11 +19,7 @@ public:
 	/**
 	*	default constructor.
 	*/
-	SortedList()
-	{
-		mLength = 0;
-		ResetIterator();
-	}
+	SortedList();
 
 	/**
 	*	destructor.

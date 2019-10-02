@@ -1,5 +1,11 @@
 #include "SortedList.h"
 
+SortedList::SortedList()
+{
+	mLength = 0;
+	ResetIterator();
+}
+
 // Make list empty.
 void SortedList::MakeEmpty()
 {
@@ -37,7 +43,7 @@ int SortedList::Add(ItemType inData)
 		// Array is empty, just add the data at the very front
 		mArray[0] = inData;
 	}
-	else if (inData > mArray[mLength-1]) {
+	else if (inData > mArray[mLength - 1]) {
 		mArray[mLength] = inData;
 	}
 	else {
@@ -107,7 +113,7 @@ int SortedList::Delete(ItemType data) {
 	{
 		if (thisData == data) {
 			// Id matched
-			while (mCurPointer < mLength- 1) {
+			while (mCurPointer < mLength - 1) {
 				// Backward push data
 				mArray[mCurPointer] = mArray[mCurPointer + 1];
 				++mCurPointer;
@@ -152,7 +158,7 @@ void SortedList::ResetIterator()
 int SortedList::GetNextItem(ItemType& data)
 {
 	++mCurPointer;	// list pointer 증가
-	if (mCurPointer>= MAXSIZE || mCurPointer>= mLength)
+	if (mCurPointer >= MAXSIZE || mCurPointer >= mLength)
 		// end of list이거나 list의 마지막 element에 도달하면 -1을 리턴
 		return -1;
 	data = mArray[mCurPointer];	// 현재 list pointer의 레코드를 복사

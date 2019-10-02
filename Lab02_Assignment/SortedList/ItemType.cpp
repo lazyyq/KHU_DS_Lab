@@ -1,5 +1,125 @@
 #include "ItemType.h"
 
+ItemType::ItemType()
+{
+	mId = "";
+	mType = -1;
+	mName = "";
+	mMelodizer = "";
+	mArtist = "";
+	mGenre = -1;
+}
+
+string ItemType::GetId()
+{
+	return mId;
+}
+
+int ItemType::GetType()
+{
+	return mType;
+}
+
+string ItemType::GetName()
+{
+	return mName;
+}
+
+string ItemType::GetMelodizer()
+{
+	return mMelodizer;
+}
+
+string ItemType::GetArtist()
+{
+	return mArtist;
+}
+
+int ItemType::GetGenre()
+{
+	return mGenre;
+}
+
+void ItemType::SetId(string inId)
+{
+	mId = inId;
+}
+
+void ItemType::SetType(int inType)
+{
+	mType = inType;
+}
+
+void ItemType::SetName(string inName)
+{
+	mName = inName;
+}
+
+void ItemType::SetMelodizer(string inMelodizer)
+{
+	mMelodizer = inMelodizer;
+}
+
+void ItemType::SetArtist(string inArtist)
+{
+	mArtist = inArtist;
+}
+
+void ItemType::SetGenre(int inGenre)
+{
+	mGenre = inGenre;
+}
+
+void ItemType::SetRecord(string inId, int inType, string inName, string inMelodizer, string inArtist, int inGenre)
+{
+	SetId(inId);
+	SetType(inType);
+	SetName(inName);
+	SetMelodizer(inMelodizer);
+	SetArtist(inArtist);
+	SetGenre(inGenre);
+}
+
+void ItemType::DisplayIdOnScreen()
+{
+	cout << setw(ATTR_INDENT_SIZE) << "ID : " << mId << endl;
+}
+
+void ItemType::DisplayTypeOnScreen()
+{
+	cout << setw(ATTR_INDENT_SIZE) << "Type : " << mType << endl;
+}
+
+void ItemType::DisplayNameOnScreen()
+{
+	cout << setw(ATTR_INDENT_SIZE) << "Name : " << mName << endl;
+}
+
+void ItemType::DisplayMelodizerOnScreen()
+{
+	cout << setw(ATTR_INDENT_SIZE) << "Melodizer : " << mMelodizer << endl;
+}
+
+void ItemType::DisplayArtistOnScreen()
+{
+	cout << setw(ATTR_INDENT_SIZE) << "Artist : " << mArtist << endl;
+}
+
+void ItemType::DisplayGenreOnScreen()
+{
+	cout << setw(ATTR_INDENT_SIZE) << "Genre : " << mGenre << endl;
+}
+
+void ItemType::DisplayRecordOnScreen()
+{
+	DisplayIdOnScreen();
+	DisplayTypeOnScreen();
+	DisplayNameOnScreen();
+	DisplayMelodizerOnScreen();
+	DisplayArtistOnScreen();
+	DisplayGenreOnScreen();
+}
+
 // Set music id from keyboard, where id is string.
 void ItemType::SetIdFromKB()
 {
@@ -10,9 +130,22 @@ void ItemType::SetIdFromKB()
 // Set music type from keyboard, where type is int.
 void ItemType::SetTypeFromKB()
 {
-	cout << setw(ATTR_INDENT_SIZE) << "Type (Int) : ";
-	cin >> mType;
-	cin.ignore();
+	while (true) {
+		cout << setw(ATTR_INDENT_SIZE) << "Type (Int) : ";
+		cin >> mType;
+
+		int result = cin.fail();
+		cin.clear();
+		cin.ignore(NUM_LIMIT, '\n');
+
+		if (result != 1) {
+			// Success
+			break;
+		}
+		else {
+			cout << setw(ATTR_INDENT_SIZE) << "Wrong input!\n";
+		}
+	}
 }
 
 // Set music name from keyboard, where name is string.
@@ -39,9 +172,22 @@ void ItemType::SetArtistFromKB()
 // Set music genre from keyboard, where genre is int.
 void ItemType::SetGenreFromKB()
 {
-	cout << setw(ATTR_INDENT_SIZE) << "Genre (Int) : ";
-	cin >> mGenre;
-	cin.ignore();
+	while (true) {
+		cout << setw(ATTR_INDENT_SIZE) << "Genre (Int) : ";
+		cin >> mGenre;
+
+		int result = cin.fail();
+		cin.clear();
+		cin.ignore(NUM_LIMIT, '\n');
+
+		if (result != 1) {
+			// Success
+			break;
+		}
+		else {
+			cout << setw(ATTR_INDENT_SIZE) << "Wrong input!\n";
+		}
+	}
 }
 
 // Set music record from keyboard.
