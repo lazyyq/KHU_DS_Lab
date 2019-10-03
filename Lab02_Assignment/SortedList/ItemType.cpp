@@ -7,7 +7,7 @@ ItemType::ItemType()
 	mName = "";
 	mMelodizer = "";
 	mArtist = "";
-	mGenre = -1;
+	mGenre = "";
 }
 
 string ItemType::GetId()
@@ -35,7 +35,7 @@ string ItemType::GetArtist()
 	return mArtist;
 }
 
-int ItemType::GetGenre()
+string ItemType::GetGenre()
 {
 	return mGenre;
 }
@@ -65,12 +65,14 @@ void ItemType::SetArtist(string inArtist)
 	mArtist = inArtist;
 }
 
-void ItemType::SetGenre(int inGenre)
+void ItemType::SetGenre(string inGenre)
 {
 	mGenre = inGenre;
 }
 
-void ItemType::SetRecord(string inId, int inType, string inName, string inMelodizer, string inArtist, int inGenre)
+// Set records.
+void ItemType::SetRecord(string inId, int inType, string inName,
+	string inMelodizer, string inArtist, string inGenre)
 {
 	SetId(inId);
 	SetType(inType);
@@ -134,6 +136,7 @@ void ItemType::SetTypeFromKB()
 		cout << setw(ATTR_INDENT_SIZE) << "Type (Int) : ";
 		cin >> mType;
 
+		// Check if input is integer.
 		int result = cin.fail();
 		cin.clear();
 		cin.ignore(NUM_LIMIT, '\n');
@@ -162,35 +165,22 @@ void ItemType::SetMelodizerFromKB()
 	getline(cin, mMelodizer);
 }
 
-// Set music artist from keyboard, where artist is string
+// Set music artist from keyboard, where artist is string.
 void ItemType::SetArtistFromKB()
 {
 	cout << setw(ATTR_INDENT_SIZE) << "Artist (String) : ";
 	getline(cin, mArtist);
 }
 
-// Set music genre from keyboard, where genre is int.
+// Set music genre from keyboard, where genre is string.
 void ItemType::SetGenreFromKB()
 {
-	while (true) {
-		cout << setw(ATTR_INDENT_SIZE) << "Genre (Int) : ";
-		cin >> mGenre;
-
-		int result = cin.fail();
-		cin.clear();
-		cin.ignore(NUM_LIMIT, '\n');
-
-		if (result != 1) {
-			// Success
-			break;
-		}
-		else {
-			cout << setw(ATTR_INDENT_SIZE) << "Wrong input!\n";
-		}
-	}
+	cout << setw(ATTR_INDENT_SIZE) << "Genre (String) : ";
+	getline(cin, mGenre);
 }
 
 // Set music record from keyboard.
+// Id is automatically generated using music name and artist.
 void ItemType::SetRecordFromKB()
 {
 	SetTypeFromKB();
@@ -199,12 +189,15 @@ void ItemType::SetRecordFromKB()
 	SetArtistFromKB();
 	SetGenreFromKB();
 
+	// If music id does not already exist, automatically generate one.
+	// Format is '`Music name` - `Artist`'
 	if (this->mId.compare("") == 0) {
 		mId = this->mName + " - " + this->mArtist;
 	}
 }
 
 // Read a record from file.
+// Store each line into respective variables.
 int ItemType::ReadDataFromFile(ifstream& fin)
 {
 	// Temporary variable to hold string
@@ -212,6 +205,7 @@ int ItemType::ReadDataFromFile(ifstream& fin)
 	string temp;
 
 	getline(fin, mId);
+	// Skip empty lines.
 	while (mId.length() == 0) {
 		getline(fin, mId);
 	}
@@ -220,8 +214,7 @@ int ItemType::ReadDataFromFile(ifstream& fin)
 	getline(fin, mName);
 	getline(fin, mMelodizer);
 	getline(fin, mArtist);
-	getline(fin, temp);
-	mGenre = stoi(temp);
+	getline(fin, mGenre);
 
 	return 1;
 };
@@ -250,21 +243,25 @@ bool ItemType::operator!=(const ItemType& that) const {
 	return !(*this == that);
 }
 
+// Compare two records
 bool ItemType::operator>(const ItemType& that) const
 {
 	return this->mId > that.mId;
 }
 
+// Compare two records
 bool ItemType::operator>=(const ItemType& that) const
 {
 	return this->mId >= that.mId;
 }
 
+// Compare two records
 bool ItemType::operator<(const ItemType& that) const
 {
 	return this->mId < that.mId;
 }
 
+// Compare two records
 bool ItemType::operator<=(const ItemType& that) const
 {
 	return this->mId <= that.mId;

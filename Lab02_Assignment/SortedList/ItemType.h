@@ -8,15 +8,12 @@
 #include <fstream>
 #include <string>
 
+// Size of indent when displaying music attributes.
 #define ATTR_INDENT_SIZE	25
+// Limit of integer, used for cin.ignore();
 #define NUM_LIMIT			std::numeric_limits<std::streamsize>::max()
 
 using namespace std;
-
-/**
-*	Relation between two items.
-*/
-enum RelationType { LESS, GREATER, EQUAL };
 
 /**
 *	item information class.
@@ -80,7 +77,7 @@ public:
 	*	@post	None.
 	*	@return	Music genre.
 	*/
-	int GetGenre();
+	string GetGenre();
 
 	/**
 	*	@brief	Set music id.
@@ -128,7 +125,7 @@ public:
 	*	@post	Music genre is set.
 	*	@param	inGenre		Music genre.
 	*/
-	void SetGenre(int inGenre);
+	void SetGenre(string inGenre);
 
 	/**
 	*	@brief	Set music record.
@@ -142,7 +139,7 @@ public:
 	*	@param	inGenre		Music genre.
 	*/
 	void SetRecord(string inId, int inType, string inName,
-		string inMelodizer, string inArtist, int inGenre);
+		string inMelodizer, string inArtist, string inGenre);
 
 	/**
 	*	@brief	Display music id on screen.
@@ -237,6 +234,7 @@ public:
 
 	/**
 	*	@brief	Set music record from keyboard.
+	*			Id is automatically generated using music name and artist.
 	*	@pre	none.
 	*	@post	music record is set.
 	*/
@@ -264,7 +262,7 @@ public:
 	*	Compare two itemtypes.
 	*	@brief	Compare two item types by item id.
 	*	@pre	two item types should be initialized.
-	*	@post	the target file is included the new item record.
+	*	@post	None.
 	*	@param	that	target item for comparing.
 	*	@return	return true if the ids are same, false otherwise.
 	*/
@@ -274,18 +272,50 @@ public:
 	*	Compare two itemtypes.
 	*	@brief	Compare two item types by item id.
 	*	@pre	two item types should be initialized.
-	*	@post	the target file is included the new item record.
+	*	@post	None.
 	*	@param	that	target item for comparing.
 	*	@return	return true if the ids differ, false otherwise.
 	*/
 	bool operator!=(const ItemType& that) const;
 
+	/**
+	*	Compare two itemtypes.
+	*	@brief	Compare two item types by item id.
+	*	@pre	two item types should be initialized.
+	*	@post	None..
+	*	@param	that	target item for comparing.
+	*	@return	return true if this > that, false otherwise.
+	*/
 	bool operator>(const ItemType& that) const;
 
+	/**
+	*	Compare two itemtypes.
+	*	@brief	Compare two item types by item id.
+	*	@pre	two item types should be initialized.
+	*	@post	None..
+	*	@param	that	target item for comparing.
+	*	@return	return true if this >= that, false otherwise.
+	*/
 	bool operator>=(const ItemType& that) const;
-
+	
+	/**
+	*	Compare two itemtypes.
+	*	@brief	Compare two item types by item id.
+	*	@pre	two item types should be initialized.
+	*	@post	None..
+	*	@param	that	target item for comparing.
+	*	@return	return true if this < that, false otherwise.
+	*/
 	bool operator<(const ItemType& that) const;
 
+	/**
+	*	Compare two itemtypes.
+	*	@brief	Compare two item types by item id.
+	*	@pre	two item types should be initialized.
+	*	@post	None..
+	*	@param	that	target item for comparing.
+	*	@return	return true if this <= that, false otherwise.
+	*/
 	bool operator<=(const ItemType& that) const;
 
 protected:
@@ -294,7 +324,7 @@ protected:
 	string mName;		///< Music name.
 	string mMelodizer;	///< Music melodizer.
 	string mArtist;		///< Music artist.
-	int mGenre;			///< Music genre.
+	string mGenre;		///< Music genre.
 };
 
 #endif	// _ITEMTYPE_H
