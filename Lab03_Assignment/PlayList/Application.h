@@ -7,6 +7,7 @@
 using namespace std;
 
 #include "SortedList.h"
+#include "ItemType.h"
 
 #define FILENAMESIZE 1024
 
@@ -148,8 +149,9 @@ public:
 private:
 	ifstream mInFile;		///< input file descriptor.
 	ofstream mOutFile;		///< output file descriptor.
-	SortedList mList;		///< item list.
+	SortedList<ItemType> mList;		///< item list.
 	int mCommand;			///< current command number.
 };
 
 #endif	// _APPLICATION_H
+

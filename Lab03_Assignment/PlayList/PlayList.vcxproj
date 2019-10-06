@@ -146,7 +146,6 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="ItemType.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="SortedList.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />

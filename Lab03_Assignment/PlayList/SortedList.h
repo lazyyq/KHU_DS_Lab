@@ -6,13 +6,12 @@
 #include <string>
 using namespace std;
 
-#include "ItemType.h"
-
 #define MAXSIZE 10
 
 /**
 *	array based simple unsorted list.
 */
+template <typename T>
 class SortedList
 {
 public:
@@ -24,7 +23,7 @@ public:
 	/**
 	*	destructor.
 	*/
-	~SortedList() {}
+	~SortedList();
 
 	/**
 	*	@brief	Make list empty.
@@ -64,7 +63,7 @@ public:
 	*	@param	inData	new data.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
-	int Add(ItemType inData);
+	int Add(T inData);
 
 	/**
 	*	@brief	Get data from list.
@@ -73,7 +72,7 @@ public:
 	*	@param	inData	object to contain data retrieved from list.
 	*	@return	Return index of the item on success, -1 on failure.
 	*/
-	int Retrieve(ItemType& inData);
+	int Retrieve(T& inData);
 
 	/**
 	*	@brief	Delete data from list.
@@ -82,7 +81,7 @@ public:
 	*	@param	inData	Object containing data to remove.
 	*	@return	return 1 on success, 0 on failure.
 	*/
-	int Delete(ItemType& inData);
+	int Delete(T& inData);
 
 	/**
 	*	@brief	Replace data in list.
@@ -91,7 +90,7 @@ public:
 	*	@param	inData	Object containing data to replace.
 	*	@return	return 1 on success, 0 on failure.
 	*/
-	int Replace(ItemType inData);
+	int Replace(T inData);
 
 	/**
 	*	@brief	Initialize list iterator.
@@ -107,12 +106,12 @@ public:
 	*	@param	data	get current iterator's item. it does not need to be initialized.
 	*	@return	index of current iterator's item if is not end of list, oterwise return -1.
 	*/
-	int GetNextItem(ItemType& data);
+	int GetNextItem(T& data);
 
 private:
-	ItemType mArray[MAXSIZE];  ///< list array.
-	int mLength;				///< number of elements in list.
-	int mCurPointer;			///< iterator pointer.
+	T* mArray;			///< Pointer for list array.
+	int mLength;		///< number of elements in list.
+	int mCurPointer;	///< iterator pointer.
 	
 	/**
 	*	@brief	Starting from startIndex + 1 to the last index of the list,
@@ -137,4 +136,205 @@ private:
 	void PushBackward(int startIndex);
 };
 
-#endif	// _SORTEDLIST_H
+
+/* Begin implementation */
+
+// Constructor.
+template <typename T>
+SortedList<T>::SortedList()
+{
+	mArray = new T[MAXSIZE];
+	mLength = 0;
+	ResetIterator();
+}
+
+// Destructor
+template <typename T>
+SortedList<T>::~SortedList() {
+	delete[] mArray;
+}
+
+// Make list empty.
+template <typename T>
+void SortedList<T>::MakeEmpty()
+{
+	mLength = 0;
+}
+
+// Get a number of records in current list.
+template <typename T>
+int SortedList<T>::GetLength()
+{
+	return mLength;
+}
+
+// Check capacity of list is full.
+template <typename T>
+bool SortedList<T>::IsFull()
+{
+	if (mLength > MAXSIZE - 1)
+		return true;
+	else
+		return false;
+}
+
+// Check is list is empty.
+template <typename T>
+bool SortedList<T>::IsEmpty() {
+	return mLength == 0;
+}
+
+// add a new data into list.
+template <typename T>
+int SortedList<T>::Add(T inData)
+{
+	if (IsFull()) {
+		// List is full
+		return 0;
+	}
+	else if (IsEmpty()) {
+		// Array is empty, just add the data at the very front
+		mArray[0] = inData;
+	}
+	else if (inData > mArray[mLength - 1]) {
+		// Item is bigger than last item in the list,
+		// just add to the very back
+		mArray[mLength] = inData;
+	}
+	else {
+		for (int curIndex = 0; curIndex <= mLength - 1; ++curIndex) {
+			// Iterate through each item, find a position
+			// where our item is bigger than the previous item
+			// and smaller than the next item.
+			if (inData == mArray[curIndex]) {
+				// Same item exists, abort since we do not allow duplicates
+				return 0;
+			}
+			else if (inData < mArray[curIndex]) {
+				// Found
+				// Push data backwards, make space for our item
+				PushBackward(curIndex);
+				mArray[curIndex] = inData;
+				break;
+			}
+		}
+	}
+
+	++mLength;
+	return 1;
+}
+
+// Get data from list using binary search.
+template <typename T>
+int SortedList<T>::Retrieve(T& inData) {
+	if (IsEmpty() || mArray[mLength - 1] < inData) {
+		// Either list is empty or its last element's primary key is
+		// smaller than given data's, so no need to check.
+		return -1;
+	}
+
+	// Reset iterator
+	ResetIterator();
+
+	T data; // Variable to hold info from list
+	// Start binary search
+	int start = 0, mid, end = mLength - 1;
+	while (start <= end) {
+		mid = (start + end) / 2;
+		data = mArray[mid];
+
+		if (data < inData) {
+			start = mid + 1;
+		}
+		else if (data > inData) {
+			end = mid - 1;
+		}
+		else {
+			inData = data;
+			return mid;
+		}
+	}
+
+	return -1;
+}
+
+// Delete data from list.
+template <typename T>
+int SortedList<T>::Delete(T& inData) {
+	if (IsEmpty()) {
+		// List is empty, no need to check
+		return 0;
+	}
+
+	// Find the position of item that matches inData
+	int index = Retrieve(inData);
+	if (index != -1) { // Found
+		PushForward(index);
+		--mLength;
+	}
+	else { // Not found
+		return 0;
+	}
+
+	return 1;
+}
+
+// Replace data in list.
+template <typename T>
+int SortedList<T>::Replace(T inData) {
+	if (IsEmpty()) {
+		// List is empty, no need to check
+		return 0;
+	}
+
+	T data = inData; // Temporary variable to hold info to search
+	int index = Retrieve(data);
+	if (index != -1) { // Found
+		mArray[index] = inData;
+	}
+	else { // Not found
+		return 0;
+	}
+
+	return 1;
+}
+
+// Initialize list iterator.
+template <typename T>
+void SortedList<T>::ResetIterator()
+{
+	mCurPointer = -1;
+}
+
+// move list iterator to the next item in list and get that item.
+template <typename T>
+int SortedList<T>::GetNextItem(T& inData)
+{
+	++mCurPointer;	// list pointer 증가
+	if (mCurPointer >= MAXSIZE || mCurPointer >= mLength)
+		// end of list이거나 list의 마지막 element에 도달하면 -1을 리턴
+		return -1;
+	inData = mArray[mCurPointer];	// 현재 list pointer의 레코드를 복사
+
+	return mCurPointer;
+}
+
+// Move items to the previous index.
+template <typename T>
+void SortedList<T>::PushForward(int startIndex) {
+	for (int i = startIndex; i < mLength - 1; ++i) {
+		// Copy each item to the next index
+		mArray[i] = mArray[i + 1];
+	}
+}
+
+// Move items to the next index.
+template <typename T>
+void SortedList<T>::PushBackward(int startIndex) {
+	for (int i = mLength; i > startIndex; --i) {
+		// Copy each item to the previous index
+		mArray[i] = mArray[i - 1];
+	}
+}
+
+#endif // _SORTEDLIST_H
