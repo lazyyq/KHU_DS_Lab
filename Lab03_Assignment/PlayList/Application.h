@@ -7,7 +7,9 @@
 using namespace std;
 
 #include "SortedList.h"
+#include "CircularQueue.h"
 #include "ItemType.h"
+#include "PlayItem.h"
 
 #define FILENAMESIZE 1024
 
@@ -101,7 +103,6 @@ public:
 	*	@brief	Search and display music info with input id from list.
 	*	@pre	None.
 	*	@post	None.
-	*	@return	None.
 	*/
 	void SearchById();
 
@@ -109,7 +110,6 @@ public:
 	*	@brief	Search and display music whose name contains input name from list.
 	*	@pre	None.
 	*	@post	None.
-	*	@return	None.
 	*/
 	void SearchByName();
 
@@ -117,7 +117,6 @@ public:
 	*	@brief	Search and display music whose artist contains input artist from list.
 	*	@pre	None.
 	*	@post	None.
-	*	@return	None.
 	*/
 	void SearchByArtist();
 
@@ -133,7 +132,6 @@ public:
 	*	@brief	Delete selected music information from list.
 	*	@pre	None.
 	*	@post	None.
-	*	@return	None.
 	*/
 	void DeleteMusic();
 
@@ -141,15 +139,38 @@ public:
 	*	@brief	Replace selected music information from list.
 	*	@pre	None.
 	*	@post	None.
-	*	@return	None.
 	*/
 	void ReplaceMusic();
 
+	/**
+	*	@brief	Search music from list with id and add to playlist.
+	*	@pre	Music list and playlist is initialized.
+	*	@post	Music retrieved from list is added to playlist.
+	*/
+	void AddToPlaylist();
+
+	/**
+	*	@brief	Play music from playlist in inserted order.
+	*	@pre	Music exists in playlist.
+	*	@post	Music in playlist is displayed in inserted order.
+	*/
+	void PlayInsertOrder();
+
+	/**
+	*	@brief	Search music from list with id and delete from playlist.
+	*	@pre	Music exists in music list and playlist.
+	*	@post	Music retrieved from list is deleted from playlist.
+	*/
+	void DeleteFromPlaylist();
+
+
 private:
-	ifstream mInFile;		///< input file descriptor.
-	ofstream mOutFile;		///< output file descriptor.
-	SortedList<ItemType> mList;		///< item list.
-	int mCommand;			///< current command number.
+	ifstream mInFile;					// input file descriptor.
+	ofstream mOutFile;					// output file descriptor.
+	SortedList<ItemType> mList;			// music item list.
+	CircularQueue<PlayItem> mPlaylist;	// music playlist.
+	int mCommand;						// current command number.
+	int mInsertOrder;					// Insert order of music in playlist.
 };
 
 #endif	// _APPLICATION_H

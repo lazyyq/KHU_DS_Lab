@@ -6,7 +6,7 @@
 #include <string>
 using namespace std;
 
-#define MAXSIZE 10
+#define SORTEDLIST_MAXSIZE 10
 
 /**
 *	array based simple unsorted list.
@@ -142,7 +142,7 @@ private:
 // Constructor.
 template <typename T>
 SortedList<T>::SortedList() {
-	mArray = new T[MAXSIZE];
+	mArray = new T[SORTEDLIST_MAXSIZE];
 	mLength = 0;
 	ResetIterator();
 }
@@ -168,7 +168,7 @@ int SortedList<T>::GetLength() {
 // Check capacity of list is full.
 template <typename T>
 bool SortedList<T>::IsFull() {
-	if (mLength > MAXSIZE - 1)
+	if (mLength > SORTEDLIST_MAXSIZE - 1)
 		return true;
 	else
 		return false;
@@ -304,7 +304,7 @@ void SortedList<T>::ResetIterator() {
 template <typename T>
 int SortedList<T>::GetNextItem(T& inData) {
 	++mCurPointer;	// list pointer 증가
-	if (mCurPointer >= MAXSIZE || mCurPointer >= mLength)
+	if (mCurPointer >= SORTEDLIST_MAXSIZE || mCurPointer >= mLength)
 		// end of list이거나 list의 마지막 element에 도달하면 -1을 리턴
 		return -1;
 	inData = mArray[mCurPointer];	// 현재 list pointer의 레코드를 복사

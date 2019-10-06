@@ -9,7 +9,7 @@
 #include <string>
 
 // Size of indent when displaying music attributes.
-#define ATTR_INDENT_SIZE	25
+#define ITEMTYPE_ATTR_INDENT_SIZE	25
 // Limit of integer, used for cin.ignore();
 #define NUM_LIMIT			std::numeric_limits<std::streamsize>::max()
 

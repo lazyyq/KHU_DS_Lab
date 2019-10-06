@@ -69,27 +69,27 @@ void ItemType::SetRecord(string inId, int inType, string inName,
 }
 
 void ItemType::DisplayIdOnScreen() {
-	cout << setw(ATTR_INDENT_SIZE) << "ID : " << mId << endl;
+	cout << setw(ITEMTYPE_ATTR_INDENT_SIZE) << "ID : " << mId << endl;
 }
 
 void ItemType::DisplayTypeOnScreen() {
-	cout << setw(ATTR_INDENT_SIZE) << "Type : " << mType << endl;
+	cout << setw(ITEMTYPE_ATTR_INDENT_SIZE) << "Type : " << mType << endl;
 }
 
 void ItemType::DisplayNameOnScreen() {
-	cout << setw(ATTR_INDENT_SIZE) << "Name : " << mName << endl;
+	cout << setw(ITEMTYPE_ATTR_INDENT_SIZE) << "Name : " << mName << endl;
 }
 
 void ItemType::DisplayMelodizerOnScreen() {
-	cout << setw(ATTR_INDENT_SIZE) << "Melodizer : " << mMelodizer << endl;
+	cout << setw(ITEMTYPE_ATTR_INDENT_SIZE) << "Melodizer : " << mMelodizer << endl;
 }
 
 void ItemType::DisplayArtistOnScreen() {
-	cout << setw(ATTR_INDENT_SIZE) << "Artist : " << mArtist << endl;
+	cout << setw(ITEMTYPE_ATTR_INDENT_SIZE) << "Artist : " << mArtist << endl;
 }
 
 void ItemType::DisplayGenreOnScreen() {
-	cout << setw(ATTR_INDENT_SIZE) << "Genre : " << mGenre << endl;
+	cout << setw(ITEMTYPE_ATTR_INDENT_SIZE) << "Genre : " << mGenre << endl;
 }
 
 void ItemType::DisplayRecordOnScreen() {
@@ -103,14 +103,14 @@ void ItemType::DisplayRecordOnScreen() {
 
 // Set music id from keyboard, where id is string.
 void ItemType::SetIdFromKB() {
-	cout << setw(ATTR_INDENT_SIZE) << "ID (String) : ";
+	cout << setw(ITEMTYPE_ATTR_INDENT_SIZE) << "ID (String) : ";
 	getline(cin, mId);
 }
 
 // Set music type from keyboard, where type is int.
 void ItemType::SetTypeFromKB() {
 	while (true) {
-		cout << setw(ATTR_INDENT_SIZE) << "Type (Int) : ";
+		cout << setw(ITEMTYPE_ATTR_INDENT_SIZE) << "Type (Int) : ";
 		cin >> mType;
 
 		// Check if input is integer.
@@ -123,32 +123,32 @@ void ItemType::SetTypeFromKB() {
 			break;
 		}
 		else {
-			cout << setw(ATTR_INDENT_SIZE) << "Wrong input!\n";
+			cout << setw(ITEMTYPE_ATTR_INDENT_SIZE) << "Wrong input!\n";
 		}
 	}
 }
 
 // Set music name from keyboard, where name is string.
 void ItemType::SetNameFromKB() {
-	cout << setw(ATTR_INDENT_SIZE) << "Name (String) : ";
+	cout << setw(ITEMTYPE_ATTR_INDENT_SIZE) << "Name (String) : ";
 	getline(cin, mName);
 }
 
 // Set music melodizer from keyboard, where melodizer is string.
 void ItemType::SetMelodizerFromKB() {
-	cout << setw(ATTR_INDENT_SIZE) << "Melodizer (String) : ";
+	cout << setw(ITEMTYPE_ATTR_INDENT_SIZE) << "Melodizer (String) : ";
 	getline(cin, mMelodizer);
 }
 
 // Set music artist from keyboard, where artist is string.
 void ItemType::SetArtistFromKB() {
-	cout << setw(ATTR_INDENT_SIZE) << "Artist (String) : ";
+	cout << setw(ITEMTYPE_ATTR_INDENT_SIZE) << "Artist (String) : ";
 	getline(cin, mArtist);
 }
 
 // Set music genre from keyboard, where genre is string.
 void ItemType::SetGenreFromKB() {
-	cout << setw(ATTR_INDENT_SIZE) << "Genre (String) : ";
+	cout << setw(ITEMTYPE_ATTR_INDENT_SIZE) << "Genre (String) : ";
 	getline(cin, mGenre);
 }
 
