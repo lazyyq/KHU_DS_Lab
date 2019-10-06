@@ -18,8 +18,7 @@ using namespace std;
 /**
 *	item information class.
 */
-class ItemType
-{
+class ItemType {
 public:
 	/**
 	*	default constructor.
@@ -297,7 +296,7 @@ public:
 	*	@return	return true if this >= that, false otherwise.
 	*/
 	bool operator>=(const ItemType& that) const;
-	
+
 	/**
 	*	Compare two itemtypes.
 	*	@brief	Compare two item types by item id.

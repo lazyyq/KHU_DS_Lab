@@ -1,19 +1,15 @@
 #include "Application.h"
 
-Application::Application()
-{
+Application::Application() {
 	mCommand = 0;
 }
 
 // Program driver.
-void Application::Run()
-{
-	while (1)
-	{
+void Application::Run() {
+	while (1) {
 		mCommand = GetCommand();
 
-		switch (mCommand)
-		{
+		switch (mCommand) {
 		case 1:		// 곡 정보를 입력 받아 리스트에 추가
 			AddMusic();
 			break;
@@ -57,8 +53,7 @@ void Application::Run()
 }
 
 // Display command on screen and get a input from keyboard.
-int Application::GetCommand()
-{
+int Application::GetCommand() {
 	int command;
 	cout << endl << endl << endl;
 	cout << "\t-- ID -- Command -------------\n\n";
@@ -96,8 +91,7 @@ void Application::MakeEmpty() {
 }
 
 // Add new record into list.
-int Application::AddMusic()
-{
+int Application::AddMusic() {
 	// 입력받은 레코드를 리스트에 add, 리스트가 full일 경우는 add하지 않고 0을 리턴
 	if (mList.IsFull()) {
 		cout << "\n\n\tList is full.\n";
@@ -126,8 +120,7 @@ int Application::AddMusic()
 }
 
 // Display all records in the list on screen.
-void Application::DisplayAllMusic()
-{
+void Application::DisplayAllMusic() {
 	ItemType data; // Temporary variable to hold info
 
 	// Display current list capacity
@@ -154,8 +147,7 @@ void Application::DisplayAllMusic()
 }
 
 // Open a file by file descriptor as an input file.
-int Application::OpenInFile(char* fileName)
-{
+int Application::OpenInFile(char* fileName) {
 	mInFile.open(fileName);	// file open for reading.
 
 	// 파일 오픈에 성공하면 1, 그렇지 않다면 0을 리턴.
@@ -164,8 +156,7 @@ int Application::OpenInFile(char* fileName)
 }
 
 // Open a file by file descriptor as an output file.
-int Application::OpenOutFile(char* fileName)
-{
+int Application::OpenOutFile(char* fileName) {
 	mOutFile.open(fileName);	// file open for writing.
 
 	// 파일 오픈에 성공하면 1, 그렇지 않다면 0을 리턴.
@@ -174,8 +165,7 @@ int Application::OpenOutFile(char* fileName)
 }
 
 // Open a file as a read mode, read all data on the file, and set list by the data.
-int Application::ReadDataFromFile()
-{
+int Application::ReadDataFromFile() {
 	int index = 0;
 	ItemType data;	// 읽기용 임시 변수
 
@@ -191,8 +181,7 @@ int Application::ReadDataFromFile()
 	}
 
 	// 파일의 모든 내용을 읽어 list에 추가
-	while (!mInFile.eof())
-	{
+	while (!mInFile.eof()) {
 		// array에 음악들의 정보가 들어있는 structure 저장
 		data.ReadDataFromFile(mInFile);
 		mList.Add(data);
@@ -208,8 +197,7 @@ int Application::ReadDataFromFile()
 }
 
 // Open a file as a write mode, and write all data into the file,
-int Application::WriteDataToFile()
-{
+int Application::WriteDataToFile() {
 	ItemType data;	// 쓰기용 임시 변수
 
 	char filename[FILENAMESIZE];
@@ -228,8 +216,7 @@ int Application::WriteDataToFile()
 
 	// list의 모든 데이터를 파일에 쓰기
 	int curIndex = mList.GetNextItem(data);
-	while (curIndex > -1)
-	{
+	while (curIndex > -1) {
 		data.WriteDataToFile(mOutFile);
 		curIndex = mList.GetNextItem(data);
 	}
@@ -270,8 +257,7 @@ void Application::SearchByName() {
 	if (curIndex > -1) {
 		cout << "\n\n\t---------------------------------------\n\n";
 	}
-	while (curIndex > -1)
-	{
+	while (curIndex > -1) {
 		// Check if input data's name property is
 		// substring of retrieved item's.
 		if (dataFromList.GetName().find(data.GetName())
@@ -304,8 +290,7 @@ void Application::SearchByArtist() {
 	if (curIndex > -1) {
 		cout << "\n\n\t---------------------------------------\n\n";
 	}
-	while (curIndex > -1)
-	{
+	while (curIndex > -1) {
 		// Check if input data's artist property is
 		// substring of retrieved item's.
 		if (dataFromList.GetArtist().find(data.GetArtist())

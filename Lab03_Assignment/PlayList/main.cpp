@@ -7,8 +7,7 @@
 /**
 *	program main function for data structures course.
 */
-int main()
-{
+int main() {
 	Application app;	// Application class object that controls the application
 	app.Run();			// initiate the application
 

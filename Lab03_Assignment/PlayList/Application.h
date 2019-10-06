@@ -14,8 +14,7 @@ using namespace std;
 /**
 *	application class for item management simply.
 */
-class Application
-{
+class Application {
 public:
 	/**
 	*	default constructor.
@@ -105,7 +104,7 @@ public:
 	*	@return	None.
 	*/
 	void SearchById();
-		   
+
 	/**
 	*	@brief	Search and display music whose name contains input name from list.
 	*	@pre	None.

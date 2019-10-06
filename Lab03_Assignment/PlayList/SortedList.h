@@ -12,8 +12,7 @@ using namespace std;
 *	array based simple unsorted list.
 */
 template <typename T>
-class SortedList
-{
+class SortedList {
 public:
 	/**
 	*	default constructor.
@@ -112,7 +111,7 @@ private:
 	T* mArray;			///< Pointer for list array.
 	int mLength;		///< number of elements in list.
 	int mCurPointer;	///< iterator pointer.
-	
+
 	/**
 	*	@brief	Starting from startIndex + 1 to the last index of the list,
 	*			copy each item to the previous index.
@@ -139,10 +138,10 @@ private:
 
 /* Begin implementation */
 
+
 // Constructor.
 template <typename T>
-SortedList<T>::SortedList()
-{
+SortedList<T>::SortedList() {
 	mArray = new T[MAXSIZE];
 	mLength = 0;
 	ResetIterator();
@@ -156,22 +155,19 @@ SortedList<T>::~SortedList() {
 
 // Make list empty.
 template <typename T>
-void SortedList<T>::MakeEmpty()
-{
+void SortedList<T>::MakeEmpty() {
 	mLength = 0;
 }
 
 // Get a number of records in current list.
 template <typename T>
-int SortedList<T>::GetLength()
-{
+int SortedList<T>::GetLength() {
 	return mLength;
 }
 
 // Check capacity of list is full.
 template <typename T>
-bool SortedList<T>::IsFull()
-{
+bool SortedList<T>::IsFull() {
 	if (mLength > MAXSIZE - 1)
 		return true;
 	else
@@ -186,8 +182,7 @@ bool SortedList<T>::IsEmpty() {
 
 // add a new data into list.
 template <typename T>
-int SortedList<T>::Add(T inData)
-{
+int SortedList<T>::Add(T inData) {
 	if (IsFull()) {
 		// List is full
 		return 0;
@@ -301,15 +296,13 @@ int SortedList<T>::Replace(T inData) {
 
 // Initialize list iterator.
 template <typename T>
-void SortedList<T>::ResetIterator()
-{
+void SortedList<T>::ResetIterator() {
 	mCurPointer = -1;
 }
 
 // move list iterator to the next item in list and get that item.
 template <typename T>
-int SortedList<T>::GetNextItem(T& inData)
-{
+int SortedList<T>::GetNextItem(T& inData) {
 	++mCurPointer;	// list pointer 증가
 	if (mCurPointer >= MAXSIZE || mCurPointer >= mLength)
 		// end of list이거나 list의 마지막 element에 도달하면 -1을 리턴
