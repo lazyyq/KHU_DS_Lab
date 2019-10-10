@@ -24,15 +24,15 @@
     <ClCompile Include="Application.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="ItemType.cpp">
+    <ClCompile Include="SingerType.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="MusicType.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CircularQueue.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="ItemType.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="PlayItem.h">
@@ -42,6 +42,18 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Application.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="LinkedList.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="UnsortedLinkedList.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SingerType.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="MusicType.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

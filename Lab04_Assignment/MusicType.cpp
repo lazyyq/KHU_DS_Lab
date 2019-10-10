@@ -1,6 +1,6 @@
-#include "ItemType.h"
+#include "MusicType.h"
 
-ItemType::ItemType() {
+MusicType::MusicType() {
 	mId = "";
 	mType = -1;
 	mName = "";
@@ -9,56 +9,56 @@ ItemType::ItemType() {
 	mGenre = "";
 }
 
-string ItemType::GetId() {
+string MusicType::GetId() {
 	return mId;
 }
 
-int ItemType::GetType() {
+int MusicType::GetType() {
 	return mType;
 }
 
-string ItemType::GetName() {
+string MusicType::GetName() {
 	return mName;
 }
 
-string ItemType::GetMelodizer() {
+string MusicType::GetMelodizer() {
 	return mMelodizer;
 }
 
-string ItemType::GetArtist() {
+string MusicType::GetArtist() {
 	return mArtist;
 }
 
-string ItemType::GetGenre() {
+string MusicType::GetGenre() {
 	return mGenre;
 }
 
-void ItemType::SetId(string inId) {
+void MusicType::SetId(string inId) {
 	mId = inId;
 }
 
-void ItemType::SetType(int inType) {
+void MusicType::SetType(int inType) {
 	mType = inType;
 }
 
-void ItemType::SetName(string inName) {
+void MusicType::SetName(string inName) {
 	mName = inName;
 }
 
-void ItemType::SetMelodizer(string inMelodizer) {
+void MusicType::SetMelodizer(string inMelodizer) {
 	mMelodizer = inMelodizer;
 }
 
-void ItemType::SetArtist(string inArtist) {
+void MusicType::SetArtist(string inArtist) {
 	mArtist = inArtist;
 }
 
-void ItemType::SetGenre(string inGenre) {
+void MusicType::SetGenre(string inGenre) {
 	mGenre = inGenre;
 }
 
 // Set records.
-void ItemType::SetRecord(string inId, int inType, string inName,
+void MusicType::SetRecord(string inId, int inType, string inName,
 	string inMelodizer, string inArtist, string inGenre) {
 	SetId(inId);
 	SetType(inType);
@@ -68,31 +68,31 @@ void ItemType::SetRecord(string inId, int inType, string inName,
 	SetGenre(inGenre);
 }
 
-void ItemType::DisplayIdOnScreen() {
-	cout << setw(ITEMTYPE_ATTR_INDENT_SIZE) << "ID : " << mId << endl;
+void MusicType::DisplayIdOnScreen() {
+	cout << setw(MUSICTYPE_ATTR_INDENT_SIZE) << "ID : " << mId << endl;
 }
 
-void ItemType::DisplayTypeOnScreen() {
-	cout << setw(ITEMTYPE_ATTR_INDENT_SIZE) << "Type : " << mType << endl;
+void MusicType::DisplayTypeOnScreen() {
+	cout << setw(MUSICTYPE_ATTR_INDENT_SIZE) << "Type : " << mType << endl;
 }
 
-void ItemType::DisplayNameOnScreen() {
-	cout << setw(ITEMTYPE_ATTR_INDENT_SIZE) << "Name : " << mName << endl;
+void MusicType::DisplayNameOnScreen() {
+	cout << setw(MUSICTYPE_ATTR_INDENT_SIZE) << "Name : " << mName << endl;
 }
 
-void ItemType::DisplayMelodizerOnScreen() {
-	cout << setw(ITEMTYPE_ATTR_INDENT_SIZE) << "Melodizer : " << mMelodizer << endl;
+void MusicType::DisplayMelodizerOnScreen() {
+	cout << setw(MUSICTYPE_ATTR_INDENT_SIZE) << "Melodizer : " << mMelodizer << endl;
 }
 
-void ItemType::DisplayArtistOnScreen() {
-	cout << setw(ITEMTYPE_ATTR_INDENT_SIZE) << "Artist : " << mArtist << endl;
+void MusicType::DisplayArtistOnScreen() {
+	cout << setw(MUSICTYPE_ATTR_INDENT_SIZE) << "Artist : " << mArtist << endl;
 }
 
-void ItemType::DisplayGenreOnScreen() {
-	cout << setw(ITEMTYPE_ATTR_INDENT_SIZE) << "Genre : " << mGenre << endl;
+void MusicType::DisplayGenreOnScreen() {
+	cout << setw(MUSICTYPE_ATTR_INDENT_SIZE) << "Genre : " << mGenre << endl;
 }
 
-void ItemType::DisplayRecordOnScreen() {
+void MusicType::DisplayRecordOnScreen() {
 	DisplayIdOnScreen();
 	DisplayTypeOnScreen();
 	DisplayNameOnScreen();
@@ -102,15 +102,15 @@ void ItemType::DisplayRecordOnScreen() {
 }
 
 // Set music id from keyboard, where id is string.
-void ItemType::SetIdFromKB() {
-	cout << setw(ITEMTYPE_ATTR_INDENT_SIZE) << "ID (String) : ";
+void MusicType::SetIdFromKB() {
+	cout << setw(MUSICTYPE_ATTR_INDENT_SIZE) << "ID (String) : ";
 	getline(cin, mId);
 }
 
 // Set music type from keyboard, where type is int.
-void ItemType::SetTypeFromKB() {
+void MusicType::SetTypeFromKB() {
 	while (true) {
-		cout << setw(ITEMTYPE_ATTR_INDENT_SIZE) << "Type (Int) : ";
+		cout << setw(MUSICTYPE_ATTR_INDENT_SIZE) << "Type (Int) : ";
 		cin >> mType;
 
 		// Check if input is integer.
@@ -121,40 +121,39 @@ void ItemType::SetTypeFromKB() {
 		if (result != 1) {
 			// Success
 			break;
-		}
-		else {
-			cout << setw(ITEMTYPE_ATTR_INDENT_SIZE) << "Wrong input!\n";
+		} else {
+			cout << setw(MUSICTYPE_ATTR_INDENT_SIZE) << "Wrong input!\n";
 		}
 	}
 }
 
 // Set music name from keyboard, where name is string.
-void ItemType::SetNameFromKB() {
-	cout << setw(ITEMTYPE_ATTR_INDENT_SIZE) << "Name (String) : ";
+void MusicType::SetNameFromKB() {
+	cout << setw(MUSICTYPE_ATTR_INDENT_SIZE) << "Name (String) : ";
 	getline(cin, mName);
 }
 
 // Set music melodizer from keyboard, where melodizer is string.
-void ItemType::SetMelodizerFromKB() {
-	cout << setw(ITEMTYPE_ATTR_INDENT_SIZE) << "Melodizer (String) : ";
+void MusicType::SetMelodizerFromKB() {
+	cout << setw(MUSICTYPE_ATTR_INDENT_SIZE) << "Melodizer (String) : ";
 	getline(cin, mMelodizer);
 }
 
 // Set music artist from keyboard, where artist is string.
-void ItemType::SetArtistFromKB() {
-	cout << setw(ITEMTYPE_ATTR_INDENT_SIZE) << "Artist (String) : ";
+void MusicType::SetArtistFromKB() {
+	cout << setw(MUSICTYPE_ATTR_INDENT_SIZE) << "Artist (String) : ";
 	getline(cin, mArtist);
 }
 
 // Set music genre from keyboard, where genre is string.
-void ItemType::SetGenreFromKB() {
-	cout << setw(ITEMTYPE_ATTR_INDENT_SIZE) << "Genre (String) : ";
+void MusicType::SetGenreFromKB() {
+	cout << setw(MUSICTYPE_ATTR_INDENT_SIZE) << "Genre (String) : ";
 	getline(cin, mGenre);
 }
 
 // Set music record from keyboard.
 // Id is automatically generated using music name and artist.
-void ItemType::SetRecordFromKB() {
+void MusicType::SetRecordFromKB() {
 	SetTypeFromKB();
 	SetNameFromKB();
 	SetMelodizerFromKB();
@@ -170,7 +169,7 @@ void ItemType::SetRecordFromKB() {
 
 // Read a record from file.
 // Store each line into respective variables.
-int ItemType::ReadDataFromFile(ifstream& fin) {
+int MusicType::ReadDataFromFile(ifstream &fin) {
 	// Temporary variable to hold string
 	// which will later be converted to int
 	string temp;
@@ -191,7 +190,7 @@ int ItemType::ReadDataFromFile(ifstream& fin) {
 };
 
 // Write a record into file.
-int ItemType::WriteDataToFile(ofstream& fout) {
+int MusicType::WriteDataToFile(ofstream &fout) {
 	fout << endl << endl;
 	fout << mId << endl;
 	fout << mType << endl;
@@ -204,31 +203,31 @@ int ItemType::WriteDataToFile(ofstream& fout) {
 }
 
 // Compare two records
-bool ItemType::operator==(const ItemType& that) const {
+bool MusicType::operator==(const MusicType &that) const {
 	return this->mId.compare(that.mId) == 0;
 }
 
 // Compare two records
-bool ItemType::operator!=(const ItemType& that) const {
+bool MusicType::operator!=(const MusicType &that) const {
 	return !(*this == that);
 }
 
 // Compare two records
-bool ItemType::operator>(const ItemType& that) const {
+bool MusicType::operator>(const MusicType &that) const {
 	return this->mId > that.mId;
 }
 
 // Compare two records
-bool ItemType::operator>=(const ItemType& that) const {
+bool MusicType::operator>=(const MusicType &that) const {
 	return this->mId >= that.mId;
 }
 
 // Compare two records
-bool ItemType::operator<(const ItemType& that) const {
+bool MusicType::operator<(const MusicType &that) const {
 	return this->mId < that.mId;
 }
 
 // Compare two records
-bool ItemType::operator<=(const ItemType& that) const {
+bool MusicType::operator<=(const MusicType &that) const {
 	return this->mId <= that.mId;
 }

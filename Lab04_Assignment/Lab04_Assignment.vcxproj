@@ -144,16 +144,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
-    <ClCompile Include="ItemType.cpp" />
+    <ClCompile Include="MusicType.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PlayItem.cpp" />
+    <ClCompile Include="SingerType.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="CircularQueue.h" />
-    <ClInclude Include="ItemType.h" />
+    <ClInclude Include="MusicType.h" />
     <ClInclude Include="PlayItem.h" />
+    <ClInclude Include="LinkedList.h" />
+    <ClInclude Include="SingerType.h" />
     <ClInclude Include="SortedList.h" />
+    <ClInclude Include="UnsortedLinkedList.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

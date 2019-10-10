@@ -1,5 +1,6 @@
 #include "PlayItem.h"
 
+// Constructors
 PlayItem::PlayItem() {
 	mId = "";
 	mNumPlay = -1;
@@ -12,29 +13,35 @@ PlayItem::PlayItem(string inId, int inNumPlay, int inInTime) {
 	mInTime = inInTime;
 }
 
-PlayItem::~PlayItem() {
-}
+// Destructor
+PlayItem::~PlayItem() {}
 
+// Get id
 string PlayItem::GetId() {
 	return mId;
 }
 
+// Get played count
 int PlayItem::GetNumPlay() {
 	return mNumPlay;
 }
 
+// Get inserted time
 int PlayItem::GetInTime() {
 	return mInTime;
 }
 
+// Set id
 void PlayItem::SetId(string inId) {
 	mId = inId;
 }
 
+// Set played count
 void PlayItem::SetNumPlay(int inNumPlay) {
 	mNumPlay = inNumPlay;
 }
 
+// Set inserted time
 void PlayItem::SetInTime(int inInTime) {
 	mInTime = inInTime;
 }
@@ -51,6 +58,6 @@ void PlayItem::IncreaseNumPlay() {
 }
 
 // Compare two items
-bool PlayItem::operator==(const PlayItem& that) const {
+bool PlayItem::operator==(const PlayItem &that) const {
 	return this->mId.compare(that.mId) == 0;
 }

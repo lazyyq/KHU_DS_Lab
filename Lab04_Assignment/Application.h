@@ -8,8 +8,12 @@ using namespace std;
 
 #include "SortedList.h"
 #include "CircularQueue.h"
-#include "ItemType.h"
+#include "UnsortedLinkedList.h"
+#include "LinkedList.h"
+
+#include "MusicType.h"
 #include "PlayItem.h"
+#include "SingerType.h"
 
 #define FILENAMESIZE 1024
 
@@ -26,7 +30,7 @@ public:
 	/**
 	*	destructor.
 	*/
-	~Application() {}
+	~Application();
 
 	/**
 	*	@brief	Program driver.
@@ -44,13 +48,6 @@ public:
 	int GetCommand();
 
 	/**
-	*	@brief	Make list empty.
-	*	@pre	none.
-	*	@post	clear list.
-	*/
-	void MakeEmpty();
-
-	/**
 	*	@brief	Add new record into list.
 	*	@pre	list should be initialized.
 	*	@post	new record is added into the list.
@@ -59,45 +56,18 @@ public:
 	int AddMusic();
 
 	/**
-	*	@brief	Display all records in the list on screen.
-	*	@pre	none.
-	*	@post	none.
+	*	@brief	Delete selected music information from list.
+	*	@pre	None.
+	*	@post	None.
 	*/
-	void DisplayAllMusic();
+	void DeleteMusic();
 
 	/**
-	*	@brief	Open a file by file descriptor as an input file.
-	*	@pre	a file for reading is exist.
-	*	@post	open the file for reading.
-	*	@param	fileName	a filename to open for reading.
-	*	@return	return 1 if this function works well, otherwise 0.
+	*	@brief	Replace selected music information from list.
+	*	@pre	None.
+	*	@post	None.
 	*/
-	int OpenInFile(char* fileName);
-
-	/**
-	*	@brief	Open a file by file descriptor as an output file.
-	*	@pre	list should be initialized.
-	*	@post	open the file for writing.
-	*	@param	fileName	a filename to open for writing.
-	*	@return	return 1 if this function works well, otherwise 0.
-	*/
-	int OpenOutFile(char* fileName);
-
-	/**
-	*	@brief	Open a file as a read mode, read all data on the file, and set list by the data.
-	*	@pre	The file is not opened.
-	*	@post	list holds all records from the file.
-	*	@return	return 1 if this function works well, otherwise 0.
-	*/
-	int ReadDataFromFile();
-
-	/**
-	*	@brief	Open a file as a write mode, and write all data into the file,
-	*	@pre	The file is not opened.
-	*	@post	the list is stored in the output file.
-	*	@return	return 1 if this function works well, otherwise 0.
-	*/
-	int WriteDataToFile();
+	void ReplaceMusic();
 
 	/**
 	*	@brief	Search and display music info with input id from list.
@@ -129,18 +99,11 @@ public:
 	void SearchByGenre();
 
 	/**
-	*	@brief	Delete selected music information from list.
-	*	@pre	None.
-	*	@post	None.
+	*	@brief	Display all records in the list on screen.
+	*	@pre	none.
+	*	@post	none.
 	*/
-	void DeleteMusic();
-
-	/**
-	*	@brief	Replace selected music information from list.
-	*	@pre	None.
-	*	@post	None.
-	*/
-	void ReplaceMusic();
+	void DisplayAllMusic();
 
 	/**
 	*	@brief	Search music from list with id and add to playlist.
@@ -163,14 +126,80 @@ public:
 	*/
 	void DeleteFromPlaylist();
 
+	/**
+	*	@brief	Make list empty.
+	*	@pre	none.
+	*	@post	clear list.
+	*/
+	void MakeEmpty();
+
+	/**
+	*	@brief	Open a file by file descriptor as an input file.
+	*	@pre	a file for reading is exist.
+	*	@post	open the file for reading.
+	*	@param	fileName	a filename to open for reading.
+	*	@return	return 1 if this function works well, otherwise 0.
+	*/
+	int OpenInFile(char *fileName);
+
+	/**
+	*	@brief	Open a file by file descriptor as an output file.
+	*	@pre	list should be initialized.
+	*	@post	open the file for writing.
+	*	@param	fileName	a filename to open for writing.
+	*	@return	return 1 if this function works well, otherwise 0.
+	*/
+	int OpenOutFile(char *fileName);
+
+	/**
+	*	@brief	Open a file as a read mode, read all data on the file, and set list by the data.
+	*	@pre	The file is not opened.
+	*	@post	list holds all records from the file.
+	*	@return	return 1 if this function works well, otherwise 0.
+	*/
+	int ReadDataFromFile();
+
+	/**
+	*	@brief	Open a file as a write mode, and write all data into the file,
+	*	@pre	The file is not opened.
+	*	@post	the list is stored in the output file.
+	*	@return	return 1 if this function works well, otherwise 0.
+	*/
+	int WriteDataToFile();
+
+	/**
+	*	@brief	Add a new singer.
+	*	@pre	Singer list is initalized.
+	*	@post	New singer is added to singer list.
+	*/
+	void AddSinger();
+
+	/**
+	*	@brief	Add a new song to a singer's song list. Will require user
+	*			to add a new singer first if not exists.
+	*	@pre	Singer list is initialized and song exists in music master list.
+	*	@post	New song is added to the singer's song list. If the singer
+	*			does not exist, he is added as well.
+	*/
+	void AddSong();
+
+	/**
+	*	@brief	Search and display all songs by specific singer whose name
+	*			exactly matches the user's input.
+	*	@pre	Music master list and singer list is initialized.
+	*	@post	Music info from the singer is displayed.
+	*/
+	void SearchBySinger();
+
 
 private:
-	ifstream mInFile;					// input file descriptor.
-	ofstream mOutFile;					// output file descriptor.
-	SortedList<ItemType> mList;			// music item list.
-	CircularQueue<PlayItem> mPlaylist;	// music playlist.
-	int mCommand;						// current command number.
-	int mInsertOrder;					// Insert order of music in playlist.
+	ifstream mInFile;					// input file descriptor
+	ofstream mOutFile;					// output file descriptor
+	SortedList<MusicType> mMasterList;	// music item list
+	CircularQueue<PlayItem> mPlaylist;	// music playlist
+	LinkedList<SingerType> mSingerList;	// Singer list
+	int mCommand;						// current command number
+	int mInsertOrder;					// Insert order of music in playlist
 };
 
 #endif	// _APPLICATION_H

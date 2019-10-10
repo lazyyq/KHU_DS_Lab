@@ -1,6 +1,6 @@
 
-#ifndef _ITEMTYPE_H
-#define _ITEMTYPE_H
+#ifndef _MUSICTYPE_H_
+#define _MUSICTYPE_H_
 
 #include <iostream>
 #include <iomanip>
@@ -9,7 +9,7 @@
 #include <string>
 
 // Size of indent when displaying music attributes.
-#define ITEMTYPE_ATTR_INDENT_SIZE	25
+#define MUSICTYPE_ATTR_INDENT_SIZE	25
 // Limit of integer, used for cin.ignore();
 #define NUM_LIMIT			std::numeric_limits<std::streamsize>::max()
 
@@ -18,17 +18,17 @@ using namespace std;
 /**
 *	item information class.
 */
-class ItemType {
+class MusicType {
 public:
 	/**
 	*	default constructor.
 	*/
-	ItemType();
+	MusicType();
 
 	/**
 	*	destructor.
 	*/
-	~ItemType() {}
+	~MusicType() {}
 
 	/**
 	*	@brief	Get music id.
@@ -246,7 +246,7 @@ public:
 	*	@param	fin	file descriptor.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
-	int ReadDataFromFile(ifstream& fin);
+	int ReadDataFromFile(ifstream &fin);
 
 	/**
 	*	@brief	Write a record into file.
@@ -255,7 +255,7 @@ public:
 	*	@param	fout	file descriptor.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
-	int WriteDataToFile(ofstream& fout);
+	int WriteDataToFile(ofstream &fout);
 
 	/**
 	*	Compare two itemtypes.
@@ -265,7 +265,7 @@ public:
 	*	@param	that	target item for comparing.
 	*	@return	return true if the ids are same, false otherwise.
 	*/
-	bool operator==(const ItemType& that) const;
+	bool operator==(const MusicType &that) const;
 
 	/**
 	*	Compare two itemtypes.
@@ -275,7 +275,7 @@ public:
 	*	@param	that	target item for comparing.
 	*	@return	return true if the ids differ, false otherwise.
 	*/
-	bool operator!=(const ItemType& that) const;
+	bool operator!=(const MusicType &that) const;
 
 	/**
 	*	Compare two itemtypes.
@@ -285,7 +285,7 @@ public:
 	*	@param	that	target item for comparing.
 	*	@return	return true if this > that, false otherwise.
 	*/
-	bool operator>(const ItemType& that) const;
+	bool operator>(const MusicType &that) const;
 
 	/**
 	*	Compare two itemtypes.
@@ -295,7 +295,7 @@ public:
 	*	@param	that	target item for comparing.
 	*	@return	return true if this >= that, false otherwise.
 	*/
-	bool operator>=(const ItemType& that) const;
+	bool operator>=(const MusicType &that) const;
 
 	/**
 	*	Compare two itemtypes.
@@ -305,7 +305,7 @@ public:
 	*	@param	that	target item for comparing.
 	*	@return	return true if this < that, false otherwise.
 	*/
-	bool operator<(const ItemType& that) const;
+	bool operator<(const MusicType &that) const;
 
 	/**
 	*	Compare two itemtypes.
@@ -315,7 +315,7 @@ public:
 	*	@param	that	target item for comparing.
 	*	@return	return true if this <= that, false otherwise.
 	*/
-	bool operator<=(const ItemType& that) const;
+	bool operator<=(const MusicType &that) const;
 
 protected:
 	string mId;			///< Music ID.
@@ -326,4 +326,4 @@ protected:
 	string mGenre;		///< Music genre.
 };
 
-#endif	// _ITEMTYPE_H
+#endif	// _MUSICTYPE_H_

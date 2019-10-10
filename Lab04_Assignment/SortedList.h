@@ -71,7 +71,7 @@ public:
 	*	@param	inData	object to contain data retrieved from list.
 	*	@return	Return index of the item on success, -1 on failure.
 	*/
-	int Retrieve(T& inData);
+	int Retrieve(T &inData);
 
 	/**
 	*	@brief	Delete data from list.
@@ -80,7 +80,7 @@ public:
 	*	@param	inData	Object containing data to remove.
 	*	@return	return 1 on success, 0 on failure.
 	*/
-	int Delete(T& inData);
+	int Delete(T &inData);
 
 	/**
 	*	@brief	Replace data in list.
@@ -105,10 +105,10 @@ public:
 	*	@param	data	get current iterator's item. it does not need to be initialized.
 	*	@return	index of current iterator's item if is not end of list, oterwise return -1.
 	*/
-	int GetNextItem(T& data);
+	int GetNextItem(T &data);
 
 private:
-	T* mArray;			///< Pointer for list array.
+	T *mArray;			///< Pointer for list array.
 	int mLength;		///< number of elements in list.
 	int mCurPointer;	///< iterator pointer.
 
@@ -186,17 +186,14 @@ int SortedList<T>::Add(T inData) {
 	if (IsFull()) {
 		// List is full
 		return 0;
-	}
-	else if (IsEmpty()) {
+	} else if (IsEmpty()) {
 		// Array is empty, just add the data at the very front
 		mArray[0] = inData;
-	}
-	else if (inData > mArray[mLength - 1]) {
+	} else if (inData > mArray[mLength - 1]) {
 		// Item is bigger than last item in the list,
 		// just add to the very back
 		mArray[mLength] = inData;
-	}
-	else {
+	} else {
 		for (int curIndex = 0; curIndex <= mLength - 1; ++curIndex) {
 			// Iterate through each item, find a position
 			// where our item is bigger than the previous item
@@ -204,8 +201,7 @@ int SortedList<T>::Add(T inData) {
 			if (inData == mArray[curIndex]) {
 				// Same item exists, abort since we do not allow duplicates
 				return 0;
-			}
-			else if (inData < mArray[curIndex]) {
+			} else if (inData < mArray[curIndex]) {
 				// Found
 				// Push data backwards, make space for our item
 				PushBackward(curIndex);
@@ -221,7 +217,7 @@ int SortedList<T>::Add(T inData) {
 
 // Get data from list using binary search.
 template <typename T>
-int SortedList<T>::Retrieve(T& inData) {
+int SortedList<T>::Retrieve(T &inData) {
 	if (IsEmpty() || mArray[mLength - 1] < inData) {
 		// Either list is empty or its last element's primary key is
 		// smaller than given data's, so no need to check.
@@ -240,11 +236,9 @@ int SortedList<T>::Retrieve(T& inData) {
 
 		if (data < inData) {
 			start = mid + 1;
-		}
-		else if (data > inData) {
+		} else if (data > inData) {
 			end = mid - 1;
-		}
-		else {
+		} else {
 			inData = data;
 			return mid;
 		}
@@ -255,7 +249,7 @@ int SortedList<T>::Retrieve(T& inData) {
 
 // Delete data from list.
 template <typename T>
-int SortedList<T>::Delete(T& inData) {
+int SortedList<T>::Delete(T &inData) {
 	if (IsEmpty()) {
 		// List is empty, no need to check
 		return 0;
@@ -266,8 +260,7 @@ int SortedList<T>::Delete(T& inData) {
 	if (index != -1) { // Found
 		PushForward(index);
 		--mLength;
-	}
-	else { // Not found
+	} else { // Not found
 		return 0;
 	}
 
@@ -286,8 +279,7 @@ int SortedList<T>::Replace(T inData) {
 	int index = Retrieve(data);
 	if (index != -1) { // Found
 		mArray[index] = inData;
-	}
-	else { // Not found
+	} else { // Not found
 		return 0;
 	}
 
@@ -302,7 +294,7 @@ void SortedList<T>::ResetIterator() {
 
 // move list iterator to the next item in list and get that item.
 template <typename T>
-int SortedList<T>::GetNextItem(T& inData) {
+int SortedList<T>::GetNextItem(T &inData) {
 	++mCurPointer;	// list pointer 증가
 	if (mCurPointer >= SORTEDLIST_MAXSIZE || mCurPointer >= mLength)
 		// end of list이거나 list의 마지막 element에 도달하면 -1을 리턴

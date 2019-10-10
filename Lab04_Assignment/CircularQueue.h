@@ -83,14 +83,14 @@ public:
 	*	@pre	Queue has been initialized.
 	*	@post	비어있으면 empty Exception을 throw;아니면 맨위의 값을 삭제
 	*/
-	void DeQueue(T& item);
+	void DeQueue(T &item);
 
 	/**
 	*	@brief	큐의 아이템을 하나 삭제. 뒤에 있는 아이템들은 전부 하나씩 앞으로 밀림.
 	*	@pre	Queue has been initialized.
 	*	@post	아이템을 삭제하고 뒤의 아이템들이 하나씩 앞으로 밀림.
 	*/
-	void Delete(T& item);
+	void Delete(T &item);
 
 	/**
 	*	@brief	Returns a copy of top item on the queue.
@@ -109,14 +109,14 @@ public:
 
 	void ResetPointer();
 
-	int GetNextItem(T& item);
+	int GetNextItem(T &item);
 
 private:
 	int mFront;
 	int mRear;
 	int mMaxQueueSize;
 	int mTop;			// Number of elements.
-	T* mQueue;			// Pointer for a queue.
+	T *mQueue;			// Pointer for a queue.
 	int mCurPointer;	// Iterator pointer.
 };
 
@@ -167,8 +167,7 @@ template <typename T>
 void CircularQueue<T>::EnQueue(T newItem) {
 	if (IsFull()) {
 		throw FullQueue();
-	}
-	else {
+	} else {
 		mRear = (mRear + 1) % mMaxQueueSize;
 		mQueue[mRear % mMaxQueueSize] = newItem;
 		mTop++;
@@ -186,11 +185,10 @@ void CircularQueue<T>::DeQueue() {
 
 // Remove and return top item from the CircularQueue.
 template <typename T>
-void CircularQueue<T>::DeQueue(T& item) {
+void CircularQueue<T>::DeQueue(T &item) {
 	if (IsEmpty()) {			//비어있는지 검사
 		throw EmptyQueue();
-	}
-	else {
+	} else {
 		mFront = (mFront + 1) % mMaxQueueSize; //front를 앞으로 한칸 이동
 		item = mQueue[mFront];	//지워지는, 접근되지 않을 값을 알기위해서 item에 해당 값을 전달
 		mTop--;
@@ -199,7 +197,7 @@ void CircularQueue<T>::DeQueue(T& item) {
 
 // 아이템을 삭제하고 뒤의 아이템들을 하나씩 앞으로 밀어줌.
 template<typename T>
-void CircularQueue<T>::Delete(T& item) {
+void CircularQueue<T>::Delete(T &item) {
 	if (IsEmpty()) { // Empty
 		cout << "Queue is empty!\n";
 		return;
@@ -233,8 +231,7 @@ template <typename T>
 T CircularQueue<T>::Top() {
 	if (IsEmpty()) {
 		throw EmptyQueue();
-	}
-	else {
+	} else {
 		return mQueue[mTop];
 	}
 }
@@ -244,8 +241,7 @@ template <typename T>
 void CircularQueue<T>::Print() {
 	if (IsEmpty()) {				//비었으면 it is empty출력. Empty Queue을 throw하면 프로그램이 종료되어서 다시 Enqueue할수없으므로
 		cout << "It is empty!" << endl;	//부득이하게 새로운 예외처리
-	}
-	else {
+	} else {
 		cout << "CircularQueue: ";
 		// CircularQueue 내의모든element 출력.
 		int first = mFront;
@@ -271,7 +267,7 @@ void CircularQueue<T>::ResetPointer() {
 }
 
 template <typename T>
-int CircularQueue<T>::GetNextItem(T& item) {
+int CircularQueue<T>::GetNextItem(T &item) {
 	// Check if list is emtpy.
 	if (IsEmpty()) {
 		cout << "List is empty.\n";
