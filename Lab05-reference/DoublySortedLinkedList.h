@@ -165,6 +165,8 @@ void DoublySortedLinkedList<T>::MakeEmpty() {
 	m_pLast->prev = m_pFirst;
 	m_pLast->next = NULL;
 
+	m_nLength = 0;
+
 	return;
 }
 
@@ -226,7 +228,7 @@ void DoublySortedLinkedList<T>::Delete(T item) {
 			pItem->prev->next = itor.m_pCurPointer;
 			itor.m_pCurPointer->prev = pItem->prev; // 삭제하는 노드의 앞과 뒤를 서로 이어준다.
 			delete pItem; // 삭제.
-			return;
+			break;
 		} else
 			itor.Next();
 	}
