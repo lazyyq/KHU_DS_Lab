@@ -5,6 +5,7 @@
 #include <string>
 #include <iomanip>
 #include "UnsortedLinkedList.h"
+#include "SortedDoublyLinkedList.h"
 #include "LinkedList.h"
 
 #define SINGERTYPE_ATTR_INDENT_SIZE	25

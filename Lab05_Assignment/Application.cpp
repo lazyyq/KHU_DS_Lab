@@ -43,30 +43,33 @@ void Application::Run() {
 			DisplayAllMusic();
 			break;
 		case 9:		// 입력된 ID로 리스트에서 음악 검색하여 플레이리스트에 추가
-			AddToPlaylist();
+			AddSongToPL();
 			break;
 		case 10:	// 플레이리스트의 곡을 차례대로 재생, 과제에서는 출력으로 대체
-			PlayInsertOrder();
+			PlayIOAddTime();
 			break;
-		case 11:	// 입력된 ID로 음악을 찾아 플레이리스트에서 삭제
-			DeleteFromPlaylist();
+		case 11:	// 플레이리스트의 곡을 자주 재생한 순서대로 재생
+			PlayIOFreq();
 			break;
-		case 12:	// 가수 리스트에 새 가수 추가
+		case 12:	// 입력된 ID로 음악을 찾아 플레이리스트에서 삭제
+			DeleteSongFrPL();
+			break;
+		case 13:	// 가수 리스트에 새 가수 추가
 			AddSinger();
 			break;
-		case 13:	// 가수의 곡 리스트에 새 곡 추가
+		case 14:	// 가수의 곡 리스트에 새 곡 추가
 			AddSong();
 			break;
-		case 14:	// 가수 리스트에서 가수를 검색한 뒤 해당 가수의 모든 곡 정보 출력
+		case 15:	// 가수 리스트에서 가수를 검색한 뒤 해당 가수의 모든 곡 정보 출력
 			SearchBySinger();
 			break;
-		case 15: 	// 리스트에 입력된 모든 곡을 삭제
+		case 16: 	// 리스트에 입력된 모든 곡을 삭제
 			MakeEmpty();
 			break;
-		case 16:	// load list data from a file.
+		case 17:	// load list data from a file.
 			ReadDataFromFile();
 			break;
-		case 17:	// save list data into a file.
+		case 18:	// save list data into a file.
 			WriteDataToFile();
 			break;
 		case 0:
@@ -97,15 +100,16 @@ int Application::GetCommand() {
 
 	cout << "\t    9  : Add music to playlist\n";
 	cout << "\t    10 : Play music in playlist\n";
-	cout << "\t    11 : Delete music from playlist\n\n";
+	cout << "\t    11 : Play music in frequently played order\n";
+	cout << "\t    12 : Delete music from playlist\n\n";
 
-	cout << "\t    12 : Add a new singer\n";
-	cout << "\t    13 : Add a new song to a singer\n";
-	cout << "\t    14 : Find music by singer\n\n";
+	cout << "\t    13 : Add a new singer\n";
+	cout << "\t    14 : Add a new song to a singer\n";
+	cout << "\t    15 : Find music by singer\n\n";
 
-	cout << "\t    15 : Empty list\n";
-	cout << "\t    16 : Read list from file\n";
-	cout << "\t    17 : Write list to file\n\n";
+	cout << "\t    16 : Empty list\n";
+	cout << "\t    17 : Read list from file\n";
+	cout << "\t    18 : Write list to file\n\n";
 
 	cout << "\t    0  : Quit\n\n";
 
@@ -313,7 +317,7 @@ void Application::DisplayAllMusic() {
 }
 
 // Add music to playlist.
-void Application::AddToPlaylist() {
+void Application::AddSongToPL() {
 	MusicType music; // Temporary variable to hold info
 
 	music.SetIdFromKB(); // Get id to search
@@ -322,20 +326,15 @@ void Application::AddToPlaylist() {
 		// Create a music item to put in playlist
 		PlayItem playItem(music.GetId(), 0, mInsertOrder++);
 
-		if (mPlaylist.IsFull()) { // Check if playlist is full
-			cout << "\n\n\tPlaylist is full, deleting oldest item.\n";
-			// Playlist is full, delete oldest item to make space
-			mPlaylist.DeQueue();
-		}
-		mPlaylist.EnQueue(playItem); // Add to playlist
-		cout << "\n\n\tAdded music \"" << playItem.GetId() << "\" to playlist.\n";
+		mPlaylist.Add(playItem); // Add to playlist
+		cout << "\n\n\tAdded music \"" << music.GetName() << "\" to playlist.\n";
 	} else {
 		cout << "\n\n\tMusic does not exist in list, aborting.\n";
 	}
 }
 
 // Play music from playlist in order.
-void Application::PlayInsertOrder() {
+void Application::PlayIOAddTime() {
 	PlayItem playItem; // Variable to hold item info from playlist
 	MusicType musicItem; // Variable to hold info from music list
 
@@ -345,22 +344,22 @@ void Application::PlayInsertOrder() {
 	}
 
 	bool done = false;
-	while (true) { // Loop until user wants to break
-		mPlaylist.ResetPointer(); // Reset pointer
-
-		int curIndex = mPlaylist.GetNextItem(playItem); // Get item from playlist
-		while (curIndex > -1) {
+	while (true) { // Loop until user wants to stop repeating playlist
+		DoublyIterator<PlayItem> iter(mPlaylist);
+		playItem = iter.Next(); // Get first item from list
+		while (iter.NextNotNull()) {
 			musicItem.SetId(playItem.GetId());
 			// Search with id and check if music exists in music list
 			if (mMasterList.Retrieve(musicItem) != -1) {
 				// Music exists
 				musicItem.DisplayRecordOnScreen();
 				playItem.IncreaseNumPlay(); // Increased played count
+				mPlaylist.Replace(playItem);
 			} else {
 				// Music not found
 				cout << "\n\n\tMusic \"" << musicItem.GetId() << "\" does not exist. Skipping.\n";
 			}
-			curIndex = mPlaylist.GetNextItem(playItem);
+			playItem = iter.Next();
 		}
 
 		// Check whether to repeat or not
@@ -389,13 +388,93 @@ void Application::PlayInsertOrder() {
 	}
 }
 
+// Play music from playlist in frequently played order
+void Application::PlayIOFreq() {
+	MusicType musicItem; // Variable to hold info from music list
+
+	if (mPlaylist.IsEmpty()) {
+		cout << "\n\n\tList is empty.\n";
+		return;
+	}
+
+	// List to save played times of items in playlist
+	SortedDoublyLinkedList<int> playedTimesList;
+	// Iterate through list and saved played counts
+	DoublyIterator<PlayItem> freqIter(mPlaylist);
+	PlayItem freqItem = freqIter.Next();
+	while (freqIter.NextNotNull()) {
+		playedTimesList.Add(freqItem.GetNumPlay());
+		freqItem = freqIter.Next();
+	}
+
+	// Now iterate through played times list
+	DoublyIterator<int> playedTimesIter(playedTimesList);
+	// Move cursor to the very end so we get the most played times value
+	while (playedTimesIter.NextNotNull()) {
+		playedTimesIter.Next();
+	}
+	// Now iterate backwards and play items in playlist which have the played times value
+	// same as the one we've got from played times list.
+	int playedTimes = playedTimesIter.Prev();
+	while (playedTimesIter.PrevNotNull()) {
+
+		// Iterate through playlist and compare played times
+		DoublyIterator<PlayItem> iter(mPlaylist);
+		PlayItem playItem = iter.Next();
+		while (iter.NextNotNull()) {
+			// Compare played times
+			if (playItem.GetNumPlay() == playedTimes) {
+				// If match, get music from master list and play
+				musicItem.SetId(playItem.GetId());
+				if (mMasterList.Retrieve(musicItem) != -1) {
+					// Music exists in list
+					musicItem.DisplayRecordOnScreen();
+					playItem.IncreaseNumPlay(); // Increased played count
+					mPlaylist.Replace(playItem);
+				} else {
+					// Music not found
+					cout << "\n\n\tMusic \"" << musicItem.GetId() << "\" does not exist. Skipping.\n";
+				}
+			}
+			playItem = iter.Next();
+		}
+
+		playedTimes = playedTimesIter.Prev();
+	}
+}
+
 // Delete music from playlist
-void Application::DeleteFromPlaylist() {
-	PlayItem playItem; // Temporary variable to hold id info
+void Application::DeleteSongFrPL() {
+	if (mPlaylist.IsEmpty()) {
+		cout << "\n\n\tPlaylist is empty!\n"
+			<< "\tMaybe you should add anything before deleting.\n";
+		return;
+	}
+	PlayItem item; // Temporary variable to hold info
 
-	playItem.SetIdFromKB(); // Get id to search from playlist
+	cout << endl;
+	item.SetIdFromKB(); // Get id to search from playlist
+	string id = item.GetId(); // 삭제할 곡명
 
-	mPlaylist.Delete(playItem);
+	// Iterator
+	// 리스트의 Delete를 바로 쓰지 않는 이유는 primary 키가 ID가 아니기 때문.
+	DoublyIterator<PlayItem> iter(mPlaylist);
+	item = iter.Next();
+	bool found = false;
+	while (iter.NextNotNull()) {
+		if (item.GetId().compare(id) == 0) {
+			// ID가 일치. 곡 발견.
+			found = true;
+			iter.Prev(); // 현재 노드는 삭제해야 하므로 포인터 뒤로 한칸 이동.
+			mPlaylist.Delete(item); // 삭제
+		}
+		item = iter.Next();
+	}
+	if (found) {
+		cout << "\n\n\tSuccessfully deleted from list.\n";
+	} else {
+		cout << "\n\n\tCouldn't find " << item.GetId() << " in list.\n";
+	}
 }
 
 // Make list empty

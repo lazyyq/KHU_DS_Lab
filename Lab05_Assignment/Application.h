@@ -10,6 +10,8 @@ using namespace std;
 #include "CircularQueue.h"
 #include "UnsortedLinkedList.h"
 #include "LinkedList.h"
+#include "SortedDoublyLinkedList.h"
+#include "DoublyIterator.h"
 
 #include "MusicType.h"
 #include "PlayItem.h"
@@ -110,21 +112,28 @@ public:
 	*	@pre	Music list and playlist is initialized.
 	*	@post	Music retrieved from list is added to playlist.
 	*/
-	void AddToPlaylist();
+	void AddSongToPL();
 
 	/**
 	*	@brief	Play music from playlist in inserted order.
 	*	@pre	Music exists in playlist.
 	*	@post	Music in playlist is displayed in inserted order.
 	*/
-	void PlayInsertOrder();
+	void PlayIOAddTime();
+
+	/**
+	*	@brief	Play music from playlist in frequently played order.
+	*	@pre	Music exists in playlist.
+	*	@post	Music in playlist is displayed in frequently played order.
+	*/
+	void PlayIOFreq();
 
 	/**
 	*	@brief	Search music from list with id and delete from playlist.
 	*	@pre	Music exists in music list and playlist.
 	*	@post	Music retrieved from list is deleted from playlist.
 	*/
-	void DeleteFromPlaylist();
+	void DeleteSongFrPL();
 
 	/**
 	*	@brief	Make list empty.
@@ -196,8 +205,8 @@ private:
 	ifstream mInFile;					// input file descriptor
 	ofstream mOutFile;					// output file descriptor
 	SortedList<MusicType> mMasterList;	// music item list
-	CircularQueue<PlayItem> mPlaylist;	// music playlist
-	LinkedList<SingerType> mSingerList;	// Singer list
+	SortedDoublyLinkedList<PlayItem> mPlaylist;	// music playlist
+	SortedDoublyLinkedList<SingerType> mSingerList;	// Singer list
 	int mCommand;						// current command number
 	int mInsertOrder;					// Insert order of music in playlist
 };

@@ -59,5 +59,21 @@ void PlayItem::IncreaseNumPlay() {
 
 // Compare two items
 bool PlayItem::operator==(const PlayItem &that) const {
-	return this->mId.compare(that.mId) == 0;
+	return this->mInTime == that.mInTime;
+}
+
+bool PlayItem::operator<(const PlayItem &that) const {
+	return this->mInTime < that.mInTime;
+}
+
+bool PlayItem::operator<=(const PlayItem &that) const {
+	return this->mInTime <= that.mInTime;
+}
+
+bool PlayItem::operator>(const PlayItem &that) const {
+	return this->mInTime > that.mInTime;
+}
+
+bool PlayItem::operator>=(const PlayItem &that) const {
+	return this->mInTime >= that.mInTime;
 }
