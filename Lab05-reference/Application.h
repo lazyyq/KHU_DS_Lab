@@ -14,21 +14,19 @@ using namespace std;
 /**
 *	아이템을 관리하기 위한 Application 클래스.
 */
-class Application
-{
+class Application {
 public:
 	/**
 	*	디폴트 생성자.
 	*/
-	Application()
-	{
+	Application() {
 		m_Command = 0;
 	}
-	
+
 	/**
 	*	소멸자.
 	*/
-	~Application()	{}
+	~Application() {}
 
 	/**
 	*	@brief	프로그램을 실행한다.
@@ -108,7 +106,7 @@ public:
 	*	@post	리스트가 비워진다.
 	*/
 	void MakeEmptyList();
-	
+
 	/**
 	*	@brief	입력받은 ID로 아이템을 찾아내어 삭제한다.
 	*	@pre	리스트에 아이템들의 정보가 저장되어 있다.
@@ -116,7 +114,7 @@ public:
 	*	@return	함수가 잘 작동하면 1을 리턴하고, 그렇지 않으면 0을 리턴한다.
 	*/
 	int DeleteItem();
-	
+
 	/**
 	*	@brief	입력받은 ID로 아이템 정보를 찾아내어 수정한다.
 	*	@pre	리스트에 아이템들의 정보가 저장되어 있다.

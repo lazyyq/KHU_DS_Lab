@@ -2,32 +2,28 @@
 
 
 // 키보드로부터 ID를 입력받는 함수
-void ItemType::SetIdFromKB()
-{
+void ItemType::SetIdFromKB() {
 	cout << "\tID : ";
 	cin >> m_Id;
 }
 
 
 // 키보드로부터 아이템 이름을 입력받는 함수
-void ItemType::SetNameFromKB()
-{
+void ItemType::SetNameFromKB() {
 	cout << "\tName : ";
 	cin >> m_sName;
 }
 
 
 // 키보드로부터 제조자를 입력받는 함수
-void ItemType::SetManufacturerFromKB()
-{
+void ItemType::SetManufacturerFromKB() {
 	cout << "\tManufacturer : ";
 	cin >> m_sManufacturer;
 }
 
 
 // 아이템의 ID, 이름, 제조자를 입력받는다.
-void ItemType::SetRecordFromKB()
-{
+void ItemType::SetRecordFromKB() {
 	SetIdFromKB();
 	SetNameFromKB();
 	SetManufacturerFromKB();
@@ -35,8 +31,7 @@ void ItemType::SetRecordFromKB()
 
 
 // 파일에서 아이템의 ID, 이름, 제조자를 가져온다.
-int ItemType::ReadDataFromFile(ifstream& fin)
-{
+int ItemType::ReadDataFromFile(ifstream &fin) {
 	fin >> m_Id;
 	fin >> m_sName;
 	fin >> m_sManufacturer;
@@ -46,8 +41,7 @@ int ItemType::ReadDataFromFile(ifstream& fin)
 
 
 // 파일에 아이템의 ID, 이름, 제조자를 입력한다.
-int ItemType::WriteDataToFile(ofstream& fout)
-{
+int ItemType::WriteDataToFile(ofstream &fout) {
 	fout << endl;
 	fout << m_Id << " ";
 	fout << m_sName << " ";
@@ -58,11 +52,10 @@ int ItemType::WriteDataToFile(ofstream& fout)
 
 
 // 두 아이템의 ID를 비교하는 함수
-RelationType ItemType::CompareByID(const ItemType &data)
-{
-	if(this->m_Id > data.m_Id)
+RelationType ItemType::CompareByID(const ItemType &data) {
+	if (this->m_Id > data.m_Id)
 		return GREATER;
-	else if(this->m_Id < data.m_Id)
+	else if (this->m_Id < data.m_Id)
 		return LESS;
 	else
 		return EQUAL;
