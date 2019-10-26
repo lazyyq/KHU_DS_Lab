@@ -9,6 +9,7 @@ Application::Application() {
 // Destructor
 Application::~Application() {
 	// Clean linked lists
+	mPlaylist.MakeEmpty();
 	mSingerList.MakeEmpty();
 }
 
@@ -239,14 +240,8 @@ void Application::AddToPlaylist() {
 		// Music exists
 		// Create a music item to put in playlist
 		PlayItem playItem(music.GetId(), 0, mInsertOrder++);
-
-		if (mPlaylist.IsFull()) { // Check if playlist is full
-			cout << "\n\n\tPlaylist is full, deleting oldest item.\n";
-			// Playlist is full, delete oldest item to make space
-			mPlaylist.DeQueue();
-		}
-		mPlaylist.EnQueue(playItem); // Add to playlist
-		cout << "\n\n\tAdded music \"" << playItem.GetId() << "\" to playlist.\n";
+		mPlaylist.Add(playItem); // Add to playlist
+		cout << "\n\n\tAdded music \"" << music.GetId() << "\" to playlist.\n";
 	} else {
 		cout << "\n\n\tMusic does not exist in list, aborting.\n";
 	}
@@ -263,11 +258,10 @@ void Application::PlayInsertOrder() {
 	}
 
 	bool done = false;
-	while (true) { // Loop until user wants to break
-		mPlaylist.ResetPointer(); // Reset pointer
-
-		int curIndex = mPlaylist.GetNextItem(playItem); // Get item from playlist
-		while (curIndex > -1) {
+	while (true) { // Loop until user wants to stop repeating playlist
+		DoublyIterator<PlayItem> iter(mPlaylist);
+		playItem = iter.Next(); // Get first item from list
+		while (iter.NextNotNull()) {
 			musicItem.SetId(playItem.GetId());
 			// Search with id and check if music exists in music list
 			if (mMasterList.Retrieve(musicItem) != -1) {
@@ -278,7 +272,7 @@ void Application::PlayInsertOrder() {
 				// Music not found
 				cout << "\n\n\tMusic \"" << musicItem.GetId() << "\" does not exist. Skipping.\n";
 			}
-			curIndex = mPlaylist.GetNextItem(playItem);
+			playItem = iter.Next();
 		}
 
 		// Check whether to repeat or not

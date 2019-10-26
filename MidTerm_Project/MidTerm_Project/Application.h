@@ -7,9 +7,9 @@
 using namespace std;
 
 #include "SortedList.h"
-#include "CircularQueue.h"
 #include "UnsortedLinkedList.h"
 #include "LinkedList.h"
+#include "SortedDoublyLinkedList.h"
 
 #include "MusicType.h"
 #include "PlayItem.h"
@@ -212,7 +212,7 @@ private:
 	ifstream mInFile;					// input file descriptor
 	ofstream mOutFile;					// output file descriptor
 	SortedList<MusicType> mMasterList;	// music item list
-	CircularQueue<PlayItem> mPlaylist;	// music playlist
+	SortedDoublyLinkedList<PlayItem> mPlaylist;	// music playlist
 	LinkedList<SingerType> mSingerList;	// Singer list
 	int mCommand;						// current command number
 	int mInsertOrder;					// Insert order of music in playlist
