@@ -7,21 +7,20 @@
 #include "UnsortedLinkedList.h"
 #include "LinkedList.h"
 
-#define SINGERTYPE_ATTR_INDENT_SIZE	25
 using namespace std;
 
-class SongItem {
+class SongType {
 public:
 	/**
 	*	Constructor
 	*/
-	SongItem();
-	SongItem(const string &inId, const string &inName);
+	SongType();
+	SongType(const string &inId, const string &inName);
 
 	/**
 	*	Destructor
 	*/
-	~SongItem();
+	~SongType();
 
 	/**
 	*	@brief	Get id of song.
@@ -82,16 +81,18 @@ public:
 	*	@post	None.
 	*	@return	Compare results of items.
 	*/
-	bool operator==(const SongItem &that) const;
-	bool operator!=(const SongItem &that) const;
-	bool operator<(const SongItem &that) const;
-	bool operator<=(const SongItem &that) const;
-	bool operator>(const SongItem &that) const;
-	bool operator>=(const SongItem &that) const;
+	bool operator==(const SongType &that) const;
+	bool operator!=(const SongType &that) const;
+	bool operator<(const SongType &that) const;
+	bool operator<=(const SongType &that) const;
+	bool operator>(const SongType &that) const;
+	bool operator>=(const SongType &that) const;
 
 private:
 	string mId; // Song id
 	string mName; // Song name
+
+	static const int attrIndentSize = 25;
 };
 
 class SingerType {
@@ -138,7 +139,7 @@ public:
 	*	@post	None.
 	*	@return	Song list of singer.
 	*/
-	UnsortedLinkedList<SongItem> GetSongList();
+	UnsortedLinkedList<SongType> GetSongList();
 
 	/**
 	*	@brief	Set name of singer.
@@ -198,7 +199,7 @@ public:
 	*	@post	Song is added to song list.
 	*	@return	1 on success, 0 on failure.
 	*/
-	int AddSong(const SongItem &song);
+	int AddSong(const SongType &song);
 
 	/**
 	*	@brief	Remove song from list.
@@ -206,7 +207,7 @@ public:
 	*	@post	Song is removed from song list.
 	*	@return	1 on success, 0 on failure.
 	*/
-	int RemoveSong(const SongItem &song);
+	int RemoveSong(const SongType &song);
 
 	/**
 	*	@brief	Compare two items.
@@ -225,7 +226,9 @@ private:
 	string mName; // Singer name
 	int mAge; // Singer age
 	char mSex; // Singer sex
-	UnsortedLinkedList<SongItem> mSongList; // Song list
+	UnsortedLinkedList<SongType> mSongList; // Song list
+
+	static const int attrIndentSize = 25;
 };
 
 #endif // _SINGERTYPE_H_

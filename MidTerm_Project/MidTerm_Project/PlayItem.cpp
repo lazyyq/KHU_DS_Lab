@@ -48,7 +48,7 @@ void PlayItem::SetInTime(int inInTime) {
 
 // Set music id from keyboard, where id is string.
 void PlayItem::SetIdFromKB() {
-	cout << setw(PLAYITEM_ATTR_INDENT_SIZE) << "ID (String) : ";
+	cout << setw(attrIndentSize) << "ID (String) : ";
 	getline(cin, mId);
 }
 

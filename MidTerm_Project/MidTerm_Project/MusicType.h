@@ -7,11 +7,7 @@
 #include <limits>
 #include <fstream>
 #include <string>
-
-// Size of indent when displaying music attributes.
-#define MUSICTYPE_ATTR_INDENT_SIZE	25
-// Limit of integer, used for cin.ignore();
-#define NUM_LIMIT			std::numeric_limits<std::streamsize>::max()
+#include <time.h>
 
 using namespace std;
 
@@ -239,6 +235,8 @@ public:
 	*/
 	void SetRecordFromKB();
 
+	string GenerateMusicId();
+
 	/**
 	*	@brief	Read a record from file.
 	*	@pre	the target file is opened.
@@ -324,6 +322,8 @@ protected:
 	string mMelodizer;	///< Music melodizer.
 	string mArtist;		///< Music artist.
 	string mGenre;		///< Music genre.
+
+	const static int attrIndentSize = 25;
 };
 
 #endif	// _MUSICTYPE_H_

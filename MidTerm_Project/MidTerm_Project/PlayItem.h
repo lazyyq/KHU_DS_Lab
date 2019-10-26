@@ -72,6 +72,8 @@ private:
 	int mNumPlay;		// How many times it has been played
 	int mInTime;		// When it was inserted to the playlist.
 						// For this assignment only, just an index.
+
+	const static int attrIndentSize = 25;
 };
 
 #endif // _PLAYITEM_H

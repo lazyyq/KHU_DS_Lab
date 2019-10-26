@@ -1,79 +1,79 @@
 #include "SingerType.h"
 
 // Constructors
-SongItem::SongItem() {
+SongType::SongType() {
 	mId = "";
 	mName = "";
 }
 
-SongItem::SongItem(const string &inId, const string &inName) {
+SongType::SongType(const string &inId, const string &inName) {
 	mId = inId;
 	mName = inName;
 }
 
 // Destructor
-SongItem::~SongItem() {}
+SongType::~SongType() {}
 
 // Get id
-string SongItem::GetId() {
+string SongType::GetId() {
 	return mId;
 }
 
 // Get name
-string SongItem::GetName() {
+string SongType::GetName() {
 	return mName;
 }
 
 // Set id
-void SongItem::SetId(string &inId) {
+void SongType::SetId(string &inId) {
 	mId = inId;
 }
 
 // Set name
-void SongItem::SetName(string &inName) {
+void SongType::SetName(string &inName) {
 	mName = inName;
 }
 
 // Set info from keyboard input
-void SongItem::SetInfoFromKB() {
+void SongType::SetInfoFromKB() {
 	SetIdFromKB();
 	SetNameFromKB();
 }
 
 // Set id from keyboard input
-void SongItem::SetIdFromKB() {
-	cout << setw(SINGERTYPE_ATTR_INDENT_SIZE) << "Song id (String) : ";
+void SongType::SetIdFromKB() {
+	cout << setw(attrIndentSize) << "Song id (String) : ";
 	getline(cin, mId);
 }
 
 // Set name from keyboard input
-void SongItem::SetNameFromKB() {
-	cout << setw(SINGERTYPE_ATTR_INDENT_SIZE) << "Song name (String) : ";
+void SongType::SetNameFromKB() {
+	cout << setw(attrIndentSize) << "Song name (String) : ";
 	getline(cin, mName);
 }
 
 // Compare operators
-bool SongItem::operator==(const SongItem &that) const {
+bool SongType::operator==(const SongType &that) const {
 	return this->mId.compare(that.mId) == 0;
 }
 
-bool SongItem::operator!=(const SongItem &that) const {
+bool SongType::operator!=(const SongType &that) const {
 	return !(*this == that);
 }
 
-bool SongItem::operator<(const SongItem &that) const {
+bool SongType::operator<(const SongType &that) const {
 	return this->mId.compare(that.mId) < 0;
 }
 
-bool SongItem::operator<=(const SongItem &that) const {
+bool SongType::operator<=(const SongType &that) const {
 	return this->mId.compare(that.mId) <= 0;
 }
 
-bool SongItem::operator>(const SongItem &that) const {
+bool SongType::operator>(const SongType &that) const {
 	return this->mId.compare(that.mId) > 0;
 }
 
-bool SongItem::operator>=(const SongItem &that) const {
+bool SongType::operator>=(const SongType &that) const {
 	return this->mId.compare(that.mId) >= 0;
 }
 
@@ -113,7 +113,7 @@ char SingerType::GetSex() {
 }
 
 // Get song list
-UnsortedLinkedList<SongItem> SingerType::GetSongList() {
+UnsortedLinkedList<SongType> SingerType::GetSongList() {
 	return mSongList;
 }
 
@@ -141,14 +141,14 @@ void SingerType::SetInfoFromKB() {
 
 // Set name from keyboard input
 void SingerType::SetNameFromKB() {
-	cout << setw(SINGERTYPE_ATTR_INDENT_SIZE) << "Singer name (String) : ";
+	cout << setw(attrIndentSize) << "Singer name (String) : ";
 	getline(cin, mName);
 }
 
 // Set age from keyboard input
 void SingerType::SetAgeFromKB() {
 	while (true) {
-		cout << setw(SINGERTYPE_ATTR_INDENT_SIZE) << "Singer age (Int) : ";
+		cout << setw(attrIndentSize) << "Singer age (Int) : ";
 		cin >> mAge;
 
 		// Check if input is integer.
@@ -160,25 +160,25 @@ void SingerType::SetAgeFromKB() {
 			// Success
 			break;
 		} else {
-			cout << setw(SINGERTYPE_ATTR_INDENT_SIZE) << "Wrong input!\n";
+			cout << setw(attrIndentSize) << "Wrong input!\n";
 		}
 	}
 }
 
 // Set sex from keyboard input
 void SingerType::SetSexFromKB() {
-	cout << setw(SINGERTYPE_ATTR_INDENT_SIZE) << "Singer sex (Char) : ";
+	cout << setw(attrIndentSize) << "Singer sex (Char) : ";
 	cin >> mSex;
 	cin.ignore(100, '\n');
 }
 
 // Add song to song list
-int SingerType::AddSong(const SongItem &song) {
+int SingerType::AddSong(const SongType &song) {
 	return this->mSongList.Add(song);
 }
 
 // Remove song from song list
-int SingerType::RemoveSong(const SongItem &song) {
+int SingerType::RemoveSong(const SongType &song) {
 	return mSongList.Delete(song);
 }
 

@@ -33,19 +33,35 @@ public:
 	~Application();
 
 	/**
+	*	@brief	Clear console.
+	*/
+	void Clear();
+
+	/**
+	*	@brief	Pause console.
+	*/
+	void Pause();
+
+	/**
+	*	@brief	Get number from keyboard input.
+	*	@pre
+	*	@post
+	*	@return	1 on success, 0 otherwise
+	*/
+	int GetNum(int &n);
+
+	/**
 	*	@brief	Program driver.
 	*	@pre	program is started.
 	*	@post	program is finished.
 	*/
 	void Run();
 
-	/**
-	*	@brief	Display command on screen and get a input from keyboard.
-	*	@pre	none.
-	*	@post	none.
-	*	@return	user's command.
-	*/
-	int GetCommand();
+	void MenuMain();
+	void MenuManage();
+	void MenuSearch();
+	void MenuPlaylists();
+	void MenuMisc();
 
 	/**
 	*	@brief	Add new record into list.

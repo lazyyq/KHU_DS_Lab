@@ -12,128 +12,46 @@ Application::~Application() {
 	mSingerList.MakeEmpty();
 }
 
-// Program driver.
-void Application::Run() {
-	while (1) {
-		mCommand = GetCommand();
-
-		switch (mCommand) {
-		case 1:		// 곡 정보를 입력 받아 리스트에 추가
-			AddMusic();
-			break;
-		case 2:		// 곡의 고유번호를 입력 받아 리스트에서 삭제
-			DeleteMusic();
-			break;
-		case 3:		// 곡 정보를 입력 받아서 리스트에서 해당 곡 정보를 갱신	
-			ReplaceMusic();
-			break;
-		case 4:		// 입력된 ID로 리스트에서 곡을 찾아서 화면에 출력
-			SearchById();
-			break;
-		case 5:		// 입력된 곡 이름으로 리스트에서 곡을 찾아서 화면에 출력
-			SearchByName();
-			break;
-		case 6:		// 입력된 가수 이름으로 리스트에서 곡을 찾아서 화면에 출력
-			SearchByArtist();
-			break;
-		case 7:		// 입력된 장르 이름으로 리스트에서 곡을 찾아서 화면에 출력
-			SearchByGenre();
-			break;
-		case 8:		// 리스트에 저장된 모든 곡을 화면에 출력
-			DisplayAllMusic();
-			break;
-		case 9:		// 입력된 ID로 리스트에서 음악 검색하여 플레이리스트에 추가
-			AddToPlaylist();
-			break;
-		case 10:	// 플레이리스트의 곡을 차례대로 재생, 과제에서는 출력으로 대체
-			PlayInsertOrder();
-			break;
-		case 11:	// 입력된 ID로 음악을 찾아 플레이리스트에서 삭제
-			DeleteFromPlaylist();
-			break;
-		case 12:	// 가수 리스트에 새 가수 추가
-			AddSinger();
-			break;
-		case 13:	// 가수의 곡 리스트에 새 곡 추가
-			AddSong();
-			break;
-		case 14:	// 가수 리스트에서 가수를 검색한 뒤 해당 가수의 모든 곡 정보 출력
-			SearchBySinger();
-			break;
-		case 15: 	// 리스트에 입력된 모든 곡을 삭제
-			MakeEmpty();
-			break;
-		case 16:	// load list data from a file.
-			ReadDataFromFile();
-			break;
-		case 17:	// save list data into a file.
-			WriteDataToFile();
-			break;
-		case 0:
-			return;
-		default:
-			cout << "\n\tIllegal selection. Please choose between 0-11!\n";
-			break;
-		}
-	}
+// Clear console.
+void Application::Clear() {
+	system("cls");
 }
 
-// Display command on screen and get a input from keyboard.
-int Application::GetCommand() {
-	int command;
-	cout << endl << endl << endl;
-	cout << "\t-- ID -- Command -------------\n\n";
+// Pause console.
+void Application::Pause() {
+	system("pause >nul");
+}
 
-	cout << "\t    1  : Add music\n";
-	cout << "\t    2  : Delete music\n";
-	cout << "\t    3  : Replace music\n\n";
+// Get number from keyboard input
+int Application::GetNum(int &n) {
+	int result = 1;
 
-	cout << "\t    4  : Find music by ID\n";
-	cout << "\t    5  : Find music by name\n";
-	cout << "\t    6  : Find music by artist\n";
-	cout << "\t    7  : Find music by genre\n\n";
-
-	cout << "\t    8  : Display all music\n\n";
-
-	cout << "\t    9  : Add music to playlist\n";
-	cout << "\t    10 : Play music in playlist\n";
-	cout << "\t    11 : Delete music from playlist\n\n";
-
-	cout << "\t    12 : Add a new singer\n";
-	cout << "\t    13 : Add a new song to a singer\n";
-	cout << "\t    14 : Find music by singer\n\n";
-
-	cout << "\t    15 : Empty list\n";
-	cout << "\t    16 : Read list from file\n";
-	cout << "\t    17 : Write list to file\n\n";
-
-	cout << "\t    0  : Quit\n\n";
-
-	cout << "\t------------------------------\n";
-
-	cout << "\n\t    Choose a command : ";
-	cin >> command;
-	if (cin.fail() == 1) { // Input error, input is probably not int.
-		cin.clear();
-		command = -1;
+	cin >> n;
+	if (cin.fail() == 1) { // Error, input is probably not int
+		cin.clear(); // Clear fail flags
+		result = 0; // We return 0 on failure
 	}
-	cin.ignore();
-	cout << endl;
+	cin.ignore(100, '\n');
 
-	return command;
+	return result;
+}
+
+// Program driver.
+void Application::Run() {
+	MenuMain();
 }
 
 // Add new record into list.
 int Application::AddMusic() {
 	// 입력받은 레코드를 리스트에 add, 리스트가 full일 경우는 add하지 않고 0을 리턴
 	if (mMasterList.IsFull()) {
-		cout << "\n\n\tList is full.\n";
+		cout << "\n\tList is full.\n";
 		return 0;
 	}
 
 	MusicType data; // Temporary variable to hold info
 
-	cout << "\n\n\tPlease input new music data."
+	cout << "\n\tPlease input new music data."
 		<< " Duplicate data is not allowed.\n";
 	// Get new music info from keyboard
 	data.SetRecordFromKB();
@@ -509,7 +427,7 @@ void Application::AddSong() {
 	singer.SetNameFromKB();
 
 	// Get song id, name from keyboard
-	SongItem song;
+	SongType song;
 	song.SetInfoFromKB();
 
 	// Check if song exists in master list
@@ -572,7 +490,7 @@ void Application::SearchBySinger() {
 	// Get singer from singer list
 	if (mSingerList.Get(singer) == 1) {
 		// Singer exists in singer list
-		SongItem song; // Temporary variable to hold info from song list
+		SongType song; // Temporary variable to hold info from song list
 		MusicType music; // Temporary variable to hold info from music master list
 
 		// Check if song list is empty
