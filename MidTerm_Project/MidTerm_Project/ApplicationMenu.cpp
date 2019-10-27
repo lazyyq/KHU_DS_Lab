@@ -78,6 +78,8 @@ void Application::MenuManage() {
 		default:
 			break;
 		}
+
+		Pause();
 	}
 }
 
@@ -117,6 +119,8 @@ void Application::MenuSearch() {
 		default:
 			break;
 		}
+
+		Pause();
 	}
 }
 
@@ -153,6 +157,8 @@ void Application::MenuPlaylists() {
 		default:
 			break;
 		}
+
+		Pause();
 	}
 }
 

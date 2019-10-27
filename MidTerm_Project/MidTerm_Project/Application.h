@@ -4,7 +4,11 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <filesystem>
+
 using namespace std;
+
+#include "LyricsManager.h"
 
 #include "SortedList.h"
 #include "UnsortedLinkedList.h"
@@ -15,6 +19,7 @@ using namespace std;
 #include "PlayItem.h"
 #include "SingerType.h"
 
+#define MUSIC_LIST_FILENAME	"files/list_music.txt"
 #define FILENAMESIZE 1024
 
 /**
@@ -43,12 +48,22 @@ public:
 	void Pause();
 
 	/**
+	*	@brief	Display message and pause console.
+	*/
+	void Pause(const string &message);
+
+	/**
 	*	@brief	Get number from keyboard input.
 	*	@pre
 	*	@post
 	*	@return	1 on success, 0 otherwise
 	*/
 	int GetNum(int &n);
+
+	/**
+	*	Initialize required directories
+	*/
+	void InitDirectories();
 
 	/**
 	*	@brief	Program driver.
@@ -156,7 +171,7 @@ public:
 	*	@param	fileName	a filename to open for reading.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
-	int OpenInFile(char *fileName);
+	int OpenInFile(string fileName);
 
 	/**
 	*	@brief	Open a file by file descriptor as an output file.
@@ -165,7 +180,7 @@ public:
 	*	@param	fileName	a filename to open for writing.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
-	int OpenOutFile(char *fileName);
+	int OpenOutFile(string fileName);
 
 	/**
 	*	@brief	Open a file as a read mode, read all data on the file, and set list by the data.
@@ -173,7 +188,7 @@ public:
 	*	@post	list holds all records from the file.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
-	int ReadDataFromFile();
+	int ReadMusicListFromFile();
 
 	/**
 	*	@brief	Open a file as a write mode, and write all data into the file,
@@ -216,6 +231,8 @@ private:
 	LinkedList<SingerType> mSingerList;	// Singer list
 	int mCommand;						// current command number
 	int mInsertOrder;					// Insert order of music in playlist
+
+	LyricsManager mLyricsManager;		// Manages lyrics & lyrics files
 };
 
 #endif	// _APPLICATION_H

@@ -66,6 +66,10 @@ public:
 	*	@return	True if ids are same, false otherwise.
 	*/
 	bool operator==(const PlayItem &that) const;
+	bool operator<(const PlayItem &that) const;
+	bool operator<=(const PlayItem &that) const;
+	bool operator>(const PlayItem &that) const;
+	bool operator>=(const PlayItem &that) const;
 
 private:
 	string mId;			// Primary key of music

@@ -20,6 +20,11 @@ void Application::Clear() {
 
 // Pause console.
 void Application::Pause() {
+	Pause("\n\tPress any key to continue.\n");
+}
+
+void Application::Pause(const string &message) {
+	cout << message;
 	system("pause >nul");
 }
 
@@ -37,8 +42,17 @@ int Application::GetNum(int &n) {
 	return result;
 }
 
+void Application::InitDirectories() {
+	string directories[] = {"files"};
+	for (string directory : directories) {
+		filesystem::create_directory(directory);
+	}
+}
+
 // Program driver.
 void Application::Run() {
+	InitDirectories(); // Create necessary directories
+	ReadMusicListFromFile(); // Load music list
 	MenuMain();
 }
 
@@ -252,25 +266,37 @@ void Application::PlayInsertOrder() {
 	PlayItem playItem; // Variable to hold item info from playlist
 	MusicType musicItem; // Variable to hold info from music list
 
+	// Check if playlist is empty
 	if (mPlaylist.IsEmpty()) {
 		cout << "\n\n\tList is empty.\n";
 		return;
 	}
 
-	bool done = false;
-	while (true) { // Loop until user wants to stop repeating playlist
-		DoublyIterator<PlayItem> iter(mPlaylist);
+	bool keepPlaying = true;
+	while (keepPlaying) { // Loop until user wants to stop repeating playlist
+		// Play all items from playlist
+		DoublyIterator<PlayItem> iter(mPlaylist); // Initialize iterator
 		playItem = iter.Next(); // Get first item from list
 		while (iter.NextNotNull()) {
 			musicItem.SetId(playItem.GetId());
 			// Search with id and check if music exists in music list
 			if (mMasterList.Retrieve(musicItem) != -1) {
-				// Music exists
+				// Music found in list, play
 				musicItem.DisplayRecordOnScreen();
-				playItem.IncreaseNumPlay(); // Increased played count
+				playItem.IncreaseNumPlay(); // Increase played count
+				mPlaylist.Replace(playItem); // Apply change to list
+
+				// Get lyrics and display if exists
+				string lyrics;
+				if (mLyricsManager.GetLyrics(musicItem.GetName(),
+					musicItem.GetArtist(), lyrics)) {
+					cout << "\n\t-------- Lyrics ------------------\n\n";
+					cout << lyrics << endl;
+				}
 			} else {
 				// Music not found
-				cout << "\n\n\tMusic \"" << musicItem.GetId() << "\" does not exist. Skipping.\n";
+				cout << "\n\n\tMusic \"" << musicItem.GetName()
+					<< "\" does not exist. Skipping.\n";
 			}
 			playItem = iter.Next();
 		}
@@ -279,24 +305,17 @@ void Application::PlayInsertOrder() {
 		while (true) {
 			cout << "\n\n\tEnd of playlist. Play again? (1: yes / 0: no): ";
 			int command;
-			cin >> command;
-			if (cin.fail() == 1) { // Input error, input is probably not int.
-				cin.clear();
-				command = -1;
+			// If input is not integer, ask again.
+			if (!GetNum(command)) {
+				continue;
 			}
-			cin.ignore();
-			cout << endl;
 
 			if (command == 0) {
-				done = true; // Break outer loop
+				keepPlaying = false; // Stop playing playlist
 				break;
-			} else if (command == 1) { // Continue outer loop
+			} else if (command == 1) { // Play playlist again
 				break;
-			} // else : continue loop
-		}
-
-		if (done) { // Break loop
-			break;
+			} // else : continue loop, ask again
 		}
 	}
 }
@@ -318,52 +337,47 @@ void Application::MakeEmpty() {
 }
 
 // Open a file by file descriptor as an input file.
-int Application::OpenInFile(char *fileName) {
-	mInFile.open(fileName);	// file open for reading.
+int Application::OpenInFile(string fileName) {
+	mInFile.open(fileName); // Open file for reading
 
-	// 파일 오픈에 성공하면 1, 그렇지 않다면 0을 리턴.
-	if (!mInFile)	return 0;
-	else	return 1;
+	// Return 1 on success
+	if (mInFile) {
+		return 1;
+	} else {
+		return 0;
+	}
 }
 
 // Open a file by file descriptor as an output file.
-int Application::OpenOutFile(char *fileName) {
-	mOutFile.open(fileName);	// file open for writing.
+int Application::OpenOutFile(string fileName) {
+	mOutFile.open(fileName); // Open file for writing
 
-	// 파일 오픈에 성공하면 1, 그렇지 않다면 0을 리턴.
-	if (!mOutFile)	return 0;
-	else	return 1;
+	// Return 1 on success
+	if (mOutFile) {
+		return 1;
+	} else {
+		return 0;
+	}
 }
 
 // Open a file as a read mode, read all data on the file, and set list by the data.
-int Application::ReadDataFromFile() {
-	int index = 0;
-	MusicType data;	// 읽기용 임시 변수
+int Application::ReadMusicListFromFile() {
+	MusicType data;	// Temporary variable to hold info from file
 
-	char filename[FILENAMESIZE];
-	cout << "\n\n\tEnter Input file Name : ";
-	cin >> filename;
-	cin.ignore();
-
-	// file open, open error가 발생하면 0을 리턴
-	if (!OpenInFile(filename)) {
+	// Open music list file
+	if (!OpenInFile(MUSIC_LIST_FILENAME)) {
 		cout << "\n\tError while opening file.\n";
 		return 0;
 	}
 
-	// 파일의 모든 내용을 읽어 list에 추가
+	// Read music data from file and add to list
 	while (!mInFile.eof()) {
-		// array에 음악들의 정보가 들어있는 structure 저장
-		data.ReadDataFromFile(mInFile);
-		mMasterList.Add(data);
+		data.ReadDataFromFile(mInFile); // Load music data from file
+		mMasterList.Add(data); // Add to list
 	}
 
-	mInFile.close();	// file close
+	mInFile.close(); // Close file
 
-	// 현재 list 출력
-	DisplayAllMusic();
-
-	cout << "\n\tSuccessfully imported from file.\n";
 	return 1;
 }
 
