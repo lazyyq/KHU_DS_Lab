@@ -6,9 +6,8 @@
 #include <string>
 #include <filesystem>
 
-using namespace std;
-
 #include "LyricsManager.h"
+#include "GeniusLyricsFetcher.h"
 
 #include "SortedList.h"
 #include "UnsortedLinkedList.h"
@@ -21,6 +20,8 @@ using namespace std;
 
 #define MUSIC_LIST_FILENAME	"files/list_music.txt"
 #define FILENAMESIZE 1024
+
+using namespace std;
 
 /**
 *	application class for item management simply.

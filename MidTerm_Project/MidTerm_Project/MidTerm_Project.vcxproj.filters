@@ -48,6 +48,9 @@
     <ClInclude Include="LyricsItem.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="GeniusLyricsFetcher.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -72,6 +75,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="LyricsItem.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GeniusLyricsFetcher.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

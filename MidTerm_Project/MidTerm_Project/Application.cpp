@@ -290,8 +290,46 @@ void Application::PlayInsertOrder() {
 				string lyrics;
 				if (mLyricsManager.GetLyrics(musicItem.GetName(),
 					musicItem.GetArtist(), lyrics)) {
+					// We have lyrics for that music, show on console
 					cout << "\n\t-------- Lyrics ------------------\n\n";
 					cout << lyrics << endl;
+				} else {
+					// We don't have lyrics for that music, get from genius.com
+					int fetchFromWeb = -1;
+					while (!((fetchFromWeb == 0) || (fetchFromWeb == 1))) {
+						cout << "\n\tWe don't have lyrics for \"" << musicItem.GetName()
+							<< "\", shall we look for it on the web? (1: yes / 0: no): ";
+						if (!GetNum(fetchFromWeb)) {
+							continue;
+						}
+					}
+					if (fetchFromWeb == 1) {
+						if (GeniusLyricsFetcher::GetLyricsFromGenius(
+							musicItem.GetName(), musicItem.GetArtist(), lyrics)) {
+							string indentedLyrics = lyrics;
+							for (auto pos = indentedLyrics.find('\n'); pos != string::npos;
+								pos = indentedLyrics.find('\n', pos + 1)) {
+								indentedLyrics.replace(pos, 1, "\n\t");
+							}
+							cout << "\n\t-------- Lyrics ------------------\n\n";
+							cout << '\t' << indentedLyrics << endl;
+
+
+							int save = -1;
+							while (!((save == 0) || (save == 1))) {
+								cout << "\n\tIs this the right lyrics for your song?\n"
+									<< "\tIf yes, we'll save it for you so we can load it faster next time."
+									<< " (1: yes / 0: no): \n";
+								if (!GetNum(save)) {
+									continue;
+								}
+							}
+							if (save == 1) {
+								mLyricsManager.SaveLyrics(musicItem.GetName(),
+									musicItem.GetArtist(), lyrics);
+							}
+						}
+					}
 				}
 			} else {
 				// Music not found
@@ -302,20 +340,16 @@ void Application::PlayInsertOrder() {
 		}
 
 		// Check whether to repeat or not
-		while (true) {
+		int playAgain = -1;
+		while (!((playAgain == 0) || (playAgain == 1))) {
 			cout << "\n\n\tEnd of playlist. Play again? (1: yes / 0: no): ";
-			int command;
 			// If input is not integer, ask again.
-			if (!GetNum(command)) {
+			if (!GetNum(playAgain)) {
 				continue;
 			}
-
-			if (command == 0) {
-				keepPlaying = false; // Stop playing playlist
-				break;
-			} else if (command == 1) { // Play playlist again
-				break;
-			} // else : continue loop, ask again
+		}
+		if (playAgain == 0) { // Stop playing
+			keepPlaying = false;
 		}
 	}
 }

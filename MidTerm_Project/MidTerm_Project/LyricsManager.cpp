@@ -1,5 +1,7 @@
 #include "LyricsManager.h"
 
+#define LYRICS_FOLDERNAME	"lyrics"
+
 LyricsManager::LyricsManager() {
 	InitLyricsList();
 }
@@ -8,8 +10,8 @@ LyricsManager::~LyricsManager() {
 	mLyricsList.MakeEmpty();
 }
 
-int LyricsManager::GetLyrics(const string name,
-	const string artist, string &lyrics) {
+int LyricsManager::GetLyrics(const string &name,
+	const string &artist, string &lyrics) {
 	LyricsItem item(name, artist);
 	int exists = mLyricsList.Get(item);
 	if (exists) {
@@ -20,15 +22,36 @@ int LyricsManager::GetLyrics(const string name,
 	}
 }
 
+int LyricsManager::SaveLyrics(const string &name,
+	const string &artist, const string &lyrics) {
+	string path =
+		LYRICS_FOLDERNAME + string("/") + artist + " - " + name + ".txt";
+	while (filesystem::exists(path)) {
+		path.insert(path.length() - 4, "_2");
+	}
+
+	ofstream ofs(path);
+	if (!ofs) {
+		return 0;
+	}
+	ofs << name << endl << artist << endl << lyrics;
+	ofs.close();
+
+	LyricsItem item(name, artist, path);
+	mLyricsList.Add(item);
+
+	return 1;
+}
+
 void LyricsManager::InitLyricsList() {
 	// Create 'lyrics' folder
-	filesystem::create_directory("lyrics");
+	filesystem::create_directory(LYRICS_FOLDERNAME);
 
 	// Add lyrics items
 	string name, artist;
 	ifstream ifs;
 	// Iterate through lyrics directory
-	for (const auto &file : filesystem::directory_iterator("lyrics")) {
+	for (const auto &file : filesystem::directory_iterator(LYRICS_FOLDERNAME)) {
 		ifs.open(file.path());
 		if (ifs) {
 			getline(ifs, name); // First line : music title
