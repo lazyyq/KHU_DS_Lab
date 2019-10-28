@@ -100,7 +100,7 @@ void Player::PlayInInsertOrder() {
 							while (!((save == 0) || (save == 1))) {
 								cout << "\n\tIs this the right lyrics for your song?\n"
 									<< "\tIf yes, we'll save it for you so we can load it faster next time."
-									<< " (1: yes / 0: no): \n";
+									<< " (1: yes / 0: no): ";
 								if (!GetNum(save)) {
 									continue;
 								}
