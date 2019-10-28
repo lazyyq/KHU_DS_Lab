@@ -6,9 +6,6 @@
 #include <string>
 #include <filesystem>
 
-#include "LyricsManager.h"
-#include "GeniusLyricsFetcher.h"
-
 #include "SortedList.h"
 #include "UnsortedLinkedList.h"
 #include "LinkedList.h"
@@ -17,6 +14,7 @@
 #include "MusicItem.h"
 #include "PlayItem.h"
 #include "Singer.h"
+#include "Player.h"
 
 #define MUSIC_LIST_FILENAME	"files/list_music.txt"
 #define FILENAMESIZE 1024
@@ -143,27 +141,6 @@ public:
 	void DisplayAllMusic();
 
 	/**
-	*	@brief	Search music from list with id and add to playlist.
-	*	@pre	Music list and playlist is initialized.
-	*	@post	Music retrieved from list is added to playlist.
-	*/
-	void AddToPlaylist();
-
-	/**
-	*	@brief	Play music from playlist in inserted order.
-	*	@pre	Music exists in playlist.
-	*	@post	Music in playlist is displayed in inserted order.
-	*/
-	void PlayInsertOrder();
-
-	/**
-	*	@brief	Search music from list with id and delete from playlist.
-	*	@pre	Music exists in music list and playlist.
-	*	@post	Music retrieved from list is deleted from playlist.
-	*/
-	void DeleteFromPlaylist();
-
-	/**
 	*	@brief	Make list empty.
 	*	@pre	none.
 	*	@post	clear list.
@@ -233,12 +210,9 @@ private:
 	ifstream mInFile;					// input file descriptor
 	ofstream mOutFile;					// output file descriptor
 	SortedList<MusicItem> mMasterList;	// music item list
-	SortedDoublyLinkedList<PlayItem> mPlaylist;	// music playlist
 	LinkedList<Singer> mSingerList;	// Singer list
+	Player mPlayer;						// Playlist manager
 	int mCommand;						// current command number
-	int mInsertOrder;					// Insert order of music in playlist
-
-	LyricsManager mLyricsManager;		// Manages lyrics & lyrics files
 };
 
 #endif	// _APPLICATION_H

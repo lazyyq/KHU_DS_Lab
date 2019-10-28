@@ -147,11 +147,11 @@ void Application::MenuPlaylists() {
 
 		switch (command) {
 		case 1:
-			PlayInsertOrder(); break;
+			mPlayer.PlayInInsertOrder(); break;
 		case 2:
-			AddToPlaylist(); break;
+			mPlayer.AddToPlaylist(); break;
 		case 3:
-			DeleteFromPlaylist(); break;
+			mPlayer.DeleteFromPlaylist(); break;
 		case 0:
 			return;
 		default:

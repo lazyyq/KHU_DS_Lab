@@ -152,6 +152,7 @@
     <ClInclude Include="GeniusLyricsFetcher.h" />
     <ClInclude Include="LyricsItem.h" />
     <ClInclude Include="LyricsManager.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="SortedDoublyLinkedList.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="MusicItem.h" />
@@ -168,6 +169,7 @@
     <ClCompile Include="LyricsManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MusicType.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayItem.cpp" />
     <ClCompile Include="Singer.cpp" />
   </ItemGroup>

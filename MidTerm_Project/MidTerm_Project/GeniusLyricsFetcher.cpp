@@ -1,33 +1,35 @@
 #include "GeniusLyricsFetcher.h"
+#include <json/json.h>
+#include <curl/curl.h>
 
-int GeniusLyricsFetcher::GetLyricsFromGenius(const string &name,
-	const string &artist, string &lyrics) {
+int GeniusLyricsFetcher::GetLyricsFromGenius(const std::string &name,
+	const std::string &artist, std::string &lyrics) {
 	// Setup url for sending get request
 	// Our search query is "`Artist` `Title`". ex) "Anne Marie 2002"
-	const string searchApi = "https://api.genius.com/search?q=";
-	ifstream ifs(GENIUS_TOKEN_FILENAME);
+	const std::string searchApi = "https://api.genius.com/search?q=";
+	std::ifstream ifs(GENIUS_TOKEN_FILENAME);
 	if (!ifs) {
 		return 0;
 	}
-	string token;
+	std::string token;
 	getline(ifs, token);
 	ifs.close();
-	string url = searchApi + artist + " " + name + "&access_token=" + token;
+	std::string url = searchApi + artist + " " + name + "&access_token=" + token;
 
 	// Convert spaces to %20
-	for (auto pos = url.find(' '); pos != string::npos;
+	for (auto pos = url.find(' '); pos != std::string::npos;
 		pos = url.find(' ', pos + 1)) {
 		url.replace(pos, 1, "%20");
 	}
 
-	string result;
+	std::string result;
 	int resultCode;
 	SendGetRequest(url, result, resultCode);
 	if (resultCode != 200) {
 		return 0;
 	}
 
-	string lyricsUrl;
+	std::string lyricsUrl;
 	if (!GetLyricsUrl(result, lyricsUrl)) {
 		return 0;
 	}
@@ -41,7 +43,7 @@ int GeniusLyricsFetcher::GetLyricsFromGenius(const string &name,
 	return 1;
 }
 
-bool GeniusLyricsFetcher::SendGetRequest(const string &url,
+bool GeniusLyricsFetcher::SendGetRequest(const std::string &url,
 	const FILE *fp, int &resultCode) {
 	CURL *curl;
 	curl = curl_easy_init();
@@ -62,8 +64,8 @@ bool GeniusLyricsFetcher::SendGetRequest(const string &url,
 	return true;
 }
 
-bool GeniusLyricsFetcher::SendGetRequest(const string &url,
-	string &result, int &resultCode) {
+bool GeniusLyricsFetcher::SendGetRequest(const std::string &url,
+	std::string &result, int &resultCode) {
 	CURL *curl;
 	curl = curl_easy_init();
 	if (!curl) {
@@ -84,7 +86,7 @@ bool GeniusLyricsFetcher::SendGetRequest(const string &url,
 }
 
 size_t GeniusLyricsFetcher::WiteStringCallback(const char *in,
-	size_t size, size_t num, string *out) {
+	size_t size, size_t num, std::string *out) {
 	const size_t total = size * num;
 	out->append(in, total);
 	return total;
@@ -96,8 +98,8 @@ size_t GeniusLyricsFetcher::WriteFileCallback(void *ptr, size_t size,
 	return total;
 }
 
-bool GeniusLyricsFetcher::GetLyricsUrl(const string &jsonString,
-	string &result) {
+bool GeniusLyricsFetcher::GetLyricsUrl(const std::string &jsonString,
+	std::string &result) {
 	Json::Value value;
 	JSONCPP_STRING err;
 	Json::CharReaderBuilder builder;
@@ -105,7 +107,7 @@ bool GeniusLyricsFetcher::GetLyricsUrl(const string &jsonString,
 	if (!reader->parse(jsonString.c_str(),
 		jsonString.c_str() + jsonString.length(), &value, &err)) {
 		// TODO: Error!
-		cout << "error\n";
+		std::cout << "error\n";
 		return false;
 	}
 
@@ -113,10 +115,10 @@ bool GeniusLyricsFetcher::GetLyricsUrl(const string &jsonString,
 	return result != "";
 }
 
-bool GeniusLyricsFetcher::GetHTMLFromGenius(const string &geniusUrl,
-	const string &fileName) {
+bool GeniusLyricsFetcher::GetHTMLFromGenius(const std::string &geniusUrl,
+	const std::string &fileName) {
 	int resultCode;
-	string htmlSrc;
+	std::string htmlSrc;
 	FILE *fp;
 	fopen_s(&fp, fileName.c_str(), "wb");
 	if (!fp) {
@@ -132,19 +134,19 @@ bool GeniusLyricsFetcher::GetHTMLFromGenius(const string &geniusUrl,
 	return resultCode == 200;
 }
 
-bool GeniusLyricsFetcher::ParseLyricsFromHTML(const string &fileName,
-	string &lyrics) {
-	ifstream ifs(fileName);
+bool GeniusLyricsFetcher::ParseLyricsFromHTML(const std::string &fileName,
+	std::string &lyrics) {
+	std::ifstream ifs(fileName);
 	if (!ifs) {
 		return false;
 	}
 
 	bool insideTag = false;
 	bool lyricsDiv = false;
-	string strInTag;
-	const string startOfLyrics = "<div class=\"lyrics\">";
-	const string lineBreak = "<br>";
-	istreambuf_iterator<char> iter(ifs), end;
+	std::string strInTag;
+	const std::string startOfLyrics = "<div class=\"lyrics\">";
+	const std::string lineBreak = "<br>";
+	std::istreambuf_iterator<char> iter(ifs), end;
 
 	// First we look for '<div class="lyrics">'
 	for (; iter != end; ++iter) {
@@ -177,7 +179,7 @@ bool GeniusLyricsFetcher::ParseLyricsFromHTML(const string &fileName,
 	}
 
 	// Next we look for '<p>', after which the lyrics actually starts
-	const string startOfP = "<p>";
+	const std::string startOfP = "<p>";
 	// Reset variables for the next FOR loop
 	insideTag = false;
 	strInTag = "";
@@ -213,7 +215,7 @@ bool GeniusLyricsFetcher::ParseLyricsFromHTML(const string &fileName,
 	// Let's finally get the real lyrics.
 	// We treat every character outside tags a part of lyrics.
 	// Loop until the end of lyrics, which is '</p>'.
-	const string endOfP = "</p>";
+	const std::string endOfP = "</p>";
 	// Reset variables for the next FOR loop
 	insideTag = false;
 	strInTag = "";
@@ -254,7 +256,7 @@ bool GeniusLyricsFetcher::ParseLyricsFromHTML(const string &fileName,
 	if (ifs.is_open()) {
 		ifs.close();
 	}
-	filesystem::remove(fileName);
+	std::filesystem::remove(fileName);
 
 	return true;
 }
