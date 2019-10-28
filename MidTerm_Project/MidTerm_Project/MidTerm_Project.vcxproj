@@ -168,7 +168,7 @@
     <ClCompile Include="LyricsItem.cpp" />
     <ClCompile Include="LyricsManager.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MusicType.cpp" />
+    <ClCompile Include="MusicItem.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlaylistItem.cpp" />
     <ClCompile Include="Singer.cpp" />
