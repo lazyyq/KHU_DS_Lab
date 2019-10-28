@@ -156,7 +156,7 @@
     <ClInclude Include="SortedDoublyLinkedList.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="MusicItem.h" />
-    <ClInclude Include="PlayItem.h" />
+    <ClInclude Include="PlaylistItem.h" />
     <ClInclude Include="Singer.h" />
     <ClInclude Include="SortedList.h" />
     <ClInclude Include="UnsortedLinkedList.h" />
@@ -170,7 +170,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MusicType.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayItem.cpp" />
+    <ClCompile Include="PlaylistItem.cpp" />
     <ClCompile Include="Singer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

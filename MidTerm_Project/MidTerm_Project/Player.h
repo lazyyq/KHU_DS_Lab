@@ -5,7 +5,7 @@
 #include "SortedList.h"
 #include "SortedDoublyLinkedList.h"
 #include "MusicItem.h"
-#include "PlayItem.h"
+#include "PlaylistItem.h"
 #include "LyricsManager.h"
 
 using namespace std;
@@ -56,6 +56,6 @@ public:
 private:
 	int mInsertOrder;					// Insert order of music in playlist
 	SortedList<MusicItem> *mMusicList;
-	SortedDoublyLinkedList<PlayItem> mPlaylist;	// music playlist
+	SortedDoublyLinkedList<PlaylistItem> mPlaylist;	// music playlist
 	LyricsManager mLyricsManager;		// Manages lyrics & lyrics files
 };

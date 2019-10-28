@@ -40,7 +40,7 @@ void Player::AddToPlaylist() {
 	if (mMusicList->Retrieve(music) != -1) { // Check if music exists in list
 		// Music exists
 		// Create a music item to put in playlist
-		PlayItem playItem(music.GetId(), 0, mInsertOrder++);
+		PlaylistItem playItem(music.GetId(), 0, mInsertOrder++);
 		mPlaylist.Add(playItem); // Add to playlist
 		cout << "\n\n\tAdded music \"" << music.GetId() << "\" to playlist.\n";
 	} else {
@@ -50,7 +50,7 @@ void Player::AddToPlaylist() {
 
 // Play music from playlist in order.
 void Player::PlayInInsertOrder() {
-	PlayItem playItem; // Variable to hold item info from playlist
+	PlaylistItem playItem; // Variable to hold item info from playlist
 	MusicItem musicItem; // Variable to hold info from music list
 
 	// Check if playlist is empty
@@ -62,7 +62,7 @@ void Player::PlayInInsertOrder() {
 	bool keepPlaying = true;
 	while (keepPlaying) { // Loop until user wants to stop repeating playlist
 		// Play all items from playlist
-		DoublyIterator<PlayItem> iter(mPlaylist); // Initialize iterator
+		DoublyIterator<PlaylistItem> iter(mPlaylist); // Initialize iterator
 		playItem = iter.Next(); // Get first item from list
 		while (iter.NextNotNull()) {
 			musicItem.SetId(playItem.GetId());
@@ -143,7 +143,7 @@ void Player::PlayInInsertOrder() {
 
 // Delete music from playlist
 void Player::DeleteFromPlaylist() {
-	PlayItem playItem; // Temporary variable to hold id info
+	PlaylistItem playItem; // Temporary variable to hold id info
 
 	playItem.SetIdFromKB(); // Get id to search from playlist
 

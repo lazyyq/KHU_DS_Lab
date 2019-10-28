@@ -9,22 +9,22 @@
 
 using namespace std;
 
-class PlayItem {
+class PlaylistItem {
 public:
 	/**
 	*	Default constructor
 	*/
-	PlayItem();
+	PlaylistItem();
 
 	/**
 	*	Constructor
 	*/
-	PlayItem(string inId, int inNumPlay, int inInTime);
+	PlaylistItem(string inId, int inNumPlay, int inInTime);
 
 	/**
 	*	Default destructor
 	*/
-	~PlayItem();
+	~PlaylistItem();
 
 	// Get id
 	string GetId();
@@ -65,11 +65,11 @@ public:
 	*	@param	that	target item for comparing.
 	*	@return	True if ids are same, false otherwise.
 	*/
-	bool operator==(const PlayItem &that) const;
-	bool operator<(const PlayItem &that) const;
-	bool operator<=(const PlayItem &that) const;
-	bool operator>(const PlayItem &that) const;
-	bool operator>=(const PlayItem &that) const;
+	bool operator==(const PlaylistItem &that) const;
+	bool operator<(const PlaylistItem &that) const;
+	bool operator<=(const PlaylistItem &that) const;
+	bool operator>(const PlaylistItem &that) const;
+	bool operator>=(const PlaylistItem &that) const;
 
 private:
 	string mId;			// Primary key of music
