@@ -10,12 +10,18 @@ Player::~Player() {
 }
 
 int Player::GetNum(int &n) {
-	int result = 1;
+	int result = 1, input;
 
-	cin >> n;
+	cin >> input;
 	if (cin.fail() == 1) { // Error, input is probably not int
 		cin.clear(); // Clear fail flags
 		result = 0; // We return 0 on failure
+	} else {
+		// We should not cin directly to n because
+		// bad input such as char is recognized as 0,
+		// which might be considered a valid number
+		// by the function that called GetNum(n).
+		n = input;
 	}
 	cin.ignore(100, '\n');
 
