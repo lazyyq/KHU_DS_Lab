@@ -56,6 +56,11 @@ void Application::Run() {
 	MenuMain();
 }
 
+// Finish program
+void Application::Finish() {
+	SaveMusicListToFile(); // Save music list to file on program finish
+}
+
 // Add new record into list.
 int Application::AddMusic() {
 	// 입력받은 레코드를 리스트에 add, 리스트가 full일 경우는 add하지 않고 0을 리턴
@@ -416,16 +421,11 @@ int Application::ReadMusicListFromFile() {
 }
 
 // Open a file as a write mode, and write all data into the file,
-int Application::WriteDataToFile() {
-	MusicType data;	// 쓰기용 임시 변수
+int Application::SaveMusicListToFile() {
+	MusicType data;	// Temporary variable to hold info from list
 
-	char filename[FILENAMESIZE];
-	cout << "\n\n\tEnter Output file Name : ";
-	cin >> filename;
-	cin.ignore();
-
-	// file open, open error가 발생하면 0을 리턴
-	if (!OpenOutFile(filename)) {
+	// Open music list file
+	if (!OpenOutFile(MUSIC_LIST_FILENAME)) {
 		cout << "\n\tError while opening file.\n";
 		return 0;
 	}
@@ -433,6 +433,7 @@ int Application::WriteDataToFile() {
 	// list 포인터를 초기화
 	mMasterList.ResetIterator();
 
+	cout << "\n\tSaving music list..\n";
 	// list의 모든 데이터를 파일에 쓰기
 	int curIndex = mMasterList.GetNextItem(data);
 	while (curIndex > -1) {
@@ -440,9 +441,8 @@ int Application::WriteDataToFile() {
 		curIndex = mMasterList.GetNextItem(data);
 	}
 
-	mOutFile.close();	// file close
+	mOutFile.close(); // Close file
 
-	cout << "\n\tSuccessfully exported to file.\n";
 	return 1;
 }
 

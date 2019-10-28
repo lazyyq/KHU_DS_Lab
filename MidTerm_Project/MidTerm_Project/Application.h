@@ -73,6 +73,11 @@ public:
 	*/
 	void Run();
 
+	/**
+	*	@brief	Finish program.
+	*/
+	void Finish();
+
 	void MenuMain();
 	void MenuManage();
 	void MenuSearch();
@@ -197,7 +202,7 @@ public:
 	*	@post	the list is stored in the output file.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
-	int WriteDataToFile();
+	int SaveMusicListToFile();
 
 	/**
 	*	@brief	Add a new singer.

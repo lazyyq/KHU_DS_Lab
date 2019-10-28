@@ -32,7 +32,7 @@ void Application::MenuMain() {
 		case 4:
 			MenuMisc(); break;
 		case 0:
-			return;
+			Finish(); return;
 		default:
 			break;
 		}
