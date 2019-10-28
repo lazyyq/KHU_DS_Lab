@@ -69,7 +69,7 @@ void Player::PlayInInsertOrder() {
 			// Search with id and check if music exists in music list
 			if (mMusicList->Retrieve(musicItem) != -1) {
 				// Music found in list, play
-				musicItem.DisplayRecordOnScreen();
+				cout << musicItem;
 				playItem.IncreaseNumPlay(); // Increase played count
 				mPlaylist.Replace(playItem); // Apply change to list
 

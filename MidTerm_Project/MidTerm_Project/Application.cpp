@@ -73,7 +73,7 @@ int Application::AddMusic() {
 	cout << "\n\tPlease input new music data."
 		<< " Duplicate data is not allowed.\n";
 	// Get new music info from keyboard
-	data.SetRecordFromKB();
+	cin >> data;
 
 	int result = mMasterList.Add(data);
 	if (result != 1) { // Add failed
@@ -106,7 +106,7 @@ void Application::ReplaceMusic() {
 	MusicItem data; // Temporary variable to hold info
 
 	data.SetIdFromKB(); // Get id to search
-	data.SetRecordFromKB(); // Get the rest info to search
+	cin >> data; // Get the rest info to search
 
 	if (mMasterList.Replace(data) == 1) { // Success
 		cout << "\n\n\tSuccessfully replaced data.\n";
@@ -123,7 +123,7 @@ void Application::SearchById() {
 	// Search in list
 	int result = mMasterList.Retrieve(data);
 	if (result == 1) { // Found
-		data.DisplayRecordOnScreen();
+		cout << data;
 	} else {	// Not found
 		cout << "\n\n\tFailed to find data\n";
 	}
@@ -149,7 +149,7 @@ void Application::SearchByName() {
 		// substring of retrieved item's.
 		if (dataFromList.GetName().find(data.GetName())
 			!= std::string::npos) {
-			dataFromList.DisplayRecordOnScreen();
+			cout << dataFromList;
 			cout << "\n\t---------------------------------------\n\n";
 
 			found = true;
@@ -182,7 +182,7 @@ void Application::SearchByArtist() {
 		// substring of retrieved item's.
 		if (dataFromList.GetArtist().find(data.GetArtist())
 			!= std::string::npos) {
-			dataFromList.DisplayRecordOnScreen();
+			cout << dataFromList;
 			cout << "\n\t---------------------------------------\n\n";
 
 			found = true;
@@ -213,7 +213,7 @@ void Application::SearchByGenre() {
 	while (curIndex > -1) {
 		// Check if retrieved item's genre matches that of input data's
 		if (dataFromList.GetGenre().compare(data.GetGenre()) == 0) {
-			dataFromList.DisplayRecordOnScreen();
+			cout << dataFromList;
 			cout << "\n\t---------------------------------------\n\n";
 
 			found = true;
@@ -235,13 +235,13 @@ void Application::DisplayAllMusic() {
 	int curIndex = mMasterList.GetNextItem(data);
 	if (curIndex > -1) { // Print first item
 		cout << "\n\tMusic #" << (curIndex + 1) << "\n\n";
-		data.DisplayRecordOnScreen();
+		cout << data;
 		curIndex = mMasterList.GetNextItem(data);
 	}
 	while (curIndex > -1) { // Print rest
 		cout << "\n\t---------------------------------------\n";
 		cout << "\n\tMusic #" << (curIndex + 1) << "\n\n";
-		data.DisplayRecordOnScreen();
+		cout << data;
 		curIndex = mMasterList.GetNextItem(data);
 	}
 
@@ -291,7 +291,7 @@ int Application::ReadMusicListFromFile() {
 
 	// Read music data from file and add to list
 	while (!mInFile.eof()) {
-		data.ReadDataFromFile(mInFile); // Load music data from file
+		mInFile >> data; // Load music data from file
 		mMasterList.Add(data); // Add to list
 	}
 
@@ -317,7 +317,8 @@ int Application::SaveMusicListToFile() {
 	// list의 모든 데이터를 파일에 쓰기
 	int curIndex = mMasterList.GetNextItem(data);
 	while (curIndex > -1) {
-		data.WriteDataToFile(mOutFile);
+		//data.WriteDataToFile(mOutFile);
+		mOutFile << data;
 		curIndex = mMasterList.GetNextItem(data);
 	}
 
@@ -429,7 +430,7 @@ void Application::SearchBySinger() {
 
 				if (mMasterList.Retrieve(music) != -1) {
 					// Music found in master list, display info on screen
-					music.DisplayRecordOnScreen();
+					cout << music;
 				} else {
 					// Music not found
 					cout << "\n\n\tSong " << music.GetName() << " not found in music list.\n";

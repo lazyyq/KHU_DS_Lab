@@ -68,37 +68,28 @@ void MusicItem::SetRecord(string inId, int inType, string inName,
 	SetGenre(inGenre);
 }
 
-void MusicItem::DisplayIdOnScreen() {
+void MusicItem::DisplayIdOnScreen() const {
 	cout << setw(attrIndentSize) << "ID : " << mId << endl;
 }
 
-void MusicItem::DisplayTypeOnScreen() {
+void MusicItem::DisplayTypeOnScreen() const {
 	cout << setw(attrIndentSize) << "Type : " << mType << endl;
 }
 
-void MusicItem::DisplayNameOnScreen() {
+void MusicItem::DisplayNameOnScreen() const {
 	cout << setw(attrIndentSize) << "Name : " << mName << endl;
 }
 
-void MusicItem::DisplayMelodizerOnScreen() {
+void MusicItem::DisplayMelodizerOnScreen() const {
 	cout << setw(attrIndentSize) << "Melodizer : " << mMelodizer << endl;
 }
 
-void MusicItem::DisplayArtistOnScreen() {
+void MusicItem::DisplayArtistOnScreen() const {
 	cout << setw(attrIndentSize) << "Artist : " << mArtist << endl;
 }
 
-void MusicItem::DisplayGenreOnScreen() {
+void MusicItem::DisplayGenreOnScreen() const {
 	cout << setw(attrIndentSize) << "Genre : " << mGenre << endl;
-}
-
-void MusicItem::DisplayRecordOnScreen() {
-	DisplayIdOnScreen();
-	DisplayTypeOnScreen();
-	DisplayNameOnScreen();
-	DisplayMelodizerOnScreen();
-	DisplayArtistOnScreen();
-	DisplayGenreOnScreen();
 }
 
 // Set music id from keyboard, where id is string.
@@ -151,21 +142,6 @@ void MusicItem::SetGenreFromKB() {
 	getline(cin, mGenre);
 }
 
-// Set music record from keyboard.
-// Id is automatically generated using music name and artist.
-void MusicItem::SetRecordFromKB() {
-	SetTypeFromKB();
-	SetNameFromKB();
-	SetMelodizerFromKB();
-	SetArtistFromKB();
-	SetGenreFromKB();
-
-	// If music id does not already exist, automatically generate one.
-	if (this->mId.compare("") == 0) {
-		mId = GenerateMusicId();
-	}
-}
-
 string MusicItem::GenerateMusicId() {
 	time_t now = time(0); //현재 시간을 time_t 타입으로 저장
 	struct tm timeinfo;
@@ -174,41 +150,6 @@ string MusicItem::GenerateMusicId() {
 	strftime(ch, sizeof(ch), "%y%m%d-%H%M%S", &timeinfo); // YYYY-MM-DD.HH:mm:ss 형태의 스트링
 
 	return string(ch);
-}
-
-// Read a record from file.
-// Store each line into respective variables.
-int MusicItem::ReadDataFromFile(ifstream &fin) {
-	// Temporary variable to hold string
-	// which will later be converted to int
-	string temp;
-
-	getline(fin, mId);
-	// Skip empty lines.
-	while (mId.length() == 0) {
-		getline(fin, mId);
-	}
-	getline(fin, temp);
-	mType = stoi(temp);
-	getline(fin, mName);
-	getline(fin, mMelodizer);
-	getline(fin, mArtist);
-	getline(fin, mGenre);
-
-	return 1;
-};
-
-// Write a record into file.
-int MusicItem::WriteDataToFile(ofstream &fout) {
-	fout << endl << endl;
-	fout << mId << endl;
-	fout << mType << endl;
-	fout << mName << endl;
-	fout << mMelodizer << endl;
-	fout << mArtist << endl;
-	fout << mGenre;
-
-	return 1;
 }
 
 // Compare two records
@@ -239,4 +180,67 @@ bool MusicItem::operator<(const MusicItem &that) const {
 // Compare two records
 bool MusicItem::operator<=(const MusicItem &that) const {
 	return this->mId <= that.mId;
+}
+
+// Set music record from keyboard.
+// Id is automatically generated using music name and artist.
+istream &operator>>(istream &is, MusicItem &item) {
+	item.SetTypeFromKB();
+	item.SetNameFromKB();
+	item.SetMelodizerFromKB();
+	item.SetArtistFromKB();
+	item.SetGenreFromKB();
+
+	// If music id does not already exist, automatically generate one.
+	if (item.mId.compare("") == 0) {
+		item.mId = MusicItem::GenerateMusicId();
+	}
+
+	return is;
+}
+
+ostream &operator<<(ostream &os, const MusicItem &item) {
+	item.DisplayIdOnScreen();
+	item.DisplayTypeOnScreen();
+	item.DisplayNameOnScreen();
+	item.DisplayMelodizerOnScreen();
+	item.DisplayArtistOnScreen();
+	item.DisplayGenreOnScreen();
+
+	return os;
+}
+
+// Read a record from file.
+// Store each line into respective variables.
+ifstream &operator>>(ifstream &ifs, MusicItem &item) {
+	// Temporary variable to hold string
+	// which will later be converted to int
+	string temp;
+
+	getline(ifs, item.mId);
+	// Skip empty lines.
+	while (item.mId.length() == 0) {
+		getline(ifs, item.mId);
+	}
+	getline(ifs, temp);
+	item.mType = stoi(temp);
+	getline(ifs, item.mName);
+	getline(ifs, item.mMelodizer);
+	getline(ifs, item.mArtist);
+	getline(ifs, item.mGenre);
+
+	return ifs;
+}
+
+// Write a record into file.
+ofstream &operator<<(ofstream &ofs, const MusicItem &item) {
+	ofs << endl << endl;
+	ofs << item.mId << endl;
+	ofs << item.mType << endl;
+	ofs << item.mName << endl;
+	ofs << item.mMelodizer << endl;
+	ofs << item.mArtist << endl;
+	ofs << item.mGenre;
+
+	return ofs;
 }

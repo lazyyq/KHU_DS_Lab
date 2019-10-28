@@ -141,49 +141,42 @@ public:
 	*	@pre	Music id is set.
 	*	@post	Music id is on screen.
 	*/
-	void DisplayIdOnScreen();
+	void DisplayIdOnScreen() const;
 
 	/**
 	*	@brief	Display music type on screen.
 	*	@pre	Music type is set.
 	*	@post	Music type is on screen.
 	*/
-	void DisplayTypeOnScreen();
+	void DisplayTypeOnScreen() const;
 
 	/**
 	*	@brief	Display music name on screen.
 	*	@pre	Music name is set.
 	*	@post	Music name is on screen.
 	*/
-	void DisplayNameOnScreen();
+	void DisplayNameOnScreen() const;
 
 	/**
 	*	@brief	Display music melodizer on screen.
 	*	@pre	Music melodizer is set.
 	*	@post	Music melodizer is on screen.
 	*/
-	void DisplayMelodizerOnScreen();
+	void DisplayMelodizerOnScreen() const;
 
 	/**
 	*	@brief	Display music artist on screen.
 	*	@pre	Music artist is set.
 	*	@post	Music artist is on screen.
 	*/
-	void DisplayArtistOnScreen();
+	void DisplayArtistOnScreen() const;
 
 	/**
 	*	@brief	Display music genre on screen.
 	*	@pre	Music genre is set.
 	*	@post	Music genre is on screen.
 	*/
-	void DisplayGenreOnScreen();
-
-	/**
-	*	@brief	Display a music record on screen.
-	*	@pre	music record is set.
-	*	@post	music record is on screen.
-	*/
-	void DisplayRecordOnScreen();
+	void DisplayGenreOnScreen() const;
 
 	/**
 	*	@brief	Set music id from keyboard.
@@ -227,33 +220,7 @@ public:
 	*/
 	void SetGenreFromKB();
 
-	/**
-	*	@brief	Set music record from keyboard.
-	*			Id is automatically generated using music name and artist.
-	*	@pre	none.
-	*	@post	music record is set.
-	*/
-	void SetRecordFromKB();
-
-	string GenerateMusicId();
-
-	/**
-	*	@brief	Read a record from file.
-	*	@pre	the target file is opened.
-	*	@post	music record is set.
-	*	@param	fin	file descriptor.
-	*	@return	return 1 if this function works well, otherwise 0.
-	*/
-	int ReadDataFromFile(ifstream &fin);
-
-	/**
-	*	@brief	Write a record into file.
-	*	@pre	the target file is opened. And the list should be initialized.
-	*	@post	the target file is included the new music record.
-	*	@param	fout	file descriptor.
-	*	@return	return 1 if this function works well, otherwise 0.
-	*/
-	int WriteDataToFile(ofstream &fout);
+	static string GenerateMusicId();
 
 	/**
 	*	Compare two itemtypes.
@@ -314,6 +281,35 @@ public:
 	*	@return	return true if this <= that, false otherwise.
 	*/
 	bool operator<=(const MusicItem &that) const;
+
+	/**
+	*	@brief	Set music record from keyboard.
+	*			Id is automatically generated using music name and artist.
+	*	@pre	none.
+	*	@post	music record is set.
+	*/
+	friend istream &operator>>(istream &is, MusicItem &item);
+
+	/**
+	*	@brief	Display a music record on screen.
+	*	@pre	music record is set.
+	*	@post	music record is on screen.
+	*/
+	friend ostream &operator<<(ostream &os, const MusicItem &item);
+
+	/**
+	*	@brief	Read a record from file.
+	*	@pre	the target file is opened.
+	*	@post	music record is set.
+	*/
+	friend ifstream &operator>>(ifstream &ifs, MusicItem &item);
+
+	/**
+	*	@brief	Write a record into file.
+	*	@pre	the target file is opened. And the list should be initialized.
+	*	@post	the target file is included the new music record.
+	*/
+	friend ofstream &operator<<(ofstream &ofs, const MusicItem &item);
 
 protected:
 	string mId;			///< Music ID.
