@@ -68,12 +68,6 @@ void Application::Finish() {
 
 // Add new record into list.
 int Application::AddMusic() {
-	// 입력받은 레코드를 리스트에 add, 리스트가 full일 경우는 add하지 않고 0을 리턴
-	if (mMasterList.IsFull()) {
-		cout << "\n\tList is full.\n";
-		return 0;
-	}
-
 	MusicItem data; // Temporary variable to hold info
 
 	cout << "\n\tPlease input new music data."
@@ -233,8 +227,7 @@ void Application::DisplayAllMusic() {
 	MusicItem data; // Temporary variable to hold info
 
 	// Display current list capacity
-	cout << "\n\n\tCurrent list (" << mMasterList.GetLength()
-		<< "/" << SORTEDLIST_MAXSIZE << ")\n";
+	cout << "\n\n\tTotal items: " << mMasterList.GetLength() << endl;
 	cout << "\n\t=======================================\n";
 
 	// Print all data in list

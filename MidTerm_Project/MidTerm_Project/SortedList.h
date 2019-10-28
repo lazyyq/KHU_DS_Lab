@@ -6,7 +6,8 @@
 #include <string>
 using namespace std;
 
-#define SORTEDLIST_MAXSIZE 10
+#define SORTEDLIST_INIT_SIZE	20
+#define SORTEDLIST_EXPAND_SIZE	20
 
 /**
 *	array based simple unsorted list.
@@ -111,6 +112,17 @@ private:
 	T *mArray;			///< Pointer for list array.
 	int mLength;		///< number of elements in list.
 	int mCurPointer;	///< iterator pointer.
+	int mCurMaxSize;	///< Current max size
+
+	/**
+	*	Increase array size.
+	*/
+	bool Expand();
+
+	/**
+	*	Decrease array size.
+	*/
+	bool Shrink();
 
 	/**
 	*	@brief	Starting from startIndex + 1 to the last index of the list,
@@ -142,7 +154,8 @@ private:
 // Constructor.
 template <typename T>
 SortedList<T>::SortedList() {
-	mArray = new T[SORTEDLIST_MAXSIZE];
+	mArray = new T[SORTEDLIST_INIT_SIZE];
+	mCurMaxSize = SORTEDLIST_INIT_SIZE;
 	mLength = 0;
 	ResetIterator();
 }
@@ -168,7 +181,7 @@ int SortedList<T>::GetLength() {
 // Check capacity of list is full.
 template <typename T>
 bool SortedList<T>::IsFull() {
-	if (mLength > SORTEDLIST_MAXSIZE - 1)
+	if (mLength > mCurMaxSize - 1)
 		return true;
 	else
 		return false;
@@ -184,9 +197,13 @@ bool SortedList<T>::IsEmpty() {
 template <typename T>
 int SortedList<T>::Add(T inData) {
 	if (IsFull()) {
-		// List is full
-		return 0;
-	} else if (IsEmpty()) {
+		// List is full, increase size
+		if (!Expand()) {
+			// Increase failed
+			return 0;
+		}
+	}
+	if (IsEmpty()) {
 		// Array is empty, just add the data at the very front
 		mArray[0] = inData;
 	} else if (inData > mArray[mLength - 1]) {
@@ -264,6 +281,9 @@ int SortedList<T>::Delete(T &inData) {
 		return 0;
 	}
 
+	// Decrease array size if possible
+	Shrink();
+
 	return 1;
 }
 
@@ -296,12 +316,59 @@ void SortedList<T>::ResetIterator() {
 template <typename T>
 int SortedList<T>::GetNextItem(T &inData) {
 	++mCurPointer;	// list pointer 증가
-	if (mCurPointer >= SORTEDLIST_MAXSIZE || mCurPointer >= mLength)
+	if (mCurPointer >= mCurMaxSize || mCurPointer >= mLength)
 		// end of list이거나 list의 마지막 element에 도달하면 -1을 리턴
 		return -1;
 	inData = mArray[mCurPointer];	// 현재 list pointer의 레코드를 복사
 
 	return mCurPointer;
+}
+
+template<typename T>
+bool SortedList<T>::Expand() {
+	mCurMaxSize += SORTEDLIST_EXPAND_SIZE; // Increase max size
+	// Try to allocate new array
+	T *newArray;
+	try {
+		newArray = new T[mCurMaxSize];
+	} catch (bad_alloc &) { // Failed
+		return false;
+	}
+	// Deep copy
+	for (int i = 0; i < mLength; ++i) {
+		newArray[i] = mArray[i];
+	}
+	delete[] mArray; // Deallocate old array
+	mArray = newArray; // Point array to the new, bigger one
+
+	return true;
+}
+
+template<typename T>
+bool SortedList<T>::Shrink() {
+	if ((mLength > mCurMaxSize - SORTEDLIST_EXPAND_SIZE)
+		// Is the new array size too small to afford current items?
+		|| (mCurMaxSize - SORTEDLIST_EXPAND_SIZE < 1)) {
+		// Or are we shrinking to size below 1?
+		return false;
+	}
+
+	mCurMaxSize -= SORTEDLIST_EXPAND_SIZE; // Decrease
+	// Try to allocate new array
+	T *newArray;
+	try {
+		newArray = new T[mCurMaxSize];
+	} catch (bad_alloc &) { // Failed
+		return false;
+	}
+	// Deep copy
+	for (int i = 0; i < mLength; ++i) {
+		newArray[i] = mArray[i];
+	}
+	delete[] mArray; // Deallocate old array
+	mArray = newArray; // Point array to the new, bigger one
+
+	return true;
 }
 
 // Move items to the previous index.
