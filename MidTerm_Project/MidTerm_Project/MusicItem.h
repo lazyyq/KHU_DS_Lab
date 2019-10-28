@@ -1,6 +1,6 @@
 
-#ifndef _MUSICTYPE_H_
-#define _MUSICTYPE_H_
+#ifndef _MUSICITEM_H_
+#define _MUSICITEM_H_
 
 #include <iostream>
 #include <iomanip>
@@ -14,17 +14,17 @@ using namespace std;
 /**
 *	item information class.
 */
-class MusicType {
+class MusicItem {
 public:
 	/**
 	*	default constructor.
 	*/
-	MusicType();
+	MusicItem();
 
 	/**
 	*	destructor.
 	*/
-	~MusicType() {}
+	~MusicItem() {}
 
 	/**
 	*	@brief	Get music id.
@@ -263,7 +263,7 @@ public:
 	*	@param	that	target item for comparing.
 	*	@return	return true if the ids are same, false otherwise.
 	*/
-	bool operator==(const MusicType &that) const;
+	bool operator==(const MusicItem &that) const;
 
 	/**
 	*	Compare two itemtypes.
@@ -273,7 +273,7 @@ public:
 	*	@param	that	target item for comparing.
 	*	@return	return true if the ids differ, false otherwise.
 	*/
-	bool operator!=(const MusicType &that) const;
+	bool operator!=(const MusicItem &that) const;
 
 	/**
 	*	Compare two itemtypes.
@@ -283,7 +283,7 @@ public:
 	*	@param	that	target item for comparing.
 	*	@return	return true if this > that, false otherwise.
 	*/
-	bool operator>(const MusicType &that) const;
+	bool operator>(const MusicItem &that) const;
 
 	/**
 	*	Compare two itemtypes.
@@ -293,7 +293,7 @@ public:
 	*	@param	that	target item for comparing.
 	*	@return	return true if this >= that, false otherwise.
 	*/
-	bool operator>=(const MusicType &that) const;
+	bool operator>=(const MusicItem &that) const;
 
 	/**
 	*	Compare two itemtypes.
@@ -303,7 +303,7 @@ public:
 	*	@param	that	target item for comparing.
 	*	@return	return true if this < that, false otherwise.
 	*/
-	bool operator<(const MusicType &that) const;
+	bool operator<(const MusicItem &that) const;
 
 	/**
 	*	Compare two itemtypes.
@@ -313,7 +313,7 @@ public:
 	*	@param	that	target item for comparing.
 	*	@return	return true if this <= that, false otherwise.
 	*/
-	bool operator<=(const MusicType &that) const;
+	bool operator<=(const MusicItem &that) const;
 
 protected:
 	string mId;			///< Music ID.
@@ -326,4 +326,4 @@ protected:
 	const static int attrIndentSize = 25;
 };
 
-#endif	// _MUSICTYPE_H_
+#endif	// _MUSICITEM_H_

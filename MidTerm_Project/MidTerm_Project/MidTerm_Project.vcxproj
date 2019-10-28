@@ -154,9 +154,9 @@
     <ClInclude Include="LyricsManager.h" />
     <ClInclude Include="SortedDoublyLinkedList.h" />
     <ClInclude Include="LinkedList.h" />
-    <ClInclude Include="MusicType.h" />
+    <ClInclude Include="MusicItem.h" />
     <ClInclude Include="PlayItem.h" />
-    <ClInclude Include="SingerType.h" />
+    <ClInclude Include="Singer.h" />
     <ClInclude Include="SortedList.h" />
     <ClInclude Include="UnsortedLinkedList.h" />
   </ItemGroup>
@@ -169,7 +169,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MusicType.cpp" />
     <ClCompile Include="PlayItem.cpp" />
-    <ClCompile Include="SingerType.cpp" />
+    <ClCompile Include="Singer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

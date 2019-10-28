@@ -1,5 +1,5 @@
-#ifndef _SINGERTYPE_H_
-#define _SINGERTYPE_H_
+#ifndef _SINGER_H_
+#define _SINGER_H_
 
 #include <iostream>
 #include <string>
@@ -9,18 +9,18 @@
 
 using namespace std;
 
-class SongType {
+class SongItem {
 public:
 	/**
 	*	Constructor
 	*/
-	SongType();
-	SongType(const string &inId, const string &inName);
+	SongItem();
+	SongItem(const string &inId, const string &inName);
 
 	/**
 	*	Destructor
 	*/
-	~SongType();
+	~SongItem();
 
 	/**
 	*	@brief	Get id of song.
@@ -81,12 +81,12 @@ public:
 	*	@post	None.
 	*	@return	Compare results of items.
 	*/
-	bool operator==(const SongType &that) const;
-	bool operator!=(const SongType &that) const;
-	bool operator<(const SongType &that) const;
-	bool operator<=(const SongType &that) const;
-	bool operator>(const SongType &that) const;
-	bool operator>=(const SongType &that) const;
+	bool operator==(const SongItem &that) const;
+	bool operator!=(const SongItem &that) const;
+	bool operator<(const SongItem &that) const;
+	bool operator<=(const SongItem &that) const;
+	bool operator>(const SongItem &that) const;
+	bool operator>=(const SongItem &that) const;
 
 private:
 	string mId; // Song id
@@ -95,19 +95,19 @@ private:
 	static const int attrIndentSize = 25;
 };
 
-class SingerType {
+class Singer {
 public:
 	/**
 	*	Constructors
 	*/
-	SingerType();
-	SingerType(const string &inName, const int inAge,
+	Singer();
+	Singer(const string &inName, const int inAge,
 		const char &inChar);
 
 	/**
 	*	Destructor
 	*/
-	~SingerType();
+	~Singer();
 
 	/**
 	*	@brief	Get name of singer.
@@ -139,7 +139,7 @@ public:
 	*	@post	None.
 	*	@return	Song list of singer.
 	*/
-	UnsortedLinkedList<SongType> GetSongList();
+	UnsortedLinkedList<SongItem> GetSongList();
 
 	/**
 	*	@brief	Set name of singer.
@@ -199,7 +199,7 @@ public:
 	*	@post	Song is added to song list.
 	*	@return	1 on success, 0 on failure.
 	*/
-	int AddSong(const SongType &song);
+	int AddSong(const SongItem &song);
 
 	/**
 	*	@brief	Remove song from list.
@@ -207,7 +207,7 @@ public:
 	*	@post	Song is removed from song list.
 	*	@return	1 on success, 0 on failure.
 	*/
-	int RemoveSong(const SongType &song);
+	int RemoveSong(const SongItem &song);
 
 	/**
 	*	@brief	Compare two items.
@@ -215,20 +215,20 @@ public:
 	*	@post	None.
 	*	@return	Compare results of items.
 	*/
-	bool operator==(const SingerType &that) const;
-	bool operator!=(const SingerType &that) const;
-	bool operator<(const SingerType &that) const;
-	bool operator<=(const SingerType &that) const;
-	bool operator>(const SingerType &that) const;
-	bool operator>=(const SingerType &that) const;
+	bool operator==(const Singer &that) const;
+	bool operator!=(const Singer &that) const;
+	bool operator<(const Singer &that) const;
+	bool operator<=(const Singer &that) const;
+	bool operator>(const Singer &that) const;
+	bool operator>=(const Singer &that) const;
 
 private:
 	string mName; // Singer name
 	int mAge; // Singer age
 	char mSex; // Singer sex
-	UnsortedLinkedList<SongType> mSongList; // Song list
+	UnsortedLinkedList<SongItem> mSongList; // Song list
 
 	static const int attrIndentSize = 25;
 };
 
-#endif // _SINGERTYPE_H_
+#endif // _SINGER_H_

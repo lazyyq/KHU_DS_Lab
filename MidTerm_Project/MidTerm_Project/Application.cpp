@@ -69,7 +69,7 @@ int Application::AddMusic() {
 		return 0;
 	}
 
-	MusicType data; // Temporary variable to hold info
+	MusicItem data; // Temporary variable to hold info
 
 	cout << "\n\tPlease input new music data."
 		<< " Duplicate data is not allowed.\n";
@@ -92,7 +92,7 @@ int Application::AddMusic() {
 
 // Delete music from list.
 void Application::DeleteMusic() {
-	MusicType data; // Temporary variable to hold info
+	MusicItem data; // Temporary variable to hold info
 	data.SetIdFromKB(); // Get id to delete
 
 	if (mMasterList.Delete(data) == 1) { // Success
@@ -104,7 +104,7 @@ void Application::DeleteMusic() {
 
 // Replace music with input.
 void Application::ReplaceMusic() {
-	MusicType data; // Temporary variable to hold info
+	MusicItem data; // Temporary variable to hold info
 
 	data.SetIdFromKB(); // Get id to search
 	data.SetRecordFromKB(); // Get the rest info to search
@@ -118,7 +118,7 @@ void Application::ReplaceMusic() {
 
 // Retrieve music information and display
 void Application::SearchById() {
-	MusicType data; // Temporary variable to hold info
+	MusicItem data; // Temporary variable to hold info
 	data.SetIdFromKB(); // Get id to search in list
 
 	// Search in list
@@ -132,13 +132,13 @@ void Application::SearchById() {
 
 // Search music with name
 void Application::SearchByName() {
-	MusicType data;// Temporary variable to hold info
+	MusicItem data;// Temporary variable to hold info
 	data.SetNameFromKB(); // Get name to search
 
 	bool found = false; // Remember whether we've found at least one
 
 	// Object to hold data from list
-	MusicType dataFromList;
+	MusicItem dataFromList;
 	// Iterate through list
 	mMasterList.ResetIterator();
 	int curIndex = mMasterList.GetNextItem(dataFromList);
@@ -165,13 +165,13 @@ void Application::SearchByName() {
 
 // Search music with artist
 void Application::SearchByArtist() {
-	MusicType data; // Temporary varilable to hold info
+	MusicItem data; // Temporary varilable to hold info
 	data.SetArtistFromKB(); // Get artist to search
 
 	bool found = false; // Remember whether we've found at least one
 
 	// Object to hold data from list
-	MusicType dataFromList;
+	MusicItem dataFromList;
 	// Iterate through list
 	mMasterList.ResetIterator();
 	int curIndex = mMasterList.GetNextItem(dataFromList);
@@ -198,13 +198,13 @@ void Application::SearchByArtist() {
 
 // Search music with name
 void Application::SearchByGenre() {
-	MusicType data; // Temporary varilable to hold info
+	MusicItem data; // Temporary varilable to hold info
 	data.SetGenreFromKB(); // Get genre to search
 
 	bool found = false; // Remember whether we've found at least one
 
 	// Object to hold data from list
-	MusicType dataFromList;
+	MusicItem dataFromList;
 	// Iterate through list
 	mMasterList.ResetIterator();
 	int curIndex = mMasterList.GetNextItem(dataFromList);
@@ -225,7 +225,7 @@ void Application::SearchByGenre() {
 
 // Display all records in the list on screen.
 void Application::DisplayAllMusic() {
-	MusicType data; // Temporary variable to hold info
+	MusicItem data; // Temporary variable to hold info
 
 	// Display current list capacity
 	cout << "\n\n\tCurrent list (" << mMasterList.GetLength()
@@ -252,7 +252,7 @@ void Application::DisplayAllMusic() {
 
 // Add music to playlist.
 void Application::AddToPlaylist() {
-	MusicType music; // Temporary variable to hold info
+	MusicItem music; // Temporary variable to hold info
 
 	music.SetIdFromKB(); // Get id to search
 	if (mMasterList.Retrieve(music) != -1) { // Check if music exists in list
@@ -269,7 +269,7 @@ void Application::AddToPlaylist() {
 // Play music from playlist in order.
 void Application::PlayInsertOrder() {
 	PlayItem playItem; // Variable to hold item info from playlist
-	MusicType musicItem; // Variable to hold info from music list
+	MusicItem musicItem; // Variable to hold info from music list
 
 	// Check if playlist is empty
 	if (mPlaylist.IsEmpty()) {
@@ -401,7 +401,7 @@ int Application::OpenOutFile(string fileName) {
 
 // Open a file as a read mode, read all data on the file, and set list by the data.
 int Application::ReadMusicListFromFile() {
-	MusicType data;	// Temporary variable to hold info from file
+	MusicItem data;	// Temporary variable to hold info from file
 
 	// Open music list file
 	if (!OpenInFile(MUSIC_LIST_FILENAME)) {
@@ -422,7 +422,7 @@ int Application::ReadMusicListFromFile() {
 
 // Open a file as a write mode, and write all data into the file,
 int Application::SaveMusicListToFile() {
-	MusicType data;	// Temporary variable to hold info from list
+	MusicItem data;	// Temporary variable to hold info from list
 
 	// Open music list file
 	if (!OpenOutFile(MUSIC_LIST_FILENAME)) {
@@ -448,7 +448,7 @@ int Application::SaveMusicListToFile() {
 
 // Add a new singer
 void Application::AddSinger() {
-	SingerType singer;
+	Singer singer;
 	singer.SetInfoFromKB(); // Get name, age, sex from keyboard
 
 	// Add singer to list
@@ -465,15 +465,15 @@ void Application::AddSinger() {
 // Add a new song to singer's song list
 void Application::AddSong() {
 	// Get singer name from keyboard
-	SingerType singer;
+	Singer singer;
 	singer.SetNameFromKB();
 
 	// Get song id, name from keyboard
-	SongType song;
+	SongItem song;
 	song.SetInfoFromKB();
 
 	// Check if song exists in master list
-	MusicType tempMusic; // Temporary variable to hold info from list
+	MusicItem tempMusic; // Temporary variable to hold info from list
 	tempMusic.SetId(song.GetId());
 	if (mMasterList.Retrieve(tempMusic) == -1) {
 		// Song does not exist in master list, abort
@@ -526,14 +526,14 @@ void Application::AddSong() {
 // Search songs by singer whose name exactly matches user's input.
 void Application::SearchBySinger() {
 	// Get singer name to search
-	SingerType singer;
+	Singer singer;
 	singer.SetNameFromKB();
 
 	// Get singer from singer list
 	if (mSingerList.Get(singer) == 1) {
 		// Singer exists in singer list
-		SongType song; // Temporary variable to hold info from song list
-		MusicType music; // Temporary variable to hold info from music master list
+		SongItem song; // Temporary variable to hold info from song list
+		MusicItem music; // Temporary variable to hold info from music master list
 
 		// Check if song list is empty
 		if (singer.GetSongList().GetLength() == 0) {

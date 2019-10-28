@@ -1,90 +1,90 @@
-#include "SingerType.h"
+#include "Singer.h"
 
 // Constructors
-SongType::SongType() {
+SongItem::SongItem() {
 	mId = "";
 	mName = "";
 }
 
-SongType::SongType(const string &inId, const string &inName) {
+SongItem::SongItem(const string &inId, const string &inName) {
 	mId = inId;
 	mName = inName;
 }
 
 // Destructor
-SongType::~SongType() {}
+SongItem::~SongItem() {}
 
 // Get id
-string SongType::GetId() {
+string SongItem::GetId() {
 	return mId;
 }
 
 // Get name
-string SongType::GetName() {
+string SongItem::GetName() {
 	return mName;
 }
 
 // Set id
-void SongType::SetId(string &inId) {
+void SongItem::SetId(string &inId) {
 	mId = inId;
 }
 
 // Set name
-void SongType::SetName(string &inName) {
+void SongItem::SetName(string &inName) {
 	mName = inName;
 }
 
 // Set info from keyboard input
-void SongType::SetInfoFromKB() {
+void SongItem::SetInfoFromKB() {
 	SetIdFromKB();
 	SetNameFromKB();
 }
 
 // Set id from keyboard input
-void SongType::SetIdFromKB() {
+void SongItem::SetIdFromKB() {
 	cout << setw(attrIndentSize) << "Song id (String) : ";
 	getline(cin, mId);
 }
 
 // Set name from keyboard input
-void SongType::SetNameFromKB() {
+void SongItem::SetNameFromKB() {
 	cout << setw(attrIndentSize) << "Song name (String) : ";
 	getline(cin, mName);
 }
 
 // Compare operators
-bool SongType::operator==(const SongType &that) const {
+bool SongItem::operator==(const SongItem &that) const {
 	return this->mId.compare(that.mId) == 0;
 }
 
-bool SongType::operator!=(const SongType &that) const {
+bool SongItem::operator!=(const SongItem &that) const {
 	return !(*this == that);
 }
 
-bool SongType::operator<(const SongType &that) const {
+bool SongItem::operator<(const SongItem &that) const {
 	return this->mId.compare(that.mId) < 0;
 }
 
-bool SongType::operator<=(const SongType &that) const {
+bool SongItem::operator<=(const SongItem &that) const {
 	return this->mId.compare(that.mId) <= 0;
 }
 
-bool SongType::operator>(const SongType &that) const {
+bool SongItem::operator>(const SongItem &that) const {
 	return this->mId.compare(that.mId) > 0;
 }
 
-bool SongType::operator>=(const SongType &that) const {
+bool SongItem::operator>=(const SongItem &that) const {
 	return this->mId.compare(that.mId) >= 0;
 }
 
 // Constructors
-SingerType::SingerType() {
+Singer::Singer() {
 	mName = "";
 	mAge = -1;
 	mSex = NULL;
 }
 
-SingerType::SingerType(const string &inName,
+Singer::Singer(const string &inName,
 	const int inAge, const char &inSex) {
 	mName = inName;
 	mAge = inAge;
@@ -92,61 +92,61 @@ SingerType::SingerType(const string &inName,
 }
 
 // Destructor
-SingerType::~SingerType() {
+Singer::~Singer() {
 	// Clean linked list
 	mSongList.MakeEmpty();
 }
 
 // Get name
-string SingerType::GetName() {
+string Singer::GetName() {
 	return mName;
 }
 
 // Get age
-int SingerType::GetAge() {
+int Singer::GetAge() {
 	return mAge;
 }
 
 // Get sex
-char SingerType::GetSex() {
+char Singer::GetSex() {
 	return mSex;
 }
 
 // Get song list
-UnsortedLinkedList<SongType> SingerType::GetSongList() {
+UnsortedLinkedList<SongItem> Singer::GetSongList() {
 	return mSongList;
 }
 
 // Set name
-void SingerType::SetName(string &inName) {
+void Singer::SetName(string &inName) {
 	mName = inName;
 }
 
 // Set age
-void SingerType::SetAge(int inAge) {
+void Singer::SetAge(int inAge) {
 	mAge = inAge;
 }
 
 // Set sex
-void SingerType::SetSex(char inSex) {
+void Singer::SetSex(char inSex) {
 	mSex = inSex;
 }
 
 // Set info from keyboard input
-void SingerType::SetInfoFromKB() {
+void Singer::SetInfoFromKB() {
 	SetNameFromKB();
 	SetAgeFromKB();
 	SetSexFromKB();
 }
 
 // Set name from keyboard input
-void SingerType::SetNameFromKB() {
+void Singer::SetNameFromKB() {
 	cout << setw(attrIndentSize) << "Singer name (String) : ";
 	getline(cin, mName);
 }
 
 // Set age from keyboard input
-void SingerType::SetAgeFromKB() {
+void Singer::SetAgeFromKB() {
 	while (true) {
 		cout << setw(attrIndentSize) << "Singer age (Int) : ";
 		cin >> mAge;
@@ -166,43 +166,43 @@ void SingerType::SetAgeFromKB() {
 }
 
 // Set sex from keyboard input
-void SingerType::SetSexFromKB() {
+void Singer::SetSexFromKB() {
 	cout << setw(attrIndentSize) << "Singer sex (Char) : ";
 	cin >> mSex;
 	cin.ignore(100, '\n');
 }
 
 // Add song to song list
-int SingerType::AddSong(const SongType &song) {
+int Singer::AddSong(const SongItem &song) {
 	return this->mSongList.Add(song);
 }
 
 // Remove song from song list
-int SingerType::RemoveSong(const SongType &song) {
+int Singer::RemoveSong(const SongItem &song) {
 	return mSongList.Delete(song);
 }
 
 // Compare operators
-bool SingerType::operator==(const SingerType &that) const {
+bool Singer::operator==(const Singer &that) const {
 	return this->mName.compare(that.mName) == 0;
 }
 
-bool SingerType::operator!=(const SingerType &that) const {
+bool Singer::operator!=(const Singer &that) const {
 	return !(*this == that);
 }
 
-bool SingerType::operator<(const SingerType &that) const {
+bool Singer::operator<(const Singer &that) const {
 	return this->mName.compare(that.mName) < 0;
 }
 
-bool SingerType::operator<=(const SingerType &that) const {
+bool Singer::operator<=(const Singer &that) const {
 	return this->mName.compare(that.mName) <= 0;
 }
 
-bool SingerType::operator>(const SingerType &that) const {
+bool Singer::operator>(const Singer &that) const {
 	return this->mName.compare(that.mName) > 0;
 }
 
-bool SingerType::operator>=(const SingerType &that) const {
+bool Singer::operator>=(const Singer &that) const {
 	return this->mName.compare(that.mName) >= 0;
 }

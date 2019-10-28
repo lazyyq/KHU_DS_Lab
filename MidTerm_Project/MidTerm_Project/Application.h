@@ -14,9 +14,9 @@
 #include "LinkedList.h"
 #include "SortedDoublyLinkedList.h"
 
-#include "MusicType.h"
+#include "MusicItem.h"
 #include "PlayItem.h"
-#include "SingerType.h"
+#include "Singer.h"
 
 #define MUSIC_LIST_FILENAME	"files/list_music.txt"
 #define FILENAMESIZE 1024
@@ -232,9 +232,9 @@ public:
 private:
 	ifstream mInFile;					// input file descriptor
 	ofstream mOutFile;					// output file descriptor
-	SortedList<MusicType> mMasterList;	// music item list
+	SortedList<MusicItem> mMasterList;	// music item list
 	SortedDoublyLinkedList<PlayItem> mPlaylist;	// music playlist
-	LinkedList<SingerType> mSingerList;	// Singer list
+	LinkedList<Singer> mSingerList;	// Singer list
 	int mCommand;						// current command number
 	int mInsertOrder;					// Insert order of music in playlist
 
