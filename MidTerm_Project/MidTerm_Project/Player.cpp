@@ -1,9 +1,7 @@
 #include "Player.h"
 
-Player::Player() {
-	mMusicList = nullptr;
-	mInsertOrder = 0;
-}
+Player::Player(SortedList<MusicItem> &inList) :
+mInsertOrder(0), mMusicList(inList) {}
 
 Player::~Player() {
 	mPlaylist.MakeEmpty();
@@ -28,16 +26,12 @@ int Player::GetNum(int &n) {
 	return result;
 }
 
-void Player::SetMusicList(SortedList<MusicItem> *inMusicList) {
-	mMusicList = inMusicList;
-}
-
 // Add music to playlist.
 void Player::AddToPlaylist() {
 	MusicItem music; // Temporary variable to hold info
 
 	music.SetIdFromKB(); // Get id to search
-	if (mMusicList->Retrieve(music) != -1) { // Check if music exists in list
+	if (mMusicList.Retrieve(music) != -1) { // Check if music exists in list
 		// Music exists
 		// Create a music item to put in playlist
 		PlaylistItem playItem(music.GetId(), 0, mInsertOrder++);
@@ -67,7 +61,7 @@ void Player::PlayInInsertOrder() {
 		while (iter.NextNotNull()) {
 			musicItem.SetId(playItem.GetId());
 			// Search with id and check if music exists in music list
-			if (mMusicList->Retrieve(musicItem) != -1) {
+			if (mMusicList.Retrieve(musicItem) != -1) {
 				// Music found in list, play
 				cout << musicItem;
 				playItem.IncreaseNumPlay(); // Increase played count

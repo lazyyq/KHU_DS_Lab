@@ -1,7 +1,8 @@
 #include "Application.h"
 
 // Constructor
-Application::Application() {
+Application::Application()
+	: mPlayer(mMasterList) {
 	mCommand = 0;
 }
 
@@ -57,7 +58,6 @@ void Application::InitDirectories() {
 void Application::Run() {
 	InitDirectories(); // Create necessary directories
 	ReadMusicListFromFile(); // Load music list
-	mPlayer.SetMusicList(&mMasterList); // Pass music list to playlist manager
 	MenuMain();
 }
 

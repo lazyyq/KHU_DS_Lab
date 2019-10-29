@@ -211,8 +211,8 @@ private:
 	ofstream mOutFile;					// output file descriptor
 	SortedList<MusicItem> mMasterList;	// music item list
 	LinkedList<Singer> mSingerList;	// Singer list
-	Player mPlayer;						// Playlist manager
 	int mCommand;						// current command number
+	Player mPlayer;						// Playlist manager
 };
 
 #endif	// _APPLICATION_H

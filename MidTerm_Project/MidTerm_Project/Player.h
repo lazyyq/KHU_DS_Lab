@@ -15,7 +15,7 @@ public:
 	/**
 	*	Constructor
 	*/
-	Player();
+	Player(SortedList<MusicItem> &inList);
 
 	/**
 	*	Destructor
@@ -29,8 +29,6 @@ public:
 	*	@return	1 on success, 0 otherwise
 	*/
 	int GetNum(int &n);
-
-	void SetMusicList(SortedList<MusicItem> *inMusicList);
 
 	/**
 	*	@brief	Search music from list with id and add to playlist.
@@ -55,7 +53,7 @@ public:
 
 private:
 	int mInsertOrder;					// Insert order of music in playlist
-	SortedList<MusicItem> *mMusicList;
+	SortedList<MusicItem> &mMusicList;
 	SortedDoublyLinkedList<PlaylistItem> mPlaylist;	// music playlist
 	LyricsManager mLyricsManager;		// Manages lyrics & lyrics files
 };
