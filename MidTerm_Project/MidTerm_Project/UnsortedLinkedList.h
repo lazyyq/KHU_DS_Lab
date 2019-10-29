@@ -43,6 +43,8 @@ public:
 
 		this->mLength = that.mLength;
 
+		MakeEmpty();
+
 		NodeType<T> *thisPtr;
 		NodeType<T> *thatPtr = that.mList;
 		if (thatPtr == NULL) {
