@@ -226,6 +226,11 @@ void Application::SearchByGenre() {
 void Application::DisplayAllMusic() {
 	MusicItem data; // Temporary variable to hold info
 
+	if (mMasterList.IsEmpty()) {
+		cout << "\n\n\tThere's nothing in the list!\n";
+		return;
+	}
+
 	// Display current list capacity
 	cout << "\n\n\tTotal items: " << mMasterList.GetLength() << endl;
 	cout << "\n\t=======================================\n";
