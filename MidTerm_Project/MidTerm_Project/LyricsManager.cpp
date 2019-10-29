@@ -10,15 +10,73 @@ LyricsManager::~LyricsManager() {
 	mLyricsList.MakeEmpty();
 }
 
-int LyricsManager::GetLyrics(const string &name,
-	const string &artist, string &lyrics) {
-	LyricsItem item(name, artist);
-	int exists = mLyricsList.Get(item);
-	if (exists) {
-		item.GetLyrics(lyrics);
-		return 1;
+int LyricsManager::GetNum(int &n) {
+	int result = 1, input;
+
+	cin >> input;
+	if (cin.fail() == 1) { // Error, input is probably not int
+		cin.clear(); // Clear fail flags
+		result = 0; // We return 0 on failure
 	} else {
-		return 0;
+		// We should not cin directly to n because
+		// bad input such as char is recognized as 0,
+		// which might be considered a valid number
+		// by the function that called GetNum(n).
+		n = input;
+	}
+	cin.ignore(100, '\n');
+
+	return result;
+}
+
+void LyricsManager::ShowLyrics(const MusicItem &music) {
+	LyricsItem item(music.GetName(), music.GetArtist());
+
+	if (mLyricsList.Get(item)) {
+		string lyrics;
+		item.GetLyrics(lyrics);
+		// We have lyrics for that music, show on console
+		cout << "\n\t-------- Lyrics ------------------\n\n";
+		cout << lyrics << endl;
+	} else {
+		// We don't have lyrics for that music, get from genius.com
+		int fetchFromWeb = -1;
+		while (!((fetchFromWeb == 0) || (fetchFromWeb == 1))) {
+			cout << "\n\tWe don't have lyrics for \"" << music.GetName()
+				<< "\", shall we look for it on the web? (1: yes / 0: no): ";
+			if (!GetNum(fetchFromWeb)) {
+				continue;
+			}
+		}
+		if (fetchFromWeb == 0) {
+			return;
+		}
+
+		string lyrics;
+		if (GeniusLyricsFetcher::GetLyricsFromGenius(
+			music.GetName(), music.GetArtist(), lyrics)) {
+			string indentedLyrics = lyrics;
+			for (auto pos = indentedLyrics.find('\n'); pos != string::npos;
+				pos = indentedLyrics.find('\n', pos + 1)) {
+				indentedLyrics.replace(pos, 1, "\n\t");
+			}
+			cout << "\n\t-------- Lyrics ------------------\n\n";
+			cout << '\t' << indentedLyrics << endl;
+
+
+			int save = -1;
+			while (!((save == 0) || (save == 1))) {
+				cout << "\n\tIs this the right lyrics for your song?\n"
+					<< "\tIf yes, we'll save it for you so we can load it faster next time."
+					<< " (1: yes / 0: no): ";
+				if (!GetNum(save)) {
+					continue;
+				}
+			}
+			if (save == 1) {
+				SaveLyrics(music.GetName(), music.GetArtist(), lyrics);
+			}
+		}
 	}
 }
 

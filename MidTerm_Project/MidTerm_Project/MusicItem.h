@@ -32,7 +32,7 @@ public:
 	*	@post	None.
 	*	@return	Music id.
 	*/
-	string GetId();
+	string GetId() const;
 
 	/**
 	*	@brief	Get music name.
@@ -40,7 +40,7 @@ public:
 	*	@post	None.
 	*	@return	Music name.
 	*/
-	string GetName();
+	string GetName() const;
 
 	/**
 	*	@brief	Get music melodizer.
@@ -48,7 +48,7 @@ public:
 	*	@post	None.
 	*	@return	Music melodizer.
 	*/
-	string GetMelodizer();
+	string GetMelodizer() const;
 
 	/**
 	*	@brief	Get music artist.
@@ -56,7 +56,7 @@ public:
 	*	@post	None.
 	*	@return	Music artist.
 	*/
-	string GetArtist();
+	string GetArtist() const;
 
 	/**
 	*	@brief	Get music genre.
@@ -64,7 +64,7 @@ public:
 	*	@post	None.
 	*	@return	Music genre.
 	*/
-	string GetGenre();
+	string GetGenre() const;
 
 	/**
 	*	@brief	Set music id.

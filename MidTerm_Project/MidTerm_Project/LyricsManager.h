@@ -8,6 +8,7 @@
 #include "LyricsItem.h"
 #include "SortedDoublyLinkedList.h"
 #include "LinkedList.h"
+#include "MusicItem.h"
 
 using namespace std;
 
@@ -24,12 +25,18 @@ public:
 	~LyricsManager();
 
 	/**
-	*	From the list, look for lyrics for the given artist and title.
-	*
-	*	@return	1 on success, 0 on failure.
+	*	@brief	Get number from keyboard input.
+	*	@pre
+	*	@post
+	*	@return	1 on success, 0 otherwise
 	*/
-	int GetLyrics(const string &name, const string &artist,
-		string &lyrics);
+	int GetNum(int &n);
+
+	/**
+	*	From the list, fetch and display lyrics for the given music
+	*	based on its title and name.
+	*/
+	void ShowLyrics(const MusicItem &music);
 
 	int SaveLyrics(const string &name, const string &artist,
 		const string &lyrics);

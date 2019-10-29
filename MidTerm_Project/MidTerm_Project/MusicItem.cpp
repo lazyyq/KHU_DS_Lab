@@ -8,23 +8,23 @@ MusicItem::MusicItem() {
 	mGenre = "";
 }
 
-string MusicItem::GetId() {
+string MusicItem::GetId() const {
 	return mId;
 }
 
-string MusicItem::GetName() {
+string MusicItem::GetName() const {
 	return mName;
 }
 
-string MusicItem::GetMelodizer() {
+string MusicItem::GetMelodizer() const {
 	return mMelodizer;
 }
 
-string MusicItem::GetArtist() {
+string MusicItem::GetArtist() const {
 	return mArtist;
 }
 
-string MusicItem::GetGenre() {
+string MusicItem::GetGenre() const {
 	return mGenre;
 }
 
