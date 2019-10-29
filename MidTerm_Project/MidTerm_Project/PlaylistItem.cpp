@@ -3,14 +3,15 @@
 // Constructors
 PlaylistItem::PlaylistItem() {
 	mId = "";
-	mNumPlay = -1;
-	mInTime = -1;
+	mPlayedTimes = -1;
+	mInsertedTime = -1;
 }
 
-PlaylistItem::PlaylistItem(string inId, int inNumPlay, int inInTime) {
+PlaylistItem::PlaylistItem(string inId, int inNumPlay,
+	int inInsertedTime) {
 	mId = inId;
-	mNumPlay = inNumPlay;
-	mInTime = inInTime;
+	mPlayedTimes = inNumPlay;
+	mInsertedTime = inInsertedTime;
 }
 
 // Destructor
@@ -22,13 +23,13 @@ string PlaylistItem::GetId() {
 }
 
 // Get played count
-int PlaylistItem::GetNumPlay() {
-	return mNumPlay;
+int PlaylistItem::GetPlayedTimes() {
+	return mPlayedTimes;
 }
 
 // Get inserted time
-int PlaylistItem::GetInTime() {
-	return mInTime;
+int PlaylistItem::GetInsertedTime() {
+	return mInsertedTime;
 }
 
 // Set id
@@ -37,13 +38,13 @@ void PlaylistItem::SetId(string inId) {
 }
 
 // Set played count
-void PlaylistItem::SetNumPlay(int inNumPlay) {
-	mNumPlay = inNumPlay;
+void PlaylistItem::SetPlayedTimes(int inPlayedTimes) {
+	mPlayedTimes = inPlayedTimes;
 }
 
 // Set inserted time
-void PlaylistItem::SetInTime(int inInTime) {
-	mInTime = inInTime;
+void PlaylistItem::SetInsertedTime(int inInsertedTime) {
+	mInsertedTime = inInsertedTime;
 }
 
 // Set music id from keyboard, where id is string.
@@ -54,7 +55,7 @@ void PlaylistItem::SetIdFromKB() {
 
 // Increase played count.
 void PlaylistItem::IncreaseNumPlay() {
-	++mNumPlay;
+	++mPlayedTimes;
 }
 
 // Compare two items

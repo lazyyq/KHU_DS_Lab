@@ -19,7 +19,7 @@ public:
 	/**
 	*	Constructor
 	*/
-	PlaylistItem(string inId, int inNumPlay, int inInTime);
+	PlaylistItem(string inId, int inNumPlay, int inInsertedTime);
 
 	/**
 	*	Default destructor
@@ -30,19 +30,19 @@ public:
 	string GetId();
 
 	// Get played count
-	int GetNumPlay();
+	int GetPlayedTimes();
 
 	// Get inserted time
-	int GetInTime();
+	int GetInsertedTime();
 
 	// Set id
 	void SetId(string inId);
 
 	// Set played count
-	void SetNumPlay(int inNumPlay);
+	void SetPlayedTimes(int inPlayedTimes);
 
 	// Set inserted time
-	void SetInTime(int inInTime);
+	void SetInsertedTime(int inInsertedTime);
 
 	/**
 	*	@brief	Set music id from keyboard.
@@ -54,7 +54,7 @@ public:
 	/**
 	*	@brief	Increase music played count.
 	*	@pre	Item is initialized.
-	*	@post	mNumPlay increases by 1.
+	*	@post	mPlayedTimes increases by 1.
 	*/
 	void IncreaseNumPlay();
 
@@ -73,8 +73,8 @@ public:
 
 private:
 	string mId;			// Primary key of music
-	int mNumPlay;		// How many times it has been played
-	int mInTime;		// When it was inserted to the playlist.
+	int mPlayedTimes;		// How many times it has been played
+	int mInsertedTime;		// When it was inserted to the playlist.
 						// For this assignment only, just an index.
 
 	const static int attrIndentSize = 25;
