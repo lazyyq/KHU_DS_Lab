@@ -36,7 +36,7 @@ void Player::AddToPlaylist() {
 	if (mMusicList.Retrieve(music) != -1) { // Check if music exists in list
 		// Music exists
 		// Create a music item to put in playlist
-		PlaylistItem playItem(music.GetId(), 0, mInsertOrder++);
+		PlaylistItem playItem(music.GetId());
 		mPlaylist.Add(playItem); // Add to playlist
 		cout << "\n\n\tAdded music \"" << music.GetId() << "\" to playlist.\n";
 	} else {

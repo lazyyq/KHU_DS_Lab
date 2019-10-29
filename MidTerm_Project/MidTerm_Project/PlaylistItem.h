@@ -20,7 +20,7 @@ public:
 	/**
 	*	Constructor
 	*/
-	PlaylistItem(string inId, int inPlayedTimes, int inInsertedTime);
+	PlaylistItem(string inId);
 
 	/**
 	*	Default destructor
@@ -34,16 +34,13 @@ public:
 	int GetPlayedTimes();
 
 	// Get inserted time
-	int GetInsertedTime();
+	string GetInsertedTime();
 
 	// Set id
 	void SetId(string inId);
 
 	// Set played count
 	void SetPlayedTimes(int inPlayedTimes);
-
-	// Set inserted time
-	void SetInsertedTime(int inInsertedTime);
 
 	/**
 	*	@brief	Set music id from keyboard.
@@ -85,10 +82,14 @@ public:
 private:
 	string mId;			// Primary key of music
 	int mPlayedTimes;		// How many times it has been played
-	int mInsertedTime;		// When it was inserted to the playlist.
-						// For this assignment only, just an index.
+	string mInsertedTime;		// When it was inserted to the playlist.
 
 	const static int attrIndentSize = 25;
+
+	/**
+	*	Get current date & time for mInsertedTime
+	*/
+	static string GetCurrentTime();
 };
 
 #endif // _PLAYITEM_H

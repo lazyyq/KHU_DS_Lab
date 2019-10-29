@@ -3,15 +3,14 @@
 // Constructors
 PlaylistItem::PlaylistItem() {
 	mId = "";
-	mPlayedTimes = -1;
-	mInsertedTime = -1;
+	mPlayedTimes = 0;
+	mInsertedTime = "0";
 }
 
-PlaylistItem::PlaylistItem(string inId, int inPlayedTimes,
-	int inInsertedTime) {
+PlaylistItem::PlaylistItem(string inId) {
 	mId = inId;
-	mPlayedTimes = inPlayedTimes;
-	mInsertedTime = inInsertedTime;
+	mPlayedTimes = 0;
+	mInsertedTime = GetCurrentTime();
 }
 
 // Destructor
@@ -28,7 +27,7 @@ int PlaylistItem::GetPlayedTimes() {
 }
 
 // Get inserted time
-int PlaylistItem::GetInsertedTime() {
+string PlaylistItem::GetInsertedTime() {
 	return mInsertedTime;
 }
 
@@ -40,11 +39,6 @@ void PlaylistItem::SetId(string inId) {
 // Set played count
 void PlaylistItem::SetPlayedTimes(int inPlayedTimes) {
 	mPlayedTimes = inPlayedTimes;
-}
-
-// Set inserted time
-void PlaylistItem::SetInsertedTime(int inInsertedTime) {
-	mInsertedTime = inInsertedTime;
 }
 
 // Set music id from keyboard, where id is string.
@@ -80,28 +74,32 @@ bool PlaylistItem::operator>=(const PlaylistItem &that) const {
 }
 
 ifstream &operator>>(ifstream &ifs, PlaylistItem &item) {
-	string temp;
-
 	getline(ifs, item.mId);
 	// Skip empty lines.
 	while (item.mId.length() == 0) {
 		getline(ifs, item.mId);
 	}
-	/*getline(ifs, temp);
-	item.mPlayedTimes = stoi(temp);
-	getline(ifs, temp);
-	item.mInsertedTime = stoi(temp);*/
 	ifs >> item.mPlayedTimes;
-	ifs >> item.mInsertedTime;
+	getline(ifs, item.mInsertedTime);
 
 	return ifs;
 }
 
 ofstream &operator<<(ofstream &ofs, const PlaylistItem &item) {
 	ofs << endl << endl;
-	ofs << item.mId << endl;
+	ofs << item.mId.c_str() << endl;
 	ofs << item.mPlayedTimes << endl;
-	ofs << item.mInsertedTime;
+	ofs << item.mInsertedTime.c_str();
 
 	return ofs;
+}
+
+string PlaylistItem::GetCurrentTime() {
+	time_t now = time(0); // Save current time as time_t
+	tm timeinfo;
+	char ch[20];
+	localtime_s(&timeinfo, &now); // Convert time to timeinfo
+	// String of format HHmmss. ex) 130328
+	strftime(ch, sizeof(ch), "%H%M%S", &timeinfo);
+	return ch;
 }
