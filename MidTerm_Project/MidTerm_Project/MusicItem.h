@@ -189,7 +189,7 @@ public:
 	*/
 	void SetGenreFromKB();
 
-	static string GenerateMusicId();
+	static string GenerateMusicId(const MusicItem &item);
 
 	/**
 	*	Compare two itemtypes.

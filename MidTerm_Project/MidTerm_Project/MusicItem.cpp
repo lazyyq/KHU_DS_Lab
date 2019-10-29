@@ -108,14 +108,8 @@ void MusicItem::SetGenreFromKB() {
 	getline(cin, mGenre);
 }
 
-string MusicItem::GenerateMusicId() {
-	time_t now = time(0); //현재 시간을 time_t 타입으로 저장
-	struct tm timeinfo;
-	char ch[20];
-	localtime_s(&timeinfo, &now);
-	strftime(ch, sizeof(ch), "%y%m%d-%H%M%S", &timeinfo); // YYYY-MM-DD.HH:mm:ss 형태의 스트링
-
-	return string(ch);
+string MusicItem::GenerateMusicId(const MusicItem &item) {
+	return item.mName + " - " + item.mArtist;
 }
 
 // Compare two records
@@ -158,7 +152,7 @@ istream &operator>>(istream &is, MusicItem &item) {
 
 	// If music id does not already exist, automatically generate one.
 	if (item.mId.compare("") == 0) {
-		item.mId = MusicItem::GenerateMusicId();
+		item.mId = MusicItem::GenerateMusicId(item);
 	}
 
 	return is;
