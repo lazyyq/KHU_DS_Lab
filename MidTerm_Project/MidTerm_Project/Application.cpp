@@ -61,8 +61,8 @@ void Application::Run() {
 	MenuMain();
 }
 
-// Finish program
-void Application::Finish() {
+// Save music list, playlist, etc.
+void Application::Save() {
 	SaveMusicListToFile(); // Save music list to file on program finish
 }
 

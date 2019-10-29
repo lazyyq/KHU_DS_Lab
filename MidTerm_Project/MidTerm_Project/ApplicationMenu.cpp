@@ -11,6 +11,7 @@ void Application::MenuMain() {
 		cout << "\t    3  : Manage playlists\n";
 		cout << "\t    4  : Misc\n\n";
 
+		cout << "\t    9  : Save music list\n";
 		cout << "\t    0  : Quit\n\n";
 
 		cout << "\t----------------------------------\n\n";
@@ -31,8 +32,10 @@ void Application::MenuMain() {
 			MenuPlaylists(); break;
 		case 4:
 			MenuMisc(); break;
+		case 9:
+			Save();
 		case 0:
-			Finish(); return;
+			Save(); return;
 		default:
 			break;
 		}

@@ -72,9 +72,9 @@ public:
 	void Run();
 
 	/**
-	*	@brief	Finish program.
+	*	@brief	Save music list, playlist, etc.
 	*/
-	void Finish();
+	void Save();
 
 	void MenuMain();
 	void MenuManage();
