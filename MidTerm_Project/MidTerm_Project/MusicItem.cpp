@@ -12,7 +12,7 @@ void MusicItem::Play() {
 	cout << "\n\n\t>\n"
 		<< "\t>      ¢Û¢Ü¢Ý   Now playing   ¢Û¢Ü¢Ý\n"
 		<< "\t>\n"
-		<< "\t>      ¢Ý \"" << mName << "\" by " << mArtist<<" ¢Ý\n"
+		<< "\t>      ¢Ý  " << mName << "   by " << mArtist << "  ¢Ý\n"
 		<< "\t>\n\n";
 }
 

@@ -133,9 +133,14 @@ void Application::MenuPlaylists() {
 		cout << endl << endl << endl;
 		cout << "\t-------- Playlists ---------------\n\n";
 
-		cout << "\t    1  : Play music in playlist\n";
-		cout << "\t    2  : Add music to playlist\n";
-		cout << "\t    3  : Delete music from playlist\n\n";
+		cout << "\t    1  : List all in playlist\n\n";
+
+		cout << "\t    2  : Choose a music and play\n";
+		cout << "\t    3  : Play all from the start\n\n";
+
+		cout << "\t    4  : Add music to playlist\n";
+		cout << "\t    5  : Delete music from playlist\n";
+		cout << "\t    6  : Empty playlist\n\n";
 
 		cout << "\t    0  : Return to previous menu\n\n";
 
@@ -150,11 +155,17 @@ void Application::MenuPlaylists() {
 
 		switch (command) {
 		case 1:
-			mPlayer.PlayInInsertOrder(); break;
+			mPlayer.ListPlaylist(); break;
 		case 2:
-			mPlayer.AddToPlaylist(); break;
+			mPlayer.ChooseAndPlay(); break;
 		case 3:
+			mPlayer.PlayInInsertOrder(); break;
+		case 4:
+			mPlayer.AddToPlaylist(); break;
+		case 5:
 			mPlayer.DeleteFromPlaylist(); break;
+		case 6:
+			mPlayer.MakeEmpty(); break;
 		case 0:
 			return;
 		default:

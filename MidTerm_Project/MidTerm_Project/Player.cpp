@@ -28,55 +28,57 @@ int Player::GetNum(int &n) {
 	return result;
 }
 
-void Player::Play(PlaylistItem &item) {
-	MusicItem music;
-	music.SetId(item.GetId());
-	// Search with id and check if music exists in music list
-	if (mMusicList.Retrieve(music) != -1) {
-		// Music found in list
-		music.Play();
-
-		item.IncreasePlayedTimes(); // Increase played count
-		mPlaylist.Replace(item); // Apply change to list
-
-		// Get lyrics and display if exists
-		mLyricsManager.ShowLyrics(music);
-	} else {
-		// Music not found
-		cout << "\n\n\tMusic \"" << music.GetName()
-			<< "\" does not exist. Skipping.\n";
-	}
-}
-
-// Add music to playlist.
-void Player::AddToPlaylist() {
-	MusicItem music; // Temporary variable to hold info
-
-	cout << endl;
-	music.SetIdFromKB(); // Get id to search
-	if (mMusicList.Retrieve(music) != -1) { // Check if music exists in list
-		// Music exists
-		// Create a music item to put in playlist
-		PlaylistItem playItem(music.GetId());
-		mPlaylist.Add(playItem); // Add to playlist
-		cout << "\n\n\tAdded music \"" << music.GetId() << "\" to playlist.\n";
-	} else {
-		cout << "\n\n\tMusic does not exist in list, aborting.\n";
-	}
-}
-
-// Play music from playlist in order.
-void Player::PlayInInsertOrder() {
-	PlaylistItem item; // Variable to hold item info from playlist
-
-	// Check if playlist is empty
+void Player::ListPlaylist() {
 	if (mPlaylist.IsEmpty()) {
-		cout << "\n\n\tList is empty.\n";
+		cout << "\n\n\tNo item in playlist! Playlist is hungry!\n";
 		return;
 	}
 
+	MusicItem music;
+	PlaylistItem item;
+	int num = 1;
+
+	cout << endl;
+
+	DoublyIterator<PlaylistItem> iter(mPlaylist);
+	item = iter.Next();
+	while (iter.NextNotNull()) {
+		music.SetId(item.GetId());
+		if (mMusicList.Retrieve(music) != -1) {
+			// Music found in music list
+			cout << "\n\t#" << num++ << " \"" << music.GetName()
+				<< "\" by " << music.GetArtist() << endl
+				<< "\t\t- ID: \"" << item.GetId() << "\"\n"
+				<< "\t\t- Played " << item.GetPlayedTimes() << " times\n";
+		}
+		item = iter.Next();
+	}
+	cout << endl;
+}
+
+void Player::ChooseAndPlay() {
+	if (mPlaylist.IsEmpty()) {
+		cout << "\n\n\tOnly when the playlist is not empty can you play anything!\n";
+		return;
+	}
+
+	ListPlaylist();
+
+	int choice = -1;
+	while (!(1 <= choice && choice <= mPlaylist.GetLength())) {
+		cout << "\n\tSelect a (valid) number from the list: ";
+		GetNum(choice);
+	}
+	PlayFromPosition(choice);
+}
+
+void Player::PlayFromPosition(int position) {
+	PlaylistItem item; // Variable to hold item info from playlist
+
 	DoublyIterator<PlaylistItem> iter(mPlaylist); // Initialize iterator
-	item = iter.Next(); // Get first item from list
+	for (int i = 0; i < position; ++i) {
+		item = iter.Next(); // Get first item from list
+	}
 	bool keepPlaying = true;
 	while (keepPlaying) {
 		if (!iter.PrevNotNull()) {
@@ -112,6 +114,56 @@ void Player::PlayInInsertOrder() {
 	}
 }
 
+void Player::Play(PlaylistItem &item) {
+	MusicItem music;
+	music.SetId(item.GetId());
+	// Search with id and check if music exists in music list
+	if (mMusicList.Retrieve(music) != -1) {
+		// Music found in list
+		music.Play();
+
+		item.IncreasePlayedTimes(); // Increase played count
+		mPlaylist.Replace(item); // Apply change to list
+
+		// Get lyrics and display if exists
+		mLyricsManager.ShowLyrics(music);
+
+		cout << "\n\n\t       ¢Ý  End of " << music.GetName() << "  ¢Ý\n\n";
+	} else {
+		// Music not found
+		cout << "\n\n\tMusic \"" << music.GetName()
+			<< "\" does not exist. Skipping.\n";
+	}
+}
+
+// Add music to playlist.
+void Player::AddToPlaylist() {
+	MusicItem music; // Temporary variable to hold info
+
+	cout << endl;
+	music.SetIdFromKB(); // Get id to search
+	if (mMusicList.Retrieve(music) != -1) { // Check if music exists in list
+		// Music exists
+		// Create a music item to put in playlist
+		PlaylistItem playItem(music.GetId());
+		mPlaylist.Add(playItem); // Add to playlist
+		cout << "\n\n\tAdded music \"" << music.GetId() << "\" to playlist.\n";
+	} else {
+		cout << "\n\n\tMusic does not exist in list, aborting.\n";
+	}
+}
+
+// Play music from playlist in order.
+void Player::PlayInInsertOrder() {
+	// Check if playlist is empty
+	if (mPlaylist.IsEmpty()) {
+		cout << "\n\n\tList is empty.\n";
+		return;
+	}
+
+	PlayFromPosition(1);
+}
+
 // Delete music from playlist
 void Player::DeleteFromPlaylist() {
 	if (mPlaylist.IsEmpty()) {
@@ -127,7 +179,7 @@ void Player::DeleteFromPlaylist() {
 	if (mPlaylist.Delete(playItem)) {
 		cout << "\n\n\tSuccessfully deleted from list.\n";
 	} else {
-		cout << "\n\n\tCouldn't find "<<playItem.GetId()<<" in list.\n";
+		cout << "\n\n\tCouldn't find " << playItem.GetId() << " in list.\n";
 	}
 }
 

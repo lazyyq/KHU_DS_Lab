@@ -32,6 +32,12 @@ public:
 	*/
 	int GetNum(int &n);
 
+	void ListPlaylist();
+
+	void ChooseAndPlay();
+
+	void PlayFromPosition(int position);
+
 	void Play(PlaylistItem &item);
 
 	/**
