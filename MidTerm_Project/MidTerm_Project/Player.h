@@ -32,6 +32,8 @@ public:
 	*/
 	int GetNum(int &n);
 
+	void Play(PlaylistItem &item);
+
 	/**
 	*	@brief	Search music from list with id and add to playlist.
 	*	@pre	Music list and playlist is initialized.

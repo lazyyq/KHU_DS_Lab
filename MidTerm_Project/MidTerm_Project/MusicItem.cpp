@@ -8,6 +8,10 @@ MusicItem::MusicItem() {
 	mGenre = "";
 }
 
+void MusicItem::Play() {
+	cout << endl << *this;
+}
+
 string MusicItem::GetId() const {
 	return mId;
 }

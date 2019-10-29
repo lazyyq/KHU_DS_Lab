@@ -28,6 +28,26 @@ int Player::GetNum(int &n) {
 	return result;
 }
 
+void Player::Play(PlaylistItem &item) {
+	MusicItem music;
+	music.SetId(item.GetId());
+	// Search with id and check if music exists in music list
+	if (mMusicList.Retrieve(music) != -1) {
+		// Music found in list
+		music.Play();
+
+		item.IncreasePlayedTimes(); // Increase played count
+		mPlaylist.Replace(item); // Apply change to list
+
+		// Get lyrics and display if exists
+		mLyricsManager.ShowLyrics(music);
+	} else {
+		// Music not found
+		cout << "\n\n\tMusic \"" << music.GetName()
+			<< "\" does not exist. Skipping.\n";
+	}
+}
+
 // Add music to playlist.
 void Player::AddToPlaylist() {
 	MusicItem music; // Temporary variable to hold info
@@ -62,21 +82,7 @@ void Player::PlayInInsertOrder() {
 		DoublyIterator<PlaylistItem> iter(mPlaylist); // Initialize iterator
 		playItem = iter.Next(); // Get first item from list
 		while (iter.NextNotNull()) {
-			musicItem.SetId(playItem.GetId());
-			// Search with id and check if music exists in music list
-			if (mMusicList.Retrieve(musicItem) != -1) {
-				// Music found in list, play
-				cout << musicItem;
-				playItem.IncreasePlayedTimes(); // Increase played count
-				mPlaylist.Replace(playItem); // Apply change to list
-
-				// Get lyrics and display if exists
-				mLyricsManager.ShowLyrics(musicItem);
-			} else {
-				// Music not found
-				cout << "\n\n\tMusic \"" << musicItem.GetName()
-					<< "\" does not exist. Skipping.\n";
-			}
+			Play(playItem);
 			playItem = iter.Next();
 		}
 

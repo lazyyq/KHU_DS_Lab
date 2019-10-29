@@ -26,6 +26,8 @@ public:
 	*/
 	~MusicItem() {}
 
+	void Play();
+
 	/**
 	*	@brief	Get music id.
 	*	@pre	Music id is set.
