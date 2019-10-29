@@ -32,6 +32,7 @@ int Player::GetNum(int &n) {
 void Player::AddToPlaylist() {
 	MusicItem music; // Temporary variable to hold info
 
+	cout << endl;
 	music.SetIdFromKB(); // Get id to search
 	if (mMusicList.Retrieve(music) != -1) { // Check if music exists in list
 		// Music exists
@@ -96,11 +97,21 @@ void Player::PlayInInsertOrder() {
 
 // Delete music from playlist
 void Player::DeleteFromPlaylist() {
+	if (mPlaylist.IsEmpty()) {
+		cout << "\n\n\tPlaylist is empty!\n"
+			<< "\tMaybe you should add anything before deleting.\n";
+		return;
+	}
 	PlaylistItem playItem; // Temporary variable to hold id info
 
+	cout << endl;
 	playItem.SetIdFromKB(); // Get id to search from playlist
 
-	mPlaylist.Delete(playItem);
+	if (mPlaylist.Delete(playItem)) {
+		cout << "\n\n\tSuccessfully deleted from list.\n";
+	} else {
+		cout << "\n\n\tCouldn't find "<<playItem.GetId()<<" in list.\n";
+	}
 }
 
 int Player::SavePlaylistToFile() {

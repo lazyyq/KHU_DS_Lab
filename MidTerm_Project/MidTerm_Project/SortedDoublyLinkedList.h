@@ -87,7 +87,7 @@ public:
 	*	@pre	item을 입력받는다.
 	*	@post	입력받은 아이템을 리스트에서 찾아 삭제한다.
 	*/
-	void Delete(T item);
+	int Delete(T item);
 
 	/**
 	*	@brief	입력받은 아이템으로 정보를 바꾼다.
@@ -277,13 +277,19 @@ int SortedDoublyLinkedList<T>::Add(T item) {
 
 // 입력받은 아이템을 데이터에서 찾아내어 삭제한다.
 template <typename T>
-void SortedDoublyLinkedList<T>::Delete(T item) {
+int SortedDoublyLinkedList<T>::Delete(T item) {
+	if (IsEmpty()) {
+		return 0;
+	}
+
 	DoublyIterator<T> itor(*this);
 	itor.Next(); // 다음으로 이동.
 
+	bool found = false;
 	while (itor.mCurPointer != mLast) {
 		if (itor.mCurPointer->data == item) // 일치하는 데이터를 찾는다.
 		{
+			found = true;
 			DoublyNodeType<T> *pItem = new DoublyNodeType<T>;
 			pItem = itor.mCurPointer;
 			itor.Next();
@@ -294,8 +300,11 @@ void SortedDoublyLinkedList<T>::Delete(T item) {
 		} else
 			itor.Next();
 	}
-	mLength--; // 길이 감소.
-	return;
+	if (found) {
+		mLength--; // 길이 감소.
+		return 1;
+	}
+	return 0;
 }
 
 // 입력받은 아이템의 정보를 교체한다.
