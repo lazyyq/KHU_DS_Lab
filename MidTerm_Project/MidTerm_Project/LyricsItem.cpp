@@ -23,7 +23,7 @@ LyricsItem::~LyricsItem() {}
 
 int LyricsItem::GetLyrics(string &lyrics) {
 	ifstream ifs(mFileName);
-	if (!ifs) {
+	if (!ifs || ifs.peek() == EOF) {
 		return 0;
 	}
 

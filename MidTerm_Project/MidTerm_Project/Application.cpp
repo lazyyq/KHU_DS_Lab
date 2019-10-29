@@ -260,7 +260,7 @@ int Application::OpenInFile(string fileName) {
 	mInFile.open(fileName); // Open file for reading
 
 	// Return 1 on success
-	if (mInFile) {
+	if (mInFile && mInFile.peek() != EOF) {
 		return 1;
 	} else {
 		return 0;

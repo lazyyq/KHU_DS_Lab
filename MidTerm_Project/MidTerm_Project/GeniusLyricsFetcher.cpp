@@ -8,7 +8,7 @@ int GeniusLyricsFetcher::GetLyricsFromGenius(const std::string &name,
 	// Our search query is "`Artist` `Title`". ex) "Anne Marie 2002"
 	const std::string searchApi = "https://api.genius.com/search?q=";
 	std::ifstream ifs(GENIUS_TOKEN_FILENAME);
-	if (!ifs) {
+	if (!ifs || ifs.peek() == EOF) {
 		return 0;
 	}
 	std::string token;
@@ -137,7 +137,7 @@ bool GeniusLyricsFetcher::GetHTMLFromGenius(const std::string &geniusUrl,
 bool GeniusLyricsFetcher::ParseLyricsFromHTML(const std::string &fileName,
 	std::string &lyrics) {
 	std::ifstream ifs(fileName);
-	if (!ifs) {
+	if (!ifs || ifs.peek() == EOF) {
 		return false;
 	}
 

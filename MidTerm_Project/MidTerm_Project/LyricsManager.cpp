@@ -53,7 +53,7 @@ void LyricsManager::InitLyricsList() {
 	// Iterate through lyrics directory
 	for (const auto &file : filesystem::directory_iterator(LYRICS_FOLDERNAME)) {
 		ifs.open(file.path());
-		if (ifs) {
+		if (ifs && ifs.peek() != EOF) {
 			getline(ifs, name); // First line : music title
 			getline(ifs, artist); // Second line : artist
 			// Rest of the file is the actual lyrics
