@@ -16,6 +16,7 @@
 #include "Singer.h"
 #include "Player.h"
 
+#define CONSOLE_COLOR	"70"
 #define MUSIC_LIST_FILENAME	"files/list_music.txt"
 #define FILENAMESIZE 1024
 
@@ -63,6 +64,8 @@ public:
 	*	Initialize required directories
 	*/
 	void InitDirectories();
+
+	void SetConsoleColor();
 
 	/**
 	*	@brief	Program driver.

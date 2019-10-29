@@ -55,8 +55,13 @@ void Application::InitDirectories() {
 	}
 }
 
+void Application::SetConsoleColor() {
+	system("color " CONSOLE_COLOR);
+}
+
 // Program driver.
 void Application::Run() {
+	SetConsoleColor();
 	MenuMain();
 }
 
