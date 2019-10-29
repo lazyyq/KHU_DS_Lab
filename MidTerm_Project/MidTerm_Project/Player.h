@@ -8,6 +8,8 @@
 #include "PlaylistItem.h"
 #include "LyricsManager.h"
 
+#define PLAYLIST_FILENAME	"files/list_playlist.txt"
+
 using namespace std;
 
 class Player {
@@ -50,6 +52,10 @@ public:
 	*	@post	Music retrieved from list is deleted from playlist.
 	*/
 	void DeleteFromPlaylist();
+
+	int SavePlaylistToFile();
+
+	int ReadPlaylistFromFile();
 
 private:
 	int mInsertOrder;					// Insert order of music in playlist

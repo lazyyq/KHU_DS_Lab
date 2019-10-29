@@ -78,3 +78,30 @@ bool PlaylistItem::operator>(const PlaylistItem &that) const {
 bool PlaylistItem::operator>=(const PlaylistItem &that) const {
 	return this->mId.compare(that.mId) >= 0;
 }
+
+ifstream &operator>>(ifstream &ifs, PlaylistItem &item) {
+	string temp;
+
+	getline(ifs, item.mId);
+	// Skip empty lines.
+	while (item.mId.length() == 0) {
+		getline(ifs, item.mId);
+	}
+	/*getline(ifs, temp);
+	item.mPlayedTimes = stoi(temp);
+	getline(ifs, temp);
+	item.mInsertedTime = stoi(temp);*/
+	ifs >> item.mPlayedTimes;
+	ifs >> item.mInsertedTime;
+
+	return ifs;
+}
+
+ofstream &operator<<(ofstream &ofs, const PlaylistItem &item) {
+	ofs << endl << endl;
+	ofs << item.mId << endl;
+	ofs << item.mPlayedTimes << endl;
+	ofs << item.mInsertedTime;
+
+	return ofs;
+}

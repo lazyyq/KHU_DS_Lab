@@ -11,7 +11,7 @@ void Application::MenuMain() {
 		cout << "\t    3  : Manage playlists\n";
 		cout << "\t    4  : Misc\n\n";
 
-		cout << "\t    9  : Save music list\n";
+		cout << "\t    9  : Save music data\n";
 		cout << "\t    0  : Quit\n\n";
 
 		cout << "\t----------------------------------\n\n";

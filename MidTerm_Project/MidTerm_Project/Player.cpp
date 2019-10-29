@@ -1,7 +1,9 @@
 #include "Player.h"
 
 Player::Player(SortedList<MusicItem> &inList) :
-	mInsertOrder(0), mMusicList(inList) {}
+	mInsertOrder(0), mMusicList(inList) {
+	ReadPlaylistFromFile();
+}
 
 Player::~Player() {
 	mPlaylist.MakeEmpty();
@@ -142,4 +144,42 @@ void Player::DeleteFromPlaylist() {
 	playItem.SetIdFromKB(); // Get id to search from playlist
 
 	mPlaylist.Delete(playItem);
+}
+
+int Player::SavePlaylistToFile() {
+	PlaylistItem data; // Temporary variable to hold info from list
+
+	ofstream ofs(PLAYLIST_FILENAME); //Open file
+	if (!ofs) { //Open failed
+		return 0;
+	}
+
+	cout << "\n\tSaving playlist..\n";
+
+	DoublyIterator<PlaylistItem> iter(mPlaylist);
+	data = iter.Next();
+	while (iter.NextNotNull()) {
+		ofs << data;
+		data = iter.Next();
+	}
+	ofs.close();
+
+	return 1;
+}
+
+int Player::ReadPlaylistFromFile() {
+	PlaylistItem data; // Temporary variable to hold info from file
+
+	ifstream ifs(PLAYLIST_FILENAME); // Open file
+	if (!ifs || ifs.peek() == EOF) { // Failed to open or file is empty
+		return 0;
+	}
+
+	while (ifs) {
+		ifs >> data; // Load data from file
+		mPlaylist.Add(data); // Add to list
+	}
+	ifs.close(); // Close file
+
+	return 1;
 }

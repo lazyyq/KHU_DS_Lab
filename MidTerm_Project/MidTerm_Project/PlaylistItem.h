@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <fstream>
 
 #define PLAYITEM_ATTR_INDENT_SIZE	25
 
@@ -70,6 +71,16 @@ public:
 	bool operator<=(const PlaylistItem &that) const;
 	bool operator>(const PlaylistItem &that) const;
 	bool operator>=(const PlaylistItem &that) const;
+
+	/**
+	*	@brief	Read a record from file.
+	*/
+	friend ifstream &operator>>(ifstream &ifs, PlaylistItem &item);
+
+	/**
+	*	@brief	Write a record into file.
+	*/
+	friend ofstream &operator<<(ofstream &ofs, const PlaylistItem &item);
 
 private:
 	string mId;			// Primary key of music

@@ -3,7 +3,7 @@
 #define LYRICS_FOLDERNAME	"lyrics"
 
 LyricsManager::LyricsManager() {
-	InitLyricsList();
+	ReadLyricsListFromFile();
 }
 
 LyricsManager::~LyricsManager() {
@@ -43,7 +43,7 @@ int LyricsManager::SaveLyrics(const string &name,
 	return 1;
 }
 
-void LyricsManager::InitLyricsList() {
+void LyricsManager::ReadLyricsListFromFile() {
 	// Create 'lyrics' folder
 	filesystem::create_directory(LYRICS_FOLDERNAME);
 

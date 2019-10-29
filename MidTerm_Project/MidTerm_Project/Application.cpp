@@ -3,7 +3,8 @@
 // Constructor
 Application::Application()
 	: mPlayer(mMasterList) {
-	mCommand = 0;
+	InitDirectories(); // Create necessary directories
+	ReadMusicListFromFile(); // Load music list
 }
 
 // Destructor
@@ -56,14 +57,13 @@ void Application::InitDirectories() {
 
 // Program driver.
 void Application::Run() {
-	InitDirectories(); // Create necessary directories
-	ReadMusicListFromFile(); // Load music list
 	MenuMain();
 }
 
 // Save music list, playlist, etc.
 void Application::Save() {
-	SaveMusicListToFile(); // Save music list to file on program finish
+	SaveMusicListToFile(); // Save music list
+	mPlayer.SavePlaylistToFile(); // Save playlist
 }
 
 // Add new record into list.

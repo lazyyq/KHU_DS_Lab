@@ -37,5 +37,5 @@ public:
 private:
 	SortedDoublyLinkedList<LyricsItem> mLyricsList;
 
-	void InitLyricsList();
+	void ReadLyricsListFromFile();
 };
