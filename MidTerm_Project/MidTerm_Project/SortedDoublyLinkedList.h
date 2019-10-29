@@ -29,9 +29,19 @@ public:
 	SortedDoublyLinkedList();
 
 	/**
+	*	Copy constructor.
+	*/
+	SortedDoublyLinkedList<T>(const SortedDoublyLinkedList<T> &that);
+
+	/**
 	*	소멸자.
 	*/
 	~SortedDoublyLinkedList();
+
+	/**
+	*	Assignment operator.
+	*/
+	SortedDoublyLinkedList<T> &operator=(const SortedDoublyLinkedList<T> &that);
 
 	/**
 	*	@brief	리스트가 비었는지 아닌지 검사한다.
@@ -115,11 +125,70 @@ SortedDoublyLinkedList<T> ::SortedDoublyLinkedList() {
 	mLength = 0; // 길이는 0.
 }
 
+// Copy constructor
+template<typename T>
+SortedDoublyLinkedList<T>::SortedDoublyLinkedList(
+	const SortedDoublyLinkedList<T> &that) {
+	mFirst = new DoublyNodeType<T>;
+	mLast = new DoublyNodeType<T>;
+
+	mFirst->next = mLast; // 끝과 처음이 서로를 가리키게 초기화.
+	mFirst->prev = NULL; // 처음.
+
+	mLast->next = NULL; // 끝.
+	mLast->prev = mFirst; // 끝과 처음이 서로를 가리키게 초기화.
+
+	mLength = that.mLength;
+
+	T dataToCopy;
+	DoublyIterator<T> iterThis(*this), iterThat(that);
+	iterThis.Next(); dataToCopy = iterThat.Next();
+	while (iterThat.NextNotNull()) {
+		DoublyNodeType<T> *newNode = new DoublyNodeType<T>;
+		newNode->data = dataToCopy;
+		iterThis.mCurPointer->prev->next = newNode;
+		newNode->prev = iterThis.mCurPointer->prev;
+		newNode->next = iterThis.mCurPointer;
+		iterThis.mCurPointer->prev = newNode;
+
+		dataToCopy = iterThat.Next();
+	}
+}
+
 // 소멸자.
 template <typename T>
 SortedDoublyLinkedList<T>::~SortedDoublyLinkedList() {
 	delete mFirst;
 	delete mLast;
+}
+
+// Assignment operator
+template<typename T>
+SortedDoublyLinkedList<T>
+&SortedDoublyLinkedList<T>::operator=(const SortedDoublyLinkedList<T> &that) {
+	if (this == &that) {
+		return *this;
+	}
+
+	MakeEmpty();
+
+	mLength = that.mLength;
+
+	T dataToCopy;
+	DoublyIterator<T> iterThis(*this), iterThat(that);
+	iterThis.Next(); dataToCopy = iterThat.Next();
+	while (iterThat.NextNotNull()) {
+		DoublyNodeType<T> *newNode = new DoublyNodeType<T>;
+		newNode->data = dataToCopy;
+		iterThis.mCurPointer->prev->next = newNode;
+		newNode->prev = iterThis.mCurPointer->prev;
+		newNode->next = iterThis.mCurPointer;
+		iterThis.mCurPointer->prev = newNode;
+
+		dataToCopy = iterThat.Next();
+	}
+
+	return *this;
 }
 
 // 리스트가 비었는지 검사한다.
