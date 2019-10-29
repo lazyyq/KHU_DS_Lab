@@ -24,8 +24,10 @@ public:
 
 	bool NotNull();
 	bool NextNotNull();
+	bool PrevNotNull();
 	T First();
 	T Next();
+	T Prev();
 	DoublyNodeType<T> GetCurrentNode();
 private:
 	const SortedDoublyLinkedList<T> &mList;
@@ -49,6 +51,14 @@ bool DoublyIterator<T> ::NextNotNull() {
 }
 
 template <typename T>
+bool DoublyIterator<T> ::PrevNotNull() {
+	if (mCurPointer->prev == NULL)
+		return false;
+	else
+		return true;
+}
+
+template <typename T>
 T DoublyIterator<T> ::First() {
 	return mList.mFirst->data;
 }
@@ -56,6 +66,12 @@ T DoublyIterator<T> ::First() {
 template <typename T>
 T DoublyIterator<T> ::Next() {
 	mCurPointer = mCurPointer->next;
+	return mCurPointer->data;
+}
+
+template <typename T>
+T DoublyIterator<T> ::Prev() {
+	mCurPointer = mCurPointer->prev;
 	return mCurPointer->data;
 }
 

@@ -67,8 +67,7 @@ void Player::AddToPlaylist() {
 
 // Play music from playlist in order.
 void Player::PlayInInsertOrder() {
-	PlaylistItem playItem; // Variable to hold item info from playlist
-	MusicItem musicItem; // Variable to hold info from music list
+	PlaylistItem item; // Variable to hold item info from playlist
 
 	// Check if playlist is empty
 	if (mPlaylist.IsEmpty()) {
@@ -76,27 +75,39 @@ void Player::PlayInInsertOrder() {
 		return;
 	}
 
+	DoublyIterator<PlaylistItem> iter(mPlaylist); // Initialize iterator
+	item = iter.Next(); // Get first item from list
 	bool keepPlaying = true;
-	while (keepPlaying) { // Loop until user wants to stop repeating playlist
-		// Play all items from playlist
-		DoublyIterator<PlaylistItem> iter(mPlaylist); // Initialize iterator
-		playItem = iter.Next(); // Get first item from list
-		while (iter.NextNotNull()) {
-			Play(playItem);
-			playItem = iter.Next();
+	while (keepPlaying) {
+		if (!iter.PrevNotNull()) {
+			cout << "\n\n\tThis is the first item of playlist.\n";
+			item = iter.Next(); // Set current pointer to first item
+		} else if (!iter.NextNotNull()) {
+			cout << "\n\n\tThis is the end of playlist.\n";
+			break;
 		}
 
-		// Check whether to repeat or not
-		int playAgain = -1;
-		while (!((playAgain == 0) || (playAgain == 1))) {
-			cout << "\n\n\tEnd of playlist. Play again? (1: yes / 0: no): ";
-			// If input is not integer, ask again.
-			if (!GetNum(playAgain)) {
+		Play(item);
+
+		int choice = -1;
+		while (!(0 <= choice && choice <= 3)) {
+			cout << "\n\tWhat would you like to play next? \n"
+				<< "\t(1: Previous / 2: Replay / 3: Next / "
+				<< "0: Stop playing): ";
+			if (!GetNum(choice)) {
 				continue;
 			}
 		}
-		if (playAgain == 0) { // Stop playing
-			keepPlaying = false;
+		switch (choice) {
+		case 1:
+			item = iter.Prev(); break;
+		case 2:
+			break;
+		case 3:
+			item = iter.Next(); break;
+		case 0:
+		default:
+			keepPlaying = false; break;
 		}
 	}
 }
