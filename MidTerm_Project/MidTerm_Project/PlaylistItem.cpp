@@ -74,12 +74,15 @@ bool PlaylistItem::operator>=(const PlaylistItem &that) const {
 }
 
 ifstream &operator>>(ifstream &ifs, PlaylistItem &item) {
+	string temp;
+
 	getline(ifs, item.mId);
 	// Skip empty lines.
 	while (item.mId.length() == 0) {
 		getline(ifs, item.mId);
 	}
-	ifs >> item.mPlayedTimes;
+	getline(ifs, temp);
+	item.mPlayedTimes = stoi(temp);
 	getline(ifs, item.mInsertedTime);
 
 	return ifs;

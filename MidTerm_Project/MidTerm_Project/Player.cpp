@@ -175,7 +175,7 @@ int Player::ReadPlaylistFromFile() {
 		return 0;
 	}
 
-	while (ifs) {
+	while (!ifs.eof()) {
 		ifs >> data; // Load data from file
 		mPlaylist.Add(data); // Add to list
 	}
