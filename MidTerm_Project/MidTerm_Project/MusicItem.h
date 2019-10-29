@@ -35,14 +35,6 @@ public:
 	string GetId();
 
 	/**
-	*	@brief	Get music type.
-	*	@pre	Music type is set.
-	*	@post	None.
-	*	@return	Music type.
-	*/
-	int GetType();
-
-	/**
 	*	@brief	Get music name.
 	*	@pre	Music name is set.
 	*	@post	None.
@@ -83,14 +75,6 @@ public:
 	void SetId(string inId);
 
 	/**
-	*	@brief	Set music type.
-	*	@pre	none.
-	*	@post	Music type is set.
-	*	@param	inType	Music type.
-	*/
-	void SetType(int inType);
-
-	/**
 	*	@brief	Set music name.
 	*	@pre	none.
 	*	@post	Music name is set.
@@ -127,13 +111,12 @@ public:
 	*	@pre	none.
 	*	@post	Music record is set.
 	*	@param	inId	Music id.
-	*	@param	inType	Music type.
 	*	@param	inName	Music name.
 	*	@param	inMelodizer		Music melodizer.
 	*	@param	inArtist	Music artist.
 	*	@param	inGenre		Music genre.
 	*/
-	void SetRecord(string inId, int inType, string inName,
+	void SetRecord(string inId, string inName,
 		string inMelodizer, string inArtist, string inGenre);
 
 	/**
@@ -142,13 +125,6 @@ public:
 	*	@post	Music id is on screen.
 	*/
 	void DisplayIdOnScreen() const;
-
-	/**
-	*	@brief	Display music type on screen.
-	*	@pre	Music type is set.
-	*	@post	Music type is on screen.
-	*/
-	void DisplayTypeOnScreen() const;
 
 	/**
 	*	@brief	Display music name on screen.
@@ -184,13 +160,6 @@ public:
 	*	@post	music id is set.
 	*/
 	void SetIdFromKB();
-
-	/**
-	*	@brief	Set music type from keyboard.
-	*	@pre	none.
-	*	@post	music type is set.
-	*/
-	void SetTypeFromKB();
 
 	/**
 	*	@brief	Set music name from keyboard.
@@ -313,7 +282,6 @@ public:
 
 protected:
 	string mId;			///< Music ID.
-	int mType;			///< Music type.
 	string mName;		///< Music name.
 	string mMelodizer;	///< Music melodizer.
 	string mArtist;		///< Music artist.

@@ -2,7 +2,6 @@
 
 MusicItem::MusicItem() {
 	mId = "";
-	mType = -1;
 	mName = "";
 	mMelodizer = "";
 	mArtist = "";
@@ -11,10 +10,6 @@ MusicItem::MusicItem() {
 
 string MusicItem::GetId() {
 	return mId;
-}
-
-int MusicItem::GetType() {
-	return mType;
 }
 
 string MusicItem::GetName() {
@@ -37,10 +32,6 @@ void MusicItem::SetId(string inId) {
 	mId = inId;
 }
 
-void MusicItem::SetType(int inType) {
-	mType = inType;
-}
-
 void MusicItem::SetName(string inName) {
 	mName = inName;
 }
@@ -58,10 +49,9 @@ void MusicItem::SetGenre(string inGenre) {
 }
 
 // Set records.
-void MusicItem::SetRecord(string inId, int inType, string inName,
+void MusicItem::SetRecord(string inId, string inName,
 	string inMelodizer, string inArtist, string inGenre) {
 	SetId(inId);
-	SetType(inType);
 	SetName(inName);
 	SetMelodizer(inMelodizer);
 	SetArtist(inArtist);
@@ -70,10 +60,6 @@ void MusicItem::SetRecord(string inId, int inType, string inName,
 
 void MusicItem::DisplayIdOnScreen() const {
 	cout << setw(attrIndentSize) << "ID : " << mId << endl;
-}
-
-void MusicItem::DisplayTypeOnScreen() const {
-	cout << setw(attrIndentSize) << "Type : " << mType << endl;
 }
 
 void MusicItem::DisplayNameOnScreen() const {
@@ -96,26 +82,6 @@ void MusicItem::DisplayGenreOnScreen() const {
 void MusicItem::SetIdFromKB() {
 	cout << setw(attrIndentSize) << "ID (String) : ";
 	getline(cin, mId);
-}
-
-// Set music type from keyboard, where type is int.
-void MusicItem::SetTypeFromKB() {
-	while (true) {
-		cout << setw(attrIndentSize) << "Type (Int) : ";
-		cin >> mType;
-
-		// Check if input is integer.
-		int result = cin.fail();
-		cin.clear();
-		cin.ignore(100, '\n');
-
-		if (result != 1) {
-			// Success
-			break;
-		} else {
-			cout << setw(attrIndentSize) << "Wrong input!\n";
-		}
-	}
 }
 
 // Set music name from keyboard, where name is string.
@@ -185,7 +151,6 @@ bool MusicItem::operator<=(const MusicItem &that) const {
 // Set music record from keyboard.
 // Id is automatically generated using music name and artist.
 istream &operator>>(istream &is, MusicItem &item) {
-	item.SetTypeFromKB();
 	item.SetNameFromKB();
 	item.SetMelodizerFromKB();
 	item.SetArtistFromKB();
@@ -201,7 +166,6 @@ istream &operator>>(istream &is, MusicItem &item) {
 
 ostream &operator<<(ostream &os, const MusicItem &item) {
 	item.DisplayIdOnScreen();
-	item.DisplayTypeOnScreen();
 	item.DisplayNameOnScreen();
 	item.DisplayMelodizerOnScreen();
 	item.DisplayArtistOnScreen();
@@ -222,8 +186,6 @@ ifstream &operator>>(ifstream &ifs, MusicItem &item) {
 	while (item.mId.length() == 0) {
 		getline(ifs, item.mId);
 	}
-	getline(ifs, temp);
-	item.mType = stoi(temp);
 	getline(ifs, item.mName);
 	getline(ifs, item.mMelodizer);
 	getline(ifs, item.mArtist);
@@ -236,7 +198,6 @@ ifstream &operator>>(ifstream &ifs, MusicItem &item) {
 ofstream &operator<<(ofstream &ofs, const MusicItem &item) {
 	ofs << endl << endl;
 	ofs << item.mId << endl;
-	ofs << item.mType << endl;
 	ofs << item.mName << endl;
 	ofs << item.mMelodizer << endl;
 	ofs << item.mArtist << endl;

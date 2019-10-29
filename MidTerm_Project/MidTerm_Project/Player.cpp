@@ -1,7 +1,7 @@
 #include "Player.h"
 
 Player::Player(SortedList<MusicItem> &inList) :
-mInsertOrder(0), mMusicList(inList) {}
+	mInsertOrder(0), mMusicList(inList) {}
 
 Player::~Player() {
 	mPlaylist.MakeEmpty();
