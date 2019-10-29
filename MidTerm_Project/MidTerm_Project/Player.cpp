@@ -183,3 +183,7 @@ int Player::ReadPlaylistFromFile() {
 
 	return 1;
 }
+
+void Player::MakeEmpty() {
+	mPlaylist.MakeEmpty();
+}

@@ -57,6 +57,8 @@ public:
 
 	int ReadPlaylistFromFile();
 
+	void MakeEmpty();
+
 private:
 	int mInsertOrder;					// Insert order of music in playlist
 	SortedList<MusicItem> &mMusicList;

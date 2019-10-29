@@ -256,6 +256,7 @@ void Application::DisplayAllMusic() {
 // Make list empty
 void Application::MakeEmpty() {
 	mMasterList.MakeEmpty();
+	mPlayer.MakeEmpty();
 
 	cout << "\n\n\tEmptied list.\n";
 }
