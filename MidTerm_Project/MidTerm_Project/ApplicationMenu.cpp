@@ -33,7 +33,7 @@ void Application::MenuMain() {
 		case 4:
 			MenuMisc(); break;
 		case 9:
-			Save(); break;
+			Save(); Pause();  break;
 		case 0:
 			Save(); return;
 		default:
