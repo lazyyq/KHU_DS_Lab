@@ -7,10 +7,10 @@ PlaylistItem::PlaylistItem() {
 	mInsertedTime = -1;
 }
 
-PlaylistItem::PlaylistItem(string inId, int inNumPlay,
+PlaylistItem::PlaylistItem(string inId, int inPlayedTimes,
 	int inInsertedTime) {
 	mId = inId;
-	mPlayedTimes = inNumPlay;
+	mPlayedTimes = inPlayedTimes;
 	mInsertedTime = inInsertedTime;
 }
 
@@ -54,7 +54,7 @@ void PlaylistItem::SetIdFromKB() {
 }
 
 // Increase played count.
-void PlaylistItem::IncreaseNumPlay() {
+void PlaylistItem::IncreasePlayedTimes() {
 	++mPlayedTimes;
 }
 

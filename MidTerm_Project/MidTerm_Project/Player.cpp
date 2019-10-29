@@ -64,7 +64,7 @@ void Player::PlayInInsertOrder() {
 			if (mMusicList.Retrieve(musicItem) != -1) {
 				// Music found in list, play
 				cout << musicItem;
-				playItem.IncreaseNumPlay(); // Increase played count
+				playItem.IncreasePlayedTimes(); // Increase played count
 				mPlaylist.Replace(playItem); // Apply change to list
 
 				// Get lyrics and display if exists

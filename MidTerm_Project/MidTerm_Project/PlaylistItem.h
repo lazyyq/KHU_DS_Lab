@@ -19,7 +19,7 @@ public:
 	/**
 	*	Constructor
 	*/
-	PlaylistItem(string inId, int inNumPlay, int inInsertedTime);
+	PlaylistItem(string inId, int inPlayedTimes, int inInsertedTime);
 
 	/**
 	*	Default destructor
@@ -56,7 +56,7 @@ public:
 	*	@pre	Item is initialized.
 	*	@post	mPlayedTimes increases by 1.
 	*/
-	void IncreaseNumPlay();
+	void IncreasePlayedTimes();
 
 	/**
 	*	@brief	Compare two item by id.
