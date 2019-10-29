@@ -171,10 +171,6 @@ ostream &operator<<(ostream &os, const MusicItem &item) {
 // Read a record from file.
 // Store each line into respective variables.
 ifstream &operator>>(ifstream &ifs, MusicItem &item) {
-	// Temporary variable to hold string
-	// which will later be converted to int
-	string temp;
-
 	getline(ifs, item.mId);
 	// Skip empty lines.
 	while (item.mId.length() == 0) {
