@@ -1,3 +1,5 @@
+#include <cstdlib>
+#include <ctime>
 #include "Player.h"
 
 Player::Player(SortedList<MusicItem> &inList) :
@@ -162,6 +164,31 @@ void Player::PlayInInsertOrder() {
 	}
 
 	PlayFromPosition(1);
+}
+
+
+void Player::Shuffle() {
+	SortedDoublyLinkedList<PlaylistItem> bak = mPlaylist, shuffled;
+	DoublyIterator<PlaylistItem> iter(mPlaylist);
+	PlaylistItem origItem;
+	srand(time(0));
+
+	while (!mPlaylist.IsEmpty()) {
+		int randomIndex = rand() % mPlaylist.GetLength();
+		for (int i = 0; i < randomIndex; ++i) {
+			iter.Next();
+		}
+		origItem = iter.Next();
+		PlaylistItem newItem;
+		newItem.SetId(origItem.GetId());
+		shuffled.Add(newItem);
+		mPlaylist.Delete(origItem);
+		iter.ResetPointer();
+	}
+
+	mPlaylist = shuffled;
+	PlayFromPosition(1);
+	mPlaylist = bak;
 }
 
 // Delete music from playlist

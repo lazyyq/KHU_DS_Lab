@@ -82,7 +82,7 @@ public:
 private:
 	string mId;			// Primary key of music
 	int mPlayedTimes;		// How many times it has been played
-	string mInsertedTime;		// When it was inserted to the playlist.
+	string mInsertedTime;		// Primary key. When it was inserted to the playlist.
 
 	const static int attrIndentSize = 25;
 

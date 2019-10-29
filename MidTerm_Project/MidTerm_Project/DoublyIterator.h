@@ -21,7 +21,7 @@ public:
 	DoublyIterator(const SortedDoublyLinkedList<T> &list) :
 		mList(list), mCurPointer(list.mFirst) {}; ///< SortedDoublyLinkedList와 친구 클래스.
 
-
+	void ResetPointer();
 	bool NotNull();
 	bool NextNotNull();
 	bool PrevNotNull();
@@ -33,6 +33,11 @@ private:
 	const SortedDoublyLinkedList<T> &mList;
 	DoublyNodeType<T> *mCurPointer;
 };
+
+template<typename T>
+void DoublyIterator<T>::ResetPointer() {
+	mCurPointer = mList.mFirst;
+}
 
 template <typename T>
 bool DoublyIterator<T> ::NotNull() {

@@ -54,23 +54,23 @@ void PlaylistItem::IncreasePlayedTimes() {
 
 // Compare two items
 bool PlaylistItem::operator==(const PlaylistItem &that) const {
-	return this->mId.compare(that.mId) == 0;
+	return this->mInsertedTime.compare(that.mInsertedTime) == 0;
 }
 
 bool PlaylistItem::operator<(const PlaylistItem &that) const {
-	return this->mId.compare(that.mId) < 0;
+	return this->mInsertedTime.compare(that.mInsertedTime) < 0;
 }
 
 bool PlaylistItem::operator<=(const PlaylistItem &that) const {
-	return this->mId.compare(that.mId) <= 0;
+	return this->mInsertedTime.compare(that.mInsertedTime) <= 0;
 }
 
 bool PlaylistItem::operator>(const PlaylistItem &that) const {
-	return this->mId.compare(that.mId) > 0;
+	return this->mInsertedTime.compare(that.mInsertedTime) > 0;
 }
 
 bool PlaylistItem::operator>=(const PlaylistItem &that) const {
-	return this->mId.compare(that.mId) >= 0;
+	return this->mInsertedTime.compare(that.mInsertedTime) >= 0;
 }
 
 ifstream &operator>>(ifstream &ifs, PlaylistItem &item) {
@@ -102,7 +102,8 @@ string PlaylistItem::GetCurrentTime() {
 	tm timeinfo;
 	char ch[20];
 	localtime_s(&timeinfo, &now); // Convert time to timeinfo
-	// String of format HHmmss. ex) 130328
-	strftime(ch, sizeof(ch), "%H%M%S", &timeinfo);
+	// String of format yymmdd-HHMMSS.
+	// ex) 2019/10/20 13:03:28 -> 191020-130328
+	strftime(ch, sizeof(ch), "%y%m%d-%H%M%S", &timeinfo);
 	return ch;
 }

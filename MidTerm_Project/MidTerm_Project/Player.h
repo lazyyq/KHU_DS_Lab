@@ -54,6 +54,8 @@ public:
 	*/
 	void PlayInInsertOrder();
 
+	void Shuffle();
+
 	/**
 	*	@brief	Search music from list with id and delete from playlist.
 	*	@pre	Music exists in music list and playlist.

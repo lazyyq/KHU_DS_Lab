@@ -136,11 +136,12 @@ void Application::MenuPlaylists() {
 		cout << "\t    1  : List all in playlist\n\n";
 
 		cout << "\t    2  : Choose a music and play\n";
-		cout << "\t    3  : Play all from the start\n\n";
+		cout << "\t    3  : Play all from the start\n";
+		cout << "\t    4  : Shuffle\n\n";
 
-		cout << "\t    4  : Add music to playlist\n";
-		cout << "\t    5  : Delete music from playlist\n";
-		cout << "\t    6  : Empty playlist\n\n";
+		cout << "\t    5  : Add music to playlist\n";
+		cout << "\t    6  : Delete music from playlist\n";
+		cout << "\t    7  : Empty playlist\n\n";
 
 		cout << "\t    0  : Return to previous menu\n\n";
 
@@ -161,10 +162,12 @@ void Application::MenuPlaylists() {
 		case 3:
 			mPlayer.PlayInInsertOrder(); break;
 		case 4:
-			mPlayer.AddToPlaylist(); break;
+			mPlayer.Shuffle(); break;
 		case 5:
-			mPlayer.DeleteFromPlaylist(); break;
+			mPlayer.AddToPlaylist(); break;
 		case 6:
+			mPlayer.DeleteFromPlaylist(); break;
+		case 7:
 			mPlayer.MakeEmpty(); break;
 		case 0:
 			return;
