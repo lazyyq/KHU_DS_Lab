@@ -203,10 +203,7 @@ bool SortedDoublyLinkedList<T>::IsEmpty() {
 // 리스트가 꽉 차있는지 검사한다.
 template <typename T>
 bool SortedDoublyLinkedList<T>::IsFull() {
-	if (mLength == 10)
-		return true;
-	else
-		return false;
+	return false;
 }
 
 // 리스트를 비운다.
