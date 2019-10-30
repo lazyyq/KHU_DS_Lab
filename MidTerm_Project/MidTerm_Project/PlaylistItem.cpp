@@ -13,6 +13,13 @@ PlaylistItem::PlaylistItem(string inId) {
 	mInsertedTime = GetCurrentTime();
 }
 
+PlaylistItem::PlaylistItem(string inId, int inPlayedTimes,
+	string inInsertedTime) {
+	mId = inId;
+	mPlayedTimes = inPlayedTimes;
+	mInsertedTime = inInsertedTime;
+}
+
 // Destructor
 PlaylistItem::~PlaylistItem() {}
 

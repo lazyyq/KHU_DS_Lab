@@ -178,17 +178,18 @@ void Player::Shuffle() {
 	PlaylistItem origItem;
 	srand(time(0));
 
-	while (!mPlaylist.IsEmpty()) {
-		int randomIndex = rand() % mPlaylist.GetLength();
-		for (int i = 0; i < randomIndex; ++i) {
-			iter.Next();
+	SortedList<int> randoms;
+
+	origItem = iter.Next();
+	while (iter.NextNotNull()) {
+		int random = rand() % (mPlaylist.GetLength() * 100);
+		if (randoms.Retrieve(random) != -1) {
+			continue;
 		}
-		origItem = iter.Next();
-		PlaylistItem newItem;
-		newItem.SetId(origItem.GetId());
+		randoms.Add(random);
+		PlaylistItem newItem(origItem.GetId(), 0, to_string(random));
 		shuffled.Add(newItem);
-		mPlaylist.Delete(origItem);
-		iter.ResetPointer();
+		origItem = iter.Next();
 	}
 
 	mPlaylist = shuffled;

@@ -22,6 +22,9 @@ public:
 	*/
 	PlaylistItem(string inId);
 
+	PlaylistItem(string inId, int inPlayedTimes,
+		string inInsertedTime);
+
 	/**
 	*	Default destructor
 	*/
