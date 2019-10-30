@@ -204,15 +204,27 @@ void Player::DeleteFromPlaylist() {
 			<< "\tMaybe you should add anything before deleting.\n";
 		return;
 	}
-	PlaylistItem playItem; // Temporary variable to hold id info
+	PlaylistItem item; // Temporary variable to hold info
 
 	cout << endl;
-	playItem.SetIdFromKB(); // Get id to search from playlist
+	item.SetIdFromKB(); // Get id to search from playlist
+	string id = item.GetId();
 
-	if (mPlaylist.Delete(playItem)) {
+	DoublyIterator<PlaylistItem> iter(mPlaylist);
+	item = iter.Next();
+	bool found = false;
+	while (iter.NextNotNull()) {
+		if (item.GetId().compare(id) == 0) {
+			found = true;
+			iter.Prev();
+			mPlaylist.Delete(item);
+		}
+		item = iter.Next();
+	}
+	if (found) {
 		cout << "\n\n\tSuccessfully deleted from list.\n";
 	} else {
-		cout << "\n\n\tCouldn't find " << playItem.GetId() << " in list.\n";
+		cout << "\n\n\tCouldn't find " << item.GetId() << " in list.\n";
 	}
 }
 
