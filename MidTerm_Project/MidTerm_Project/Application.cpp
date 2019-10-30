@@ -181,7 +181,9 @@ void Application::SearchById() {
 	// Search in list
 	int result = mMasterList.Retrieve(data);
 	if (result != -1) { // Found
+		cout << "\n\t---------------------------------------\n\n";
 		cout << data;
+		cout << "\n\t---------------------------------------\n";
 	} else {	// Not found
 		cout << "\n\n\tFailed to find data\n";
 	}
@@ -199,16 +201,14 @@ void Application::SearchByName() {
 	// Iterate through list
 	mMasterList.ResetIterator();
 	int curIndex = mMasterList.GetNextItem(dataFromList);
-	if (curIndex > -1) {
-		cout << "\n\n\t---------------------------------------\n\n";
-	}
 	while (curIndex > -1) {
 		// Check if input data's name property is
 		// substring of retrieved item's.
 		if (dataFromList.GetName().find(data.GetName())
 			!= std::string::npos) {
-			cout << dataFromList;
 			cout << "\n\t---------------------------------------\n\n";
+			cout << dataFromList;
+			cout << "\n\t---------------------------------------\n";
 
 			found = true;
 		}
@@ -250,7 +250,9 @@ void Application::SearchByArtist() {
 		music.SetId(song.GetId());
 		if (mMasterList.Retrieve(music) != -1) {
 			// Music found in master list, display info on screen
+			cout << "\n\t---------------------------------------\n\n";
 			cout << music;
+			cout << "\n\t---------------------------------------\n";
 		} else {
 			// Music not found
 			cout << "\n\n\tSong " << music.GetName() << " not found in music list.\n";
@@ -289,7 +291,9 @@ void Application::SearchByGenre() {
 		music.SetId(song.GetId());
 		if (mMasterList.Retrieve(music) != -1) {
 			// Music found in master list, display info on screen
+			cout << "\n\t---------------------------------------\n\n";
 			cout << music;
+			cout << "\n\t---------------------------------------\n";
 		} else {
 			// Music not found
 			cout << "\n\n\tSong " << music.GetName() << " not found in music list.\n";

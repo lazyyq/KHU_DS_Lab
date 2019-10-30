@@ -4,17 +4,16 @@ void Application::MenuMain() {
 	while (true) {
 		Clear();
 		cout << endl << endl << endl;
-		cout << "\t忙式式式式式式式式  Main Menu  式式式式式式式式式式式式式式忖\n";
-		cout << "\t弛                                   弛\n";
-		cout << "\t弛     1  : Manage music             弛\n";
-		cout << "\t弛     2  : Search music             弛\n";
-		cout << "\t弛     3  : Manage playlists         弛\n";
-		cout << "\t弛     4  : Misc                     弛\n";
-		cout << "\t弛                                   弛\n";
-		cout << "\t弛     9  : Save music data          弛\n";
-		cout << "\t弛     0  : Quit                     弛\n";
-		cout << "\t弛                                   弛\n";
-		cout << "\t戌式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式戎\n\n";
+		cout << "\t忙式式式式式式式式  Main Menu  式式式式式式式式式式式式式式式式式式式忖\n";
+		cout << "\t弛                                        弛\n";
+		cout << "\t弛     1  : Manage music                  弛\n";
+		cout << "\t弛     2  : Search music                  弛\n";
+		cout << "\t弛     3  : Play & Manage playlists       弛\n";
+		cout << "\t弛                                        弛\n";
+		cout << "\t弛     9  : Save music data               弛\n";
+		cout << "\t弛     0  : Quit                          弛\n";
+		cout << "\t弛                                        弛\n";
+		cout << "\t戌式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式式戎\n\n";
 
 		cout << "\t      Choose a command : ";
 
