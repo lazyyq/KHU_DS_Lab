@@ -12,7 +12,7 @@
 using namespace std;
 
 /**
-*	item information class.
+*	곡 정보가 담긴 클래스
 */
 class MusicItem {
 public:
@@ -26,6 +26,9 @@ public:
 	*/
 	~MusicItem() {}
 
+	/**
+	*	@brief	곡을 재생하는 함수. 실제 재생기능은 구현돼있지 않고 곡 정보를 표시하는 데서 그침.
+	*/
 	void Play();
 
 	/**
@@ -191,6 +194,13 @@ public:
 	*/
 	void SetGenreFromKB();
 
+	/**
+	*	@brief	곡 정보로부터 아이디 생성. 아이디는 `곡명 - 아티스트명` 형식.
+	*	@post	곡 아이템이 초기화돼있음.
+	*	@pre	곡 아이템의 아이디가 생성됨.
+	*	@param	item	아이디 생성이 필요한 곡.
+	*	@return	곡 아이디.
+	*/
 	static string GenerateMusicId(const MusicItem &item);
 
 	/**
@@ -289,7 +299,7 @@ protected:
 	string mArtist;		///< Music artist.
 	string mGenre;		///< Music genre.
 
-	const static int attrIndentSize = 25;
+	const static int attrIndentSize = 25; // 곡 정보를 화면에 표시할 때 들여쓰기 칸 수
 };
 
 #endif	// _MUSICITEM_H_

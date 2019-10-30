@@ -1,5 +1,6 @@
 #include "Application.h"
 
+// Main menu
 void Application::MenuMain() {
 	while (true) {
 		Clear();
@@ -19,22 +20,22 @@ void Application::MenuMain() {
 
 		int command;
 		if (!GetNum(command)) {
-			continue;
+			continue; // Show this menu again if input is not number
 		}
 
 		switch (command) {
 		case 1:
-			MenuManage(); break;
+			MenuManage(); break; // Show menu for mananing music list
 		case 2:
-			MenuSearch(); break;
+			MenuSearch(); break; // Show menu for searching music
 		case 3:
-			MenuPlaylists(); break;
-		case 4:
-			MenuMisc(); break;
+			MenuPlaylists(); break; // Show menu for playing & managning playlist.
+		//case 4:
+		//	MenuMisc(); break;
 		case 9:
-			Save(); Pause();  break;
+			Save(); Pause();  break; // 리스트를 파일에 저장
 		case 0:
-			Save(); return;
+			Save(); return; // 저장하고 프로그램 종료
 		default:
 			break;
 		}
@@ -61,20 +62,20 @@ void Application::MenuManage() {
 
 		int command;
 		if (!GetNum(command)) {
-			continue;
+			continue; // 인풋이 숫자가 아니면 이 메뉴 다시 표시
 		}
 
 		switch (command) {
 		case 1:
-			DisplayAllMusic(); break;
+			DisplayAllMusic(); break; // 모든 곡 정보 표시
 		case 2:
-			AddMusic(); break;
+			AddMusic(); break; // 곡 추가
 		case 3:
-			DeleteMusic(); break;
+			DeleteMusic(); break; // 곡 삭제
 		case 4:
-			ReplaceMusic(); break;
+			ReplaceMusic(); break; // 곡 정보 업데이트(교체)
 		case 5:
-			MakeEmpty(); break;
+			MakeEmpty(); break; // 곡 리스트, 가수리스트, 장르 리스트, 플레이리스트 전부 초기화
 		case 0:
 			return;
 		default:
@@ -104,18 +105,18 @@ void Application::MenuSearch() {
 
 		int command;
 		if (!GetNum(command)) {
-			continue;
+			continue; // 인풋이 숫자가 아니면 메뉴 다시 표시
 		}
 
 		switch (command) {
 		case 1:
-			SearchById(); break;
+			SearchById(); break; // ID로 곡 검색
 		case 2:
-			SearchByName(); break;
+			SearchByName(); break; // 곡 이름으로 검색
 		case 3:
-			SearchByArtist(); break;
+			SearchByArtist(); break; // 가수 이름으로 검색
 		case 4:
-			SearchByGenre(); break;
+			SearchByGenre(); break; // 장르 이름으로 검색
 		case 0:
 			return;
 		default:
@@ -150,24 +151,24 @@ void Application::MenuPlaylists() {
 
 		int command;
 		if (!GetNum(command)) {
-			continue;
+			continue; // 인풋이 숫자가 아니면 메뉴 다시표시
 		}
 
 		switch (command) {
 		case 1:
-			mPlayer.ListPlaylist(); break;
+			mPlayer.ListPlaylist(); break; // 플레이리스트의 곡 정보 다 표시
 		case 2:
-			mPlayer.ChooseAndPlay(); break;
+			mPlayer.ChooseAndPlay(); break; // 플레이리스트에서 골라서 재생
 		case 3:
-			mPlayer.PlayInInsertOrder(); break;
+			mPlayer.PlayInInsertOrder(); break; // 맨 처음 곡부터 재생
 		case 4:
-			mPlayer.Shuffle(); break;
+			mPlayer.Shuffle(); break; // 랜덤으로 섞어서 재생
 		case 5:
-			mPlayer.AddToPlaylist(); break;
+			mPlayer.AddToPlaylist(); break; // 플레이리스트에 곡 추가
 		case 6:
-			mPlayer.DeleteFromPlaylist(); break;
+			mPlayer.DeleteFromPlaylist(); break; // 플레이리스트에서 곡 삭제
 		case 7:
-			mPlayer.MakeEmpty(); break;
+			mPlayer.MakeEmpty(); break; // 플레이리스트 초기화
 		case 0:
 			return;
 		default:
@@ -178,6 +179,7 @@ void Application::MenuPlaylists() {
 	}
 }
 
-void Application::MenuMisc() {
-	return;
-}
+// 왜 만들었는지 기억 안남
+//void Application::MenuMisc() {
+//	return;
+//}

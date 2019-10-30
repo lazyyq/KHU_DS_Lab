@@ -26,6 +26,7 @@ void Application::Pause() {
 	Pause("\n\tPress any key to continue.\n");
 }
 
+// Display message and pause console.
 void Application::Pause(const string &message) {
 	cout << message;
 	system("pause >nul");
@@ -46,34 +47,38 @@ int Application::GetNum(int &n) {
 		// by the function that called GetNum(n).
 		n = input;
 	}
-	cin.ignore(100, '\n');
+	cin.ignore(100, '\n'); // Ignore buffer until '\n'
 
 	return result;
 }
 
+// Create directories (if not exist) required for running program
 void Application::InitDirectories() {
+	// files: where music list, singer list, playlist... are stored.
 	string directories[] = {"files"};
 	for (string directory : directories) {
 		filesystem::create_directory(directory);
 	}
 }
 
+// Set cmd window color scheme
 void Application::SetConsoleColor() {
 	system("color " CONSOLE_COLOR);
 }
 
 // Program driver.
 void Application::Run() {
-	SetConsoleColor();
-	MenuMain();
+	SetConsoleColor(); // Set color
+	MenuMain(); // Show main menu
 }
 
 // Save music list, playlist, etc.
 void Application::Save() {
-	SaveMusicListToFile(); // Save music list
+	// Save lists
+	SaveMusicListToFile();
 	SaveArtistListToFile();
 	SaveGenreListToFile();
-	mPlayer.SavePlaylistToFile(); // Save playlist
+	mPlayer.SavePlaylistToFile();
 }
 
 // Add new record into list.
@@ -82,8 +87,7 @@ int Application::AddMusic() {
 
 	cout << "\n\tPlease input new music data."
 		<< " Duplicate data is not allowed.\n\n";
-	// Get new music info from keyboard
-	cin >> data;
+	cin >> data; // 키보드로부터 곡정보 입력
 
 	int result = mMasterList.Add(data);
 	if (result != 1) { // Add failed
@@ -93,24 +97,29 @@ int Application::AddMusic() {
 
 	string id = data.GetId(), name = data.GetName(),
 		artistName = data.GetArtist(), genreName = data.GetGenre();
+	// 가수와 장르리스트에 추가할 아이템
 	SimpleItem simple(id, name, artistName);
 
-	// Check if singer exists in our list
+	// 가수가 이미 있는지 확인
 	Singer singer; singer.SetName(artistName);
 	if (mSingerList.Get(singer)) {
+		// 이미 있으면 가수의 곡 리스트에 추가
 		singer.AddSong(simple);
 		mSingerList.Replace(singer);
 	} else {
+		// 없으면 새 가수 추가
 		singer.AddSong(simple);
 		mSingerList.Add(singer);
 	}
 
-	// Check if genre exists in our list
+	// 장르가 이미 있는지 확인
 	Genre genre; genre.SetName(genreName);
 	if (mGenreList.Get(genre)) {
+		// 이미 있으면 장르의 곡 리스트에 추가
 		genre.AddSong(simple);
 		mGenreList.Replace(genre);
 	} else {
+		// 없으면 새 장르 추가
 		genre.AddSong(simple);
 		mGenreList.Add(genre);
 	}
@@ -129,28 +138,36 @@ void Application::DeleteMusic() {
 	data.SetIdFromKB(); // Get id to delete
 
 	if (mMasterList.Retrieve(data) != -1) {
+		// 곡이 마스터리스트에 존재하면 삭제
+		// 굳이 존재여부를 먼저 확인하는 이유는
+		// Retrieve를 통해 곡의 완전한 정보를 받아와
+		// 가수 리스트와 장르 리스트에서도 삭제하기 위한 것
 		mMasterList.Delete(data);
 	} else { // Failed
 		cout << "\n\n\tNo such data in our list.\n";
 		return;
 	}
 
-	SimpleItem simple;
+	SimpleItem simple; // 가수 리스트와 장르 리스트 검색용
 	string id = data.GetId(), artistName = data.GetArtist(),
 		genreName = data.GetGenre();;
 	simple.SetId(id);
 
+	// 삭제된 곡의 가수 이름 받아오기
 	Singer singer;
 	singer.SetName(artistName);
 
+	// 해당 가수의 곡 리스트에서도 삭제
 	if (mSingerList.Get(singer)) {
 		singer.RemoveSong(simple);
 		mSingerList.Replace(singer);
 	}
 
+	// 삭제된 곡의 장르 이름 받아오기
 	Genre genre;
 	genre.SetName(genreName);
 
+	// 해당 가수의 장르 리스트에서도 삭제
 	if (mGenreList.Get(genre)) {
 		genre.RemoveSong(simple);
 		mGenreList.Replace(genre);
@@ -207,7 +224,7 @@ void Application::SearchByName() {
 		if (dataFromList.GetName().find(data.GetName())
 			!= std::string::npos) {
 			cout << "\n\t---------------------------------------\n\n";
-			cout << dataFromList;
+			cout << dataFromList; // Display song info
 			cout << "\n\t---------------------------------------\n";
 
 			found = true;
@@ -243,6 +260,7 @@ void Application::SearchByArtist() {
 	SimpleItem song; // Temporary variable to hold info from song list
 	MusicItem music; // Temporary variable to hold info from music master list
 
+	// Iterate through singer's song list
 	DoublyIterator<SimpleItem> iter(singer.GetSongList());
 	song = iter.Next();
 	while (iter.NextNotNull()) {
@@ -251,7 +269,7 @@ void Application::SearchByArtist() {
 		if (mMasterList.Retrieve(music) != -1) {
 			// Music found in master list, display info on screen
 			cout << "\n\t---------------------------------------\n\n";
-			cout << music;
+			cout << music; // Display song info
 			cout << "\n\t---------------------------------------\n";
 		} else {
 			// Music not found
@@ -261,7 +279,7 @@ void Application::SearchByArtist() {
 	}
 }
 
-// Search music with name
+// Search music with genre name
 void Application::SearchByGenre() {
 	// Get genre name to search
 	Genre genre;
@@ -284,6 +302,7 @@ void Application::SearchByGenre() {
 	SimpleItem song; // Temporary variable to hold info from song list
 	MusicItem music; // Temporary variable to hold info from music master list
 
+	// Iterate through song list
 	DoublyIterator<SimpleItem> iter(genre.GetSongList());
 	song = iter.Next();
 	while (iter.NextNotNull()) {
@@ -292,7 +311,7 @@ void Application::SearchByGenre() {
 		if (mMasterList.Retrieve(music) != -1) {
 			// Music found in master list, display info on screen
 			cout << "\n\t---------------------------------------\n\n";
-			cout << music;
+			cout << music; // Display song info
 			cout << "\n\t---------------------------------------\n";
 		} else {
 			// Music not found
@@ -335,6 +354,7 @@ void Application::DisplayAllMusic() {
 
 // Make list empty
 void Application::MakeEmpty() {
+	// linkedlist 초기화
 	mMasterList.MakeEmpty();
 	mSingerList.MakeEmpty();
 	mGenreList.MakeEmpty();
@@ -405,7 +425,6 @@ int Application::SaveMusicListToFile() {
 	// list의 모든 데이터를 파일에 쓰기
 	int curIndex = mMasterList.GetNextItem(data);
 	while (curIndex > -1) {
-		//data.WriteDataToFile(mOutFile);
 		mOutFile << data;
 		curIndex = mMasterList.GetNextItem(data);
 	}
@@ -415,6 +434,7 @@ int Application::SaveMusicListToFile() {
 	return 1;
 }
 
+// 파일에서 가수 정보를 읽어서 리스트에 저장
 int Application::ReadArtistListFromFile() {
 	// Open music list file
 	if (!OpenInFile(ARTIST_LIST_FILENAME)) {
@@ -434,6 +454,7 @@ int Application::ReadArtistListFromFile() {
 	return 1;
 }
 
+// 가수 리스트의 가수 아이템을 파일에 저장
 int Application::SaveArtistListToFile() {
 	Singer singer;	// Temporary variable to hold info from list
 
@@ -461,6 +482,7 @@ int Application::SaveArtistListToFile() {
 	return 1;
 }
 
+// 파일에서 장르 정보를 읽어서 리스트에 저장
 int Application::ReadGenreListFromFile() {
 	// Open music list file
 	if (!OpenInFile(GENRE_LIST_FILENAME)) {
@@ -480,6 +502,7 @@ int Application::ReadGenreListFromFile() {
 	return 1;
 }
 
+// 장르 리스트의 장르 정보들을 파일에 저장
 int Application::SaveGenreListToFile() {
 	Genre genre;	// Temporary variable to hold info from list
 
@@ -505,20 +528,4 @@ int Application::SaveGenreListToFile() {
 	mOutFile.close(); // Close file
 
 	return 1;
-}
-
-// Add a new singer
-void Application::AddSinger() {
-	Singer singer;
-	singer.SetInfoFromKB(); // Get name, age, sex from keyboard
-
-	// Add singer to list
-	int result = mSingerList.Add(singer);
-	if (result == 1) {
-		// Successfully added
-		cout << "\n\n\tSuccessfully added singer to list.\n";
-	} else {
-		// Failed
-		cout << "\n\n\tError while adding singer to list. Probably duplicate?\n";
-	}
 }

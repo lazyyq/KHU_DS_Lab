@@ -156,12 +156,10 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="SimpleItem.h" />
     <ClInclude Include="SortedDoublyLinkedList.h" />
-    <ClInclude Include="LinkedList.h" />
     <ClInclude Include="MusicItem.h" />
     <ClInclude Include="PlaylistItem.h" />
     <ClInclude Include="Singer.h" />
     <ClInclude Include="SortedList.h" />
-    <ClInclude Include="UnsortedLinkedList.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />

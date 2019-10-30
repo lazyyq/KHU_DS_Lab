@@ -11,9 +11,9 @@ class DoublyIterator;
 */
 template <typename T>
 struct DoublyNodeType {
-	T data; ///< 각 노드의 데이터.
-	DoublyNodeType *prev = NULL; ///< 노드의 앞을 가리키는 포인터.
-	DoublyNodeType *next = NULL; ///< 노드의 다음를 가리키는 포인터.
+	T data; // 각 노드의 데이터.
+	DoublyNodeType *prev = NULL; // 노드의 앞을 가리키는 포인터.
+	DoublyNodeType *next = NULL; // 노드의 다음를 가리키는 포인터.
 };
 
 /**
@@ -21,7 +21,7 @@ struct DoublyNodeType {
 */
 template <typename T>
 class SortedDoublyLinkedList {
-	friend class DoublyIterator<T>; ///< DoublyIterator와 친구 클래스.
+	friend class DoublyIterator<T>; // DoublyIterator와 친구 클래스.
 public:
 	/**
 	*	디폴트 생성자.
@@ -105,9 +105,9 @@ public:
 	int Get(T &item) const;
 
 private:
-	DoublyNodeType<T> *mFirst; ///< 최소값을 가지는 리스트의 맨 처음.
-	DoublyNodeType<T> *mLast; ///< 최댓값을 가지는 리스트의 맨 끝.
-	int mLength; ///< 리스트의 길이.
+	DoublyNodeType<T> *mFirst; // 리스트의 맨 처음.
+	DoublyNodeType<T> *mLast; // 리스트의 맨 끝.
+	int mLength; // 리스트의 길이.
 };
 
 // 리스트의 맨 처음과 끝이 서로를 가리키게 설정하고 리스트의 길이를 0으로 초기화시켜놓는다.
@@ -140,14 +140,19 @@ SortedDoublyLinkedList<T>::SortedDoublyLinkedList(
 
 	mLength = that.mLength;
 
+	// Deep copy.
 	T dataToCopy;
+	// 현재 리스트와 복사 대상 리스트의 iterator
 	DoublyIterator<T> iterThis(*this), iterThat(that);
 	iterThis.Next(); dataToCopy = iterThat.Next();
 	while (iterThat.NextNotNull()) {
+		// 새 노드를 만들고 데이터 복사해옴
 		DoublyNodeType<T> *newNode = new DoublyNodeType<T>;
 		newNode->data = dataToCopy;
+		// 새 노드를 이전 노드와 연결
 		iterThis.mCurPointer->prev->next = newNode;
 		newNode->prev = iterThis.mCurPointer->prev;
+		// 새 노드를 다음 노드와 연결
 		newNode->next = iterThis.mCurPointer;
 		iterThis.mCurPointer->prev = newNode;
 
@@ -166,6 +171,7 @@ SortedDoublyLinkedList<T>::~SortedDoublyLinkedList() {
 template<typename T>
 SortedDoublyLinkedList<T>
 &SortedDoublyLinkedList<T>::operator=(const SortedDoublyLinkedList<T> &that) {
+	// self-assignment 검사
 	if (this == &that) {
 		return *this;
 	}
@@ -174,14 +180,19 @@ SortedDoublyLinkedList<T>
 
 	mLength = that.mLength;
 
+	// Deep copy
 	T dataToCopy;
+	// 현재 리스트와 복사 대상 리스트의 iterator
 	DoublyIterator<T> iterThis(*this), iterThat(that);
 	iterThis.Next(); dataToCopy = iterThat.Next();
 	while (iterThat.NextNotNull()) {
+		// 새 노드를 만들고 데이터 복사해옴
 		DoublyNodeType<T> *newNode = new DoublyNodeType<T>;
 		newNode->data = dataToCopy;
+		// 새 노드를 이전 노드와 연결
 		iterThis.mCurPointer->prev->next = newNode;
 		newNode->prev = iterThis.mCurPointer->prev;
+		// 새 노드를 다음 노드와 연결
 		newNode->next = iterThis.mCurPointer;
 		iterThis.mCurPointer->prev = newNode;
 

@@ -10,6 +10,10 @@
 
 using namespace std;
 
+/**
+*	플레이리스트에 저장될 아이템의 클래스.
+*	곡 아이디, 재생 횟수, 플레이리스트 삽입 시간 등의 정보를 가짐.
+*/
 class PlaylistItem {
 public:
 	/**
@@ -87,7 +91,7 @@ private:
 	int mPlayedTimes;		// How many times it has been played
 	string mInsertedTime;		// Primary key. When it was inserted to the playlist.
 
-	const static int attrIndentSize = 25;
+	const static int attrIndentSize = 25; // 화면에 표시할 때 들여쓰기
 
 	/**
 	*	Get current date & time for mInsertedTime

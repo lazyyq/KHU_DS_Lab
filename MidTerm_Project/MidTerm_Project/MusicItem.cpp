@@ -1,5 +1,6 @@
 #include "MusicItem.h"
 
+// 생성자
 MusicItem::MusicItem() {
 	mId = "";
 	mName = "";
@@ -8,6 +9,7 @@ MusicItem::MusicItem() {
 	mGenre = "";
 }
 
+// 재생
 void MusicItem::Play() {
 	cout << "\n\n\t>\n"
 		<< "\t>      ♩♪♬   Now playing   ♩♪♬\n"
@@ -16,6 +18,7 @@ void MusicItem::Play() {
 		<< "\t>\n\n";
 }
 
+// 멤버 변수들에 대한 Getter 들
 string MusicItem::GetId() const {
 	return mId;
 }
@@ -36,6 +39,7 @@ string MusicItem::GetGenre() const {
 	return mGenre;
 }
 
+// 멤버 변수들에 대한 Setter 들
 void MusicItem::SetId(string inId) {
 	mId = inId;
 }
@@ -66,6 +70,7 @@ void MusicItem::SetRecord(string inId, string inName,
 	SetGenre(inGenre);
 }
 
+// 곡 정보를 화면에 표시하기 위한 함수들
 void MusicItem::DisplayIdOnScreen() const {
 	cout << setw(attrIndentSize) << "ID : " << mId << endl;
 }
@@ -116,6 +121,7 @@ void MusicItem::SetGenreFromKB() {
 	getline(cin, mGenre);
 }
 
+// 곡의 아이디를 생성
 string MusicItem::GenerateMusicId(const MusicItem &item) {
 	return item.mName + " - " + item.mArtist;
 }
@@ -166,6 +172,7 @@ istream &operator>>(istream &is, MusicItem &item) {
 	return is;
 }
 
+// 곡의 자세한 정보를 화면에 표시.
 ostream &operator<<(ostream &os, const MusicItem &item) {
 	item.DisplayIdOnScreen();
 	item.DisplayNameOnScreen();

@@ -6,6 +6,10 @@
 
 using namespace std;
 
+/**
+*	가수의 곡 리스트나 장르의 곡 리스트에 저장하기 위한,
+*	마스터리스트 검색용 아이디를 담을 목적으로 최소한의 정보만 담고있는 곡 간이정보 클래스.
+*/
 class SimpleItem {
 public:
 	/**
@@ -37,6 +41,12 @@ public:
 	*/
 	string GetName() const;
 
+	/**
+	*	@brief	Get artist of song.
+	*	@pre	Item is initialized. Artist is set.
+	*	@post	None.
+	*	@return	Artist of song.
+	*/
 	string GetArtist() const;
 
 	/**
@@ -55,28 +65,13 @@ public:
 	*/
 	void SetName(string &inName);
 
+	/**
+	*	@brief	Set artist of song.
+	*	@pre	Item is initialized.
+	*	@post	Artist is set.
+	*	@param	inArtist	Artist to set.
+	*/
 	void SetArtist(string &inArtist);
-
-	///**
-	//*	@brief	Set attributes of song from keyboard input.
-	//*	@pre	Item is initialized.
-	//*	@post	Atributes are set.
-	//*/
-	//void SetInfoFromKB();
-
-	///**
-	//*	@brief	Set Id of song from keyboard input.
-	//*	@pre	Item is initialized.
-	//*	@post	Id is set.
-	//*/
-	//void SetIdFromKB();
-
-	///**
-	//*	@brief	Set name of song from keyboard input.
-	//*	@pre	Item is initialized.
-	//*	@post	Name is set.
-	//*/
-	//void SetNameFromKB();
 
 	/**
 	*	@brief	Compare two items.
@@ -96,5 +91,5 @@ private:
 	string mName; // Music name
 	string mArtist; // Artist name
 
-	static const int attrIndentSize = 25;
+	static const int attrIndentSize = 25; // 정보 표시할때 들여쓰기 칸 수
 };

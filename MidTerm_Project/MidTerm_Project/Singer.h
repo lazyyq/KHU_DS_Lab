@@ -49,14 +49,6 @@ public:
 	*/
 	char GetSex();
 
-	///**
-	//*	@brief	Get song list of singer.
-	//*	@pre	Item is initialized. Song list is set.
-	//*	@post	None.
-	//*	@return	Song list of singer.
-	//*/
-	//UnsortedLinkedList<SimpleItem> GetSongList();
-
 	/**
 	*	@brief	Set name of singer.
 	*	@pre	Item is initialized.
@@ -125,6 +117,11 @@ public:
 	*/
 	int RemoveSong(const SimpleItem &song);
 
+	/**
+	*	@brief	곡 리스트 반환
+	*	@pre	곡 리스트가 초기화돼있음.
+	*	@return	곡 리스트
+	*/
 	const SortedDoublyLinkedList<SimpleItem> &GetSongList();
 
 	/**
@@ -160,7 +157,7 @@ private:
 	char mSex; // Singer sex
 	SortedDoublyLinkedList<SimpleItem> mSongList; // Song list
 
-	static const int attrIndentSize = 25;
+	static const int attrIndentSize = 25; // 정보 표시할 때 들여쓰기 칸 수
 };
 
 #endif // _SINGER_H_

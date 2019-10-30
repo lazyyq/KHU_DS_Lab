@@ -24,23 +24,15 @@ public:
 	~Genre();
 
 	/**
-	*	@brief	Get name of singer.
+	*	@brief	Get name of genre.
 	*	@pre	Item is initialized. Name is set.
 	*	@post	None.
-	*	@return	Name of singer.
+	*	@return	Name of genre.
 	*/
 	string GetName();
 
-	///**
-	//*	@brief	Get song list of singer.
-	//*	@pre	Item is initialized. Song list is set.
-	//*	@post	None.
-	//*	@return	Song list of singer.
-	//*/
-	//UnsortedLinkedList<SimpleItem> GetSongList();
-
 	/**
-	*	@brief	Set name of singer.
+	*	@brief	Set name of genre.
 	*	@pre	Item is initialized.
 	*	@post	Name is set.
 	*	@param	inName	Name to set.
@@ -48,7 +40,7 @@ public:
 	void SetName(string &inName);
 
 	/**
-	*	@brief	Set name of singer from keyboard input.
+	*	@brief	Set name of genre from keyboard input.
 	*	@pre	Item is initialized.
 	*	@post	Name is set.
 	*/
@@ -70,6 +62,11 @@ public:
 	*/
 	int RemoveSong(const SimpleItem &song);
 
+	/**
+	*	@brief	곡 리스트 반환
+	*	@pre	곡 리스트가 초기화돼있음.
+	*	@return	곡 리스트
+	*/
 	const SortedDoublyLinkedList<SimpleItem> &GetSongList();
 
 	/**
@@ -88,7 +85,7 @@ public:
 	/**
 	*	@brief	Read a record from file.
 	*	@pre	the target file is opened.
-	*	@post	music record is set.
+	*	@post	record is set.
 	*/
 	friend ifstream &operator>>(ifstream &ifs, Genre &item);
 
@@ -103,5 +100,5 @@ private:
 	string mName; // Genre name
 	SortedDoublyLinkedList<SimpleItem> mSongList; // Song list
 
-	static const int attrIndentSize = 25;
+	static const int attrIndentSize = 25; // 정보 표시할 때 들여쓰기 칸 수
 };

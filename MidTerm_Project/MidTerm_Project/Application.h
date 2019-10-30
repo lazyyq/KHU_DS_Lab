@@ -7,8 +7,6 @@
 #include <filesystem>
 
 #include "SortedList.h"
-#include "UnsortedLinkedList.h"
-#include "LinkedList.h"
 #include "SortedDoublyLinkedList.h"
 
 #include "MusicItem.h"
@@ -22,12 +20,11 @@
 #define MUSIC_LIST_FILENAME	"files/list_music.txt"
 #define ARTIST_LIST_FILENAME	"files/list_artist.txt"
 #define GENRE_LIST_FILENAME	"files/list_genre.txt"
-#define FILENAMESIZE 1024
 
 using namespace std;
 
 /**
-*	application class for item management simply.
+*	Class for running main program
 */
 class Application {
 public:
@@ -42,33 +39,38 @@ public:
 	~Application();
 
 	/**
-	*	@brief	Clear console.
+	*	@brief	CMD 창 초기화.
+	*	@post	CMD 창 위의 모든 메시지가 삭제됨.
 	*/
 	void Clear();
 
 	/**
-	*	@brief	Pause console.
+	*	@brief	CMD를 멈춤.
 	*/
 	void Pause();
 
 	/**
-	*	@brief	Display message and pause console.
+	*	@brief	메시지를 화면에 표시하고 CMD를 멈춤.
+	*	@param	message	CMD를 멈추기 전에 화면에 표시할 메시지.
 	*/
 	void Pause(const string &message);
 
 	/**
-	*	@brief	Get number from keyboard input.
-	*	@pre
-	*	@post
-	*	@return	1 on success, 0 otherwise
+	*	@brief	키보드 입력으로 숫자를 받음.
+	*	@post	입력이 숫자가 맞다면 숫자를 n에 저장함.
+	*	@param	n	사용자가 입력한 게 숫자가 맞다면 숫자가 저장됨.
+	*	@return	입력이 숫자가 맞다면 1, 아니면 0.
 	*/
 	int GetNum(int &n);
 
 	/**
-	*	Initialize required directories
+	*	@brief	프로그램 구동에 필요한 디렉토리 생성.
 	*/
 	void InitDirectories();
 
+	/**
+	*	@brief	현재 CMD창의 color scheme을 변경함
+	*/
 	void SetConsoleColor();
 
 	/**
@@ -79,18 +81,38 @@ public:
 	void Run();
 
 	/**
-	*	@brief	Save music list, playlist, etc.
+	*	@brief	음악리스트, 가수리스트, 플레이리스트 등을 파일로 저장함.
+	*	@pre	`files` 와 `lyrics` 디렉토리가 존재함.
+	*	@post	리스트들이 각 폴더의 정해진 파일에 저장됨.
 	*/
 	void Save();
 
+	/**
+	*	@brief	Show main menu.
+	*/
 	void MenuMain();
-	void MenuManage();
-	void MenuSearch();
-	void MenuPlaylists();
-	void MenuMisc();
 
 	/**
-	*	@brief	Add new record into list.
+	*	@brief	Show menu for managing music list.
+	*/
+	void MenuManage();
+
+	/**
+	*	@brief	Show menu for searching music.
+	*/
+	void MenuSearch();
+
+	/**
+	*	@brief	Show menu for playing music and managing playlist.
+	*/
+	void MenuPlaylists();
+
+	// Not used.
+	//void MenuMisc();
+
+	/**
+	*	@brief	Add new record into master list and the song lists of
+	*			its singer (artist) and genre.
 	*	@pre	list should be initialized.
 	*	@post	new record is added into the list.
 	*	@return	return 1 if this function works well, otherwise 0.
@@ -98,59 +120,44 @@ public:
 	int AddMusic();
 
 	/**
-	*	@brief	Delete selected music information from list.
-	*	@pre	None.
-	*	@post	None.
+	*	@brief	Delete selected music information from list and the song lists of
+	*			its singer (artist) and genre.
 	*/
 	void DeleteMusic();
 
 	/**
 	*	@brief	Replace selected music information from list.
-	*	@pre	None.
-	*	@post	None.
 	*/
 	void ReplaceMusic();
 
 	/**
 	*	@brief	Search and display music info with input id from list.
-	*	@pre	None.
-	*	@post	None.
 	*/
 	void SearchById();
 
 	/**
 	*	@brief	Search and display music whose name contains input name from list.
-	*	@pre	None.
-	*	@post	None.
 	*/
 	void SearchByName();
 
 	/**
-	*	@brief	Search and display music whose artist contains input artist from list.
-	*	@pre	None.
-	*	@post	None.
+	*	@brief	가수 목록에서 가수를 찾아 해당 가수가 부른 모든 곡의 정보를 표시함.
 	*/
 	void SearchByArtist();
 
 	/**
-	*	@brief	Search and display music info with input genre from list.
-	*	@pre	None.
-	*	@post	None.
-	*	@return	return 1 if this function works well, otherwise 0.
+	*	@brief	장르 목록에서 장르를 찾아 해당 장르의 모든 곡의 정보를 표시함.
 	*/
 	void SearchByGenre();
 
 	/**
-	*	@brief	Display all records in the list on screen.
-	*	@pre	none.
-	*	@post	none.
+	*	@brief	모든 곡의 정보를 화면에 표시함.
 	*/
 	void DisplayAllMusic();
 
 	/**
-	*	@brief	Make list empty.
-	*	@pre	none.
-	*	@post	clear list.
+	*	@brief	모든 리스트 초기화.
+	*	@post	마스터리스트, 가수리스트, 장르리스트, 플레이리스트가 전부 초기화됨.
 	*/
 	void MakeEmpty();
 
@@ -173,68 +180,52 @@ public:
 	int OpenOutFile(string fileName);
 
 	/**
-	*	@brief	Open a file as a read mode, read all data on the file, and set list by the data.
-	*	@pre	The file is not opened.
-	*	@post	list holds all records from the file.
-	*	@return	return 1 if this function works well, otherwise 0.
+	*	@brief	파일을 읽기 모드로 열어 모든 정보를 리스트에 저장함.
+	*	@pre	파일이 사용 중이 아님.
+	*	@post	모든 정보가 리스트에 저장됨.
+	*	@return	성공 시 1, 아니면 0.
 	*/
 	int ReadMusicListFromFile();
 
 	/**
-	*	@brief	Open a file as a write mode, and write all data into the file,
-	*	@pre	The file is not opened.
-	*	@post	the list is stored in the output file.
-	*	@return	return 1 if this function works well, otherwise 0.
+	*	@brief	파일을 쓰기 모드로 열어 리스트의 모든 정보를 저장함.
+	*	@pre	파일이 사용 중이 아님.
+	*	@post	리스트의 모든 정보가 파일에 저장됨.
+	*	@return	성공 시 1, 아니면 0.
 	*/
 	int SaveMusicListToFile();
 
 	/**
-	*	@brief	Open a file as a read mode, read all data on the file, and set list by the data.
-	*	@pre	The file is not opened.
-	*	@post	list holds all records from the file.
-	*	@return	return 1 if this function works well, otherwise 0.
+	*	@brief	파일을 읽기 모드로 열어 모든 정보를 리스트에 저장함.
+	*	@pre	파일이 사용 중이 아님.
+	*	@post	모든 정보가 리스트에 저장됨.
+	*	@return	성공 시 1, 아니면 0.
 	*/
 	int ReadArtistListFromFile();
 
 	/**
-	*	@brief	Open a file as a write mode, and write all data into the file,
-	*	@pre	The file is not opened.
-	*	@post	the list is stored in the output file.
-	*	@return	return 1 if this function works well, otherwise 0.
+	*	@brief	파일을 쓰기 모드로 열어 리스트의 모든 정보를 저장함.
+	*	@pre	파일이 사용 중이 아님.
+	*	@post	리스트의 모든 정보가 파일에 저장됨.
+	*	@return	성공 시 1, 아니면 0.
 	*/
 	int SaveArtistListToFile();
 
 	/**
-	*	@brief	Open a file as a read mode, read all data on the file, and set list by the data.
-	*	@pre	The file is not opened.
-	*	@post	list holds all records from the file.
-	*	@return	return 1 if this function works well, otherwise 0.
+	*	@brief	파일을 읽기 모드로 열어 모든 정보를 리스트에 저장함.
+	*	@pre	파일이 사용 중이 아님.
+	*	@post	모든 정보가 리스트에 저장됨.
+	*	@return	성공 시 1, 아니면 0.
 	*/
 	int ReadGenreListFromFile();
 
 	/**
-	*	@brief	Open a file as a write mode, and write all data into the file,
-	*	@pre	The file is not opened.
-	*	@post	the list is stored in the output file.
-	*	@return	return 1 if this function works well, otherwise 0.
+	*	@brief	파일을 쓰기 모드로 열어 리스트의 모든 정보를 저장함.
+	*	@pre	파일이 사용 중이 아님.
+	*	@post	리스트의 모든 정보가 파일에 저장됨.
+	*	@return	성공 시 1, 아니면 0.
 	*/
 	int SaveGenreListToFile();
-
-	/**
-	*	@brief	Add a new singer.
-	*	@pre	Singer list is initalized.
-	*	@post	New singer is added to singer list.
-	*/
-	void AddSinger();
-
-	/**
-	*	@brief	Add a new song to a singer's song list. Will require user
-	*			to add a new singer first if not exists.
-	*	@pre	Singer list is initialized and song exists in music master list.
-	*	@post	New song is added to the singer's song list. If the singer
-	*			does not exist, he is added as well.
-	*/
-	void AddSong();
 
 
 private:
@@ -242,7 +233,7 @@ private:
 	ofstream mOutFile;					// output file descriptor
 	SortedList<MusicItem> mMasterList;	// music item list
 	SortedDoublyLinkedList<Singer> mSingerList;	// Singer list
-	SortedDoublyLinkedList<Genre> mGenreList;	// Singer list
+	SortedDoublyLinkedList<Genre> mGenreList;	// Genre list
 	Player mPlayer;						// Playlist manager
 };
 

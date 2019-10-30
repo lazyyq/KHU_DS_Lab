@@ -80,6 +80,8 @@ bool PlaylistItem::operator>=(const PlaylistItem &that) const {
 	return this->mInsertedTime.compare(that.mInsertedTime) >= 0;
 }
 
+// 파일로부터 읽어오기
+// 파일의 형식은 첫째줄 아이디, 둘째줄 재생횟수, 셋째줄 삽입시간
 ifstream &operator>>(ifstream &ifs, PlaylistItem &item) {
 	string temp;
 

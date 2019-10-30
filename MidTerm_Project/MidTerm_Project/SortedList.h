@@ -10,7 +10,9 @@ using namespace std;
 #define SORTEDLIST_EXPAND_SIZE	20
 
 /**
-*	array based simple unsorted list.
+*	Array 기반의 SortedList.
+*	그러나 리스트가 꽉 차면 자동으로 확장하고
+*	공간이 많이 남으면 자동으로 축소함.
 */
 template <typename T>
 class SortedList {
@@ -115,12 +117,22 @@ private:
 	int mCurMaxSize;	///< Current max size
 
 	/**
-	*	Increase array size.
+	*	@brief	리스트의 크기를 늘림. 현재 리스트보다 단위크기만큼 큰 리스트를 새로 만들고
+	*			기존 리스트의 아이템을 전부 복사한 뒤 기존 리스트는 파기함.
+	*	@post	리스트가 초기화됨. 메모리가 충분함.
+	*	@pre	크기가 더 큰 리스트로 대체됨.
+	*	@return	성공 시 1, 실패 시 0.
 	*/
 	bool Expand();
 
 	/**
-	*	Decrease array size.
+	*	@brief	리스트의 크기를 줄임. 현재 리스트보다 단위크기만큼 작은 리스트여도
+	*			아이템을 전부 담을 수 있다고 판단될 때 크기가 더 작은 리스크를 새로 만들고
+	*			기존 리스트의 아이템을 전부 복사한 뒤 기존 리스트는 파기함.
+	*			크기는 1 미만으로 줄어들지 않음.
+	*	@post	리스트가 초기화됨.
+	*	@pre	크기가 더 작은 리스트로 대체됨.
+	*	@return	성공 시 1, 실패 시 0.
 	*/
 	bool Shrink();
 

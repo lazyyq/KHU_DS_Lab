@@ -1,15 +1,11 @@
-/**
-*	Lab 1: Implementtaion of a list class using array.
-*/
-
 #include "Application.h"
 
 /**
-*	program main function for data structures course.
+*	main 함수.
 */
 int main() {
-	Application app;	// Application class object that controls the application
-	app.Run();			// initiate the application
+	Application app; // 음원 관리 프로그램 클래스의 오브젝트
+	app.Run(); // 실행
 
 	return 0;
 }

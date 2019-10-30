@@ -26,6 +26,7 @@ string SimpleItem::GetName() const {
 	return mName;
 }
 
+// Get artist name
 string SimpleItem::GetArtist() const {
 	return mArtist;
 }
@@ -40,27 +41,10 @@ void SimpleItem::SetName(string &inName) {
 	mName = inName;
 }
 
+// Set artist name
 void SimpleItem::SetArtist(string &inArtist) {
 	mArtist = inArtist;
 }
-
-//// Set info from keyboard input
-//void SimpleItem::SetInfoFromKB() {
-//	SetIdFromKB();
-//	SetNameFromKB();
-//}
-//
-//// Set id from keyboard input
-//void SimpleItem::SetIdFromKB() {
-//	cout << "\t" << setw(attrIndentSize) << "Song id (String) : ";
-//	getline(cin, mId);
-//}
-//
-//// Set name from keyboard input
-//void SimpleItem::SetNameFromKB() {
-//	cout << "\t" << setw(attrIndentSize) << "Song name (String) : ";
-//	getline(cin, mName);
-//}
 
 // Compare operators
 bool SimpleItem::operator==(const SimpleItem &that) const {
