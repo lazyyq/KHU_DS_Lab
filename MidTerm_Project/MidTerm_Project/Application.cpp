@@ -157,7 +157,7 @@ void Application::SearchById() {
 
 	// Search in list
 	int result = mMasterList.Retrieve(data);
-	if (result == 1) { // Found
+	if (result != -1) { // Found
 		cout << data;
 	} else {	// Not found
 		cout << "\n\n\tFailed to find data\n";
