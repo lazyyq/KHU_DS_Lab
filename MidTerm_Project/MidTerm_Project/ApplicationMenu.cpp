@@ -94,7 +94,7 @@ void Application::MenuSearch() {
 		cout << "\t¦¢                                       ¦¢\n";
 		cout << "\t¦¢     1  : Search by ID                 ¦¢\n";
 		cout << "\t¦¢     2  : Search by name               ¦¢\n";
-		cout << "\t¦¢     3  : Search by artist             ¦¢\n";
+		cout << "\t¦¢     3  : Search by singer (artist)    ¦¢\n";
 		cout << "\t¦¢     4  : Search by genre              ¦¢\n";
 		cout << "\t¦¢                                       ¦¢\n";
 		cout << "\t¦¢     0  : Return to previous menu      ¦¢\n";

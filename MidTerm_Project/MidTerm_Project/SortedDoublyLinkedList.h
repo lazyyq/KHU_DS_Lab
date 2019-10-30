@@ -49,7 +49,7 @@ public:
 	*	@post	비었는지 아닌지를 알려준다.
 	*	@return	비어있으면 true, 아니면 false를 반환.
 	*/
-	bool IsEmpty();
+	bool IsEmpty() const;
 
 	/**
 	*	@brief	리스트가 가득 찼는지 아닌지 검사한다.
@@ -57,7 +57,7 @@ public:
 	*	@post	가득 찼는지 아닌지를 알려준다.
 	*	@return	가득 차있으면 true, 아니면 false를 반환.
 	*/
-	bool IsFull();
+	bool IsFull() const;
 
 	/**
 	*	@brief	리스트를 비운다.
@@ -102,7 +102,7 @@ public:
 	*	@post	검색된 데이터를 아이템에 넣는다.
 	*	@return	일치하는 데이터를 찾으면 1, 그렇지 않으면 0을 반환.
 	*/
-	int Get(T &item);
+	int Get(T &item) const;
 
 private:
 	DoublyNodeType<T> *mFirst; ///< 최소값을 가지는 리스트의 맨 처음.
@@ -193,7 +193,7 @@ SortedDoublyLinkedList<T>
 
 // 리스트가 비었는지 검사한다.
 template <typename T>
-bool SortedDoublyLinkedList<T>::IsEmpty() {
+bool SortedDoublyLinkedList<T>::IsEmpty() const {
 	if (mLength == 0)
 		return true;
 	else
@@ -202,7 +202,7 @@ bool SortedDoublyLinkedList<T>::IsEmpty() {
 
 // 리스트가 꽉 차있는지 검사한다.
 template <typename T>
-bool SortedDoublyLinkedList<T>::IsFull() {
+bool SortedDoublyLinkedList<T>::IsFull() const {
 	return false;
 }
 
@@ -323,7 +323,7 @@ void SortedDoublyLinkedList<T>::Replace(T item) {
 
 // 입력받은 아이템과 일치하는 아이템을 리스트에서 찾아 가져온다.
 template <typename T>
-int SortedDoublyLinkedList<T>::Get(T &item) {
+int SortedDoublyLinkedList<T>::Get(T &item) const {
 	DoublyIterator<T> itor(*this);
 	itor.Next();
 

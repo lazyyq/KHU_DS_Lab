@@ -1,87 +1,10 @@
 #include "Singer.h"
 
 // Constructors
-SongItem::SongItem() {
-	mId = "";
-	mName = "";
-}
-
-SongItem::SongItem(const string &inId, const string &inName) {
-	mId = inId;
-	mName = inName;
-}
-
-// Destructor
-SongItem::~SongItem() {}
-
-// Get id
-string SongItem::GetId() {
-	return mId;
-}
-
-// Get name
-string SongItem::GetName() {
-	return mName;
-}
-
-// Set id
-void SongItem::SetId(string &inId) {
-	mId = inId;
-}
-
-// Set name
-void SongItem::SetName(string &inName) {
-	mName = inName;
-}
-
-// Set info from keyboard input
-void SongItem::SetInfoFromKB() {
-	SetIdFromKB();
-	SetNameFromKB();
-}
-
-// Set id from keyboard input
-void SongItem::SetIdFromKB() {
-	cout << "\t" << setw(attrIndentSize) << "Song id (String) : ";
-	getline(cin, mId);
-}
-
-// Set name from keyboard input
-void SongItem::SetNameFromKB() {
-	cout << "\t" << setw(attrIndentSize) << "Song name (String) : ";
-	getline(cin, mName);
-}
-
-// Compare operators
-bool SongItem::operator==(const SongItem &that) const {
-	return this->mId.compare(that.mId) == 0;
-}
-
-bool SongItem::operator!=(const SongItem &that) const {
-	return !(*this == that);
-}
-
-bool SongItem::operator<(const SongItem &that) const {
-	return this->mId.compare(that.mId) < 0;
-}
-
-bool SongItem::operator<=(const SongItem &that) const {
-	return this->mId.compare(that.mId) <= 0;
-}
-
-bool SongItem::operator>(const SongItem &that) const {
-	return this->mId.compare(that.mId) > 0;
-}
-
-bool SongItem::operator>=(const SongItem &that) const {
-	return this->mId.compare(that.mId) >= 0;
-}
-
-// Constructors
 Singer::Singer() {
-	mName = "";
+	mName = " ";
 	mAge = -1;
-	mSex = NULL;
+	mSex = ' ';
 }
 
 Singer::Singer(const string &inName,
@@ -112,10 +35,10 @@ char Singer::GetSex() {
 	return mSex;
 }
 
-// Get song list
-UnsortedLinkedList<SongItem> Singer::GetSongList() {
-	return mSongList;
-}
+//// Get song list
+//UnsortedLinkedList<SimpleItem> Singer::GetSongList() {
+//	return mSongList;
+//}
 
 // Set name
 void Singer::SetName(string &inName) {
@@ -173,13 +96,17 @@ void Singer::SetSexFromKB() {
 }
 
 // Add song to song list
-int Singer::AddSong(const SongItem &song) {
+int Singer::AddSong(const SimpleItem &song) {
 	return this->mSongList.Add(song);
 }
 
 // Remove song from song list
-int Singer::RemoveSong(const SongItem &song) {
+int Singer::RemoveSong(const SimpleItem &song) {
 	return mSongList.Delete(song);
+}
+
+const SortedDoublyLinkedList<SimpleItem> &Singer::GetSongList() {
+	return mSongList;
 }
 
 // Compare operators
@@ -205,4 +132,54 @@ bool Singer::operator>(const Singer &that) const {
 
 bool Singer::operator>=(const Singer &that) const {
 	return this->mName.compare(that.mName) >= 0;
+}
+
+ifstream &operator>>(ifstream &ifs, Singer &item) {
+	string temp;
+
+	getline(ifs, item.mName);
+	while (item.mName.length() == 0) {
+		// Skip empty lines.
+		getline(ifs, item.mName);
+	}
+	getline(ifs, temp);
+	item.mAge = stoi(temp);
+	getline(ifs, temp);
+	item.mSex = temp[0];
+
+	SimpleItem simple;
+	getline(ifs, temp);
+	while (temp.length() != 0) {
+		simple.SetId(temp);
+		getline(ifs, temp);
+		simple.SetName(temp);
+		getline(ifs, temp);
+		simple.SetArtist(temp);
+		item.AddSong(simple);
+
+		getline(ifs, temp);
+	}
+
+	return ifs;
+}
+
+ofstream &operator<<(ofstream &ofs, const Singer &item) {
+	ofs << endl << endl << endl;
+	ofs << item.mName << endl;
+	ofs << item.mAge << endl;
+	ofs << item.mSex;
+
+	SimpleItem simple;
+	DoublyIterator<SimpleItem> iter(item.mSongList);
+	simple = iter.Next();
+	while (iter.NextNotNull()) {
+		ofs << endl;
+		ofs << simple.GetId() << endl;
+		ofs << simple.GetName() << endl;
+		ofs << simple.GetArtist();
+		simple = iter.Next();
+	}
+	ofs << endl;
+
+	return ofs;
 }

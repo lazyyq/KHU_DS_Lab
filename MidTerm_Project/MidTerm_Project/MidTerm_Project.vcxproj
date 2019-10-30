@@ -153,6 +153,7 @@
     <ClInclude Include="LyricsItem.h" />
     <ClInclude Include="LyricsManager.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="SimpleItem.h" />
     <ClInclude Include="SortedDoublyLinkedList.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="MusicItem.h" />
@@ -171,6 +172,7 @@
     <ClCompile Include="MusicItem.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlaylistItem.cpp" />
+    <ClCompile Include="SimpleItem.cpp" />
     <ClCompile Include="Singer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

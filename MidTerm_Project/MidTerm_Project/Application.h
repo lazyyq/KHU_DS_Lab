@@ -12,12 +12,14 @@
 #include "SortedDoublyLinkedList.h"
 
 #include "MusicItem.h"
+#include "SimpleItem.h"
 #include "PlaylistItem.h"
 #include "Singer.h"
 #include "Player.h"
 
 #define CONSOLE_COLOR	"70"
 #define MUSIC_LIST_FILENAME	"files/list_music.txt"
+#define ARTIST_LIST_FILENAME	"files/list_artist.txt"
 #define FILENAMESIZE 1024
 
 using namespace std;
@@ -185,6 +187,22 @@ public:
 	int SaveMusicListToFile();
 
 	/**
+	*	@brief	Open a file as a read mode, read all data on the file, and set list by the data.
+	*	@pre	The file is not opened.
+	*	@post	list holds all records from the file.
+	*	@return	return 1 if this function works well, otherwise 0.
+	*/
+	int ReadArtistListFromFile();
+
+	/**
+	*	@brief	Open a file as a write mode, and write all data into the file,
+	*	@pre	The file is not opened.
+	*	@post	the list is stored in the output file.
+	*	@return	return 1 if this function works well, otherwise 0.
+	*/
+	int SaveArtistListToFile();
+
+	/**
 	*	@brief	Add a new singer.
 	*	@pre	Singer list is initalized.
 	*	@post	New singer is added to singer list.
@@ -200,20 +218,12 @@ public:
 	*/
 	void AddSong();
 
-	/**
-	*	@brief	Search and display all songs by specific singer whose name
-	*			exactly matches the user's input.
-	*	@pre	Music master list and singer list is initialized.
-	*	@post	Music info from the singer is displayed.
-	*/
-	void SearchBySinger();
-
 
 private:
 	ifstream mInFile;					// input file descriptor
 	ofstream mOutFile;					// output file descriptor
 	SortedList<MusicItem> mMasterList;	// music item list
-	LinkedList<Singer> mSingerList;	// Singer list
+	SortedDoublyLinkedList<Singer> mSingerList;	// Singer list
 	Player mPlayer;						// Playlist manager
 };
 
