@@ -168,6 +168,11 @@ void Player::PlayInInsertOrder() {
 
 
 void Player::Shuffle() {
+	if (mPlaylist.IsEmpty()) {
+		cout << "\n\n\tPlaylist is empty! Nothing to shuffle!\n";
+		return;
+	}
+
 	SortedDoublyLinkedList<PlaylistItem> bak = mPlaylist, shuffled;
 	DoublyIterator<PlaylistItem> iter(mPlaylist);
 	PlaylistItem origItem;
