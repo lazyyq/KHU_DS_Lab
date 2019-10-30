@@ -4,7 +4,7 @@ void Application::MenuMain() {
 	while (true) {
 		Clear();
 		cout << endl << endl << endl;
-		cout << "\t忙式式式式式式式式式 Main Menu 式式式式式式式式式式式式式式式忖\n";
+		cout << "\t忙式式式式式式式式  Main Menu  式式式式式式式式式式式式式式忖\n";
 		cout << "\t弛                                   弛\n";
 		cout << "\t弛     1  : Manage music             弛\n";
 		cout << "\t弛     2  : Search music             弛\n";
@@ -46,7 +46,7 @@ void Application::MenuManage() {
 	while (true) {
 		Clear();
 		cout << endl << endl << endl;
-		cout << "\t忙式式式式式式式式式 Manage Music 式式式式式式式式式式式式式式式式忖\n";
+		cout << "\t忙式式式式式式式式  Manage Music  式式式式式式式式式式式式式式式忖\n";
 		cout << "\t弛                                       弛\n";
 		cout << "\t弛     1  : List all music               弛\n";
 		cout << "\t弛     2  : Add music                    弛\n";
@@ -90,7 +90,7 @@ void Application::MenuSearch() {
 	while (true) {
 		Clear();
 		cout << endl << endl << endl;
-		cout << "\t忙式式式式式式式式式 Search Music 式式式式式式式式式式式式式式式式忖\n";
+		cout << "\t忙式式式式式式式式  Search Music  式式式式式式式式式式式式式式式忖\n";
 		cout << "\t弛                                       弛\n";
 		cout << "\t弛     1  : Search by ID                 弛\n";
 		cout << "\t弛     2  : Search by name               弛\n";
@@ -131,7 +131,7 @@ void Application::MenuPlaylists() {
 	while (true) {
 		Clear();
 		cout << endl << endl << endl;
-		cout << "\t忙式式式式式式式式式 Playlists 式式式式式式式式式式式式式式式式式式式式式式忖\n";
+		cout << "\t忙式式式式式式式式  Playlists  式式式式式式式式式式式式式式式式式式式式式忖\n";
 		cout << "\t弛                                          弛\n";
 		cout << "\t弛     1  : List all in playlist            弛\n";
 		cout << "\t弛                                          弛\n";
