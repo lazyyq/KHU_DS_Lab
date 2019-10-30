@@ -60,13 +60,14 @@ void LyricsManager::ShowLyrics(const MusicItem &music) {
 				pos = indentedLyrics.find('\n', pos + 1)) {
 				indentedLyrics.replace(pos, 1, "\n\t");
 			}
-			cout << "\n\t-------- Lyrics ------------------\n\n";
-			cout << '\t' << indentedLyrics << endl;
+			cout << "\n\n\t------------------ Lyrics ------------------\n\n";
+			cout << '\t' << indentedLyrics;
+			cout << "\n\n\t--------------------------------------------\n\n";
 
 
 			int save = -1;
 			while (!((save == 0) || (save == 1))) {
-				cout << "\n\tIs this the right lyrics for your song?\n"
+				cout << "\n\n\tIs this the right lyrics for your song?\n"
 					<< "\tIf yes, we'll save it for you so we can load it faster next time."
 					<< " (1: yes / 0: no): ";
 				if (!GetNum(save)) {

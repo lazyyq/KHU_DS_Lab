@@ -42,13 +42,13 @@ void SongItem::SetInfoFromKB() {
 
 // Set id from keyboard input
 void SongItem::SetIdFromKB() {
-	cout << setw(attrIndentSize) << "Song id (String) : ";
+	cout << "\t" << setw(attrIndentSize) << "Song id (String) : ";
 	getline(cin, mId);
 }
 
 // Set name from keyboard input
 void SongItem::SetNameFromKB() {
-	cout << setw(attrIndentSize) << "Song name (String) : ";
+	cout << "\t" << setw(attrIndentSize) << "Song name (String) : ";
 	getline(cin, mName);
 }
 
@@ -141,14 +141,14 @@ void Singer::SetInfoFromKB() {
 
 // Set name from keyboard input
 void Singer::SetNameFromKB() {
-	cout << setw(attrIndentSize) << "Singer name (String) : ";
+	cout << "\t" << setw(attrIndentSize) << "Singer name (String) : ";
 	getline(cin, mName);
 }
 
 // Set age from keyboard input
 void Singer::SetAgeFromKB() {
 	while (true) {
-		cout << setw(attrIndentSize) << "Singer age (Int) : ";
+		cout << "\t" << setw(attrIndentSize) << "Singer age (Int) : ";
 		cin >> mAge;
 
 		// Check if input is integer.
@@ -160,14 +160,14 @@ void Singer::SetAgeFromKB() {
 			// Success
 			break;
 		} else {
-			cout << setw(attrIndentSize) << "Wrong input!\n";
+			cout << "Wrong input!\n";
 		}
 	}
 }
 
 // Set sex from keyboard input
 void Singer::SetSexFromKB() {
-	cout << setw(attrIndentSize) << "Singer sex (Char) : ";
+	cout << "\t" << setw(attrIndentSize) << "Singer sex (Char) : ";
 	cin >> mSex;
 	cin.ignore(100, '\n');
 }

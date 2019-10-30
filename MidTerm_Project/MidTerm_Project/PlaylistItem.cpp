@@ -43,7 +43,7 @@ void PlaylistItem::SetPlayedTimes(int inPlayedTimes) {
 
 // Set music id from keyboard, where id is string.
 void PlaylistItem::SetIdFromKB() {
-	cout << setw(attrIndentSize) << "ID (String) : ";
+	cout << "\t" << setw(attrIndentSize) << "ID (String) : ";
 	getline(cin, mId);
 }
 

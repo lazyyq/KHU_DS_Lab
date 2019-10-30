@@ -76,7 +76,7 @@ int Application::AddMusic() {
 	MusicItem data; // Temporary variable to hold info
 
 	cout << "\n\tPlease input new music data."
-		<< " Duplicate data is not allowed.\n";
+		<< " Duplicate data is not allowed.\n\n";
 	// Get new music info from keyboard
 	cin >> data;
 
@@ -296,7 +296,7 @@ int Application::ReadMusicListFromFile() {
 
 	// Open music list file
 	if (!OpenInFile(MUSIC_LIST_FILENAME)) {
-		cout << "\n\tError while opening file.\n";
+		cout << "\n\tNothing to read from file.\n";
 		return 0;
 	}
 

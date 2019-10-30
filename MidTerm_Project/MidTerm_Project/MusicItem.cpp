@@ -88,31 +88,31 @@ void MusicItem::DisplayGenreOnScreen() const {
 
 // Set music id from keyboard, where id is string.
 void MusicItem::SetIdFromKB() {
-	cout << setw(attrIndentSize) << "ID (String) : ";
+	cout << "\t" << setw(attrIndentSize) << "ID (String) : ";
 	getline(cin, mId);
 }
 
 // Set music name from keyboard, where name is string.
 void MusicItem::SetNameFromKB() {
-	cout << setw(attrIndentSize) << "Name (String) : ";
+	cout << "\t" << setw(attrIndentSize) << "Name (String) : ";
 	getline(cin, mName);
 }
 
 // Set music melodizer from keyboard, where melodizer is string.
 void MusicItem::SetMelodizerFromKB() {
-	cout << setw(attrIndentSize) << "Melodizer (String) : ";
+	cout << "\t" << setw(attrIndentSize) << "Melodizer (String) : ";
 	getline(cin, mMelodizer);
 }
 
 // Set music artist from keyboard, where artist is string.
 void MusicItem::SetArtistFromKB() {
-	cout << setw(attrIndentSize) << "Artist (String) : ";
+	cout << "\t" << setw(attrIndentSize) << "Artist (String) : ";
 	getline(cin, mArtist);
 }
 
 // Set music genre from keyboard, where genre is string.
 void MusicItem::SetGenreFromKB() {
-	cout << setw(attrIndentSize) << "Genre (String) : ";
+	cout << "\t" << setw(attrIndentSize) << "Genre (String) : ";
 	getline(cin, mGenre);
 }
 
