@@ -15,11 +15,13 @@
 #include "SimpleItem.h"
 #include "PlaylistItem.h"
 #include "Singer.h"
+#include "Genre.h"
 #include "Player.h"
 
 #define CONSOLE_COLOR	"70"
 #define MUSIC_LIST_FILENAME	"files/list_music.txt"
 #define ARTIST_LIST_FILENAME	"files/list_artist.txt"
+#define GENRE_LIST_FILENAME	"files/list_genre.txt"
 #define FILENAMESIZE 1024
 
 using namespace std;
@@ -203,6 +205,22 @@ public:
 	int SaveArtistListToFile();
 
 	/**
+	*	@brief	Open a file as a read mode, read all data on the file, and set list by the data.
+	*	@pre	The file is not opened.
+	*	@post	list holds all records from the file.
+	*	@return	return 1 if this function works well, otherwise 0.
+	*/
+	int ReadGenreListFromFile();
+
+	/**
+	*	@brief	Open a file as a write mode, and write all data into the file,
+	*	@pre	The file is not opened.
+	*	@post	the list is stored in the output file.
+	*	@return	return 1 if this function works well, otherwise 0.
+	*/
+	int SaveGenreListToFile();
+
+	/**
 	*	@brief	Add a new singer.
 	*	@pre	Singer list is initalized.
 	*	@post	New singer is added to singer list.
@@ -224,6 +242,7 @@ private:
 	ofstream mOutFile;					// output file descriptor
 	SortedList<MusicItem> mMasterList;	// music item list
 	SortedDoublyLinkedList<Singer> mSingerList;	// Singer list
+	SortedDoublyLinkedList<Genre> mGenreList;	// Singer list
 	Player mPlayer;						// Playlist manager
 };
 

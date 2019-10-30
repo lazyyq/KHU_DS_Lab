@@ -6,12 +6,14 @@ Application::Application()
 	InitDirectories(); // Create necessary directories
 	ReadMusicListFromFile(); // Load music list
 	ReadArtistListFromFile(); // Load artist list
+	ReadGenreListFromFile(); // Load genre list
 }
 
 // Destructor
 Application::~Application() {
 	// Clean linked lists
 	mSingerList.MakeEmpty();
+	mGenreList.MakeEmpty();
 }
 
 // Clear console.
@@ -70,6 +72,7 @@ void Application::Run() {
 void Application::Save() {
 	SaveMusicListToFile(); // Save music list
 	SaveArtistListToFile();
+	SaveGenreListToFile();
 	mPlayer.SavePlaylistToFile(); // Save playlist
 }
 
@@ -89,17 +92,27 @@ int Application::AddMusic() {
 	}
 
 	string id = data.GetId(), name = data.GetName(),
-		artist = data.GetArtist();
-	SimpleItem simple(id, name, artist);
+		artistName = data.GetArtist(), genreName = data.GetGenre();
+	SimpleItem simple(id, name, artistName);
 
 	// Check if singer exists in our list
-	Singer singer; singer.SetName(artist);
+	Singer singer; singer.SetName(artistName);
 	if (mSingerList.Get(singer)) {
 		singer.AddSong(simple);
 		mSingerList.Replace(singer);
 	} else {
 		singer.AddSong(simple);
 		mSingerList.Add(singer);
+	}
+
+	// Check if genre exists in our list
+	Genre genre; genre.SetName(genreName);
+	if (mGenreList.Get(genre)) {
+		genre.AddSong(simple);
+		mGenreList.Replace(genre);
+	} else {
+		genre.AddSong(simple);
+		mGenreList.Add(genre);
 	}
 
 	cout << "\n\tSuccessfully added new data.\n";
@@ -123,14 +136,24 @@ void Application::DeleteMusic() {
 	}
 
 	SimpleItem simple;
-	Singer singer;
-	string id = data.GetId(), artist = data.GetArtist();
+	string id = data.GetId(), artistName = data.GetArtist(),
+		genreName = data.GetGenre();;
 	simple.SetId(id);
-	singer.SetName(artist);
+
+	Singer singer;
+	singer.SetName(artistName);
 
 	if (mSingerList.Get(singer)) {
 		singer.RemoveSong(simple);
 		mSingerList.Replace(singer);
+	}
+
+	Genre genre;
+	genre.SetName(genreName);
+
+	if (mGenreList.Get(genre)) {
+		genre.RemoveSong(simple);
+		mGenreList.Replace(genre);
 	}
 
 	cout << "\n\n\tSuccessfully deleted data.\n";
@@ -238,28 +261,40 @@ void Application::SearchByArtist() {
 
 // Search music with name
 void Application::SearchByGenre() {
-	MusicItem data; // Temporary varilable to hold info
-	data.SetGenreFromKB(); // Get genre to search
+	// Get genre name to search
+	Genre genre;
+	genre.SetNameFromKB();
 
-	bool found = false; // Remember whether we've found at least one
-
-	// Object to hold data from list
-	MusicItem dataFromList;
-	// Iterate through list
-	mMasterList.ResetIterator();
-	int curIndex = mMasterList.GetNextItem(dataFromList);
-	if (curIndex > -1) {
-		cout << "\n\n\t---------------------------------------\n\n";
+	// Get genre from genre list
+	if (!mGenreList.Get(genre)) {
+		// Genre does not exist in genre list
+		cout << "\n\n\tNo such genre in genre list.\n";
+		return;
 	}
-	while (curIndex > -1) {
-		// Check if retrieved item's genre matches that of input data's
-		if (dataFromList.GetGenre().compare(data.GetGenre()) == 0) {
-			cout << dataFromList;
-			cout << "\n\t---------------------------------------\n\n";
 
-			found = true;
+	// Check if song list is empty
+	if (genre.GetSongList().IsEmpty()) {
+		// Empty
+		cout << "\n\n\t" << genre.GetName() << " has no songs.\n";
+		return;
+	}
+
+	SimpleItem song; // Temporary variable to hold info from song list
+	MusicItem music; // Temporary variable to hold info from music master list
+
+	DoublyIterator<SimpleItem> iter(genre.GetSongList());
+	song = iter.Next();
+	while (iter.NextNotNull()) {
+		// Display info for each song in the genre's song list
+		music.SetId(song.GetId());
+		if (mMasterList.Retrieve(music) != -1) {
+			// Music found in master list, display info on screen
+			cout << music;
+		} else {
+			// Music not found
+			cout << "\n\n\tSong " << music.GetName() << " not found in music list.\n";
 		}
-		curIndex = mMasterList.GetNextItem(dataFromList);
+		song = iter.Next();
 	}
 }
 
@@ -297,6 +332,8 @@ void Application::DisplayAllMusic() {
 // Make list empty
 void Application::MakeEmpty() {
 	mMasterList.MakeEmpty();
+	mSingerList.MakeEmpty();
+	mGenreList.MakeEmpty();
 	mPlayer.MakeEmpty();
 
 	cout << "\n\n\tEmptied list.\n";
@@ -405,7 +442,7 @@ int Application::SaveArtistListToFile() {
 	// list 포인터를 초기화
 	mMasterList.ResetIterator();
 
-	cout << "\n\tSaving music list..\n";
+	cout << "\n\tSaving artist list..\n";
 	// list의 모든 데이터를 파일에 쓰기
 	DoublyIterator<Singer> iter(mSingerList);
 	singer = iter.Next();
@@ -413,6 +450,52 @@ int Application::SaveArtistListToFile() {
 		//data.WriteDataToFile(mOutFile);
 		mOutFile << singer;
 		singer = iter.Next();
+	}
+
+	mOutFile.close(); // Close file
+
+	return 1;
+}
+
+int Application::ReadGenreListFromFile() {
+	// Open music list file
+	if (!OpenInFile(GENRE_LIST_FILENAME)) {
+		cout << "\n\tNothing to read from file.\n";
+		return 0;
+	}
+
+	// Read music data from file and add to list
+	while (!mInFile.eof()) {
+		Genre genre;
+		mInFile >> genre; // Load music data from file
+		mGenreList.Add(genre); // Add to list
+	}
+
+	mInFile.close(); // Close file
+
+	return 1;
+}
+
+int Application::SaveGenreListToFile() {
+	Genre genre;	// Temporary variable to hold info from list
+
+	// Open music list file
+	if (!OpenOutFile(GENRE_LIST_FILENAME)) {
+		cout << "\n\tError while opening file.\n";
+		return 0;
+	}
+
+	// list 포인터를 초기화
+	mMasterList.ResetIterator();
+
+	cout << "\n\tSaving genre list..\n";
+	// list의 모든 데이터를 파일에 쓰기
+	DoublyIterator<Genre> iter(mGenreList);
+	genre = iter.Next();
+	while (iter.NextNotNull()) {
+		//data.WriteDataToFile(mOutFile);
+		mOutFile << genre;
+		genre = iter.Next();
 	}
 
 	mOutFile.close(); // Close file
