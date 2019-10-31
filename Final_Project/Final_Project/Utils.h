@@ -27,5 +27,12 @@ namespace utils {
 	*	@return	입력이 숫자가 맞다면 1, 아니면 0.
 	*/
 	int GetNum(int &n);
-};
 
+	/**
+	*	@brief	스트링의 문자를 전부 소문자로 변환.
+	*	@post	스트링의 문자열이 전부 소문자로 변환됨.
+	*	@param	str	소문자로 변환할 스트링
+	*	@return	소문자로 변환된 스트링
+	*/
+	std::string ToLowerCase(const std::string &str);
+};
