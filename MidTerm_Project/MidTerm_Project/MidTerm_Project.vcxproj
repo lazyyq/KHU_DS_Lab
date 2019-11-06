@@ -72,15 +72,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>..\packages\vcpkg-export-20191106-224308.1.0.0\installed\x86-windows\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>..\packages\vcpkg-export-20191106-224308.1.0.0\installed\x86-windows\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>..\packages\vcpkg-export-20191106-224308.1.0.0\installed\x86-windows\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>..\packages\vcpkg-export-20191106-224308.1.0.0\installed\x86-windows\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -94,6 +98,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>..\packages\vcpkg-export-20191106-224308.1.0.0\installed\x86-windows\lib\jsoncpp.lib;..\packages\vcpkg-export-20191106-224308.1.0.0\installed\x86-windows\lib\libcurl.lib;..\packages\vcpkg-export-20191106-224308.1.0.0\installed\x86-windows\lib\zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -108,6 +113,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>..\packages\vcpkg-export-20191106-224308.1.0.0\installed\x86-windows\lib\jsoncpp.lib;..\packages\vcpkg-export-20191106-224308.1.0.0\installed\x86-windows\lib\libcurl.lib;..\packages\vcpkg-export-20191106-224308.1.0.0\installed\x86-windows\lib\zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -126,6 +132,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>..\packages\vcpkg-export-20191106-224308.1.0.0\installed\x86-windows\lib\jsoncpp.lib;..\packages\vcpkg-export-20191106-224308.1.0.0\installed\x86-windows\lib\libcurl.lib;..\packages\vcpkg-export-20191106-224308.1.0.0\installed\x86-windows\lib\zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -144,6 +151,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>..\packages\vcpkg-export-20191106-224308.1.0.0\installed\x86-windows\lib\jsoncpp.lib;..\packages\vcpkg-export-20191106-224308.1.0.0\installed\x86-windows\lib\libcurl.lib;..\packages\vcpkg-export-20191106-224308.1.0.0\installed\x86-windows\lib\zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -175,7 +183,17 @@
     <ClCompile Include="SimpleItem.cpp" />
     <ClCompile Include="Singer.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\vcpkg-export-20191106-224308.1.0.0\build\native\vcpkg-export-20191106-224308.targets" Condition="Exists('..\packages\vcpkg-export-20191106-224308.1.0.0\build\native\vcpkg-export-20191106-224308.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>이 프로젝트는 이 컴퓨터에 없는 NuGet 패키지를 참조합니다. 해당 패키지를 다운로드하려면 NuGet 패키지 복원을 사용하십시오. 자세한 내용은 http://go.microsoft.com/fwlink/?LinkID=322105를 참조하십시오. 누락된 파일은 {0}입니다.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\vcpkg-export-20191106-224308.1.0.0\build\native\vcpkg-export-20191106-224308.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\vcpkg-export-20191106-224308.1.0.0\build\native\vcpkg-export-20191106-224308.targets'))" />
+  </Target>
 </Project>
