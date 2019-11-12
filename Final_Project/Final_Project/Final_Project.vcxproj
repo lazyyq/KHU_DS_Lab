@@ -147,15 +147,20 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="DoublyIterator.h" />
+    <ClInclude Include="DoublyLinkedList.h" />
+    <ClInclude Include="DoublyNodeType.h" />
     <ClInclude Include="GeniusLyricsFetcher.h" />
     <ClInclude Include="Genre.h" />
     <ClInclude Include="LyricsItem.h" />
     <ClInclude Include="LyricsManager.h" />
+    <ClInclude Include="menu\CursorManager.h" />
+    <ClInclude Include="menu\MenuScreen.h" />
     <ClInclude Include="MusicItem.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlaylistItem.h" />
     <ClInclude Include="SimpleItem.h" />
     <ClInclude Include="Singer.h" />
+    <ClInclude Include="SortedDoublyIterator.h" />
     <ClInclude Include="SortedDoublyLinkedList.h" />
     <ClInclude Include="SortedList.h" />
     <ClInclude Include="Utils.h" />
@@ -168,6 +173,8 @@
     <ClCompile Include="LyricsItem.cpp" />
     <ClCompile Include="LyricsManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="menu\CursorManager.cpp" />
+    <ClCompile Include="menu\MenuScreen.cpp" />
     <ClCompile Include="MusicItem.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlaylistItem.cpp" />

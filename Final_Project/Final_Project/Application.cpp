@@ -19,7 +19,7 @@ Application::~Application() {
 // Create directories (if not exist) required for running program
 void Application::InitDirectories() {
 	// files: where music list, singer list, playlist... are stored.
-	string directories[] = {"files"};
+	string directories[] = { "files" };
 	for (string directory : directories) {
 		filesystem::create_directory(directory);
 	}
@@ -46,7 +46,7 @@ void Application::Save() {
 }
 
 // Add new record into list.
-int Application::AddMusic() {
+int Application::AddMusicManually() {
 	MusicItem data; // Temporary variable to hold info
 
 	cout << "\n\tPlease input new music data."
@@ -225,7 +225,7 @@ void Application::SearchByArtist() {
 	MusicItem music; // Temporary variable to hold info from music master list
 
 	// Iterate through singer's song list
-	DoublyIterator<SimpleItem> iter(singer.GetSongList());
+	SortedDoublyIterator<SimpleItem> iter(singer.GetSongList());
 	song = iter.Next();
 	while (iter.NextNotNull()) {
 		// Display info for each song in the singer's song list
@@ -267,7 +267,7 @@ void Application::SearchByGenre() {
 	MusicItem music; // Temporary variable to hold info from music master list
 
 	// Iterate through song list
-	DoublyIterator<SimpleItem> iter(genre.GetSongList());
+	SortedDoublyIterator<SimpleItem> iter(genre.GetSongList());
 	song = iter.Next();
 	while (iter.NextNotNull()) {
 		// Display info for each song in the genre's song list
@@ -433,7 +433,7 @@ int Application::SaveArtistListToFile() {
 
 	cout << "\n\tSaving artist list..\n";
 	// list의 모든 데이터를 파일에 쓰기
-	DoublyIterator<Singer> iter(mSingerList);
+	SortedDoublyIterator<Singer> iter(mSingerList);
 	singer = iter.Next();
 	while (iter.NextNotNull()) {
 		//data.WriteDataToFile(mOutFile);
@@ -481,7 +481,7 @@ int Application::SaveGenreListToFile() {
 
 	cout << "\n\tSaving genre list..\n";
 	// list의 모든 데이터를 파일에 쓰기
-	DoublyIterator<Genre> iter(mGenreList);
+	SortedDoublyIterator<Genre> iter(mGenreList);
 	genre = iter.Next();
 	while (iter.NextNotNull()) {
 		//data.WriteDataToFile(mOutFile);

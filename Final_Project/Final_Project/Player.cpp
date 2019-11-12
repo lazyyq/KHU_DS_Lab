@@ -27,7 +27,7 @@ void Player::ListPlaylist() {
 	cout << endl;
 
 	// iterator
-	DoublyIterator<PlaylistItem> iter(mPlaylist);
+	SortedDoublyIterator<PlaylistItem> iter(mPlaylist);
 	item = iter.Next();
 	while (iter.NextNotNull()) {
 		music.SetId(item.GetId()); // item의 아이디를 저장
@@ -67,7 +67,7 @@ void Player::ChooseAndPlay() {
 void Player::PlayFromPosition(int position) {
 	PlaylistItem item; // Variable to hold item info from playlist
 
-	DoublyIterator<PlaylistItem> iter(mPlaylist); // Initialize iterator
+	SortedDoublyIterator<PlaylistItem> iter(mPlaylist); // Initialize iterator
 	for (int i = 0; i < position; ++i) {
 		item = iter.Next(); // Get first item from list
 	}
@@ -173,7 +173,7 @@ void Player::Shuffle() {
 
 	// 기존 플레이리스트 백업용, 셔플리스트용 각각 하나씩 초기화
 	SortedDoublyLinkedList<PlaylistItem> bak = mPlaylist, shuffled;
-	DoublyIterator<PlaylistItem> iter(mPlaylist); // Iterator
+	SortedDoublyIterator<PlaylistItem> iter(mPlaylist); // Iterator
 	PlaylistItem origItem; // 기존 마스터리스트에서 꺼내온 정보 저장
 	srand(time(0)); // 시드 설정
 
@@ -219,7 +219,7 @@ void Player::DeleteFromPlaylist() {
 
 	// Iterator
 	// 리스트의 Delete를 바로 쓰지 않는 이유는 primary 키가 ID가 아니기 때문.
-	DoublyIterator<PlaylistItem> iter(mPlaylist);
+	SortedDoublyIterator<PlaylistItem> iter(mPlaylist);
 	item = iter.Next();
 	bool found = false;
 	while (iter.NextNotNull()) {
@@ -249,7 +249,7 @@ int Player::SavePlaylistToFile() {
 
 	cout << "\n\tSaving playlist..\n";
 
-	DoublyIterator<PlaylistItem> iter(mPlaylist);
+	SortedDoublyIterator<PlaylistItem> iter(mPlaylist);
 	data = iter.Next();
 	while (iter.NextNotNull()) {
 		ofs << data; // 파일에 아이템 저장

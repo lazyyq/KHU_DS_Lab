@@ -95,6 +95,8 @@ public:
 	*	@post	new record is added into the list.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
+	int AddMusicManually();
+
 	int AddMusic();
 
 	/**

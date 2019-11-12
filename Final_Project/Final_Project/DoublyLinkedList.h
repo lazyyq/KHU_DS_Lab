@@ -1,37 +1,37 @@
 #pragma once
 
 #include "DoublyNodeType.h"
-#include "SortedDoublyIterator.h"
+#include "DoublyIterator.h"
 
 template<typename T>
-class SortedDoublyIterator;
+class DoublyIterator;
 
 /**
 *	정렬된 더블연결리스트 클래스
 */
 template <typename T>
-class SortedDoublyLinkedList {
-	friend class SortedDoublyIterator<T>; // SortedDoublyIterator와 친구 클래스.
+class DoublyLinkedList {
+	friend class DoublyIterator<T>; // DoublyIterator와 친구 클래스.
 public:
 	/**
 	*	디폴트 생성자.
 	*/
-	SortedDoublyLinkedList();
+	DoublyLinkedList();
 
 	/**
 	*	Copy constructor.
 	*/
-	SortedDoublyLinkedList<T>(const SortedDoublyLinkedList<T> &that);
+	DoublyLinkedList<T>(const DoublyLinkedList<T> &that);
 
 	/**
 	*	소멸자.
 	*/
-	~SortedDoublyLinkedList();
+	~DoublyLinkedList();
 
 	/**
 	*	Assignment operator.
 	*/
-	SortedDoublyLinkedList<T> &operator=(const SortedDoublyLinkedList<T> &that);
+	DoublyLinkedList<T> &operator=(const DoublyLinkedList<T> &that);
 
 	/**
 	*	@brief	리스트가 비었는지 아닌지 검사한다.
@@ -102,7 +102,7 @@ private:
 
 // 리스트의 맨 처음과 끝이 서로를 가리키게 설정하고 리스트의 길이를 0으로 초기화시켜놓는다.
 template <typename T>
-SortedDoublyLinkedList<T> ::SortedDoublyLinkedList() {
+DoublyLinkedList<T> ::DoublyLinkedList() {
 	mFirst = new DoublyNodeType<T>;
 	mLast = new DoublyNodeType<T>;
 
@@ -117,8 +117,8 @@ SortedDoublyLinkedList<T> ::SortedDoublyLinkedList() {
 
 // Copy constructor
 template<typename T>
-SortedDoublyLinkedList<T>::SortedDoublyLinkedList(
-	const SortedDoublyLinkedList<T> &that) {
+DoublyLinkedList<T>::DoublyLinkedList(
+	const DoublyLinkedList<T> &that) {
 	mFirst = new DoublyNodeType<T>;
 	mLast = new DoublyNodeType<T>;
 
@@ -133,7 +133,7 @@ SortedDoublyLinkedList<T>::SortedDoublyLinkedList(
 	// Deep copy.
 	T dataToCopy;
 	// 현재 리스트와 복사 대상 리스트의 iterator
-	SortedDoublyIterator<T> iterThis(*this), iterThat(that);
+	DoublyIterator<T> iterThis(*this), iterThat(that);
 	iterThis.Next(); dataToCopy = iterThat.Next();
 	while (iterThat.NextNotNull()) {
 		// 새 노드를 만들고 데이터 복사해옴
@@ -152,15 +152,15 @@ SortedDoublyLinkedList<T>::SortedDoublyLinkedList(
 
 // 소멸자.
 template <typename T>
-SortedDoublyLinkedList<T>::~SortedDoublyLinkedList() {
+DoublyLinkedList<T>::~DoublyLinkedList() {
 	delete mFirst;
 	delete mLast;
 }
 
 // Assignment operator
 template<typename T>
-SortedDoublyLinkedList<T>
-&SortedDoublyLinkedList<T>::operator=(const SortedDoublyLinkedList<T> &that) {
+DoublyLinkedList<T>
+&DoublyLinkedList<T>::operator=(const DoublyLinkedList<T> &that) {
 	// self-assignment 검사
 	if (this == &that) {
 		return *this;
@@ -173,7 +173,7 @@ SortedDoublyLinkedList<T>
 	// Deep copy
 	T dataToCopy;
 	// 현재 리스트와 복사 대상 리스트의 iterator
-	SortedDoublyIterator<T> iterThis(*this), iterThat(that);
+	DoublyIterator<T> iterThis(*this), iterThat(that);
 	iterThis.Next(); dataToCopy = iterThat.Next();
 	while (iterThat.NextNotNull()) {
 		// 새 노드를 만들고 데이터 복사해옴
@@ -194,7 +194,7 @@ SortedDoublyLinkedList<T>
 
 // 리스트가 비었는지 검사한다.
 template <typename T>
-bool SortedDoublyLinkedList<T>::IsEmpty() const {
+bool DoublyLinkedList<T>::IsEmpty() const {
 	if (mLength == 0)
 		return true;
 	else
@@ -203,15 +203,15 @@ bool SortedDoublyLinkedList<T>::IsEmpty() const {
 
 // 리스트가 꽉 차있는지 검사한다.
 template <typename T>
-bool SortedDoublyLinkedList<T>::IsFull() const {
+bool DoublyLinkedList<T>::IsFull() const {
 	return false;
 }
 
 // 리스트를 비운다.
 template <typename T>
-void SortedDoublyLinkedList<T>::MakeEmpty() {
+void DoublyLinkedList<T>::MakeEmpty() {
 	DoublyNodeType<T> *pItem;
-	SortedDoublyIterator<T> itor(*this);
+	DoublyIterator<T> itor(*this);
 	itor.Next(); // 다음으로 이동.
 
 	while (itor.NextNotNull()) {
@@ -232,14 +232,14 @@ void SortedDoublyLinkedList<T>::MakeEmpty() {
 
 // 리스트의 길이를 반환한다.
 template <typename T>
-int SortedDoublyLinkedList<T>::GetLength() const {
+int DoublyLinkedList<T>::GetLength() const {
 	return mLength;
 }
 
 // 아이템을 입력받아 리스트의 맞는 자리를 찾아 삽입한다.
 template <typename T>
-int SortedDoublyLinkedList<T>::Add(T item) {
-	SortedDoublyIterator<T> itor(*this);
+int DoublyLinkedList<T>::Add(T item) {
+	DoublyIterator<T> itor(*this);
 	itor.Next(); // 다음으로 이동.
 
 	if (IsEmpty()) // 처음 삽입할 때
@@ -254,8 +254,8 @@ int SortedDoublyLinkedList<T>::Add(T item) {
 		return 1;
 	} else // 처음이 아닐 때
 	{
-		while (1) {
-			if (item < itor.mCurPointer->data || !itor.NextNotNull()) // 맞는 자리를 찾는다.
+		while (true) {
+			if (!itor.NextNotNull()) // 마지막 자리를 찾는다.
 			{
 				DoublyNodeType<T> *pItem = new DoublyNodeType<T>;
 				pItem->data = item;
@@ -265,8 +265,9 @@ int SortedDoublyLinkedList<T>::Add(T item) {
 				itor.mCurPointer->prev = pItem; // 아이템을 삽입.
 				mLength++;
 				return 1;
-			} else if (item == itor.mCurPointer->data) // 같은 정보의 아이템이 있으면
-				return 0; // 0을 반환.
+			}
+			//else if (item == itor.mCurPointer->data) // 같은 정보의 아이템이 있으면
+			//	return 0; // 0을 반환.
 			else
 				itor.Next(); // 다음으로 이동.
 		}
@@ -275,12 +276,12 @@ int SortedDoublyLinkedList<T>::Add(T item) {
 
 // 입력받은 아이템을 데이터에서 찾아내어 삭제한다.
 template <typename T>
-int SortedDoublyLinkedList<T>::Delete(T item) {
+int DoublyLinkedList<T>::Delete(T item) {
 	if (IsEmpty()) {
 		return 0;
 	}
 
-	SortedDoublyIterator<T> itor(*this);
+	DoublyIterator<T> itor(*this);
 	itor.Next(); // 다음으로 이동.
 
 	bool found = false;
@@ -307,8 +308,8 @@ int SortedDoublyLinkedList<T>::Delete(T item) {
 
 // 입력받은 아이템의 정보를 교체한다.
 template <typename T>
-void SortedDoublyLinkedList<T>::Replace(T item) {
-	SortedDoublyIterator<T> itor(*this);
+void DoublyLinkedList<T>::Replace(T item) {
+	DoublyIterator<T> itor(*this);
 	itor.Next(); // 다음으로 이동.
 
 	while (itor.mCurPointer != mLast) {
@@ -324,8 +325,8 @@ void SortedDoublyLinkedList<T>::Replace(T item) {
 
 // 입력받은 아이템과 일치하는 아이템을 리스트에서 찾아 가져온다.
 template <typename T>
-int SortedDoublyLinkedList<T>::Get(T &item) const {
-	SortedDoublyIterator<T> itor(*this);
+int DoublyLinkedList<T>::Get(T &item) const {
+	DoublyIterator<T> itor(*this);
 	itor.Next();
 
 	while (itor.mCurPointer != mLast) {

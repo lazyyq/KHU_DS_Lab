@@ -170,7 +170,7 @@ ofstream &operator<<(ofstream &ofs, const Singer &item) {
 
 	// 곡 리스트 저장 시작
 	SimpleItem simple;
-	DoublyIterator<SimpleItem> iter(item.mSongList); // Iterator
+	SortedDoublyIterator<SimpleItem> iter(item.mSongList); // Iterator
 	simple = iter.Next();
 	while (iter.NextNotNull()) {
 		ofs << endl;

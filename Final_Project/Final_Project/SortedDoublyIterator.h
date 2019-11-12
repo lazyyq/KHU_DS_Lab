@@ -1,24 +1,24 @@
 #pragma once
 
-#include "DoublyLinkedList.h"
+#include "SortedDoublyLinkedList.h"
 
 template<typename T>
 struct DoublyNodeType;
 template<typename T>
-class DoublyLinkedList;
+class SortedDoublyLinkedList;
 
 /**
 *	DoublyLinkedList의 Iterator
 */
 template <typename T>
-class DoublyIterator {
-	friend class DoublyLinkedList<T>;
+class SortedDoublyIterator {
+	friend class SortedDoublyLinkedList<T>;
 public:
 	/**
 	*	디폴트 생성자.
 	*/
-	DoublyIterator(const DoublyLinkedList<T> &list) :
-		mList(list), mCurPointer(list.mFirst) {}; //DoublyLinkedList와 친구 클래스.
+	SortedDoublyIterator(const SortedDoublyLinkedList<T> &list) :
+		mList(list), mCurPointer(list.mFirst) {}; //SortedDoublyLinkedList와 친구 클래스.
 
 	/**
 	*	@brief	현재 포인터를 맨 처음 아이템으로 리셋
@@ -73,19 +73,19 @@ public:
 	DoublyNodeType<T> GetCurrentNode();
 
 private:
-	const DoublyLinkedList<T> &mList; // Iterate의 대상이 될 리스트
+	const SortedDoublyLinkedList<T> &mList; // Iterate의 대상이 될 리스트
 	DoublyNodeType<T> *mCurPointer; // 현재 포인터
 };
 
 template<typename T>
-void DoublyIterator<T>::ResetPointer() {
+void SortedDoublyIterator<T>::ResetPointer() {
 	// 포인터를 첫 아이템으로 이동시킴.
 	// 초기화 직후와 같은 상태가 됨.
 	mCurPointer = mList.mFirst;
 }
 
 template <typename T>
-bool DoublyIterator<T> ::NotNull() {
+bool SortedDoublyIterator<T> ::NotNull() {
 	if (mCurPointer == NULL)
 		return false;
 	else
@@ -93,7 +93,7 @@ bool DoublyIterator<T> ::NotNull() {
 }
 
 template <typename T>
-bool DoublyIterator<T> ::NextNotNull() {
+bool SortedDoublyIterator<T> ::NextNotNull() {
 	if (mCurPointer->next == NULL)
 		return false;
 	else
@@ -101,7 +101,7 @@ bool DoublyIterator<T> ::NextNotNull() {
 }
 
 template <typename T>
-bool DoublyIterator<T> ::PrevNotNull() {
+bool SortedDoublyIterator<T> ::PrevNotNull() {
 	if (mCurPointer->prev == NULL)
 		return false;
 	else
@@ -109,23 +109,23 @@ bool DoublyIterator<T> ::PrevNotNull() {
 }
 
 template <typename T>
-T DoublyIterator<T> ::First() {
+T SortedDoublyIterator<T> ::First() {
 	return mList.mFirst->data;
 }
 
 template <typename T>
-T DoublyIterator<T> ::Next() {
+T SortedDoublyIterator<T> ::Next() {
 	mCurPointer = mCurPointer->next; // 포인터를 다음으로 이동
 	return mCurPointer->data;
 }
 
 template <typename T>
-T DoublyIterator<T> ::Prev() {
+T SortedDoublyIterator<T> ::Prev() {
 	mCurPointer = mCurPointer->prev; // 포인터를 이전으로 이동
 	return mCurPointer->data;
 }
 
 template <typename T>
-DoublyNodeType<T> DoublyIterator<T> ::GetCurrentNode() {
+DoublyNodeType<T> SortedDoublyIterator<T> ::GetCurrentNode() {
 	return *mCurPointer;
 }
