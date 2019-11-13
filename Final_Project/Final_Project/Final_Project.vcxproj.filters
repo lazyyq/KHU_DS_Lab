@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="소스 파일\id3">
+      <UniqueIdentifier>{85353dab-e69d-4a5a-9a5a-4a886c1d9c59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\id3">
+      <UniqueIdentifier>{59f4ab2f-336d-4bb8-8ca8-ad16a941b204}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlaylistItem.h">
@@ -72,6 +78,54 @@
     <ClInclude Include="SortedDoublyIterator.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="dialog\DialogUtils.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\id3\Encoding.h">
+      <Filter>헤더 파일\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\id3\ID3DefaultReaderFactory.h">
+      <Filter>헤더 파일\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\id3\ID3InvalidReader.h">
+      <Filter>헤더 파일\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\id3\ID3Reader.h">
+      <Filter>헤더 파일\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\id3\ID3ReaderFactory.h">
+      <Filter>헤더 파일\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\id3\ID3Tag.h">
+      <Filter>헤더 파일\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\id3\ID3v1.h">
+      <Filter>헤더 파일\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\id3\ID3v2.h">
+      <Filter>헤더 파일\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\id3\ID3v2Reader.h">
+      <Filter>헤더 파일\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\id3\ID3v11ExtReader.h">
+      <Filter>헤더 파일\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\id3\ID3v11Reader.h">
+      <Filter>헤더 파일\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\id3\ID3v22Reader.h">
+      <Filter>헤더 파일\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\id3\ID3v23Reader.h">
+      <Filter>헤더 파일\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\id3\ID3v24Reader.h">
+      <Filter>헤더 파일\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\id3\MetaInfo.h">
+      <Filter>헤더 파일\id3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlaylistItem.cpp">
@@ -118,6 +172,45 @@
     </ClCompile>
     <ClCompile Include="menu\MenuScreen.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="dialog\DialogUtils.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libs\id3\ID3DefaultReaderFactory.cpp">
+      <Filter>소스 파일\id3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libs\id3\ID3InvalidReader.cpp">
+      <Filter>소스 파일\id3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libs\id3\ID3Reader.cpp">
+      <Filter>소스 파일\id3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libs\id3\ID3ReaderFactory.cpp">
+      <Filter>소스 파일\id3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libs\id3\ID3Tag.cpp">
+      <Filter>소스 파일\id3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libs\id3\ID3v2Reader.cpp">
+      <Filter>소스 파일\id3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libs\id3\ID3v11ExtReader.cpp">
+      <Filter>소스 파일\id3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libs\id3\ID3v11Reader.cpp">
+      <Filter>소스 파일\id3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libs\id3\ID3v22Reader.cpp">
+      <Filter>소스 파일\id3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libs\id3\ID3v23Reader.cpp">
+      <Filter>소스 파일\id3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libs\id3\ID3v24Reader.cpp">
+      <Filter>소스 파일\id3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libs\id3\Encoding.cpp">
+      <Filter>소스 파일\id3</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

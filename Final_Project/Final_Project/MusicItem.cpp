@@ -1,5 +1,10 @@
 #include "MusicItem.h"
 
+#include "Utils.h"
+
+using namespace utils;
+namespace ID3 = MetadataInfo::ID3;
+
 // 생성자
 MusicItem::MusicItem() {
 	mId = "";
@@ -7,6 +12,10 @@ MusicItem::MusicItem() {
 	mMelodizer = "";
 	mArtist = "";
 	mGenre = "";
+}
+
+MusicItem::MusicItem(ID3::ID3Tag &tag) {
+	SetRecordFromTag(tag);
 }
 
 // 재생
@@ -113,6 +122,31 @@ void MusicItem::SetMelodizerFromKB() {
 void MusicItem::SetArtistFromKB() {
 	cout << "\t" << setw(attrIndentSize) << "Artist (String) : ";
 	getline(cin, mArtist);
+}
+
+void MusicItem::SetRecordFromTag(MetadataInfo::ID3::ID3Tag &tag) {
+	// 태그에서 제목, 아티스트, 작곡가, 장르 읽어오기
+	const wstring wtitle = tag.GetStringValue(ID3::TITLE).compare(L"") ?
+		tag.GetStringValue(ID3::TITLE) : L" ";
+
+	const wstring wartist = tag.GetStringValue(ID3::ARTIST).compare(L"") ?
+		tag.GetStringValue(ID3::ARTIST) : L" ";
+
+	const wstring wcomposer = tag.GetStringValue(ID3::COMPOSERS).compare(L"") ?
+		tag.GetStringValue(ID3::COMPOSERS) : L" ";
+
+	// 장르의 경우 GENRE 태그를 먼저 읽어보고 없으면 CONTENT_TYPE에서 추출
+	const wstring wgenre = tag.GetStringValue(ID3::GENRE).compare(L"") ?
+		tag.GetStringValue(ID3::CONTENT_TYPE) :
+		tag.GetStringValue(ID3::CONTENT_TYPE).compare(L"") ?
+		tag.GetStringValue(ID3::CONTENT_TYPE) : L" ";
+
+	// wstring -> string
+	mName = WstrToStr(wtitle);
+	mArtist = WstrToStr(wartist);
+	mMelodizer = WstrToStr(wcomposer);
+	mGenre = WstrToStr(wgenre);
+	mId = GenerateMusicId(*this);
 }
 
 // Set music genre from keyboard, where genre is string.

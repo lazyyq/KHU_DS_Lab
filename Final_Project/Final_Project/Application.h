@@ -76,6 +76,11 @@ public:
 	void MenuManage();
 
 	/**
+	*	@brief	Show menu for adding music.
+	*/
+	void MenuAddMusic();
+
+	/**
 	*	@brief	Show menu for searching music.
 	*/
 	void MenuSearch();
@@ -93,11 +98,31 @@ public:
 	*			its singer (artist) and genre.
 	*	@pre	list should be initialized.
 	*	@post	new record is added into the list.
+	*	@param	data	Record to add to list.
+	*	@return	return 1 if this function works well, otherwise 0.
+	*/
+	int AddMusic(const MusicItem &data);
+
+	/**
+	*	@brief	Get record of music from keyboard and add to list.
+	*	@pre	list should be initialized.
+	*	@post	new record is added into the list.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
 	int AddMusicManually();
 
-	int AddMusic();
+	/**
+	*	@brief	Read record from an mp3 file and add to song list.
+	*	@return	1 on success, 0 on failure.
+	*/
+	int AddMusicFromFile();
+
+	/**
+	*	@brief	Scan a folder recursively, read record from mp3 files inside
+				and add to song list.
+	*	@return	1 on success, 0 on failure.
+	*/
+	int AddMusicFromFolder();
 
 	/**
 	*	@brief	Delete selected music information from list and the song lists of

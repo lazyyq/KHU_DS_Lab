@@ -37,7 +37,7 @@ void Application::MenuManage() {
 	const string title = "Manage Music";
 	const string menus[] = {
 		"List all music",
-		"Add music manually",
+		"Add music",
 		"Delete music",
 		"Update music info",
 		"Clear music list",
@@ -52,7 +52,7 @@ void Application::MenuManage() {
 		case 1:
 			DisplayAllMusic(); break; // 모든 곡 정보 표시
 		case 2:
-			AddMusicManually(); break; // 곡 추가
+			MenuAddMusic(); break; // 곡 추가 메뉴 표시
 		case 3:
 			DeleteMusic(); break; // 곡 삭제
 		case 4:
@@ -60,6 +60,36 @@ void Application::MenuManage() {
 		case 5:
 			MakeEmpty(); break; // 곡 리스트, 가수리스트, 장르 리스트, 플레이리스트 전부 초기화
 		case 7:
+			return;
+		default:
+			continue;
+		}
+
+		Pause();
+	}
+}
+
+void Application::MenuAddMusic() {
+	const string title = "Manage Music";
+	const string menus[] = {
+		"Add music manually",
+		"Add music from file",
+		"Add music from folder",
+		"",
+		"Return to previous menu",
+	};
+
+	MenuScreen menu(title, begin(menus), end(menus));
+
+	while (true) {
+		switch (menu.GetSelection()) {
+		case 1:
+			AddMusicManually(); break; // 곡 정보를 직접 입력하여 추가
+		case 2:
+			AddMusicFromFile(); break; // MP3 파일에서 곡 정보 추가
+		case 3:
+			AddMusicFromFolder(); break; // 폴더 내의 MP3 파일에서 곡 정보 추가
+		case 5:
 			return;
 		default:
 			continue;

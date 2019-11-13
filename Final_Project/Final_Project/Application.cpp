@@ -1,5 +1,11 @@
 #include "Application.h"
 
+#include <id3/ID3Tag.h>
+
+#include "dialog/DialogUtils.h"
+
+namespace ID3 = MetadataInfo::ID3;
+
 // Constructor
 Application::Application()
 	: mPlayer(mMasterList) {
@@ -32,6 +38,8 @@ void Application::SetConsoleColor() {
 
 // Program driver.
 void Application::Run() {
+	setlocale(LC_ALL, "korean");
+
 	SetConsoleColor(); // Set color
 	MenuMain(); // Show main menu
 }
@@ -46,16 +54,10 @@ void Application::Save() {
 }
 
 // Add new record into list.
-int Application::AddMusicManually() {
-	MusicItem data; // Temporary variable to hold info
-
-	cout << "\n\tPlease input new music data."
-		<< " Duplicate data is not allowed.\n\n";
-	cin >> data; // 키보드로부터 곡정보 입력
-
+int Application::AddMusic(const MusicItem &data) {
 	int result = mMasterList.Add(data);
 	if (result != 1) { // Add failed
-		cout << "\n\tFailed to add data. Probably duplicate?\n";
+		cout << "\n\tFailed to add " << data.GetName() << ". Probably duplicate?\n";
 		return 0;
 	}
 
@@ -88,12 +90,89 @@ int Application::AddMusicManually() {
 		mGenreList.Add(genre);
 	}
 
-	cout << "\n\tSuccessfully added new data.\n";
-
-	// 현재 list 출력
-	DisplayAllMusic();
+	cout << "\n\tSuccessfully added " << data.GetName() << ".\n";
 
 	return 1;
+}
+
+// Get record from keyboard and add to list.
+int Application::AddMusicManually() {
+	MusicItem data; // Temporary variable to hold info
+
+	cout << "\n\tPlease input new music data."
+		<< " Duplicate data is not allowed.\n\n";
+	cin >> data; // 키보드로부터 곡정보 입력
+
+	int result = AddMusic(data);
+	DisplayAllMusic(); // list 출력
+
+	return result;
+}
+
+// Add record from an mp3 file
+int Application::AddMusicFromFile() {
+	// 파일 선택 창 띄우기
+	wstring filename;
+	const wchar_t *filter = L"MP3 File (*.mp3)\0*.mp3\0"; // MP3 파일 필터
+	if (!DialogUtils::GetFile(filename, filter)) {
+		return 0;
+	}
+
+	// 파일에서 태그 정보 읽어오기
+	namespace ID3 = MetadataInfo::ID3;
+	ID3::ID3Tag tag;
+	if (!tag.Open(filename.c_str())) {
+		return 0;
+	}
+
+	// 읽어온 정보를 MusicItem으로 만들어 리스트에 추가
+	MusicItem item(tag);
+
+	tag.Close(); // 태그 닫기
+
+	int result = AddMusic(item); // 리스트에 추가
+	if (result) {
+		DisplayAllMusic();
+	}
+
+	return result;
+}
+
+// Add record from mp3 files inside a folder
+int Application::AddMusicFromFolder() {
+	// 폴더 선택 창 띄우기
+	wstring path = L"."; // 기본 폴더는 현재 폴더
+	if (!DialogUtils::GetFolder(path)) {
+		return 0;
+	}
+
+	ID3::ID3Tag tag;
+	int result = 0;
+
+	for (const auto &entry : filesystem::recursive_directory_iterator(path)) {
+		if (!entry.is_directory()) {
+			if (!ToLowerCase(entry.path().extension().string()).compare(".mp3")) {
+				// 파일에서 태그 정보 읽어오기
+				if (tag.Open(entry.path().c_str())) {
+					// 읽어온 정보를 MusicItem으로 만들어 리스트에 추가
+					MusicItem item(tag);
+					if (AddMusic(item)) {
+						result = 1; // 리스트에 하나라도 추가 성공 시 함수 성공으로 간주
+					}
+				}
+			}
+		}
+	}
+	tag.Close();
+
+	if (result) {
+		cout << "\n\tFinished adding music.\n";
+		DisplayAllMusic();
+	} else {
+		cout << "\n\tFailed to add music.\n"
+			<< "\tPlease make sure you chose the right folder with mp3 files inside.\n";
+	}
+	return result;
 }
 
 // Delete music from list.

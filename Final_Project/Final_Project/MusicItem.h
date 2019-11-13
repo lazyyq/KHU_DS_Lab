@@ -9,6 +9,8 @@
 #include <string>
 #include <time.h>
 
+#include <id3/ID3Tag.h>
+
 using namespace std;
 
 /**
@@ -20,6 +22,8 @@ public:
 	*	default constructor.
 	*/
 	MusicItem();
+
+	MusicItem(MetadataInfo::ID3::ID3Tag &tag);
 
 	/**
 	*	destructor.
@@ -186,6 +190,12 @@ public:
 	*	@post	music artist is set.
 	*/
 	void SetArtistFromKB();
+
+	/**
+	*	@brief	Read record from MP3 tag.
+	*	@param	tag	MP3 tag to read data from.
+	*/
+	void SetRecordFromTag(MetadataInfo::ID3::ID3Tag &tag);
 
 	/**
 	*	@brief	Set music genre from keyboard.
