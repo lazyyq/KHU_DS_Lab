@@ -7,11 +7,12 @@
 class MenuScreen {
 public:
 	MenuScreen(const std::string title);
-	MenuScreen(const std::string title, const int size,
-		const std::string menus[]);
+	MenuScreen(const std::string title,
+		const std::string *begin, const std::string *end);
 	~MenuScreen();
 	void AddMenu();
 	void AddMenu(const std::string &title);
+	void AddMenu(const std::string *begin, const std::string *end);
 	int GetSelection() const;
 	std::string GetTitle() const;
 	void SetTitle(const std::string &title);

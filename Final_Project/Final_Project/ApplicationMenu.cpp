@@ -13,7 +13,7 @@ void Application::MenuMain() {
 		"Save and quit",
 	};
 
-	MenuScreen menu(title, 6, menus);
+	MenuScreen menu(title, begin(menus), end(menus));
 
 	while (true) {
 		switch (menu.GetSelection()) {
@@ -45,7 +45,7 @@ void Application::MenuManage() {
 		"Return to previous menu",
 	};
 
-	MenuScreen menu(title, 7, menus);
+	MenuScreen menu(title, begin(menus), end(menus));
 
 	while (true) {
 		switch (menu.GetSelection()) {
@@ -80,7 +80,7 @@ void Application::MenuSearch() {
 		"Return to previous menu",
 	};
 
-	MenuScreen menu(title, 6, menus);
+	MenuScreen menu(title, begin(menus), end(menus));
 
 	while (true) {
 		switch (menu.GetSelection()) {
@@ -118,7 +118,7 @@ void Application::MenuPlaylists() {
 		"Return to previous menu",
 	};
 
-	MenuScreen menu(title, 11, menus);
+	MenuScreen menu(title, begin(menus), end(menus));
 
 	while (true) {
 		switch (menu.GetSelection()) {

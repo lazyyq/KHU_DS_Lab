@@ -2,6 +2,7 @@
 
 #include <conio.h>
 #include <Windows.h>
+#include <algorithm>
 
 #include "CursorManager.h"
 
@@ -13,12 +14,10 @@ using namespace std;
 MenuScreen::MenuScreen(const string title) :
 	mTitle(title) {}
 
-MenuScreen::MenuScreen(const std::string title, const int size,
-	const std::string menus[]) :
+MenuScreen::MenuScreen(const std::string title,
+	const std::string *begin, const std::string *end) :
 	mTitle(title) {
-	for (int i = 0; i < size; ++i) {
-		mMenuList.Add(menus[i]);
-	}
+	AddMenu(begin, end);
 }
 
 MenuScreen::~MenuScreen() {
@@ -31,6 +30,12 @@ void MenuScreen::AddMenu() {
 
 void MenuScreen::AddMenu(const string &title) {
 	mMenuList.Add(title);
+}
+
+void MenuScreen::AddMenu(const std::string *begin, const std::string *end) {
+	std::for_each(begin, end, [&](const auto &str) {
+		mMenuList.Add(str);
+		});
 }
 
 int MenuScreen::GetSelection() const {
