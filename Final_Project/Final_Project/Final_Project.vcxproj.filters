@@ -19,6 +19,12 @@
     <Filter Include="헤더 파일\id3">
       <UniqueIdentifier>{59f4ab2f-336d-4bb8-8ca8-ad16a941b204}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\menu">
+      <UniqueIdentifier>{d67bbb3d-6d05-4ca9-9fca-2047977e8639}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\menu">
+      <UniqueIdentifier>{33075441-c3f7-4d53-ab2b-be05785715bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlaylistItem.h">
@@ -64,12 +70,6 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="DoublyNodeType.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="menu\MenuScreen.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="menu\CursorManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="DoublyLinkedList.h">
@@ -126,6 +126,12 @@
     <ClInclude Include="..\libs\id3\MetaInfo.h">
       <Filter>헤더 파일\id3</Filter>
     </ClInclude>
+    <ClInclude Include="menu\CursorManager.h">
+      <Filter>헤더 파일\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="menu\MenuScreen.h">
+      <Filter>헤더 파일\menu</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlaylistItem.cpp">
@@ -167,12 +173,6 @@
     <ClCompile Include="Utils.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="menu\CursorManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="menu\MenuScreen.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="dialog\DialogUtils.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -211,6 +211,12 @@
     </ClCompile>
     <ClCompile Include="..\libs\id3\Encoding.cpp">
       <Filter>소스 파일\id3</Filter>
+    </ClCompile>
+    <ClCompile Include="menu\MenuScreen.cpp">
+      <Filter>소스 파일\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="menu\CursorManager.cpp">
+      <Filter>소스 파일\menu</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

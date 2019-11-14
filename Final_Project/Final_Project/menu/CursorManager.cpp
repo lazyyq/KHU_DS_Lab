@@ -47,20 +47,20 @@ int CursorManager::StartSelectMode() {
 
 			switch (c) {
 			case KEY_UP:
-				if (coord.Y > yFrom)
-					--coord.Y;
+				if (coord.Y > yFrom) --coord.Y;
+				else coord.Y = yTo;
 				break;
 			case KEY_DOWN:
-				if (coord.Y < yTo)
-					++coord.Y;
+				if (coord.Y < yTo) ++coord.Y;
+				else coord.Y = yFrom;
 				break;
 			case KEY_LEFT:
-				if (coord.X > xFrom)
-					--coord.X;
+				if (coord.X > xFrom) --coord.X;
+				else coord.X = xTo;
 				break;
 			case KEY_RIGHT:
-				if (coord.X < xTo)
-					++coord.X;
+				if (coord.X < xTo) ++coord.X;
+				else coord.X = xFrom;
 				break;
 			}
 
