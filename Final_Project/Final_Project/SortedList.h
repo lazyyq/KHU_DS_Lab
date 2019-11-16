@@ -1,10 +1,8 @@
-#ifndef _SORTEDLIST_H
-#define _SORTEDLIST_H
+#pragma once
 
 #include <iostream>
-#include <fstream>	
+#include <fstream>
 #include <string>
-using namespace std;
 
 #define SORTEDLIST_INIT_SIZE	20
 #define SORTEDLIST_EXPAND_SIZE	20
@@ -400,5 +398,3 @@ void SortedList<T>::PushBackward(int startIndex) {
 		mArray[i] = mArray[i - 1];
 	}
 }
-
-#endif // _SORTEDLIST_H

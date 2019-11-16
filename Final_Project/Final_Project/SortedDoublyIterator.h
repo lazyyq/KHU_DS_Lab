@@ -86,7 +86,7 @@ void SortedDoublyIterator<T>::ResetPointer() {
 
 template <typename T>
 bool SortedDoublyIterator<T> ::NotNull() {
-	if (mCurPointer == NULL)
+	if (mCurPointer == nullptr)
 		return false;
 	else
 		return true;
@@ -94,7 +94,7 @@ bool SortedDoublyIterator<T> ::NotNull() {
 
 template <typename T>
 bool SortedDoublyIterator<T> ::NextNotNull() {
-	if (mCurPointer->next == NULL)
+	if (mCurPointer->next == nullptr)
 		return false;
 	else
 		return true;
@@ -102,7 +102,7 @@ bool SortedDoublyIterator<T> ::NextNotNull() {
 
 template <typename T>
 bool SortedDoublyIterator<T> ::PrevNotNull() {
-	if (mCurPointer->prev == NULL)
+	if (mCurPointer->prev == nullptr)
 		return false;
 	else
 		return true;

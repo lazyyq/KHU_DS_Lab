@@ -1,11 +1,5 @@
 #pragma once
 
-#include <iostream>
-#include <string>
-#include <iomanip>
-#include <fstream>
-#include <json/json.h>
-
 #include "SortedDoublyLinkedList.h"
 #include "SimpleItem.h"
 

@@ -2,6 +2,7 @@
 
 #include <Windows.h>
 #include <ShlObj.h>
+#include <string>
 
 using namespace std;
 

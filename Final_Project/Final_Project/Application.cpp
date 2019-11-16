@@ -1,10 +1,23 @@
 #include "Application.h"
 
+#include <iostream>
+#include <string>
+#include <filesystem>
 #include <json/json.h>
 
-#include "id3/ID3Tag.h"
+#include "PlaylistItem.h"
+#include "SimpleItem.h"
+#include "Utils.h"
 #include "dialog/DialogUtils.h"
+#include "id3/ID3Tag.h"
 
+#define CONSOLE_COLOR			"70"
+#define MUSIC_LIST_FILENAME		"files/list_music.json"
+#define ARTIST_LIST_FILENAME	"files/list_artist.json"
+#define GENRE_LIST_FILENAME		"files/list_genre.json"
+
+using namespace std;
+using namespace utils;
 namespace ID3 = MetadataInfo::ID3;
 
 // Constructor

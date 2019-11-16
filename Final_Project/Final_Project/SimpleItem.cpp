@@ -1,9 +1,15 @@
 #include "SimpleItem.h"
 
+#include <iostream>
+#include <string>
+#include <iomanip>
+
 #define JSON_ATTR_ID			"ID"
 #define JSON_ATTR_TITLE			"Title"
 #define JSON_ATTR_ARTIST		"Artist"
 #define JSON_VALUE_STR_UNKNOWN	"Unknown"
+
+using namespace std;
 
 // Constructors
 SimpleItem::SimpleItem() {

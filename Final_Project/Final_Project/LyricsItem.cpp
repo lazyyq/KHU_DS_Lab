@@ -1,5 +1,10 @@
 #include "LyricsItem.h"
 
+#include <string>
+#include <fstream>
+
+using namespace std;
+
 // 생성자들
 LyricsItem::LyricsItem() {
 	mName = " ";

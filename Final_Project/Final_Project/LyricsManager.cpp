@@ -1,6 +1,17 @@
 #include "LyricsManager.h"
 
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <filesystem>
+
+#include "GeniusLyricsFetcher.h"
+#include "Utils.h"
+
 #define LYRICS_FOLDERNAME	"lyrics"
+
+using namespace std;
+using namespace utils;
 
 // »ý¼ºÀÚ
 LyricsManager::LyricsManager() {

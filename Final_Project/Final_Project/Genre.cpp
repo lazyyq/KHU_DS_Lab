@@ -1,8 +1,16 @@
 #include "Genre.h"
 
+#include <iostream>
+#include <string>
+#include <iomanip>
+#include <fstream>
+#include <json/json.h>
+
 #define JSON_ATTR_GENRE			"Genre"
 #define JSON_ATTR_SONGLIST		"Songs"
 #define JSON_VALUE_STR_UNKNOWN	"Unknown"
+
+using namespace std;
 
 // Constructors
 Genre::Genre() {

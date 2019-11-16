@@ -1,15 +1,6 @@
-#ifndef _PLAYITEM_H
-#define _PLAYITEM_H
+#pragma once
 
-#include <iostream>
-#include <string>
-#include <iomanip>
-#include <fstream>
 #include <json/json.h>
-
-#define PLAYITEM_ATTR_INDENT_SIZE	25
-
-using namespace std;
 
 /**
 *	플레이리스트에 저장될 아이템의 클래스.
@@ -25,10 +16,10 @@ public:
 	/**
 	*	Constructor
 	*/
-	PlaylistItem(string inId);
+	PlaylistItem(std::string inId);
 
-	PlaylistItem(string inId, int inPlayedTimes,
-		string inInsertedTime);
+	PlaylistItem(std::string inId, int inPlayedTimes,
+		std::string inInsertedTime);
 
 	/**
 	*	Default destructor
@@ -36,16 +27,16 @@ public:
 	~PlaylistItem();
 
 	// Get id
-	string GetId();
+	std::string GetId();
 
 	// Get played count
 	int GetPlayedTimes();
 
 	// Get inserted time
-	string GetInsertedTime();
+	std::string GetInsertedTime();
 
 	// Set id
-	void SetId(string inId);
+	void SetId(std::string inId);
 
 	// Set played count
 	void SetPlayedTimes(int inPlayedTimes);
@@ -88,16 +79,14 @@ public:
 	friend Json::Value &operator<<(Json::Value &root, const PlaylistItem &item);
 
 private:
-	string mId;			// Primary key of music
+	std::string mId;			// Primary key of music
 	int mPlayedTimes;		// How many times it has been played
-	string mInsertedTime;		// Primary key. When it was inserted to the playlist.
+	std::string mInsertedTime;		// Primary key. When it was inserted to the playlist.
 
 	const static int attrIndentSize = 25; // 화면에 표시할 때 들여쓰기
 
 	/**
 	*	Get current date & time for mInsertedTime
 	*/
-	static string GetCurrentTime();
+	static std::string GetCurrentTime();
 };
-
-#endif // _PLAYITEM_H

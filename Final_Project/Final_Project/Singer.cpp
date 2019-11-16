@@ -1,5 +1,10 @@
 #include "Singer.h"
 
+#include <iostream>
+#include <string>
+#include <iomanip>
+#include <fstream>
+
 #define JSON_ATTR_SINGER		"Singer"
 #define JSON_ATTR_AGE			"Age"
 #define JSON_ATTR_SEX			"Sex"
@@ -7,6 +12,8 @@
 #define JSON_VALUE_STR_UNKNOWN	"Unknown"
 #define JSON_VALUE_CHAR_UNKNOWN	' '
 #define JSON_VALUE_INT_UNKNOWN	-1
+
+using namespace std;
 
 // Constructors
 Singer::Singer() {

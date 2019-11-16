@@ -1,5 +1,10 @@
 #include "Application.h"
+
 #include "menu/MenuScreen.h"
+#include "Utils.h"
+
+using namespace std;
+using namespace utils;
 
 // Main menu
 void Application::MenuMain() {

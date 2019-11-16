@@ -1,26 +1,35 @@
 #include "GeniusLyricsFetcher.h"
+
+#include <string>
+#include <fstream>
+#include <filesystem>
 #include <json/json.h>
 #include <curl/curl.h>
-#include <iostream>
+
 #include "GeniusAccessToken.h"
 
+#define GENIUS_TOKEN_FILENAME	"genius_access_token.txt"
+#define GENIUS_HTML_TEMPFILENAME "genius_html_temp.txt"
+
+using namespace std;
+
 // 곡 이름과 가수명으로 가사를 받아옴
-int GeniusLyricsFetcher::GetLyricsFromGenius(const std::string &name,
-	const std::string &artist, std::string &lyrics) {
+int GeniusLyricsFetcher::GetLyricsFromGenius(const string &name,
+	const string &artist, string &lyrics) {
 	// Setup url for sending get request
 	// Our search query is "`Artist` `Title`". ex) "Anne Marie 2002"
-	const std::string searchApi = "https://api.genius.com/search?q=";
+	const string searchApi = "https://api.genius.com/search?q=";
 	// 리퀘스트를 보낼 URL
-	std::string url = searchApi + artist + " " + name + "&access_token=" + GENIUS_ACCESS_TOKEN;
+	string url = searchApi + artist + " " + name + "&access_token=" + GENIUS_ACCESS_TOKEN;
 
 	// URL의 공백을 %20으로 바꿈
-	for (auto pos = url.find(' '); pos != std::string::npos;
+	for (auto pos = url.find(' '); pos != string::npos;
 		pos = url.find(' ', pos + 1)) {
 		url.replace(pos, 1, "%20");
 	}
 
 	// 리퀘스트 전송
-	std::string result;
+	string result;
 	int resultCode;
 	SendGetRequest(url, result, resultCode);
 	if (resultCode != 200) {
@@ -29,7 +38,7 @@ int GeniusLyricsFetcher::GetLyricsFromGenius(const std::string &name,
 	}
 
 	// JSON 형태의 응답에서 가사 URL 가져오기
-	std::string lyricsUrl;
+	string lyricsUrl;
 	if (!GetLyricsUrl(result, lyricsUrl)) {
 		return 0;
 	}
@@ -46,13 +55,13 @@ int GeniusLyricsFetcher::GetLyricsFromGenius(const std::string &name,
 }
 
 // Get 리퀘스트 전송, cURL 이용
-bool GeniusLyricsFetcher::SendGetRequest(const std::string &url,
+bool GeniusLyricsFetcher::SendGetRequest(const string &url,
 	const FILE *fp, int &resultCode) {
 	// REST 요청을 보낼 cURL 초기화
 	CURL *curl;
 	curl = curl_easy_init();
 	if (!curl) {
-		std::cout << "curl init failed\n";
+		cout << "curl init failed\n";
 		return false;
 	}
 
@@ -70,13 +79,13 @@ bool GeniusLyricsFetcher::SendGetRequest(const std::string &url,
 }
 
 // Get 리퀘스트 전송, cURL 이용
-bool GeniusLyricsFetcher::SendGetRequest(const std::string &url,
-	std::string &result, int &resultCode) {
+bool GeniusLyricsFetcher::SendGetRequest(const string &url,
+	string &result, int &resultCode) {
 	// REST 요청을 보낼 cURL 초기화
 	CURL *curl;
 	curl = curl_easy_init();
 	if (!curl) {
-		std::cout << "curl init failed\n";
+		cout << "curl init failed\n";
 		return false;
 	}
 
@@ -95,7 +104,7 @@ bool GeniusLyricsFetcher::SendGetRequest(const std::string &url,
 
 // 리퀘스트 콜백, 결과물 string에 저장
 size_t GeniusLyricsFetcher::WiteStringCallback(const char *in,
-	size_t size, size_t num, std::string *out) {
+	size_t size, size_t num, string *out) {
 	const size_t total = size * num; // 토탈 사이즈 계산
 	out->append(in, total); // out에 받은 문자열만큼 추가
 	return total;
@@ -109,8 +118,8 @@ size_t GeniusLyricsFetcher::WriteFileCallback(void *ptr, size_t size,
 }
 
 // 리퀘스트 응답을 JSON 파싱하여 URL만 추출
-bool GeniusLyricsFetcher::GetLyricsUrl(const std::string &jsonString,
-	std::string &result) {
+bool GeniusLyricsFetcher::GetLyricsUrl(const string &jsonString,
+	string &result) {
 	// 파서 이용에 필요한 변수 초기화
 	Json::Value value; // 파싱된 내용이 담길 변수
 	JSONCPP_STRING err;
@@ -121,7 +130,7 @@ bool GeniusLyricsFetcher::GetLyricsUrl(const std::string &jsonString,
 	if (!reader->parse(jsonString.c_str(),
 		jsonString.c_str() + jsonString.length(), &value, &err)) {
 		// TODO: Error!
-		std::cout << "error\n";
+		cout << "error\n";
 		return false;
 	}
 
@@ -131,8 +140,8 @@ bool GeniusLyricsFetcher::GetLyricsUrl(const std::string &jsonString,
 }
 
 // URL의 HTML 소스 받아서 파일에 저장
-bool GeniusLyricsFetcher::GetHTMLFromGenius(const std::string &geniusUrl,
-	const std::string &fileName) {
+bool GeniusLyricsFetcher::GetHTMLFromGenius(const string &geniusUrl,
+	const string &fileName) {
 	int resultCode;
 
 	FILE *fp;
@@ -152,20 +161,20 @@ bool GeniusLyricsFetcher::GetHTMLFromGenius(const std::string &geniusUrl,
 }
 
 // HTML 소스에서 가사만 뽑아내는, 굉장이 무식한 파서 역할
-bool GeniusLyricsFetcher::ParseLyricsFromHTML(const std::string &fileName,
-	std::string &lyrics) {
+bool GeniusLyricsFetcher::ParseLyricsFromHTML(const string &fileName,
+	string &lyrics) {
 	// HTML 소스가 담긴 파일 열기
-	std::ifstream ifs(fileName);
+	ifstream ifs(fileName);
 	if (!ifs || ifs.peek() == EOF) {
 		return false;
 	}
 
 	bool insideTag = false; // 현재 태그 안의 내용을 읽고 있는지 여부
 	bool lyricsDiv = false; // 가사의 시작을 알리는 div 태그를 찾았는지 여부
-	std::string strInTag; // 태그 내용을 저장할 스트링, 우리가 찾는 스트링이 맞는지 대조하는 데 사용
-	const std::string startOfLyrics = "<div class=\"lyrics\">"; // 가사의 시작을 알리는 태그
-	const std::string lineBreak = "<br>"; // 줄바꿈 문자
-	std::istreambuf_iterator<char> iter(ifs), end; // iterator
+	string strInTag; // 태그 내용을 저장할 스트링, 우리가 찾는 스트링이 맞는지 대조하는 데 사용
+	const string startOfLyrics = "<div class=\"lyrics\">"; // 가사의 시작을 알리는 태그
+	const string lineBreak = "<br>"; // 줄바꿈 문자
+	istreambuf_iterator<char> iter(ifs), end; // iterator
 
 	// First we look for '<div class="lyrics">'
 	for (; iter != end; ++iter) {
@@ -200,7 +209,7 @@ bool GeniusLyricsFetcher::ParseLyricsFromHTML(const std::string &fileName,
 
 	// Next we look for '<p>', after which the lyrics actually starts
 	// 전체적인 흐름은 위와 동일
-	const std::string startOfP = "<p>";
+	const string startOfP = "<p>";
 	// Reset variables for the next FOR loop
 	insideTag = false;
 	strInTag = "";
@@ -236,7 +245,7 @@ bool GeniusLyricsFetcher::ParseLyricsFromHTML(const std::string &fileName,
 	// Let's finally get the real lyrics.
 	// We treat every character outside tags a part of lyrics.
 	// Loop until the end of lyrics, which is '</p>'.
-	const std::string endOfP = "</p>";
+	const string endOfP = "</p>";
 	// Reset variables for the next FOR loop
 	insideTag = false;
 	strInTag = "";
@@ -272,7 +281,7 @@ bool GeniusLyricsFetcher::ParseLyricsFromHTML(const std::string &fileName,
 	if (ifs.is_open()) {
 		ifs.close(); // HTML 소스 파일 닫기
 	}
-	std::filesystem::remove(fileName); // HTML 소스 파일은 임시파일이었으므로 삭제
+	filesystem::remove(fileName); // HTML 소스 파일은 임시파일이었으므로 삭제
 
 	return true;
 }

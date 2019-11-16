@@ -1,9 +1,6 @@
 #pragma once
 
 #include <string>
-#include <fstream>
-
-using namespace std;
 
 class LyricsItem {
 public:
@@ -12,10 +9,10 @@ public:
 	*/
 	LyricsItem();
 
-	LyricsItem(string inName, string inArtist);
+	LyricsItem(std::string inName, std::string inArtist);
 
-	LyricsItem(string inName, string inArtist,
-		string inFileName);
+	LyricsItem(std::string inName, std::string inArtist,
+		std::string inFileName);
 
 	/**
 	*	Destructor
@@ -29,7 +26,7 @@ public:
 	*	@param	lyrics	가사가 저장됨.
 	*	@return	가사 저장 성공 시 1, 아니면 0.
 	*/
-	int GetLyrics(string &lyrics);
+	int GetLyrics(std::string &lyrics);
 
 	/**
 	*	Comparator. Primary key 는 곡명과 아티스트명.
@@ -41,7 +38,7 @@ public:
 	bool operator>=(const LyricsItem &that) const;
 
 private:
-	string mName; // Music name
-	string mArtist; // Artist name
-	string mFileName; // Lyrics filename
+	std::string mName; // Music name
+	std::string mArtist; // Artist name
+	std::string mFileName; // Lyrics filename
 };

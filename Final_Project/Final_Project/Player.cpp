@@ -1,7 +1,16 @@
+#include "Player.h"
+
+#include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include "Player.h"
 #include <json/json.h>
+
+#include "Utils.h"
+
+#define PLAYLIST_FILENAME	"files/list_playlist.json"
+
+using namespace std;
+using namespace utils;
 
 // »ý¼º»ç
 Player::Player(SortedList<MusicItem> &inList) :

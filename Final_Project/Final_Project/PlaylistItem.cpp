@@ -1,5 +1,14 @@
 #include "PlaylistItem.h"
 
+#include <iostream>
+#include <string>
+#include <iomanip>
+#include <fstream>
+
+#define PLAYITEM_ATTR_INDENT_SIZE	25
+
+using namespace std;
+
 // Constructors
 PlaylistItem::PlaylistItem() {
 	mId = "";

@@ -1,11 +1,6 @@
 #pragma once
 
-#include <iostream>
-#include <string>
-#include <iomanip>
 #include <json/json.h>
-
-using namespace std;
 
 /**
 *	가수의 곡 리스트나 장르의 곡 리스트에 저장하기 위한,
@@ -18,8 +13,8 @@ public:
 	*/
 	SimpleItem();
 
-	SimpleItem(const string &inId, const string &inName,
-		const string &inArtist);
+	SimpleItem(const std::string &inId, const std::string &inName,
+		const std::string &inArtist);
 
 	/**
 	*	Destructor
@@ -32,7 +27,7 @@ public:
 	*	@post	None.
 	*	@return	Id of song.
 	*/
-	string GetId() const;
+	std::string GetId() const;
 
 	/**
 	*	@brief	Get name of song.
@@ -40,7 +35,7 @@ public:
 	*	@post	None.
 	*	@return	Name of song.
 	*/
-	string GetName() const;
+	std::string GetName() const;
 
 	/**
 	*	@brief	Get artist of song.
@@ -48,7 +43,7 @@ public:
 	*	@post	None.
 	*	@return	Artist of song.
 	*/
-	string GetArtist() const;
+	std::string GetArtist() const;
 
 	/**
 	*	@brief	Set id of song.
@@ -56,7 +51,7 @@ public:
 	*	@post	Id is set.
 	*	@param	inId	Id to set.
 	*/
-	void SetId(string &inId);
+	void SetId(std::string &inId);
 
 	/**
 	*	@brief	Set name of song.
@@ -64,7 +59,7 @@ public:
 	*	@post	Name is set.
 	*	@param	inName	Name to set.
 	*/
-	void SetName(string &inName);
+	void SetName(std::string &inName);
 
 	/**
 	*	@brief	Set artist of song.
@@ -72,7 +67,7 @@ public:
 	*	@post	Artist is set.
 	*	@param	inArtist	Artist to set.
 	*/
-	void SetArtist(string &inArtist);
+	void SetArtist(std::string &inArtist);
 
 	/**
 	*	@brief	Compare two items.
@@ -98,9 +93,9 @@ public:
 	friend Json::Value &operator<<(Json::Value &root, const SimpleItem &item);
 
 private:
-	string mId; // Music id
-	string mName; // Music name
-	string mArtist; // Artist name
+	std::string mId; // Music id
+	std::string mName; // Music name
+	std::string mArtist; // Artist name
 
 	static const int attrIndentSize = 25; // 정보 표시할때 들여쓰기 칸 수
 };

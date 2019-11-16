@@ -107,9 +107,9 @@ SortedDoublyLinkedList<T> ::SortedDoublyLinkedList() {
 	mLast = new DoublyNodeType<T>;
 
 	mFirst->next = mLast; // 끝과 처음이 서로를 가리키게 초기화.
-	mFirst->prev = NULL; // 처음.
+	mFirst->prev = nullptr; // 처음.
 
-	mLast->next = NULL; // 끝.
+	mLast->next = nullptr; // 끝.
 	mLast->prev = mFirst; // 끝과 처음이 서로를 가리키게 초기화.
 
 	mLength = 0; // 길이는 0.
@@ -123,9 +123,9 @@ SortedDoublyLinkedList<T>::SortedDoublyLinkedList(
 	mLast = new DoublyNodeType<T>;
 
 	mFirst->next = mLast; // 끝과 처음이 서로를 가리키게 초기화.
-	mFirst->prev = NULL; // 처음.
+	mFirst->prev = nullptr; // 처음.
 
-	mLast->next = NULL; // 끝.
+	mLast->next = nullptr; // 끝.
 	mLast->prev = mFirst; // 끝과 처음이 서로를 가리키게 초기화.
 
 	mLength = that.mLength;
@@ -221,9 +221,9 @@ void SortedDoublyLinkedList<T>::MakeEmpty() {
 	}
 
 	mFirst->next = mLast;
-	mFirst->prev = NULL;
+	mFirst->prev = nullptr;
 	mLast->prev = mFirst;
-	mLast->next = NULL;
+	mLast->next = nullptr;
 
 	mLength = 0;
 

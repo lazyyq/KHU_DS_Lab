@@ -1,18 +1,8 @@
 #pragma once
 
-#include <iostream>
-#include <string>
-#include <filesystem>
-
-#include "Utils.h"
-
-#include "GeniusLyricsFetcher.h"
 #include "LyricsItem.h"
-#include "SortedDoublyLinkedList.h"
 #include "MusicItem.h"
-
-using namespace std;
-using namespace utils;
+#include "SortedDoublyLinkedList.h"
 
 class LyricsManager {
 public:
@@ -40,8 +30,8 @@ public:
 	*			lyrics	가사가 저장됨
 	*	@return	가사 가져오는 데 성공 시 1, 실패 시 0
 	*/
-	int SaveLyrics(const string &name, const string &artist,
-		const string &lyrics);
+	int SaveLyrics(const std::string &name, const std::string &artist,
+		const std::string &lyrics);
 
 private:
 	SortedDoublyLinkedList<LyricsItem> mLyricsList; // 가사 리스트

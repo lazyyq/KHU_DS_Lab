@@ -1,19 +1,10 @@
 #pragma once
 
-#include <iostream>
-
-#include "Utils.h"
-
-#include "SortedList.h"
-#include "SortedDoublyLinkedList.h"
+#include "LyricsManager.h"
 #include "MusicItem.h"
 #include "PlaylistItem.h"
-#include "LyricsManager.h"
-
-#define PLAYLIST_FILENAME	"files/list_playlist.json"
-
-using namespace std;
-using namespace utils;
+#include "SortedDoublyLinkedList.h"
+#include "SortedList.h"
 
 class Player {
 public:

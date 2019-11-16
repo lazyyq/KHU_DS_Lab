@@ -1,6 +1,6 @@
-#include <algorithm>
-
 #include "Utils.h"
+
+#include <algorithm>
 
 // Clear console.
 void utils::Clear() {

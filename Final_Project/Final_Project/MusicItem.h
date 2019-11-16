@@ -1,18 +1,8 @@
+#pragma once
 
-#ifndef _MUSICITEM_H_
-#define _MUSICITEM_H_
-
-#include <iostream>
-#include <iomanip>
-#include <limits>
-#include <fstream>
-#include <string>
-#include <time.h>
 #include <json/json.h>
 
 #include "id3/ID3Tag.h"
-
-using namespace std;
 
 /**
 *	곡 정보가 담긴 클래스
@@ -308,5 +298,3 @@ protected:
 
 	const static int attrIndentSize = 25; // 곡 정보를 화면에 표시할 때 들여쓰기 칸 수
 };
-
-#endif	// _MUSICITEM_H_

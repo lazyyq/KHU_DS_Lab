@@ -1,30 +1,13 @@
-#ifndef _APPLICATION_H
-#define _APPLICATION_H
+#pragma once
 
-#include <iostream>
 #include <fstream>
-#include <string>
-#include <filesystem>
 
-#include "Utils.h"
-
-#include "SortedList.h"
-#include "SortedDoublyLinkedList.h"
-
-#include "MusicItem.h"
-#include "SimpleItem.h"
-#include "PlaylistItem.h"
-#include "Singer.h"
 #include "Genre.h"
+#include "MusicItem.h"
 #include "Player.h"
-
-#define CONSOLE_COLOR	"70"
-#define MUSIC_LIST_FILENAME	"files/list_music.json"
-#define ARTIST_LIST_FILENAME	"files/list_artist.json"
-#define GENRE_LIST_FILENAME	"files/list_genre.json"
-
-using namespace std;
-using namespace utils;
+#include "Singer.h"
+#include "SortedDoublyLinkedList.h"
+#include "SortedList.h"
 
 /**
 *	Class for running main program
@@ -241,6 +224,3 @@ private:
 	SortedDoublyLinkedList<Genre> mGenreList;	// Genre list
 	Player mPlayer;						// Playlist manager
 };
-
-#endif	// _APPLICATION_H
-

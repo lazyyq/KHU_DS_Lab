@@ -1,16 +1,6 @@
 #pragma once
 
 #include <iostream>
-#include <string>
-#include <fstream>
-#include <filesystem>
-
-#define GENIUS_TOKEN_FILENAME	"genius_access_token.txt"
-#define GENIUS_HTML_TEMPFILENAME "genius_html_temp.txt"
-
-// using namespace std;
-// is not allowed here since std::byte and
-// 'typedef unsigned char byte' in curl.h cause a conflict.
 
 /**
 *	genius.com 에 REST 요청을 보내 노래의 가사가 포함된 사이트의 URL을 알아낸 뒤,

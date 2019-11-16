@@ -1,5 +1,12 @@
 #include "MusicItem.h"
 
+#include <iostream>
+#include <iomanip>
+#include <limits>
+#include <fstream>
+#include <string>
+#include <time.h>
+
 #include "Utils.h"
 
 #define JSON_ATTR_ID			"ID"
@@ -9,6 +16,7 @@
 #define JSON_ATTR_GENRE			"Genre"
 #define JSON_VALUE_STR_UNKNOWN	"Unknown"
 
+using namespace std;
 using namespace utils;
 namespace ID3 = MetadataInfo::ID3;
 

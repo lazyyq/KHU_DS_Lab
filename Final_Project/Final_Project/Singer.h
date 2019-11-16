@@ -1,16 +1,9 @@
-#ifndef _SINGER_H_
-#define _SINGER_H_
+#pragma once
 
-#include <iostream>
-#include <string>
-#include <iomanip>
-#include <fstream>
 #include <json/json.h>
 
-#include "SortedDoublyLinkedList.h"
 #include "SimpleItem.h"
-
-using namespace std;
+#include "SortedDoublyLinkedList.h"
 
 class Singer {
 public:
@@ -18,7 +11,7 @@ public:
 	*	Constructors
 	*/
 	Singer();
-	Singer(const string &inName, const int inAge,
+	Singer(const std::string &inName, const int inAge,
 		const char &inChar);
 
 	/**
@@ -32,7 +25,7 @@ public:
 	*	@post	None.
 	*	@return	Name of singer.
 	*/
-	string GetName();
+	std::string GetName();
 
 	/**
 	*	@brief	Get age of singer.
@@ -56,7 +49,7 @@ public:
 	*	@post	Name is set.
 	*	@param	inName	Name to set.
 	*/
-	void SetName(string &inName);
+	void SetName(std::string &inName);
 
 	/**
 	*	@brief	Set age of singer.
@@ -149,12 +142,10 @@ public:
 	friend Json::Value &operator<<(Json::Value &root, const Singer &item);
 
 private:
-	string mName; // Singer name
+	std::string mName; // Singer name
 	int mAge; // Singer age
 	char mSex; // Singer sex
 	SortedDoublyLinkedList<SimpleItem> mSongList; // Song list
 
 	static const int attrIndentSize = 25; // 정보 표시할 때 들여쓰기 칸 수
 };
-
-#endif // _SINGER_H_
