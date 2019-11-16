@@ -1,3 +1,6 @@
 /Final_Project/files
 /Final_Project/genius_access_token.txt
 /Final_Project/lyrics
+
+!/Final_Project/dll/**
+!/Final_Project/lib/**
