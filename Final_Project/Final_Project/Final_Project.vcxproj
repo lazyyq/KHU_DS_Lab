@@ -72,19 +72,15 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\libs;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\libs;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>..\libs;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>..\libs;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -151,21 +147,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\libs\id3\Encoding.h" />
-    <ClInclude Include="..\libs\id3\ID3DefaultReaderFactory.h" />
-    <ClInclude Include="..\libs\id3\ID3InvalidReader.h" />
-    <ClInclude Include="..\libs\id3\ID3Reader.h" />
-    <ClInclude Include="..\libs\id3\ID3ReaderFactory.h" />
-    <ClInclude Include="..\libs\id3\ID3Tag.h" />
-    <ClInclude Include="..\libs\id3\ID3v1.h" />
-    <ClInclude Include="..\libs\id3\ID3v11ExtReader.h" />
-    <ClInclude Include="..\libs\id3\ID3v11Reader.h" />
-    <ClInclude Include="..\libs\id3\ID3v2.h" />
-    <ClInclude Include="..\libs\id3\ID3v22Reader.h" />
-    <ClInclude Include="..\libs\id3\ID3v23Reader.h" />
-    <ClInclude Include="..\libs\id3\ID3v24Reader.h" />
-    <ClInclude Include="..\libs\id3\ID3v2Reader.h" />
-    <ClInclude Include="..\libs\id3\MetaInfo.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="dialog\DialogUtils.h" />
     <ClInclude Include="DoublyIterator.h" />
@@ -173,6 +154,21 @@
     <ClInclude Include="DoublyNodeType.h" />
     <ClInclude Include="GeniusLyricsFetcher.h" />
     <ClInclude Include="Genre.h" />
+    <ClInclude Include="id3\Encoding.h" />
+    <ClInclude Include="id3\ID3DefaultReaderFactory.h" />
+    <ClInclude Include="id3\ID3InvalidReader.h" />
+    <ClInclude Include="id3\ID3Reader.h" />
+    <ClInclude Include="id3\ID3ReaderFactory.h" />
+    <ClInclude Include="id3\ID3Tag.h" />
+    <ClInclude Include="id3\ID3v1.h" />
+    <ClInclude Include="id3\ID3v11ExtReader.h" />
+    <ClInclude Include="id3\ID3v11Reader.h" />
+    <ClInclude Include="id3\ID3v2.h" />
+    <ClInclude Include="id3\ID3v22Reader.h" />
+    <ClInclude Include="id3\ID3v23Reader.h" />
+    <ClInclude Include="id3\ID3v24Reader.h" />
+    <ClInclude Include="id3\ID3v2Reader.h" />
+    <ClInclude Include="id3\MetaInfo.h" />
     <ClInclude Include="LyricsItem.h" />
     <ClInclude Include="LyricsManager.h" />
     <ClInclude Include="menu\CursorManager.h" />
@@ -188,23 +184,23 @@
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\libs\id3\Encoding.cpp" />
-    <ClCompile Include="..\libs\id3\ID3DefaultReaderFactory.cpp" />
-    <ClCompile Include="..\libs\id3\ID3InvalidReader.cpp" />
-    <ClCompile Include="..\libs\id3\ID3Reader.cpp" />
-    <ClCompile Include="..\libs\id3\ID3ReaderFactory.cpp" />
-    <ClCompile Include="..\libs\id3\ID3Tag.cpp" />
-    <ClCompile Include="..\libs\id3\ID3v11ExtReader.cpp" />
-    <ClCompile Include="..\libs\id3\ID3v11Reader.cpp" />
-    <ClCompile Include="..\libs\id3\ID3v22Reader.cpp" />
-    <ClCompile Include="..\libs\id3\ID3v23Reader.cpp" />
-    <ClCompile Include="..\libs\id3\ID3v24Reader.cpp" />
-    <ClCompile Include="..\libs\id3\ID3v2Reader.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="ApplicationMenu.cpp" />
     <ClCompile Include="dialog\DialogUtils.cpp" />
     <ClCompile Include="GeniusLyricsFetcher.cpp" />
     <ClCompile Include="Genre.cpp" />
+    <ClCompile Include="id3\Encoding.cpp" />
+    <ClCompile Include="id3\ID3DefaultReaderFactory.cpp" />
+    <ClCompile Include="id3\ID3InvalidReader.cpp" />
+    <ClCompile Include="id3\ID3Reader.cpp" />
+    <ClCompile Include="id3\ID3ReaderFactory.cpp" />
+    <ClCompile Include="id3\ID3Tag.cpp" />
+    <ClCompile Include="id3\ID3v11ExtReader.cpp" />
+    <ClCompile Include="id3\ID3v11Reader.cpp" />
+    <ClCompile Include="id3\ID3v22Reader.cpp" />
+    <ClCompile Include="id3\ID3v23Reader.cpp" />
+    <ClCompile Include="id3\ID3v24Reader.cpp" />
+    <ClCompile Include="id3\ID3v2Reader.cpp" />
     <ClCompile Include="LyricsItem.cpp" />
     <ClCompile Include="LyricsManager.cpp" />
     <ClCompile Include="main.cpp" />

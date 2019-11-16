@@ -1,7 +1,6 @@
 #include "Application.h"
 
-#include <id3/ID3Tag.h>
-
+#include "id3/ID3Tag.h"
 #include "dialog/DialogUtils.h"
 
 namespace ID3 = MetadataInfo::ID3;

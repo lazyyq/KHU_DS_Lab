@@ -9,7 +9,7 @@
 #include <string>
 #include <time.h>
 
-#include <id3/ID3Tag.h>
+#include "id3/ID3Tag.h"
 
 using namespace std;
 
