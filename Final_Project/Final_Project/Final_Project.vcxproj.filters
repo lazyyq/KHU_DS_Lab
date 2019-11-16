@@ -132,6 +132,9 @@
     <ClInclude Include="id3\ID3ReaderFactory.h">
       <Filter>헤더 파일\id3</Filter>
     </ClInclude>
+    <ClInclude Include="GeniusAccessToken.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlaylistItem.cpp">

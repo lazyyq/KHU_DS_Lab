@@ -1,6 +1,8 @@
 #include "GeniusLyricsFetcher.h"
 #include <json/json.h>
 #include <curl/curl.h>
+#include <iostream>
+#include "GeniusAccessToken.h"
 
 // 곡 이름과 가수명으로 가사를 받아옴
 int GeniusLyricsFetcher::GetLyricsFromGenius(const std::string &name,
@@ -8,16 +10,8 @@ int GeniusLyricsFetcher::GetLyricsFromGenius(const std::string &name,
 	// Setup url for sending get request
 	// Our search query is "`Artist` `Title`". ex) "Anne Marie 2002"
 	const std::string searchApi = "https://api.genius.com/search?q=";
-	// 액세스 토큰 가져오기
-	std::ifstream ifs(GENIUS_TOKEN_FILENAME);
-	if (!ifs || ifs.peek() == EOF) {
-		return 0;
-	}
-	std::string token;
-	getline(ifs, token);
-	ifs.close();
 	// 리퀘스트를 보낼 URL
-	std::string url = searchApi + artist + " " + name + "&access_token=" + token;
+	std::string url = searchApi + artist + " " + name + "&access_token=" + GENIUS_ACCESS_TOKEN;
 
 	// URL의 공백을 %20으로 바꿈
 	for (auto pos = url.find(' '); pos != std::string::npos;
@@ -58,6 +52,7 @@ bool GeniusLyricsFetcher::SendGetRequest(const std::string &url,
 	CURL *curl;
 	curl = curl_easy_init();
 	if (!curl) {
+		std::cout << "curl init failed\n";
 		return false;
 	}
 
@@ -81,6 +76,7 @@ bool GeniusLyricsFetcher::SendGetRequest(const std::string &url,
 	CURL *curl;
 	curl = curl_easy_init();
 	if (!curl) {
+		std::cout << "curl init failed\n";
 		return false;
 	}
 

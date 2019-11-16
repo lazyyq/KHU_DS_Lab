@@ -164,6 +164,7 @@
     <ClInclude Include="DoublyIterator.h" />
     <ClInclude Include="DoublyLinkedList.h" />
     <ClInclude Include="DoublyNodeType.h" />
+    <ClInclude Include="GeniusAccessToken.h" />
     <ClInclude Include="GeniusLyricsFetcher.h" />
     <ClInclude Include="Genre.h" />
     <ClInclude Include="id3\Encoding.h" />
