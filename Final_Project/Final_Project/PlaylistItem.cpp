@@ -80,30 +80,30 @@ bool PlaylistItem::operator>=(const PlaylistItem &that) const {
 	return this->mInsertedTime.compare(that.mInsertedTime) >= 0;
 }
 
-// 파일로부터 읽어오기
-// 파일의 형식은 첫째줄 아이디, 둘째줄 재생횟수, 셋째줄 삽입시간
-ifstream &operator>>(ifstream &ifs, PlaylistItem &item) {
-	string temp;
+#define JSON_ATTR_ID			"ID"
+#define JSON_ATTR_PLAYEDTIMES	"PlayedTimes"
+#define JSON_ATTR_INSERTEDTIME	"InsertedTime"
+#define JSON_VALUE_STR_UNKNOWN	"Unknown"
+#define JSON_VALUE_INT_UNKNOWN	"-1"
 
-	getline(ifs, item.mId);
-	// Skip empty lines.
-	while (item.mId.length() == 0) {
-		getline(ifs, item.mId);
-	}
-	getline(ifs, temp);
-	item.mPlayedTimes = stoi(temp);
-	getline(ifs, item.mInsertedTime);
+// Read record from JSON
+Json::Value &operator>>(Json::Value &value, PlaylistItem &item) {
+	item.mId = value.get(JSON_ATTR_ID, JSON_VALUE_STR_UNKNOWN).asString();
+	item.mPlayedTimes = value.get(JSON_ATTR_PLAYEDTIMES, JSON_VALUE_INT_UNKNOWN).asInt();
+	item.mInsertedTime = value.get(JSON_ATTR_INSERTEDTIME, JSON_VALUE_STR_UNKNOWN).asString();
 
-	return ifs;
+	return value;
 }
 
-ofstream &operator<<(ofstream &ofs, const PlaylistItem &item) {
-	ofs << endl << endl;
-	ofs << item.mId.c_str() << endl;
-	ofs << item.mPlayedTimes << endl;
-	ofs << item.mInsertedTime.c_str();
+// Write record to JSON
+Json::Value &operator<<(Json::Value &root, const PlaylistItem &item) {
+	Json::Value newValue;
+	newValue[JSON_ATTR_ID] = item.mId;
+	newValue[JSON_ATTR_PLAYEDTIMES] = item.mPlayedTimes;
+	newValue[JSON_ATTR_INSERTEDTIME] = item.mInsertedTime;
+	root.append(newValue); // Add to array
 
-	return ofs;
+	return root;
 }
 
 string PlaylistItem::GetCurrentTime() {

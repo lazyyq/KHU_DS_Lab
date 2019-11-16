@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include <ctime>
 #include "Player.h"
+#include <json/json.h>
 
 // 생성사
 Player::Player(SortedList<MusicItem> &inList) :
@@ -240,21 +241,22 @@ void Player::DeleteFromPlaylist() {
 
 // 플레이리스트 파일로 저장
 int Player::SavePlaylistToFile() {
-	PlaylistItem data; // Temporary variable to hold info from list
-
 	ofstream ofs(PLAYLIST_FILENAME); //Open file
-	if (!ofs) { //Open failed
+	if (!ofs) {
 		return 0;
 	}
 
 	cout << "\n\tSaving playlist..\n";
 
+	// Put each data to JSON
+	Json::Value root;
 	SortedDoublyIterator<PlaylistItem> iter(mPlaylist);
-	data = iter.Next();
-	while (iter.NextNotNull()) {
-		ofs << data; // 파일에 아이템 저장
-		data = iter.Next();
+	for (PlaylistItem data = iter.Next();
+		iter.NextNotNull(); data = iter.Next()) {
+		root << data;
 	}
+	ofs << root; // Write to file
+
 	ofs.close();
 
 	return 1;
@@ -262,18 +264,22 @@ int Player::SavePlaylistToFile() {
 
 // 파일로부터 플레이리스트 읽기
 int Player::ReadPlaylistFromFile() {
-	PlaylistItem data; // Temporary variable to hold info from file
-
-	ifstream ifs(PLAYLIST_FILENAME); // Open file
-	if (!ifs || ifs.peek() == EOF) { // Failed to open or file is empty
+	ifstream ifs(PLAYLIST_FILENAME);
+	if (!ifs) {
 		return 0;
 	}
 
-	while (!ifs.eof()) {
-		ifs >> data; // Load data from file
-		mPlaylist.Add(data); // Add to list
+	Json::Value root;
+	PlaylistItem data;
+
+	// Convert each value to PlaylistItem
+	ifs >> root;
+	for (auto &value : root) {
+		value >> data;
+		mPlaylist.Add(data);
 	}
-	ifs.close(); // Close file
+
+	ifs.close();
 
 	return 1;
 }

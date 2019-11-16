@@ -5,6 +5,7 @@
 #include <string>
 #include <iomanip>
 #include <fstream>
+#include <json/json.h>
 
 #include "SortedDoublyLinkedList.h"
 #include "SimpleItem.h"
@@ -138,18 +139,14 @@ public:
 	bool operator>=(const Singer &that) const;
 
 	/**
-	*	@brief	Read a record from file.
-	*	@pre	the target file is opened.
-	*	@post	music record is set.
+	*	@brief	Read record from JSON.
 	*/
-	friend ifstream &operator>>(ifstream &ifs, Singer &item);
+	friend Json::Value &operator>>(Json::Value &value, Singer &item);
 
 	/**
-	*	@brief	Write a record into file.
-	*	@pre	the target file is opened. And the list should be initialized.
-	*	@post	the target file is included the new music record.
+	*	@brief	Write record to JSON.
 	*/
-	friend ofstream &operator<<(ofstream &ofs, const Singer &item);
+	friend Json::Value &operator<<(Json::Value &root, const Singer &item);
 
 private:
 	string mName; // Singer name

@@ -8,6 +8,7 @@
 #include <fstream>
 #include <string>
 #include <time.h>
+#include <json/json.h>
 
 #include "id3/ID3Tag.h"
 
@@ -289,18 +290,14 @@ public:
 	friend ostream &operator<<(ostream &os, const MusicItem &item);
 
 	/**
-	*	@brief	Read a record from file.
-	*	@pre	the target file is opened.
-	*	@post	music record is set.
+	*	@brief	Read record from JSON.
 	*/
-	friend ifstream &operator>>(ifstream &ifs, MusicItem &item);
+	friend Json::Value &operator>>(Json::Value &value, MusicItem &item);
 
 	/**
-	*	@brief	Write a record into file.
-	*	@pre	the target file is opened. And the list should be initialized.
-	*	@post	the target file is included the new music record.
+	*	@brief	Write record to JSON.
 	*/
-	friend ofstream &operator<<(ofstream &ofs, const MusicItem &item);
+	friend Json::Value &operator<<(Json::Value &root, const MusicItem &item);
 
 protected:
 	string mId;			///< Music ID.

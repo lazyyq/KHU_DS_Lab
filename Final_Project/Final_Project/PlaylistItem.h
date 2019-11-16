@@ -5,6 +5,7 @@
 #include <string>
 #include <iomanip>
 #include <fstream>
+#include <json/json.h>
 
 #define PLAYITEM_ATTR_INDENT_SIZE	25
 
@@ -77,14 +78,14 @@ public:
 	bool operator>=(const PlaylistItem &that) const;
 
 	/**
-	*	@brief	Read a record from file.
+	*	@brief	Read record from JSON.
 	*/
-	friend ifstream &operator>>(ifstream &ifs, PlaylistItem &item);
+	friend Json::Value &operator>>(Json::Value &value, PlaylistItem &item);
 
 	/**
-	*	@brief	Write a record into file.
+	*	@brief	Write record to JSON.
 	*/
-	friend ofstream &operator<<(ofstream &ofs, const PlaylistItem &item);
+	friend Json::Value &operator<<(Json::Value &root, const PlaylistItem &item);
 
 private:
 	string mId;			// Primary key of music

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <json/json.h>
 
 using namespace std;
 
@@ -85,6 +86,16 @@ public:
 	bool operator<=(const SimpleItem &that) const;
 	bool operator>(const SimpleItem &that) const;
 	bool operator>=(const SimpleItem &that) const;
+
+	/**
+	*	@brief	Read record from JSON.
+	*/
+	friend Json::Value &operator>>(Json::Value &value, SimpleItem &item);
+
+	/**
+	*	@brief	Write record to JSON.
+	*/
+	friend Json::Value &operator<<(Json::Value &root, const SimpleItem &item);
 
 private:
 	string mId; // Music id

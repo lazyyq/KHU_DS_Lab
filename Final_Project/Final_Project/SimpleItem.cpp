@@ -1,5 +1,10 @@
 #include "SimpleItem.h"
 
+#define JSON_ATTR_ID			"ID"
+#define JSON_ATTR_TITLE			"Title"
+#define JSON_ATTR_ARTIST		"Artist"
+#define JSON_VALUE_STR_UNKNOWN	"Unknown"
+
 // Constructors
 SimpleItem::SimpleItem() {
 	mId = "";
@@ -69,4 +74,24 @@ bool SimpleItem::operator>(const SimpleItem &that) const {
 
 bool SimpleItem::operator>=(const SimpleItem &that) const {
 	return this->mId.compare(that.mId) >= 0;
+}
+
+// Read record from JSON
+Json::Value &operator>>(Json::Value &value, SimpleItem &item) {
+	item.mId = value.get(JSON_ATTR_ID, JSON_VALUE_STR_UNKNOWN).asString();
+	item.mName = value.get(JSON_ATTR_TITLE, JSON_VALUE_STR_UNKNOWN).asString();
+	item.mArtist = value.get(JSON_ATTR_ARTIST, JSON_VALUE_STR_UNKNOWN).asString();
+
+	return value;
+}
+
+// Write record to JSON
+Json::Value &operator<<(Json::Value &root, const SimpleItem &item) {
+	Json::Value newValue;
+	newValue[JSON_ATTR_ID] = item.mId;
+	newValue[JSON_ATTR_TITLE] = item.mName;
+	newValue[JSON_ATTR_ARTIST] = item.mArtist;
+	root.append(newValue); // Add to array
+
+	return root;
 }

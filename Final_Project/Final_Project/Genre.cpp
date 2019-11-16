@@ -1,5 +1,9 @@
 #include "Genre.h"
 
+#define JSON_ATTR_GENRE			"Genre"
+#define JSON_ATTR_SONGLIST		"Songs"
+#define JSON_VALUE_STR_UNKNOWN	"Unknown"
+
 // Constructors
 Genre::Genre() {
 	mName = " ";
@@ -70,52 +74,33 @@ bool Genre::operator>=(const Genre &that) const {
 	return this->mName.compare(that.mName) >= 0;
 }
 
-// 파일로부터 읽기
-ifstream &operator>>(ifstream &ifs, Genre &item) {
-	string temp;
-
-	// 파일의 첫줄은 Name
-	getline(ifs, item.mName);
-	while (item.mName.length() == 0) {
-		// Skip empty lines.
-		getline(ifs, item.mName);
+// Read record from JSON
+Json::Value &operator>>(Json::Value &value, Genre &item) {
+	item.mName = value.get(JSON_ATTR_GENRE, JSON_VALUE_STR_UNKNOWN).asString();
+	// Get song list
+	Json::Value songs = value[JSON_ATTR_SONGLIST];
+	SimpleItem simple;
+	for (auto &i : songs) {
+		i >> simple;
+		item.mSongList.Add(simple);
 	}
 
-	// 그 다음 줄부터는 각각 곡의 아이디, 이름, 가수명이 나열돼있음.
-	// 나열이 끝나면 빈 줄이 나옴.
-	SimpleItem simple; // 리스트에 추가할 변수
-	getline(ifs, temp);
-	while (temp.length() != 0) { // 빈줄이 발견될때까지, 즉 끝날때까지
-		simple.SetId(temp);
-		getline(ifs, temp);
-		simple.SetName(temp);
-		getline(ifs, temp);
-		simple.SetArtist(temp);
-		item.AddSong(simple);
-
-		getline(ifs, temp);
-	}
-
-	return ifs;
+	return value;
 }
 
-// 파일에 저장
-ofstream &operator<<(ofstream &ofs, const Genre &item) {
-	ofs << endl << endl << endl;
-	ofs << item.mName.c_str();
-
-	// 곡 리스트 저장 시작
-	SimpleItem simple;
-	SortedDoublyIterator<SimpleItem> iter(item.mSongList); // Iterator
-	simple = iter.Next();
-	while (iter.NextNotNull()) {
-		ofs << endl;
-		ofs << simple.GetId().c_str() << endl;
-		ofs << simple.GetName().c_str() << endl;
-		ofs << simple.GetArtist().c_str();
-		simple = iter.Next();
+// Write record to JSON
+Json::Value &operator<<(Json::Value &root, const Genre &item) {
+	Json::Value newValue;
+	newValue[JSON_ATTR_GENRE] = item.mName;
+	// Add song list
+	Json::Value songs;
+	SortedDoublyIterator<SimpleItem> iter(item.mSongList);
+	for (SimpleItem simple = iter.Next();
+		iter.NextNotNull();	simple = iter.Next()) {
+		songs << simple;
 	}
-	ofs << endl;
+	newValue[JSON_ATTR_SONGLIST] = songs;
+	root.append(newValue);
 
-	return ofs;
+	return root;
 }

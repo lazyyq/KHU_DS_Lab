@@ -2,6 +2,13 @@
 
 #include "Utils.h"
 
+#define JSON_ATTR_ID			"ID"
+#define JSON_ATTR_TITLE			"Title"
+#define JSON_ATTR_COMPOSER		"Composer"
+#define JSON_ATTR_ARTIST		"Artist"
+#define JSON_ATTR_GENRE			"Genre"
+#define JSON_VALUE_STR_UNKNOWN	"Unknown"
+
 using namespace utils;
 namespace ID3 = MetadataInfo::ID3;
 
@@ -217,30 +224,26 @@ ostream &operator<<(ostream &os, const MusicItem &item) {
 	return os;
 }
 
-// Read a record from file.
-// Store each line into respective variables.
-ifstream &operator>>(ifstream &ifs, MusicItem &item) {
-	getline(ifs, item.mId);
-	// Skip empty lines.
-	while (item.mId.length() == 0) {
-		getline(ifs, item.mId);
-	}
-	getline(ifs, item.mName);
-	getline(ifs, item.mMelodizer);
-	getline(ifs, item.mArtist);
-	getline(ifs, item.mGenre);
+// Read record from JSON
+Json::Value &operator>>(Json::Value &value, MusicItem &item) {
+	item.mId = value.get(JSON_ATTR_ID, JSON_VALUE_STR_UNKNOWN).asString();
+	item.mName = value.get(JSON_ATTR_TITLE, JSON_VALUE_STR_UNKNOWN).asString();
+	item.mMelodizer = value.get(JSON_ATTR_COMPOSER, JSON_VALUE_STR_UNKNOWN).asString();
+	item.mArtist = value.get(JSON_ATTR_ARTIST, JSON_VALUE_STR_UNKNOWN).asString();
+	item.mGenre = value.get(JSON_ATTR_GENRE, JSON_VALUE_STR_UNKNOWN).asString();
 
-	return ifs;
+	return value;
 }
 
-// Write a record into file.
-ofstream &operator<<(ofstream &ofs, const MusicItem &item) {
-	ofs << endl << endl;
-	ofs << item.mId << endl;
-	ofs << item.mName << endl;
-	ofs << item.mMelodizer << endl;
-	ofs << item.mArtist << endl;
-	ofs << item.mGenre;
+// Write record to JSON
+Json::Value &operator<<(Json::Value &root, const MusicItem &item) {
+	Json::Value newValue;
+	newValue[JSON_ATTR_ID] = item.mId;
+	newValue[JSON_ATTR_TITLE] = item.mName;
+	newValue[JSON_ATTR_COMPOSER] = item.mMelodizer;
+	newValue[JSON_ATTR_ARTIST] = item.mArtist;
+	newValue[JSON_ATTR_GENRE] = item.mGenre;
+	root.append(newValue); // Add to array
 
-	return ofs;
+	return root;
 }

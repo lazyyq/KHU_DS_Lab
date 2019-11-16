@@ -10,7 +10,7 @@
 #include "PlaylistItem.h"
 #include "LyricsManager.h"
 
-#define PLAYLIST_FILENAME	"files/list_playlist.txt"
+#define PLAYLIST_FILENAME	"files/list_playlist.json"
 
 using namespace std;
 using namespace utils;

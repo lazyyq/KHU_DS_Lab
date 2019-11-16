@@ -1,5 +1,7 @@
 #include "Application.h"
 
+#include <json/json.h>
+
 #include "id3/ID3Tag.h"
 #include "dialog/DialogUtils.h"
 
@@ -431,64 +433,70 @@ int Application::OpenOutFile(string fileName) {
 
 // Open a file as a read mode, read all data on the file, and set list by the data.
 int Application::ReadMusicListFromFile() {
-	MusicItem data;	// Temporary variable to hold info from file
-
 	// Open music list file
 	if (!OpenInFile(MUSIC_LIST_FILENAME)) {
 		cout << "\n\tNothing to read from file.\n";
 		return 0;
 	}
 
-	// Read music data from file and add to list
-	while (!mInFile.eof()) {
-		mInFile >> data; // Load music data from file
-		mMasterList.Add(data); // Add to list
+	Json::Value root; // Root of json to store music info
+	MusicItem data; // Store item from list
+
+	// Convert each json value to music data
+	mInFile >> root; // Read json data from file
+	for (auto &value : root) {
+		value >> data;
+		mMasterList.Add(data);
 	}
 
-	mInFile.close(); // Close file
+	mInFile.close();
 
 	return 1;
 }
 
 // Open a file as a write mode, and write all data into the file,
 int Application::SaveMusicListToFile() {
-	MusicItem data;	// Temporary variable to hold info from list
-
 	// Open music list file
 	if (!OpenOutFile(MUSIC_LIST_FILENAME)) {
 		cout << "\n\tError while opening file.\n";
 		return 0;
 	}
 
-	// list 포인터를 초기화
-	mMasterList.ResetIterator();
-
 	cout << "\n\tSaving music list..\n";
-	// list의 모든 데이터를 파일에 쓰기
+
+	Json::Value root; // Root of json to store music info
+	MusicItem data; // Store item from list
+
+	// Add each music data to json
+	mMasterList.ResetIterator();
 	int curIndex = mMasterList.GetNextItem(data);
 	while (curIndex > -1) {
-		mOutFile << data;
+		root << data;
 		curIndex = mMasterList.GetNextItem(data);
 	}
+	mOutFile << root; // Write to file
 
-	mOutFile.close(); // Close file
+	mOutFile.close();
 
 	return 1;
 }
 
 // 파일에서 가수 정보를 읽어서 리스트에 저장
 int Application::ReadArtistListFromFile() {
-	// Open music list file
+	// Open artist list file
 	if (!OpenInFile(ARTIST_LIST_FILENAME)) {
 		cout << "\n\tNothing to read from file.\n";
 		return 0;
 	}
 
-	// Read music data from file and add to list
-	while (!mInFile.eof()) {
-		Singer singer;
-		mInFile >> singer; // Load music data from file
-		mSingerList.Add(singer); // Add to list
+	Json::Value root; // Root of json to store artist info
+	Singer singer; // Store item from list
+
+	// Convert each json value to artist data
+	mInFile >> root; // Read json data from file
+	for (auto &value : root) {
+		value >> singer;
+		mSingerList.Add(singer);
 	}
 
 	mInFile.close(); // Close file
@@ -498,45 +506,45 @@ int Application::ReadArtistListFromFile() {
 
 // 가수 리스트의 가수 아이템을 파일에 저장
 int Application::SaveArtistListToFile() {
-	Singer singer;	// Temporary variable to hold info from list
-
-	// Open music list file
+	// Open artist list file
 	if (!OpenOutFile(ARTIST_LIST_FILENAME)) {
 		cout << "\n\tError while opening file.\n";
 		return 0;
 	}
 
-	// list 포인터를 초기화
-	mMasterList.ResetIterator();
-
 	cout << "\n\tSaving artist list..\n";
-	// list의 모든 데이터를 파일에 쓰기
-	SortedDoublyIterator<Singer> iter(mSingerList);
-	singer = iter.Next();
-	while (iter.NextNotNull()) {
-		//data.WriteDataToFile(mOutFile);
-		mOutFile << singer;
-		singer = iter.Next();
-	}
 
-	mOutFile.close(); // Close file
+	Json::Value root; // Root of json to store singer info
+
+	// Add each singer data to json
+	SortedDoublyIterator<Singer> iter(mSingerList);
+	for (Singer singer = iter.Next();
+		iter.NextNotNull(); singer = iter.Next()) {
+		root << singer;
+	}
+	mOutFile << root; // Write to file
+
+	mOutFile.close();
 
 	return 1;
 }
 
 // 파일에서 장르 정보를 읽어서 리스트에 저장
 int Application::ReadGenreListFromFile() {
-	// Open music list file
+	// Open genre list file
 	if (!OpenInFile(GENRE_LIST_FILENAME)) {
 		cout << "\n\tNothing to read from file.\n";
 		return 0;
 	}
 
-	// Read music data from file and add to list
-	while (!mInFile.eof()) {
-		Genre genre;
-		mInFile >> genre; // Load music data from file
-		mGenreList.Add(genre); // Add to list
+	Json::Value root; // Root of json to store genre info
+	Genre genre; // Store item from list
+
+	// Convert each json value to genre data
+	mInFile >> root; // Read json data from file
+	for (auto &value : root) {
+		value >> genre;
+		mGenreList.Add(genre);
 	}
 
 	mInFile.close(); // Close file
@@ -546,28 +554,25 @@ int Application::ReadGenreListFromFile() {
 
 // 장르 리스트의 장르 정보들을 파일에 저장
 int Application::SaveGenreListToFile() {
-	Genre genre;	// Temporary variable to hold info from list
-
-	// Open music list file
+	// Open genre list file
 	if (!OpenOutFile(GENRE_LIST_FILENAME)) {
 		cout << "\n\tError while opening file.\n";
 		return 0;
 	}
 
-	// list 포인터를 초기화
-	mMasterList.ResetIterator();
-
 	cout << "\n\tSaving genre list..\n";
-	// list의 모든 데이터를 파일에 쓰기
-	SortedDoublyIterator<Genre> iter(mGenreList);
-	genre = iter.Next();
-	while (iter.NextNotNull()) {
-		//data.WriteDataToFile(mOutFile);
-		mOutFile << genre;
-		genre = iter.Next();
-	}
 
-	mOutFile.close(); // Close file
+	Json::Value root; // Root of json to store genre info
+
+	// Add each genre data to json
+	SortedDoublyIterator<Genre> iter(mGenreList);
+	for (Genre genre = iter.Next();
+		iter.NextNotNull(); genre = iter.Next()) {
+		root << genre;
+	}
+	mOutFile << root; // Write to file
+
+	mOutFile.close();
 
 	return 1;
 }

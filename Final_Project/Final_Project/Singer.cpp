@@ -1,5 +1,13 @@
 #include "Singer.h"
 
+#define JSON_ATTR_SINGER		"Singer"
+#define JSON_ATTR_AGE			"Age"
+#define JSON_ATTR_SEX			"Sex"
+#define JSON_ATTR_SONGLIST		"Songs"
+#define JSON_VALUE_STR_UNKNOWN	"Unknown"
+#define JSON_VALUE_CHAR_UNKNOWN	' '
+#define JSON_VALUE_INT_UNKNOWN	-1
+
 // Constructors
 Singer::Singer() {
 	mName = " ";
@@ -129,57 +137,37 @@ bool Singer::operator>=(const Singer &that) const {
 	return this->mName.compare(that.mName) >= 0;
 }
 
-// 파일로부터 읽어오기.
-// 파일의 첫째줄은 가수이름, 둘째줄은 나이, 셋째줄은 성별,
-// 그 다음줄부터 공백을 만날때까지는 가수가 취입한 곡 아이디.
-ifstream &operator>>(ifstream &ifs, Singer &item) {
-	string temp;
-
-	getline(ifs, item.mName); // 이름
-	while (item.mName.length() == 0) {
-		// Skip empty lines.
-		getline(ifs, item.mName);
-	}
-	getline(ifs, temp);
-	item.mAge = stoi(temp); // 나이
-	getline(ifs, temp);
-	item.mSex = temp[0]; // 성별
-
+// Read record from JSON
+Json::Value &operator>>(Json::Value &value, Singer &item) {
+	item.mName = value.get(JSON_ATTR_SINGER, JSON_VALUE_STR_UNKNOWN).asString();
+	item.mAge = value.get(JSON_ATTR_AGE, JSON_VALUE_INT_UNKNOWN).asInt();
+	item.mSex = value.get(JSON_ATTR_SEX, JSON_VALUE_CHAR_UNKNOWN).asInt();
+	// Get song list
+	Json::Value songs = value[JSON_ATTR_SONGLIST];
 	SimpleItem simple;
-	getline(ifs, temp);
-	while (temp.length() != 0) { // 빈줄 발견될때까지
-		simple.SetId(temp);
-		getline(ifs, temp);
-		simple.SetName(temp);
-		getline(ifs, temp);
-		simple.SetArtist(temp);
-		item.AddSong(simple);
-
-		getline(ifs, temp);
+	for (auto &i : songs) {
+		i >> simple;
+		item.mSongList.Add(simple);
 	}
 
-	return ifs;
+	return value;
 }
 
-// 파일에 저장
-ofstream &operator<<(ofstream &ofs, const Singer &item) {
-	ofs << endl << endl << endl;
-	ofs << item.mName << endl;
-	ofs << item.mAge << endl;
-	ofs << item.mSex;
-
-	// 곡 리스트 저장 시작
-	SimpleItem simple;
-	SortedDoublyIterator<SimpleItem> iter(item.mSongList); // Iterator
-	simple = iter.Next();
-	while (iter.NextNotNull()) {
-		ofs << endl;
-		ofs << simple.GetId() << endl;
-		ofs << simple.GetName() << endl;
-		ofs << simple.GetArtist();
-		simple = iter.Next();
+// Write record to JSON
+Json::Value &operator<<(Json::Value &root, const Singer &item) {
+	Json::Value newValue;
+	newValue[JSON_ATTR_SINGER] = item.mName;
+	newValue[JSON_ATTR_AGE] = item.mAge;
+	newValue[JSON_ATTR_SEX] = item.mSex;
+	// Add song list
+	Json::Value songs;
+	SortedDoublyIterator<SimpleItem> iter(item.mSongList);
+	for (SimpleItem simple = iter.Next();
+		iter.NextNotNull();	simple = iter.Next()) {
+		songs << simple;
 	}
-	ofs << endl;
+	newValue[JSON_ATTR_SONGLIST] = songs;
+	root.append(newValue);
 
-	return ofs;
+	return root;
 }

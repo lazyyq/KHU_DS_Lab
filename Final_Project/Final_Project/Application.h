@@ -19,9 +19,9 @@
 #include "Player.h"
 
 #define CONSOLE_COLOR	"70"
-#define MUSIC_LIST_FILENAME	"files/list_music.txt"
-#define ARTIST_LIST_FILENAME	"files/list_artist.txt"
-#define GENRE_LIST_FILENAME	"files/list_genre.txt"
+#define MUSIC_LIST_FILENAME	"files/list_music.json"
+#define ARTIST_LIST_FILENAME	"files/list_artist.json"
+#define GENRE_LIST_FILENAME	"files/list_genre.json"
 
 using namespace std;
 using namespace utils;
