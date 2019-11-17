@@ -44,10 +44,3 @@ std::string utils::ToLowerCase(const std::string &str) {
 	std::transform(converted.begin(), converted.end(), converted.begin(), tolower);
 	return converted;
 }
-
-std::string utils::WstrToStr(const std::wstring &wstr) {
-	char ch[10000];
-	size_t cnt;
-	wcstombs_s(&cnt, ch, sizeof(ch), wstr.c_str(), sizeof(ch));
-	return std::string(ch);
-}

@@ -210,7 +210,8 @@
     <ClInclude Include="SortedDoublyIterator.h" />
     <ClInclude Include="SortedDoublyLinkedList.h" />
     <ClInclude Include="SortedList.h" />
-    <ClInclude Include="Utils.h" />
+    <ClInclude Include="utils\StringUtils.h" />
+    <ClInclude Include="utils\Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
@@ -240,7 +241,8 @@
     <ClCompile Include="PlaylistItem.cpp" />
     <ClCompile Include="SimpleItem.cpp" />
     <ClCompile Include="Singer.cpp" />
-    <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="utils\StringUtils.cpp" />
+    <ClCompile Include="utils\Utils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

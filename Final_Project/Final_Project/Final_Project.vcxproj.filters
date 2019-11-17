@@ -25,6 +25,12 @@
     <Filter Include="헤더 파일\id3">
       <UniqueIdentifier>{01226c62-4493-4418-9e90-ddf7113f65b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\utils">
+      <UniqueIdentifier>{f664657f-b7a5-4db2-bbb3-4c87f4f2cea6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\utils">
+      <UniqueIdentifier>{0f07fba5-5e65-474b-930e-5a307b31d7be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlaylistItem.h">
@@ -64,9 +70,6 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="DoublyNodeType.h">
@@ -135,6 +138,12 @@
     <ClInclude Include="GeniusAccessToken.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="utils\Utils.h">
+      <Filter>헤더 파일\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\StringUtils.h">
+      <Filter>헤더 파일\utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlaylistItem.cpp">
@@ -171,9 +180,6 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Utils.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="dialog\DialogUtils.cpp">
@@ -220,6 +226,12 @@
     </ClCompile>
     <ClCompile Include="id3\ID3Reader.cpp">
       <Filter>소스 파일\id3</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\Utils.cpp">
+      <Filter>소스 파일\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\StringUtils.cpp">
+      <Filter>소스 파일\utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

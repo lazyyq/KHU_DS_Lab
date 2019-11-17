@@ -7,7 +7,7 @@
 
 #include "PlaylistItem.h"
 #include "SimpleItem.h"
-#include "Utils.h"
+#include "utils/Utils.h"
 #include "dialog/DialogUtils.h"
 #include "id3/ID3Tag.h"
 
@@ -52,8 +52,7 @@ void Application::SetConsoleColor() {
 
 // Program driver.
 void Application::Run() {
-	setlocale(LC_ALL, "korean");
-
+	setlocale(LC_ALL, "");
 	SetConsoleColor(); // Set color
 	MenuMain(); // Show main menu
 }

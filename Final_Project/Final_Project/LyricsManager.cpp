@@ -6,7 +6,7 @@
 #include <filesystem>
 
 #include "GeniusLyricsFetcher.h"
-#include "Utils.h"
+#include "utils/Utils.h"
 
 #define LYRICS_FOLDERNAME	"lyrics"
 

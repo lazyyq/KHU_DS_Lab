@@ -35,11 +35,4 @@ namespace utils {
 	*	@return	소문자로 변환된 스트링
 	*/
 	std::string ToLowerCase(const std::string &str);
-
-	/**
-	*	@brief	wstring을 string으로 변환
-	*	@param	wstr	변환할 wstring, 최대 길이 10000자
-	*	@return	변환된 string
-	*/
-	std::string WstrToStr(const std::wstring &wstr);
 };
