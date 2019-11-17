@@ -2,12 +2,12 @@
 
 #include <fstream>
 
+#include "BinarySearchTree.h"
 #include "Genre.h"
 #include "MusicItem.h"
 #include "Player.h"
 #include "Singer.h"
 #include "SortedDoublyLinkedList.h"
-#include "SortedList.h"
 
 /**
 *	Class for running main program
@@ -219,7 +219,7 @@ public:
 private:
 	ifstream mInFile;					// input file descriptor
 	ofstream mOutFile;					// output file descriptor
-	SortedList<MusicItem> mMasterList;	// music item list
+	BinarySearchTree<MusicItem> mMasterList;	// music item list
 	SortedDoublyLinkedList<Singer> mSingerList;	// Singer list
 	SortedDoublyLinkedList<Genre> mGenreList;	// Genre list
 	Player mPlayer;						// Playlist manager

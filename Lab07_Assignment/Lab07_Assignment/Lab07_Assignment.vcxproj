@@ -199,6 +199,7 @@
     <ClInclude Include="id3\ID3v24Reader.h" />
     <ClInclude Include="id3\ID3v2Reader.h" />
     <ClInclude Include="id3\MetaInfo.h" />
+    <ClInclude Include="LinkedQueueList.h" />
     <ClInclude Include="LyricsItem.h" />
     <ClInclude Include="LyricsManager.h" />
     <ClInclude Include="menu\CursorManager.h" />

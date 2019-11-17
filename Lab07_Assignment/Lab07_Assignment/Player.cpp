@@ -5,6 +5,7 @@
 #include <ctime>
 #include <json/json.h>
 
+#include "SortedList.h"
 #include "Utils.h"
 
 #define PLAYLIST_FILENAME	"files/list_playlist.json"
@@ -13,7 +14,7 @@ using namespace std;
 using namespace utils;
 
 // 생성사
-Player::Player(SortedList<MusicItem> &inList) :
+Player::Player(BinarySearchTree<MusicItem> &inList) :
 	mInsertOrder(0), mMusicList(inList) {
 	ReadPlaylistFromFile(); // 파일로부터 읽어오기
 }
@@ -41,7 +42,7 @@ void Player::ListPlaylist() {
 	item = iter.Next();
 	while (iter.NextNotNull()) {
 		music.SetId(item.GetId()); // item의 아이디를 저장
-		if (mMusicList.Retrieve(music) != -1) { // 저장된 아이디로 마스터리스트 검색
+		if (mMusicList.RetrieveItem(music)) { // 저장된 아이디로 마스터리스트 검색
 			// Music found in music list
 			cout << "\n\t#" << num++ << " \"" << music.GetName()
 				<< "\" by " << music.GetArtist() << endl
@@ -124,7 +125,7 @@ void Player::Play(PlaylistItem &item) {
 	MusicItem music; // 마스터리스트 검색용
 	music.SetId(item.GetId());
 	// Search with id and check if music exists in music list
-	if (mMusicList.Retrieve(music) != -1) {
+	if (mMusicList.RetrieveItem(music)) {
 		// Music found in list
 		music.Play();
 
@@ -148,7 +149,7 @@ void Player::AddToPlaylist() {
 
 	cout << endl;
 	music.SetIdFromKB(); // Get id to search
-	if (mMusicList.Retrieve(music) != -1) { // Check if music exists in list
+	if (mMusicList.RetrieveItem(music)) { // Check if music exists in list
 		// Music exists
 		// Create a music item to put in playlist
 		PlaylistItem playItem(music.GetId());

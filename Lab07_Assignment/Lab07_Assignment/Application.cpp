@@ -69,8 +69,7 @@ void Application::Save() {
 
 // Add new record into list.
 int Application::AddMusic(const MusicItem &data) {
-	int result = mMasterList.Add(data);
-	if (result != 1) { // Add failed
+	if (!mMasterList.Add(data)) { // Add failed
 		cout << "\n\tFailed to add " << data.GetName() << ". Probably duplicate?\n";
 		return 0;
 	}
@@ -194,12 +193,12 @@ void Application::DeleteMusic() {
 	MusicItem data; // Temporary variable to hold info
 	data.SetIdFromKB(); // Get id to delete
 
-	if (mMasterList.Retrieve(data) != -1) {
+	if (mMasterList.RetrieveItem(data)) {
 		// 곡이 마스터리스트에 존재하면 삭제
 		// 굳이 존재여부를 먼저 확인하는 이유는
 		// Retrieve를 통해 곡의 완전한 정보를 받아와
 		// 가수 리스트와 장르 리스트에서도 삭제하기 위한 것
-		mMasterList.Delete(data);
+		mMasterList.DeleteItem(data);
 	} else { // Failed
 		cout << "\n\n\tNo such data in our list.\n";
 		return;
@@ -240,7 +239,7 @@ void Application::ReplaceMusic() {
 	data.SetIdFromKB(); // Get id to search
 	cin >> data; // Get the rest info to search
 
-	if (mMasterList.Replace(data) == 1) { // Success
+	if (mMasterList.ReplaceItem(data)) { // Success
 		cout << "\n\n\tSuccessfully replaced data.\n";
 	} else { // Failed
 		cout << "\n\n\tFailed to replace data.\n";
@@ -253,8 +252,7 @@ void Application::SearchById() {
 	data.SetIdFromKB(); // Get id to search in list
 
 	// Search in list
-	int result = mMasterList.Retrieve(data);
-	if (result != -1) { // Found
+	if (mMasterList.RetrieveItem(data)) { // Found
 		cout << "\n\t---------------------------------------\n\n";
 		cout << data;
 		cout << "\n\t---------------------------------------\n";
@@ -273,9 +271,10 @@ void Application::SearchByName() {
 	// Object to hold data from list
 	MusicItem dataFromList;
 	// Iterate through list
-	mMasterList.ResetIterator();
-	int curIndex = mMasterList.GetNextItem(dataFromList);
-	while (curIndex > -1) {
+	mMasterList.ResetTree(OrderType::IN);
+	bool finished = false;
+	mMasterList.GetNextItem(dataFromList, OrderType::IN, finished);
+	while (!finished) {
 		// Check if input data's name property is
 		// substring of retrieved item's.
 		if (dataFromList.GetName().find(data.GetName())
@@ -286,7 +285,7 @@ void Application::SearchByName() {
 
 			found = true;
 		}
-		curIndex = mMasterList.GetNextItem(dataFromList);
+		mMasterList.GetNextItem(dataFromList, OrderType::IN, finished);
 	}
 
 	if (!found) {
@@ -323,7 +322,7 @@ void Application::SearchByArtist() {
 	while (iter.NextNotNull()) {
 		// Display info for each song in the singer's song list
 		music.SetId(song.GetId());
-		if (mMasterList.Retrieve(music) != -1) {
+		if (mMasterList.RetrieveItem(music)) {
 			// Music found in master list, display info on screen
 			cout << "\n\t---------------------------------------\n\n";
 			cout << music; // Display song info
@@ -365,7 +364,7 @@ void Application::SearchByGenre() {
 	while (iter.NextNotNull()) {
 		// Display info for each song in the genre's song list
 		music.SetId(song.GetId());
-		if (mMasterList.Retrieve(music) != -1) {
+		if (mMasterList.RetrieveItem(music)) {
 			// Music found in master list, display info on screen
 			cout << "\n\t---------------------------------------\n\n";
 			cout << music; // Display song info
@@ -392,18 +391,20 @@ void Application::DisplayAllMusic() {
 	cout << "\n\t=======================================\n";
 
 	// Print all data in list
-	mMasterList.ResetIterator(); // Reset pointer
-	int curIndex = mMasterList.GetNextItem(data);
-	if (curIndex > -1) { // Print first item
-		cout << "\n\tMusic #" << (curIndex + 1) << "\n\n";
+	mMasterList.ResetTree(OrderType::IN); // Reset pointer
+	bool finished = false;
+	int curIndex = 0;
+	mMasterList.GetNextItem(data, OrderType::IN, finished);
+	if (!finished) { // Print first item
+		cout << "\n\tMusic #" << (++curIndex) << "\n\n";
 		cout << data;
-		curIndex = mMasterList.GetNextItem(data);
+		mMasterList.GetNextItem(data, OrderType::IN, finished);
 	}
-	while (curIndex > -1) { // Print rest
+	while (!finished) { // Print rest
 		cout << "\n\t---------------------------------------\n";
-		cout << "\n\tMusic #" << (curIndex + 1) << "\n\n";
+		cout << "\n\tMusic #" << (++curIndex) << "\n\n";
 		cout << data;
-		curIndex = mMasterList.GetNextItem(data);
+		mMasterList.GetNextItem(data, OrderType::IN, finished);
 	}
 
 	cout << "\n\t=======================================\n";
@@ -481,11 +482,12 @@ int Application::SaveMusicListToFile() {
 	MusicItem data; // Store item from list
 
 	// Add each music data to json
-	mMasterList.ResetIterator();
-	int curIndex = mMasterList.GetNextItem(data);
-	while (curIndex > -1) {
+	mMasterList.ResetTree(OrderType::IN);
+	bool finished = false;
+	mMasterList.GetNextItem(data, OrderType::IN, finished);
+	while (!finished) {
 		root << data;
-		curIndex = mMasterList.GetNextItem(data);
+		mMasterList.GetNextItem(data, OrderType::IN, finished);
 	}
 	mOutFile << root; // Write to file
 

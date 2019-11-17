@@ -1,17 +1,17 @@
 #pragma once
 
+#include "BinarySearchTree.h"
 #include "LyricsManager.h"
 #include "MusicItem.h"
 #include "PlaylistItem.h"
 #include "SortedDoublyLinkedList.h"
-#include "SortedList.h"
 
 class Player {
 public:
 	/**
 	*	Constructor
 	*/
-	Player(SortedList<MusicItem> &inList);
+	Player(BinarySearchTree<MusicItem> &inList);
 
 	/**
 	*	Destructor
@@ -100,7 +100,7 @@ public:
 
 private:
 	int mInsertOrder;					// Insert order of music in playlist
-	SortedList<MusicItem> &mMusicList;	// 음악 마스터리스트
+	BinarySearchTree<MusicItem> &mMusicList;	// 음악 마스터리스트
 	SortedDoublyLinkedList<PlaylistItem> mPlaylist;	// music playlist
 	LyricsManager mLyricsManager;		// Manages lyrics & lyrics files
 };

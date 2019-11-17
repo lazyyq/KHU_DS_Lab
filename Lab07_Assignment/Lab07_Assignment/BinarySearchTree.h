@@ -1,78 +1,97 @@
-ï»¿#pragma once
+#pragma once
 
 #include <iostream>
+
+#include "LinkedQueueList.h"
+
+enum OrderType { PRE, IN, POST };
 
 // Binary Search Tree 
 template<class T>
 class BinarySearchTree {
 public:
-	// ìƒì„±ì
+	// »ı¼ºÀÚ
 	BinarySearchTree();
 
-	// ì†Œë©¸ì
-	~BinarySearchTree() {}
+	// ¼Ò¸êÀÚ
+	~BinarySearchTree();
 
 	/**
-	*	@brief	Treeê°€ Emptyì¸ì§€ í™•ì¸
+	*	@brief	Tree°¡ EmptyÀÎÁö È®ÀÎ
 	*	@pre	none
 	*	@post	none
-	*	@return	Treeê°€ ë¹„ì–´ìˆìœ¼ë©´ trueë¦¬í„´, ì•„ë‹ˆë©´ false ë¦¬í„´
+	*	@return	Tree°¡ ºñ¾îÀÖÀ¸¸é true¸®ÅÏ, ¾Æ´Ï¸é false ¸®ÅÏ
 	*/
 	bool IsEmpty() const;
 
 	/**
-	*	@brief	Treeê°€ Fullì¸ì§€ í™•ì¸
+	*	@brief	Tree°¡ FullÀÎÁö È®ÀÎ
 	*	@pre	none
 	*	@post	none
-	*	@return	Treeê°€ Fullì´ë©´ true ë¦¬í„´, ì•„ë‹ˆë©´ false ë¦¬í„´
+	*	@return	Tree°¡ FullÀÌ¸é true ¸®ÅÏ, ¾Æ´Ï¸é false ¸®ÅÏ
 	*/
 	bool IsFull() const;
 
 	/**
-	*	@brief	Treeë¥¼ ë¹„ìš´ë‹¤
+	*	@brief	Tree¸¦ ºñ¿î´Ù
 	*	@pre	none
 	*	@post	none
 	*/
 	void MakeEmpty();
 
 	/**
-	*	@brief	Treeì— nodeê°€ ëª‡ ê°œì¸ì§€ í™•ì¸í•¨
+	*	@brief	Tree¿¡ node°¡ ¸î °³ÀÎÁö È®ÀÎÇÔ
 	*	@pre	none
 	*	@post	none
-	*	@return	Treeì˜ node ê°œìˆ˜ë¥¼ ë¦¬í„´
+	*	@return	TreeÀÇ node °³¼ö¸¦ ¸®ÅÏ
 	*/
-	int GetLength() const;
+	int GetLength();
 
 	/**
-	*	@brief	Treeì— ìƒˆ nodeë¥¼ ì¶”ê°€í•œë‹¤
-	*	@pre	Tì˜ ê°ì²´ë¥¼ ìƒì„±
-	*	@post	Treeì— ìƒˆ nodeê°€ ì¶”ê°€ë¨
+	*	@brief	Tree¿¡ »õ node¸¦ Ãß°¡ÇÑ´Ù
+	*	@pre	TÀÇ °´Ã¼¸¦ »ı¼º
+	*	@post	Tree¿¡ »õ node°¡ Ãß°¡µÊ
+	*	@return	Ãß°¡ ¼º°ø ½Ã true, ¾Æ´Ò ½Ã false
 	*/
-	void Add(T item);
+	bool Add(T item);
 
 	/**
-	*	@brief	Treeì—ì„œ ì§€ìš°ê³ ì í•˜ëŠ” nodeë¥¼ ì°¾ê³  ì§€ì›€
-	*	@pre	Tì˜ ê°ì²´ë¥¼ ìƒì„±
-	*	@post	Treeì—ì„œ ì…ë ¥í•œ nodeê°€ ì‚­ì œë¨
+	*	@brief	Tree¿¡ Á¸ÀçÇÏ´Â nodeÀÇ Á¤º¸¸¦ ¾÷µ¥ÀÌÆ®ÇÑ´Ù
+	*	@return	¾÷µ¥ÀÌÆ® ¼º°ø ½Ã true, ¾Æ´Ò ½Ã false
+	*/
+	bool ReplaceItem(T item);
+
+	/**
+	*	@brief	Tree¿¡¼­ Áö¿ì°íÀÚ ÇÏ´Â node¸¦ Ã£°í Áö¿ò
+	*	@pre	TÀÇ °´Ã¼¸¦ »ı¼º
+	*	@post	Tree¿¡¼­ ÀÔ·ÂÇÑ node°¡ »èÁ¦µÊ
 	*/
 	void DeleteItem(T item);
 
 	/**
-	*	@brief	ì…ë ¥í•œ ê°’ì˜ nodeë¥¼ Treeì—ì„œ ê²€ìƒ‰í•¨
-	*	@pre	ì°¾ê³ ì í•˜ëŠ” itemê³¼ ê²€ìƒ‰ê²°ê³¼ì— ëŒ€í•œ found ì„¤ì •
-	*	@post	nodeê°€ Treeì— ìˆëŠ”ì§€ ê²€ìƒ‰ê²°ê³¼ë¥¼ ì•Œë ¤ì¤Œ
+	*	@brief	ÀÔ·ÂÇÑ °ªÀÇ node¸¦ Tree¿¡¼­ °Ë»öÇÔ
+	*	@pre	Ã£°íÀÚ ÇÏ´Â item°ú °Ë»ö°á°ú¿¡ ´ëÇÑ found ¼³Á¤
+	*	@post	node°¡ Tree¿¡ ÀÖ´ÂÁö °Ë»ö°á°ú¸¦ ¾Ë·ÁÁÜ
+	*	@return	¹ß°ß ½Ã true, ¾Æ´Ï¸é false
 	*/
-	void RetrieveItem(T &item, bool &found) const;
+	bool RetrieveItem(T &item);
 
 	/**
-	*	@brief	Treeì˜ nodeë¥¼ ìŠ¤í¬ë¦°ì— ì¶œë ¥í•œë‹¤.
+	*	@brief	TreeÀÇ node¸¦ ½ºÅ©¸°¿¡ Ãâ·ÂÇÑ´Ù.
 	*	@pre	none
-	*	@post	ìŠ¤í¬ë¦°ì— Treeê°€ InOrder, PreOrder, PostOrder ë°©ë²•ìœ¼ë¡œ ê°ê° ì¶œë ¥ë¨.
+	*	@post	½ºÅ©¸°¿¡ Tree°¡ InOrder, PreOrder, PostOrder ¹æ¹ıÀ¸·Î °¢°¢ Ãâ·ÂµÊ.
 	*/
-	void PrintTree(std::ostream &out) const;
+	void PrintTree(std::ostream &out);
+
+	// Update queue with given order type
+	void ResetTree(OrderType order);
+
+	// Get next item in bst with given order type
+	void GetNextItem(T &item, OrderType order,
+		bool &finished);
 
 private:
-	// Treeë¥¼ êµ¬ì„±í•˜ëŠ” Node (node data, left í¬ì¸í„°, right í¬ì¸í„°)
+	// Tree¸¦ ±¸¼ºÇÏ´Â Node (node data, left Æ÷ÀÎÅÍ, right Æ÷ÀÎÅÍ)
 	template<class T>
 	struct Node {
 		T data;
@@ -80,7 +99,9 @@ private:
 		Node *right;
 	};
 
-	Node<T> *root;		// Node íƒ€ì…ì˜ root
+	Node<T> *root;		// Node Å¸ÀÔÀÇ root
+	// Queues to store items in bst. For iterating purpose.
+	LinkedQueueList<T> preQueue, inQueue, postQueue;
 
 	// Empty tree
 	void MakeEmptyTree(Node<T> *&root);
@@ -89,7 +110,10 @@ private:
 	int CountNodes(Node<T> *root);
 
 	// Insert an item
-	void Insert(Node<T> *&root, T item);
+	void Insert(Node<T> *&root, T item, bool &result);
+
+	// Replace an item
+	void Replace(Node<T> *&root, T item, bool &result);
 
 	// Find the biggest item
 	void GetPredecessor(Node<T> *root, T &item);
@@ -111,195 +135,320 @@ private:
 
 	// Print in PostOrder
 	void PrintPostOrderTraversal(Node<T> *root, std::ostream &out);
+
+	// Put items in queue with given order type
+	void Reset(Node<T> *root, OrderType order);
 };
 
-// ìƒì„±ì
+// »ı¼ºÀÚ
 template<class T>
 BinarySearchTree<T>::BinarySearchTree() {
 	root = NULL;
 }
 
-// Treeê°€ ë¹„ì–´ìˆëŠ”ì§€ í™•ì¸
 template<class T>
-bool BinarySearchTree<T>::IsEmpty() const {
-	if (root == NULL)			// root ë…¸ë“œê°€ NULLì¸ ê²½ìš° true ë¦¬í„´
-		return true;
-	else
-		return false;			// root ë…¸ë“œê°€ NULLì´ ì•„ë‹Œ ê²½ìš° false ë¦¬í„´
+BinarySearchTree<T>::~BinarySearchTree() {
+	MakeEmpty();
+	preQueue.MakeEmpty();
+	inQueue.MakeEmpty();
+	postQueue.MakeEmpty();
 }
 
-// Treeê°€ Fullì¸ì§€ í™•ì¸
+// Tree°¡ ºñ¾îÀÖ´ÂÁö È®ÀÎ
+template<class T>
+bool BinarySearchTree<T>::IsEmpty() const {
+	if (root == NULL)			// root ³ëµå°¡ NULLÀÎ °æ¿ì true ¸®ÅÏ
+		return true;
+	else
+		return false;			// root ³ëµå°¡ NULLÀÌ ¾Æ´Ñ °æ¿ì false ¸®ÅÏ
+}
+
+// Tree°¡ FullÀÎÁö È®ÀÎ
 template<class T>
 bool BinarySearchTree<T>::IsFull() const {
-	Node *room;					// ì„ì‹œì˜ nodeë¥¼ ë§Œë“¤ê³ 
+	Node *room;					// ÀÓ½ÃÀÇ node¸¦ ¸¸µé°í
 	try {
-		room = new Node;		// ìƒˆ ë…¸ë“œë¥¼ ì¶”ê°€í•  ìˆ˜ ìˆëŠ”ì§€ í™•ì¸
-		delete room;			// ì„ì‹œë¡œ ë§Œë“  room ë…¸ë“œë¥¼ ì§€ì›€
-		return false;			// isFullì— ëŒ€í•œ false ë¦¬í„´
-	} catch (std::bad_alloc exception)		// ë” ì´ìƒ ì•„ì´í…œ ì¶”ê°€ë¥¼ í•  ìˆ˜ ì—†ê³  Fullì¼ ê²½ìš°
+		room = new Node;		// »õ ³ëµå¸¦ Ãß°¡ÇÒ ¼ö ÀÖ´ÂÁö È®ÀÎ
+		delete room;			// ÀÓ½Ã·Î ¸¸µç room ³ëµå¸¦ Áö¿ò
+		return false;			// isFull¿¡ ´ëÇÑ false ¸®ÅÏ
+	} catch (std::bad_alloc exception)		// ´õ ÀÌ»ó ¾ÆÀÌÅÛ Ãß°¡¸¦ ÇÒ ¼ö ¾ø°í FullÀÏ °æ¿ì
 	{
-		return true;					// isFullì— ëŒ€í•œ true ë¦¬í„´
+		return true;					// isFull¿¡ ´ëÇÑ true ¸®ÅÏ
 	}
 }
 
-// Treeë¥¼ ë¹„ì›€
+// Tree¸¦ ºñ¿ò
 template<class T>
 void BinarySearchTree<T>::MakeEmpty() {
-	MakeEmptyTree(root);				// Tree ì´ˆê¸°í™” í•¨ìˆ˜ í˜¸ì¶œ
+	MakeEmptyTree(root);				// Tree ÃÊ±âÈ­ ÇÔ¼ö È£Ãâ
 }
 
-// Treeì˜ nodeê°œìˆ˜ë¥¼ ì•Œë ¤ì¤Œ
+// TreeÀÇ node°³¼ö¸¦ ¾Ë·ÁÁÜ
 template<class T>
-int BinarySearchTree<T>::GetLength() const {
-	return CountNodes(root);			// node ê°œìˆ˜ë¥¼ ìƒˆëŠ” í•¨ìˆ˜ í˜¸ì¶œ
+int BinarySearchTree<T>::GetLength() {
+	return CountNodes(root);			// node °³¼ö¸¦ »õ´Â ÇÔ¼ö È£Ãâ
 }
 
-// Treeì— ìƒˆë¡œìš´ node ì¶”ê°€
+// Tree¿¡ »õ·Î¿î node Ãß°¡
 template<class T>
-void BinarySearchTree<T>::Add(T item) {
-	Insert(root, item);					// ìƒˆ node ì¶”ê°€í•˜ëŠ” í•¨ìˆ˜ í˜¸ì¶œ
+bool BinarySearchTree<T>::Add(T item) {
+	bool result = false;
+	Insert(root, item, result);					// »õ node Ãß°¡ÇÏ´Â ÇÔ¼ö È£Ãâ
+	return result;
 }
 
-// Treeì˜ nodeë¥¼ ì§€ì›€
+// NodeÀÇ Á¤º¸ ¾÷µ¥ÀÌÆ®
+template<class T>
+bool BinarySearchTree<T>::ReplaceItem(T item) {
+	bool result = false;
+	Replace(root, item, result);
+	return result;
+}
+
+// TreeÀÇ node¸¦ Áö¿ò
 template<class T>
 void BinarySearchTree<T>::DeleteItem(T item) {
-	Delete(root, item);					// ì¡´ì¬í•˜ëŠ” node ì‚­ì œí•˜ëŠ” í•¨ìˆ˜ë¥¼ í˜¸ì¶œ
+	Delete(root, item);					// Á¸ÀçÇÏ´Â node »èÁ¦ÇÏ´Â ÇÔ¼ö¸¦ È£Ãâ
 }
 
-// Treeì—ì„œ ì°¾ê³ ì í•˜ëŠ” ê°’ì˜ nodeë¥¼ ê²€ìƒ‰
+// Tree¿¡¼­ Ã£°íÀÚ ÇÏ´Â °ªÀÇ node¸¦ °Ë»ö
 template<class T>
-void BinarySearchTree<T>::RetrieveItem(T &item, bool &found) const {
-	Retrieve(root, item, found);		// Tree ê²€ìƒ‰ í•¨ìˆ˜ í˜¸ì¶œ
+bool BinarySearchTree<T>::RetrieveItem(T &item) {
+	bool found = false;
+	Retrieve(root, item, found);		// Tree °Ë»ö ÇÔ¼ö È£Ãâ
+	return found;
 }
 
-// Treeì˜ nodeë¥¼ ê°ê°ì˜ ë°©ë²•ëŒ€ë¡œ ì¶œë ¥í•¨
+// TreeÀÇ node¸¦ °¢°¢ÀÇ ¹æ¹ı´ë·Î Ãâ·ÂÇÔ
 template<class T>
-void BinarySearchTree<T>::PrintTree(std::ostream &out) const {
+void BinarySearchTree<T>::PrintTree(std::ostream &out) {
 	std::cout << "[InOrder]" << std::endl;
-	PrintInOrderTraversal(root, out);			// InOrder ë°©ë²•ìœ¼ë¡œ ì¶œë ¥
+	PrintInOrderTraversal(root, out);			// InOrder ¹æ¹ıÀ¸·Î Ãâ·Â
 	std::cout << std::endl << "[PreOrder]" << std::endl;
-	PrintPreOrderTraversal(root, out);			// PreOrder ë°©ë²•ìœ¼ë¡œ ì¶œë ¥
+	PrintPreOrderTraversal(root, out);			// PreOrder ¹æ¹ıÀ¸·Î Ãâ·Â
 	std::cout << std::endl << "[PostOrder]" << std::endl;
-	PrintPostOrderTraversal(root, out);			// PostOrder ë°©ë²•ìœ¼ë¡œ ì¶œë ¥
+	PrintPostOrderTraversal(root, out);			// PostOrder ¹æ¹ıÀ¸·Î Ãâ·Â
+}
+
+// Put items in queue
+template<class T>
+void BinarySearchTree<T>::ResetTree(OrderType order) {
+	// Reset appropriate queue
+	switch (order) {
+	case PRE:
+		preQueue.MakeEmpty(); break;
+	case IN:
+		inQueue.MakeEmpty(); break;
+	case POST:
+		postQueue.MakeEmpty(); break;
+	}
+	Reset(root, order); // Start recursion
+}
+
+// Get next item in bst
+template<class T>
+void BinarySearchTree<T>::GetNextItem(T &item, OrderType order,
+	bool &finished) {
+	// Dequeue item from appropriate queue
+	switch (order) {
+	case PRE:
+		if (preQueue.IsEmpty()) {
+			finished = true;
+		} else {
+			preQueue.Dequeue(item);
+		}
+		break;
+	case IN:
+		if (inQueue.IsEmpty()) {
+			finished = true;
+		} else {
+			inQueue.Dequeue(item);
+		}
+		break;
+	case POST:
+		if (postQueue.IsEmpty()) {
+			finished = true;
+		} else {
+			postQueue.Dequeue(item);
+		}
+		break;
+	}
 }
 
 /////////////////////////////Global functions//////////////////////////
-// Treeë¥¼ ì´ˆê¸°í™”í•˜ëŠ” í•¨ìˆ˜
+// Tree¸¦ ÃÊ±âÈ­ÇÏ´Â ÇÔ¼ö
 template<class T>
 void BinarySearchTree<T>::MakeEmptyTree(Node<T> *&root) {
-	root = NULL;			// root ë…¸ë“œë¥¼ Nullë¡œ í•¨
+	root = NULL;			// root ³ëµå¸¦ Null·Î ÇÔ
 }
 
-// Treeì˜ node ê°œìˆ˜ë¥¼ ì„¸ëŠ” í•¨ìˆ˜
+// TreeÀÇ node °³¼ö¸¦ ¼¼´Â ÇÔ¼ö
 template<class T>
 int BinarySearchTree<T>::CountNodes(Node<T> *root) {
-	if (root == NULL)		// root ë…¸ë“œê°€ nullì¼ê²½ìš° 0ì„ ë¦¬í„´
+	if (root == NULL)		// root ³ëµå°¡ nullÀÏ°æ¿ì 0À» ¸®ÅÏ
 		return 0;
 	else
-		// ë…¸ë“œì˜ ì™¼ìª½, ì˜¤ë¥¸ìª½ì— ëŒ€í•œ ì¬ê·€ì  í˜¸ì¶œê³¼ rootì— í•´ë‹¹í•˜ëŠ” 1ì„ ë”í•´ì„œ ê°’ì„ ë¦¬í„´
+		// ³ëµåÀÇ ¿ŞÂÊ, ¿À¸¥ÂÊ¿¡ ´ëÇÑ Àç±ÍÀû È£Ãâ°ú root¿¡ ÇØ´çÇÏ´Â 1À» ´õÇØ¼­ °ªÀ» ¸®ÅÏ
 		return CountNodes(root->left) + CountNodes(root->right) + 1;
 }
 
-// BinarySearchTreeì— ìƒˆë¡œìš´ ë…¸ë“œ ì¶”ê°€
+// BinarySearchTree¿¡ »õ·Î¿î ³ëµå Ãß°¡
 template<class T>
-void BinarySearchTree<T>::Insert(Node<T> *&root, T item) {
-	if (root == NULL)				// rootê°€ nullì¼ ê²½ìš° 
+void BinarySearchTree<T>::Insert(Node<T> *&root, T item, bool &result) {
+	if (root == NULL)				// root°¡ nullÀÏ °æ¿ì 
 	{
-		root = new Node<T>;	// root ë…¸ë“œ ìƒì„±
-		root->left = NULL;			// root ë…¸ë“œì´ë¯€ë¡œ leftì™€ rightëŠ” NULLë¡œ ì„¤ì •
+		root = new Node<T>;	// root ³ëµå »ı¼º
+		root->left = NULL;			// root ³ëµåÀÌ¹Ç·Î left¿Í right´Â NULL·Î ¼³Á¤
 		root->right = NULL;
-		root->data = item;			// root ë…¸ë“œì˜ ê°’
-	} else if (root->data > item)		// rootê°€ ì¡´ì¬í•˜ê³ , ê·¸ ê°’ì´ ìƒˆë¡œìš´ item ê°’ë³´ë‹¤ í´ ë•Œ
-		Insert(root->left, item);	// rootì˜ ì™¼ìª½ìœ¼ë¡œ Insert í•¨ìˆ˜ ë‹¤ì‹œ í˜¸ì¶œ
-	else if (root->data < item)		// rootê°€ ì¡´ì¬í•˜ê³ , ê·¸ ê°’ì´ ìƒˆë¡œìš´ item ê°’ë³´ë‹¤ ì‘ì„ ë•Œ
-		Insert(root->right, item);	// rootì˜ ì˜¤ë¥¸ìª½ìœ¼ë¡œ Insert í•¨ìˆ˜ ë‹¤ì‹œ í˜¸ì¶œ
+		root->data = item;			// root ³ëµåÀÇ °ª
+		result = true; // ¼º°øÀûÀ¸·Î Ãß°¡ÇßÀ½À» ¾Ë¸²
+	} else if (root->data > item)		// root°¡ Á¸ÀçÇÏ°í, ±× °ªÀÌ »õ·Î¿î item °ªº¸´Ù Å¬ ¶§
+		Insert(root->left, item, result);	// rootÀÇ ¿ŞÂÊÀ¸·Î Insert ÇÔ¼ö ´Ù½Ã È£Ãâ
+	else if (root->data < item)		// root°¡ Á¸ÀçÇÏ°í, ±× °ªÀÌ »õ·Î¿î item °ªº¸´Ù ÀÛÀ» ¶§
+		Insert(root->right, item, result);	// rootÀÇ ¿À¸¥ÂÊÀ¸·Î Insert ÇÔ¼ö ´Ù½Ã È£Ãâ
 }
 
-// ê°€ì¥ í° ê°’ì„ ì°¾ëŠ” í•¨ìˆ˜ 
+// Replace item
+template<class T>
+void BinarySearchTree<T>::Replace(Node<T> *&root, T item, bool &result) {
+	if (root->data > item)		// root°¡ Á¸ÀçÇÏ°í, ±× °ªÀÌ »õ·Î¿î item °ªº¸´Ù Å¬ ¶§
+		Replace(root->left, item, result);	// rootÀÇ ¿ŞÂÊÀ¸·Î Insert ÇÔ¼ö ´Ù½Ã È£Ãâ
+	else if (root->data < item)		// root°¡ Á¸ÀçÇÏ°í, ±× °ªÀÌ »õ·Î¿î item °ªº¸´Ù ÀÛÀ» ¶§
+		Replace(root->right, item, result);	// rootÀÇ ¿À¸¥ÂÊÀ¸·Î Insert ÇÔ¼ö ´Ù½Ã È£Ãâ
+	else { // ±³Ã¼ÇÏ°íÀÚ ÇÏ´Â µ¥ÀÌÅÍ¸¦ ¹ß°ßÇÔ
+		root->data = item;
+		result = true;
+	}
+}
+
+// °¡Àå Å« °ªÀ» Ã£´Â ÇÔ¼ö 
 template<class T>
 void BinarySearchTree<T>::GetPredecessor(Node<T> *root, T &item) {
-	while (root->right != NULL)			// rootì˜ ì˜¤ë¥¸ìª½ì´ ì¡´ì¬í•  ê²½ìš°
-		root = root->right;				// rootì˜ ì˜¤ë¥¸ìª½ ë…¸ë“œê°’ì´ rootì— ì˜¤ë„ë¡ í•œë‹¤
-	item = root->data;					// root ë…¸ë“œì˜ ê°’ì„ itemì— ë³µì‚¬í•œë‹¤.
+	while (root->right != NULL)			// rootÀÇ ¿À¸¥ÂÊÀÌ Á¸ÀçÇÒ °æ¿ì
+		root = root->right;				// rootÀÇ ¿À¸¥ÂÊ ³ëµå°ªÀÌ root¿¡ ¿Àµµ·Ï ÇÑ´Ù
+	item = root->data;					// root ³ëµåÀÇ °ªÀ» item¿¡ º¹»çÇÑ´Ù.
 }
 
-// ì§€ìš°ë ¤ëŠ” ë…¸ë“œë¥¼ ì°¾ìœ¼ë©´ ì‹¤ì œë¡œ íŠ¸ë¦¬ì—ì„œ ê·¸ ë…¸ë“œë¥¼ ì§€ìš°ëŠ” í•¨ìˆ˜
+// Áö¿ì·Á´Â ³ëµå¸¦ Ã£À¸¸é ½ÇÁ¦·Î Æ®¸®¿¡¼­ ±× ³ëµå¸¦ Áö¿ì´Â ÇÔ¼ö
 template<class T>
 void BinarySearchTree<T>::DeleteNode(Node<T> *&root) {
 	T item;
-	Node<T> *tempPtr;			// ì„ì‹œ ë…¸ë“œë¥¼ ìƒì„±í•˜ê³  root ë…¸ë“œë¥¼ ì„ì‹œ ë…¸ë“œì— ë³µì‚¬
+	Node<T> *tempPtr;			// ÀÓ½Ã ³ëµå¸¦ »ı¼ºÇÏ°í root ³ëµå¸¦ ÀÓ½Ã ³ëµå¿¡ º¹»ç
 	tempPtr = root;
 
-	if (root->left == NULL)				// ì™¼ìª½ë…¸ë“œê°€ ì—†ì„ ë•Œ
+	if (root->left == NULL)				// ¿ŞÂÊ³ëµå°¡ ¾øÀ» ¶§
 	{
-		root = root->right;				// ì˜¤ë¥¸ìª½ ë…¸ë“œê°€ rootê°€ ë˜ë„ë¡ ë³µì‚¬í•˜ê³  ì„ì‹œë…¸ë“œë¥¼ ì§€ì›€
+		root = root->right;				// ¿À¸¥ÂÊ ³ëµå°¡ root°¡ µÇµµ·Ï º¹»çÇÏ°í ÀÓ½Ã³ëµå¸¦ Áö¿ò
 		delete tempPtr;
-	} else if (root->right == NULL)		// ì˜¤ë¥¸ìª½ë…¸ë“œê°€ ì—†ì„ ë•Œ
+	} else if (root->right == NULL)		// ¿À¸¥ÂÊ³ëµå°¡ ¾øÀ» ¶§
 	{
-		root = root->left;				// ì™¼ìª½ ë…¸ë“œê°€ rootê°€ ë˜ë„ë¡ ë³µì‚¬í•˜ê³  ì„ì‹œë…¸ë“œë¥¼ ì§€ì›€
+		root = root->left;				// ¿ŞÂÊ ³ëµå°¡ root°¡ µÇµµ·Ï º¹»çÇÏ°í ÀÓ½Ã³ëµå¸¦ Áö¿ò
 		delete tempPtr;
 	} else {
-		GetPredecessor(root->left, item);	// ì¤‘ê°„ì— ìˆëŠ” ë…¸ë“œë¥¼ ì§€ìš°ê³  ì‹¶ì„ ë•Œ (left, right, child ë…¸ë“œ ìˆì„ ê²½ìš°)
-		root->data = item;					// ì§€ìš°ë ¤ëŠ” ë…¸ë“œë³´ë‹¤ ì‘ì€ ë…¸ë“œë“¤ ì¤‘ì— ê°€ì¥ í° ë…¸ë“œë¥¼ ì°¾ìŒ
-		Delete(root->left, item);			// ê·¸ ê°’ì„ ì§€ìš¸ ë…¸ë“œì— ë³µì‚¬ë¥¼ í•´ì„œ ì§€ìš´ ê²ƒì²˜ëŸ¼ ëˆˆì†ì„
+		GetPredecessor(root->left, item);	// Áß°£¿¡ ÀÖ´Â ³ëµå¸¦ Áö¿ì°í ½ÍÀ» ¶§ (left, right, child ³ëµå ÀÖÀ» °æ¿ì)
+		root->data = item;					// Áö¿ì·Á´Â ³ëµåº¸´Ù ÀÛÀº ³ëµåµé Áß¿¡ °¡Àå Å« ³ëµå¸¦ Ã£À½
+		Delete(root->left, item);			// ±× °ªÀ» Áö¿ï ³ëµå¿¡ º¹»ç¸¦ ÇØ¼­ Áö¿î °ÍÃ³·³ ´«¼ÓÀÓ
 	}
 }
 
-// ë‚´ê°€ ì§€ìš°ë ¤ê³  í•˜ëŠ” ë…¸ë“œë¥¼ ì°¾ëŠ” recursive í•¨ìˆ˜
+// ³»°¡ Áö¿ì·Á°í ÇÏ´Â ³ëµå¸¦ Ã£´Â recursive ÇÔ¼ö
 template<class T>
 void BinarySearchTree<T>::Delete(Node<T> *&root, T item) {
-	if (item < root->data)				// rootë…¸ë“œê°’ë³´ë‹¤ itemë…¸ë“œê°€ ì‘ì„ ë•Œ
-		Delete(root->left, item);		// ì™¼ìª½ë…¸ë“œë¡œ ê°€ì„œ deleteí•¨ìˆ˜ í˜¸ì¶œ
-	else if (item > root->data)			// rootë…¸ë“œê°’ë³´ë‹¤ itemë…¸ë“œê°€ í´ ë•Œ
-		Delete(root->right, item);		// ì˜¤ë¥¸ìª½ë…¸ë“œë¡œ ê°€ì„œ deleteí•¨ìˆ˜ í˜¸ì¶œ
+	if (item < root->data)				// root³ëµå°ªº¸´Ù item³ëµå°¡ ÀÛÀ» ¶§
+		Delete(root->left, item);		// ¿ŞÂÊ³ëµå·Î °¡¼­ deleteÇÔ¼ö È£Ãâ
+	else if (item > root->data)			// root³ëµå°ªº¸´Ù item³ëµå°¡ Å¬ ¶§
+		Delete(root->right, item);		// ¿À¸¥ÂÊ³ëµå·Î °¡¼­ deleteÇÔ¼ö È£Ãâ
 	else
-		DeleteNode(root);				// ì°¾ê³ ì í•˜ëŠ” ê°’ì´ ì¼ì¹˜í•˜ëŠ” ê²½ìš° deletenode í•¨ìˆ˜ í˜¸ì¶œ
+		DeleteNode(root);				// Ã£°íÀÚ ÇÏ´Â °ªÀÌ ÀÏÄ¡ÇÏ´Â °æ¿ì deletenode ÇÔ¼ö È£Ãâ
 }
 
-// Treeì—ì„œ nodeë¥¼ ê²€ìƒ‰í•˜ëŠ” í•¨ìˆ˜
+// Tree¿¡¼­ node¸¦ °Ë»öÇÏ´Â ÇÔ¼ö
 template<class T>
 void BinarySearchTree<T>::Retrieve(Node<T> *root, T &item, bool &found) {
-	if (root == NULL)						// rootê°€ NULLì¸ ê²½ìš° foundëŠ” false 
+	if (root == NULL)						// root°¡ NULLÀÎ °æ¿ì found´Â false 
 		found = false;
-	else if (item < root->data)				// ì°¾ê³ ì í•˜ëŠ” ì•„ì´í…œê°’ì´ rootê°’ë³´ë‹¤ ì‘ì„ ë•Œ 
-		Retrieve(root->left, item, found);	// ì™¼ìª½ ë…¸ë“œë¡œ ê°€ì„œ retrieve í•¨ìˆ˜ í˜¸ì¶œ
-	else if (item > root->data)				// ì°¾ê³ ì í•˜ëŠ” ì•„ì´í…œê°’ì´ rootê°’ë³´ë‹¤ í´ ë•Œ
-		Retrieve(root->right, item, found);	// ì˜¤ë¥¸ìª½ ë…¸ë“œë¡œ ê°€ì„œ retrieve í•¨ìˆ˜ í˜¸ì¶œ
-	else {										// ì°¾ê³ ì í•˜ëŠ” ê°’ê³¼ ì¼ì¹˜í•  ë•Œ
-		item = root->data;					// itemì— ë…¸ë“œ ì •ë³´ë¥¼ ë³µì‚¬
-		found = true;						// foundê°’ì„ trueë¡œ í•´ì„œ ì°¾ëŠ” ê³¼ì •ì„ ë©ˆì¶¤
+	else if (item < root->data)				// Ã£°íÀÚ ÇÏ´Â ¾ÆÀÌÅÛ°ªÀÌ root°ªº¸´Ù ÀÛÀ» ¶§ 
+		Retrieve(root->left, item, found);	// ¿ŞÂÊ ³ëµå·Î °¡¼­ retrieve ÇÔ¼ö È£Ãâ
+	else if (item > root->data)				// Ã£°íÀÚ ÇÏ´Â ¾ÆÀÌÅÛ°ªÀÌ root°ªº¸´Ù Å¬ ¶§
+		Retrieve(root->right, item, found);	// ¿À¸¥ÂÊ ³ëµå·Î °¡¼­ retrieve ÇÔ¼ö È£Ãâ
+	else {										// Ã£°íÀÚ ÇÏ´Â °ª°ú ÀÏÄ¡ÇÒ ¶§
+		item = root->data;					// item¿¡ ³ëµå Á¤º¸¸¦ º¹»ç
+		found = true;						// found°ªÀ» true·Î ÇØ¼­ Ã£´Â °úÁ¤À» ¸ØÃã
 	}
 }
 
-// InOrder ë°©ë²•ìœ¼ë¡œ ì¶œë ¥í•˜ëŠ” í•¨ìˆ˜ 
+// InOrder ¹æ¹ıÀ¸·Î Ãâ·ÂÇÏ´Â ÇÔ¼ö 
 template<class T>
 void BinarySearchTree<T>::PrintInOrderTraversal(Node<T> *root, std::ostream &out) {
-	if (root != NULL)								// rootê°€ ì¡´ì¬í•˜ëŠ” ê²½ìš°
+	if (root != NULL)								// root°¡ Á¸ÀçÇÏ´Â °æ¿ì
 	{
-		PrintInOrderTraversal(root->left, out);		// rootì˜ ì™¼ìª½ìœ¼ë¡œ ê°€ì„œ ë‹¤ì‹œ InOrder í•¨ìˆ˜ í˜¸ì¶œ
-		out << root->data;							// root ì¶œë ¥
-		PrintInOrderTraversal(root->right, out);	// rootì˜ ì˜¤ë¥¸ìª½ìœ¼ë¡œ ê°€ì„œ ë‹¤ì‹œ InOrder í•¨ìˆ˜ í˜¸ì¶œ
+		PrintInOrderTraversal(root->left, out);		// rootÀÇ ¿ŞÂÊÀ¸·Î °¡¼­ ´Ù½Ã InOrder ÇÔ¼ö È£Ãâ
+		out << root->data;							// root Ãâ·Â
+		PrintInOrderTraversal(root->right, out);	// rootÀÇ ¿À¸¥ÂÊÀ¸·Î °¡¼­ ´Ù½Ã InOrder ÇÔ¼ö È£Ãâ
 	}
 }
 
-// PreOrder ë°©ë²•ìœ¼ë¡œ ì¶œë ¥í•˜ëŠ” í•¨ìˆ˜
+// PreOrder ¹æ¹ıÀ¸·Î Ãâ·ÂÇÏ´Â ÇÔ¼ö
 template<class T>
 void BinarySearchTree<T>::PrintPreOrderTraversal(Node<T> *root, std::ostream &out) {
-	if (root != NULL)								// rootê°€ ì¡´ì¬í•˜ëŠ” ê²½ìš°
+	if (root != NULL)								// root°¡ Á¸ÀçÇÏ´Â °æ¿ì
 	{
-		out << root->data;							// rootë¥¼ ë¨¼ì € ì¶œë ¥
-		PrintPreOrderTraversal(root->left, out);	// rootì˜ ì™¼ìª½ìœ¼ë¡œ ê°€ì„œ PreOrder í•¨ìˆ˜ ë‹¤ì‹œ í˜¸ì¶œ
-		PrintPreOrderTraversal(root->right, out);	// rootì˜ ì˜¤ë¥¸ìª½ìœ¼ë¡œ ê°€ì„œ PreOrder í•¨ìˆ˜ ë‹¤ì‹œ í˜¸ì¶œ
+		out << root->data;							// root¸¦ ¸ÕÀú Ãâ·Â
+		PrintPreOrderTraversal(root->left, out);	// rootÀÇ ¿ŞÂÊÀ¸·Î °¡¼­ PreOrder ÇÔ¼ö ´Ù½Ã È£Ãâ
+		PrintPreOrderTraversal(root->right, out);	// rootÀÇ ¿À¸¥ÂÊÀ¸·Î °¡¼­ PreOrder ÇÔ¼ö ´Ù½Ã È£Ãâ
 	}
 }
 
-// PostOrder ë°©ë²•ìœ¼ë¡œ ì¶œë ¥í•˜ëŠ” í•¨ìˆ˜
+// PostOrder ¹æ¹ıÀ¸·Î Ãâ·ÂÇÏ´Â ÇÔ¼ö
 template<class T>
 void BinarySearchTree<T>::PrintPostOrderTraversal(Node<T> *root, std::ostream &out) {
-	if (root != NULL)								// rootê°€ ì¡´ì¬í•˜ëŠ” ê²½ìš°
+	if (root != NULL)								// root°¡ Á¸ÀçÇÏ´Â °æ¿ì
 	{
-		PrintPostOrderTraversal(root->left, out);	// rootì˜ ì™¼ìª½ìœ¼ë¡œ ê°€ì„œ ë‹¤ì‹œ PostOrder í•¨ìˆ˜ í˜¸ì¶œ
-		PrintPostOrderTraversal(root->right, out);	// rootì˜ ì˜¤ë¥¸ìª½ìœ¼ë¡œ ê°€ì„œ ë‹¤ì‹œ PostOrder í•¨ìˆ˜ í˜¸ì¶œ
-		out << root->data;							// rootì˜ ê°’ ì¶œë ¥
+		PrintPostOrderTraversal(root->left, out);	// rootÀÇ ¿ŞÂÊÀ¸·Î °¡¼­ ´Ù½Ã PostOrder ÇÔ¼ö È£Ãâ
+		PrintPostOrderTraversal(root->right, out);	// rootÀÇ ¿À¸¥ÂÊÀ¸·Î °¡¼­ ´Ù½Ã PostOrder ÇÔ¼ö È£Ãâ
+		out << root->data;							// rootÀÇ °ª Ãâ·Â
+	}
+}
+
+// Put items in queue
+template<class T>
+void BinarySearchTree<T>::Reset(Node<T> *root, OrderType order) {
+	switch (order) {
+	case PRE:
+		if (root == NULL) {
+			break;
+		}
+		preQueue.Enqueue(root->data); // Enqueue root first
+		if (root->left != NULL) {
+			Reset(root->left, order); // then left
+		}
+		if (root->right != NULL) {
+			Reset(root->right, order); // then right
+		}
+		break;
+	case IN:
+		if (root == NULL) {
+			break;
+		}
+		if (root->left != NULL) {
+			Reset(root->left, order); // Enqueue left first
+		}
+		inQueue.Enqueue(root->data); // then root
+		if (root->right != NULL) {
+			Reset(root->right, order); // then right
+		}
+		break;
+	case POST:
+		if (root == NULL) {
+			break;
+		}
+		if (root->left != NULL) {
+			Reset(root->left, order); // Enqueue left irst
+		}
+		if (root->right != NULL) {
+			Reset(root->right, order); // then right
+		}
+		postQueue.Enqueue(root->data); // then root
+		break;
 	}
 }
