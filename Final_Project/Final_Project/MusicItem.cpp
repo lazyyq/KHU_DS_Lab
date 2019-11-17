@@ -7,7 +7,8 @@
 #include <string>
 #include <time.h>
 
-#include "Utils.h"
+#include "utils/StringUtils.h"
+#include "utils/Utils.h"
 
 #define JSON_ATTR_ID			"ID"
 #define JSON_ATTR_TITLE			"Title"
@@ -18,6 +19,7 @@
 
 using namespace std;
 using namespace utils;
+using namespace stringutils;
 namespace ID3 = MetadataInfo::ID3;
 
 // »ý¼ºÀÚ
@@ -157,10 +159,10 @@ void MusicItem::SetRecordFromTag(MetadataInfo::ID3::ID3Tag &tag) {
 		tag.GetStringValue(ID3::CONTENT_TYPE) : L" ";
 
 	// wstring -> string
-	mName = WstrToStr(wtitle);
-	mArtist = WstrToStr(wartist);
-	mMelodizer = WstrToStr(wcomposer);
-	mGenre = WstrToStr(wgenre);
+	mName = WstrToStr(wtitle, CP_ACP);
+	mArtist = WstrToStr(wartist, CP_ACP);
+	mMelodizer = WstrToStr(wcomposer, CP_ACP);
+	mGenre = WstrToStr(wgenre, CP_ACP);
 	mId = GenerateMusicId(*this);
 }
 
@@ -234,11 +236,11 @@ ostream &operator<<(ostream &os, const MusicItem &item) {
 
 // Read record from JSON
 Json::Value &operator>>(Json::Value &value, MusicItem &item) {
-	item.mId = value.get(JSON_ATTR_ID, JSON_VALUE_STR_UNKNOWN).asString();
-	item.mName = value.get(JSON_ATTR_TITLE, JSON_VALUE_STR_UNKNOWN).asString();
-	item.mMelodizer = value.get(JSON_ATTR_COMPOSER, JSON_VALUE_STR_UNKNOWN).asString();
-	item.mArtist = value.get(JSON_ATTR_ARTIST, JSON_VALUE_STR_UNKNOWN).asString();
-	item.mGenre = value.get(JSON_ATTR_GENRE, JSON_VALUE_STR_UNKNOWN).asString();
+	item.mId = Utf8ToAnsi(value.get(JSON_ATTR_ID, JSON_VALUE_STR_UNKNOWN).asString());
+	item.mName = Utf8ToAnsi(value.get(JSON_ATTR_TITLE, JSON_VALUE_STR_UNKNOWN).asString());
+	item.mMelodizer = Utf8ToAnsi(value.get(JSON_ATTR_COMPOSER, JSON_VALUE_STR_UNKNOWN).asString());
+	item.mArtist = Utf8ToAnsi(value.get(JSON_ATTR_ARTIST, JSON_VALUE_STR_UNKNOWN).asString());
+	item.mGenre = Utf8ToAnsi(value.get(JSON_ATTR_GENRE, JSON_VALUE_STR_UNKNOWN).asString());
 
 	return value;
 }
@@ -246,11 +248,11 @@ Json::Value &operator>>(Json::Value &value, MusicItem &item) {
 // Write record to JSON
 Json::Value &operator<<(Json::Value &root, const MusicItem &item) {
 	Json::Value newValue;
-	newValue[JSON_ATTR_ID] = item.mId;
-	newValue[JSON_ATTR_TITLE] = item.mName;
-	newValue[JSON_ATTR_COMPOSER] = item.mMelodizer;
-	newValue[JSON_ATTR_ARTIST] = item.mArtist;
-	newValue[JSON_ATTR_GENRE] = item.mGenre;
+	newValue[JSON_ATTR_ID] = AnsiToUtf8(item.mId);
+	newValue[JSON_ATTR_TITLE] = AnsiToUtf8(item.mName);
+	newValue[JSON_ATTR_COMPOSER] = AnsiToUtf8(item.mMelodizer);
+	newValue[JSON_ATTR_ARTIST] = AnsiToUtf8(item.mArtist);
+	newValue[JSON_ATTR_GENRE] = AnsiToUtf8(item.mGenre);
 	root.append(newValue); // Add to array
 
 	return root;

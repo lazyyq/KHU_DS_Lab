@@ -6,11 +6,14 @@
 #include <fstream>
 #include <json/json.h>
 
+#include "utils/StringUtils.h"
+
 #define JSON_ATTR_GENRE			"Genre"
 #define JSON_ATTR_SONGLIST		"Songs"
 #define JSON_VALUE_STR_UNKNOWN	"Unknown"
 
 using namespace std;
+using namespace stringutils;
 
 // Constructors
 Genre::Genre() {
@@ -84,7 +87,7 @@ bool Genre::operator>=(const Genre &that) const {
 
 // Read record from JSON
 Json::Value &operator>>(Json::Value &value, Genre &item) {
-	item.mName = value.get(JSON_ATTR_GENRE, JSON_VALUE_STR_UNKNOWN).asString();
+	item.mName = Utf8ToAnsi(value.get(JSON_ATTR_GENRE, JSON_VALUE_STR_UNKNOWN).asString());
 	// Get song list
 	Json::Value songs = value[JSON_ATTR_SONGLIST];
 	SimpleItem simple;
@@ -99,7 +102,7 @@ Json::Value &operator>>(Json::Value &value, Genre &item) {
 // Write record to JSON
 Json::Value &operator<<(Json::Value &root, const Genre &item) {
 	Json::Value newValue;
-	newValue[JSON_ATTR_GENRE] = item.mName;
+	newValue[JSON_ATTR_GENRE] = AnsiToUtf8(item.mName);
 	// Add song list
 	Json::Value songs;
 	SortedDoublyIterator<SimpleItem> iter(item.mSongList);

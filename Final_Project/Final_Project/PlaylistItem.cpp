@@ -5,9 +5,18 @@
 #include <iomanip>
 #include <fstream>
 
+#include "utils/StringUtils.h"
+
 #define PLAYITEM_ATTR_INDENT_SIZE	25
 
+#define JSON_ATTR_ID			"ID"
+#define JSON_ATTR_PLAYEDTIMES	"PlayedTimes"
+#define JSON_ATTR_INSERTEDTIME	"InsertedTime"
+#define JSON_VALUE_STR_UNKNOWN	"Unknown"
+#define JSON_VALUE_INT_UNKNOWN	"-1"
+
 using namespace std;
+using namespace stringutils;
 
 // Constructors
 PlaylistItem::PlaylistItem() {
@@ -89,17 +98,11 @@ bool PlaylistItem::operator>=(const PlaylistItem &that) const {
 	return this->mInsertedTime.compare(that.mInsertedTime) >= 0;
 }
 
-#define JSON_ATTR_ID			"ID"
-#define JSON_ATTR_PLAYEDTIMES	"PlayedTimes"
-#define JSON_ATTR_INSERTEDTIME	"InsertedTime"
-#define JSON_VALUE_STR_UNKNOWN	"Unknown"
-#define JSON_VALUE_INT_UNKNOWN	"-1"
-
 // Read record from JSON
 Json::Value &operator>>(Json::Value &value, PlaylistItem &item) {
-	item.mId = value.get(JSON_ATTR_ID, JSON_VALUE_STR_UNKNOWN).asString();
+	item.mId = Utf8ToAnsi(value.get(JSON_ATTR_ID, JSON_VALUE_STR_UNKNOWN).asString());
 	item.mPlayedTimes = value.get(JSON_ATTR_PLAYEDTIMES, JSON_VALUE_INT_UNKNOWN).asInt();
-	item.mInsertedTime = value.get(JSON_ATTR_INSERTEDTIME, JSON_VALUE_STR_UNKNOWN).asString();
+	item.mInsertedTime = Utf8ToAnsi(value.get(JSON_ATTR_INSERTEDTIME, JSON_VALUE_STR_UNKNOWN).asString());
 
 	return value;
 }
@@ -107,9 +110,9 @@ Json::Value &operator>>(Json::Value &value, PlaylistItem &item) {
 // Write record to JSON
 Json::Value &operator<<(Json::Value &root, const PlaylistItem &item) {
 	Json::Value newValue;
-	newValue[JSON_ATTR_ID] = item.mId;
+	newValue[JSON_ATTR_ID] = AnsiToUtf8(item.mId);
 	newValue[JSON_ATTR_PLAYEDTIMES] = item.mPlayedTimes;
-	newValue[JSON_ATTR_INSERTEDTIME] = item.mInsertedTime;
+	newValue[JSON_ATTR_INSERTEDTIME] = AnsiToUtf8(item.mInsertedTime);
 	root.append(newValue); // Add to array
 
 	return root;

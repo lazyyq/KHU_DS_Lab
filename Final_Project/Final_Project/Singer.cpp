@@ -5,6 +5,8 @@
 #include <iomanip>
 #include <fstream>
 
+#include "utils/StringUtils.h"
+
 #define JSON_ATTR_SINGER		"Singer"
 #define JSON_ATTR_AGE			"Age"
 #define JSON_ATTR_SEX			"Sex"
@@ -14,6 +16,7 @@
 #define JSON_VALUE_INT_UNKNOWN	-1
 
 using namespace std;
+using namespace stringutils;
 
 // Constructors
 Singer::Singer() {
@@ -146,7 +149,7 @@ bool Singer::operator>=(const Singer &that) const {
 
 // Read record from JSON
 Json::Value &operator>>(Json::Value &value, Singer &item) {
-	item.mName = value.get(JSON_ATTR_SINGER, JSON_VALUE_STR_UNKNOWN).asString();
+	item.mName = Utf8ToAnsi(value.get(JSON_ATTR_SINGER, JSON_VALUE_STR_UNKNOWN).asString());
 	item.mAge = value.get(JSON_ATTR_AGE, JSON_VALUE_INT_UNKNOWN).asInt();
 	item.mSex = value.get(JSON_ATTR_SEX, JSON_VALUE_CHAR_UNKNOWN).asInt();
 	// Get song list
@@ -163,7 +166,7 @@ Json::Value &operator>>(Json::Value &value, Singer &item) {
 // Write record to JSON
 Json::Value &operator<<(Json::Value &root, const Singer &item) {
 	Json::Value newValue;
-	newValue[JSON_ATTR_SINGER] = item.mName;
+	newValue[JSON_ATTR_SINGER] = AnsiToUtf8(item.mName);
 	newValue[JSON_ATTR_AGE] = item.mAge;
 	newValue[JSON_ATTR_SEX] = item.mSex;
 	// Add song list
