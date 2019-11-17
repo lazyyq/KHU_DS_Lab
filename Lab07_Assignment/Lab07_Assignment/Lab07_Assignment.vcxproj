@@ -176,6 +176,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="BinarySearchTree.h" />
     <ClInclude Include="dialog\DialogUtils.h" />
     <ClInclude Include="DoublyIterator.h" />
     <ClInclude Include="DoublyLinkedList.h" />
