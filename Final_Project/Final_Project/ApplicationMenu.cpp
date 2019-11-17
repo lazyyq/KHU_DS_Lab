@@ -29,11 +29,9 @@ void Application::MenuMain() {
 		case 3:
 			MenuPlaylists(); break; // Show menu for playing & managning playlist.
 		case 5:
-			Save(); Pause();  break; // 리스트를 파일에 저장
+			Save(); Pause(); break; // 리스트를 파일에 저장
 		case 6:
 			Save(); return; // 저장하고 프로그램 종료
-		default:
-			break;
 		}
 	}
 }
@@ -55,22 +53,18 @@ void Application::MenuManage() {
 	while (true) {
 		switch (menu.GetSelection()) {
 		case 1:
-			DisplayAllMusic(); break; // 모든 곡 정보 표시
+			DisplayAllMusic(); Pause(); break; // 모든 곡 정보 표시
 		case 2:
 			MenuAddMusic(); break; // 곡 추가 메뉴 표시
 		case 3:
-			DeleteMusic(); break; // 곡 삭제
+			DeleteMusic(); Pause(); break; // 곡 삭제
 		case 4:
-			ReplaceMusic(); break; // 곡 정보 업데이트(교체)
+			ReplaceMusic(); Pause(); break; // 곡 정보 업데이트(교체)
 		case 5:
-			MakeEmpty(); break; // 곡 리스트, 가수리스트, 장르 리스트, 플레이리스트 전부 초기화
+			MakeEmpty(); Pause(); break; // 곡 리스트, 가수리스트, 장르 리스트, 플레이리스트 전부 초기화
 		case 7:
 			return;
-		default:
-			continue;
 		}
-
-		Pause();
 	}
 }
 
@@ -89,18 +83,14 @@ void Application::MenuAddMusic() {
 	while (true) {
 		switch (menu.GetSelection()) {
 		case 1:
-			AddMusicManually(); break; // 곡 정보를 직접 입력하여 추가
+			AddMusicManually(); Pause(); break; // 곡 정보를 직접 입력하여 추가
 		case 2:
-			AddMusicFromFile(); break; // MP3 파일에서 곡 정보 추가
+			AddMusicFromFile(); Pause(); break; // MP3 파일에서 곡 정보 추가
 		case 3:
-			AddMusicFromFolder(); break; // 폴더 내의 MP3 파일에서 곡 정보 추가
+			AddMusicFromFolder(); Pause(); break; // 폴더 내의 MP3 파일에서 곡 정보 추가
 		case 5:
 			return;
-		default:
-			continue;
 		}
-
-		Pause();
 	}
 }
 
@@ -120,20 +110,16 @@ void Application::MenuSearch() {
 	while (true) {
 		switch (menu.GetSelection()) {
 		case 1:
-			SearchById(); break; // ID로 곡 검색
+			SearchById(); Pause(); break; // ID로 곡 검색
 		case 2:
-			SearchByName(); break; // 곡 이름으로 검색
+			SearchByName(); Pause(); break; // 곡 이름으로 검색
 		case 3:
-			SearchByArtist(); break; // 가수 이름으로 검색
+			SearchByArtist(); Pause(); break; // 가수 이름으로 검색
 		case 4:
-			SearchByGenre(); break; // 장르 이름으로 검색
+			SearchByGenre(); Pause(); break; // 장르 이름으로 검색
 		case 6:
 			return;
-		default:
-			continue;
 		}
-
-		Pause();
 	}
 }
 
@@ -158,26 +144,22 @@ void Application::MenuPlaylists() {
 	while (true) {
 		switch (menu.GetSelection()) {
 		case 1:
-			mPlayer.ListPlaylist(); break; // 플레이리스트의 곡 정보 다 표시
+			mPlayer.ListPlaylist(); Pause(); break; // 플레이리스트의 곡 정보 다 표시
 		case 3:
-			mPlayer.ChooseAndPlay(); break; // 플레이리스트에서 골라서 재생
+			mPlayer.ChooseAndPlay(); Pause(); break; // 플레이리스트에서 골라서 재생
 		case 4:
-			mPlayer.PlayInInsertOrder(); break; // 맨 처음 곡부터 재생
+			mPlayer.PlayInInsertOrder(); Pause(); break; // 맨 처음 곡부터 재생
 		case 5:
-			mPlayer.Shuffle(); break; // 랜덤으로 섞어서 재생
+			mPlayer.Shuffle(); Pause(); break; // 랜덤으로 섞어서 재생
 		case 7:
-			mPlayer.AddToPlaylist(); break; // 플레이리스트에 곡 추가
+			mPlayer.AddToPlaylist(); Pause(); break; // 플레이리스트에 곡 추가
 		case 8:
-			mPlayer.DeleteFromPlaylist(); break; // 플레이리스트에서 곡 삭제
+			mPlayer.DeleteFromPlaylist(); Pause(); break; // 플레이리스트에서 곡 삭제
 		case 9:
-			mPlayer.MakeEmpty(); break; // 플레이리스트 초기화
+			mPlayer.MakeEmpty(); Pause(); break; // 플레이리스트 초기화
 		case 11:
 			return;
-		default:
-			continue;
 		}
-
-		Pause();
 	}
 }
 
