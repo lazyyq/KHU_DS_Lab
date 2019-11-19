@@ -183,17 +183,17 @@ public:
 	void SetArtistFromKB();
 
 	/**
-	*	@brief	Read record from MP3 tag.
-	*	@param	tag	MP3 tag to read data from.
-	*/
-	void SetRecordFromTag(MetadataInfo::ID3::ID3Tag &tag);
-
-	/**
 	*	@brief	Set music genre from keyboard.
 	*	@pre	none.
 	*	@post	music genre is set.
 	*/
 	void SetGenreFromKB();
+
+	/**
+	*	@brief	Read record from MP3 tag.
+	*	@param	tag	MP3 tag to read data from.
+	*/
+	void SetRecordFromTag(MetadataInfo::ID3::ID3Tag &tag);
 
 	/**
 	*	@brief	곡 정보로부터 아이디 생성. 아이디는 `곡명 - 아티스트명` 형식.
