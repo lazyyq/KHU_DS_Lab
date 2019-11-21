@@ -9,6 +9,8 @@
 #include "SortedDoublyLinkedList.h"
 #include "SortedList.h"
 
+#include "CMinHeap.h"
+
 /**
 *	Class for running main program
 */

@@ -144,6 +144,12 @@
     <ClInclude Include="utils\StringUtils.h">
       <Filter>헤더 파일\utils</Filter>
     </ClInclude>
+    <ClInclude Include="CHeapBase.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CMinHeap.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlaylistItem.cpp">

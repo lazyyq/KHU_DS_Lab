@@ -137,16 +137,20 @@ public:
 	void Swap(int iparent, int ibottom);
 
 protected:
-	T *m_pHeap;			// 배열
-	int m_iLastNode;	// 배열의 끝
-	int m_nMaxSize;		// 배열의 최대길이
+	T *mHeap;			// 배열
+	int mLastNode;	// 배열의 끝
+	int mMaxSize;		// 배열의 최대길이
+
+	virtual int GetLeftChildIndex(int parent);
+	virtual int GetRightChildIndex(int parent);
+	virtual int GetParentIndex(int child);
 };
 
 
 // 생성자
 template <typename T>
 CHeapBase<T>::CHeapBase() {
-	m_iLastNode = 0;
+	mLastNode = 0;
 }
 
 
@@ -160,7 +164,7 @@ CHeapBase<T>::~CHeapBase() {
 // Heap가 Empty인지 아닌지 확인하는 함수.
 template <typename T>
 bool CHeapBase<T>::IsEmpty() {
-	if (m_iLastNode == 0)
+	if (mLastNode == 0)
 		return 1;
 	else
 		return 0;
@@ -169,7 +173,7 @@ bool CHeapBase<T>::IsEmpty() {
 
 template <typename T>
 bool CHeapBase<T>::IsFull() {
-	if (m_iLastNode == m_nMaxSize)
+	if (mLastNode == mMaxSize)
 		return 1;
 	else
 		return 0;
@@ -179,25 +183,26 @@ bool CHeapBase<T>::IsFull() {
 // Heap가 Full인지 아닌지 확인하는 함수.
 template <typename T>
 int CHeapBase<T>::GetLength() const {
-	return m_iLastNode;
+	return mLastNode;
 }
 
 
 // Heap를 초기화 하는 함수.
 template <typename T>
 void CHeapBase<T>::MakeEmpty() {
-	delete[] m_pHeap;
+	delete[] mHeap;
+	mLastNode = 0;
 }
 
 
 // Heap에 새로운 데이터를 추가하는 가상함수
 template <typename T>
 int CHeapBase<T>::Add(T item) {
-	m_pHeap[m_iLastNode] = item; // 새 데이터 추가
+	mHeap[mLastNode] = item; // 새 데이터 추가
 
-	ReheapUp(0, m_iLastNode); // 데이터 정렬
+	ReheapUp(0, mLastNode); // 데이터 정렬
 
-	m_iLastNode++; // 데이터 수 증가
+	mLastNode++; // 데이터 수 증가
 
 	return 1;
 }
@@ -211,7 +216,7 @@ int CHeapBase<T>::Delete(T item) {
 	Delete(item, found, 0); // 데이터 삭제
 
 	if (found)
-		m_iLastNode--; // 데이터 수 감소
+		mLastNode--; // 데이터 수 감소
 	else
 		return 0;
 
@@ -222,7 +227,7 @@ int CHeapBase<T>::Delete(T item) {
 // Heap의 첫번째 데이터를 삭제하는 가상함수.
 template <typename T>
 T CHeapBase<T>::Dequeue() {
-	T item = m_pHeap[0];
+	T item = mHeap[0];
 
 	Delete(item); // 첫번째 데이터 삭제
 
@@ -242,8 +247,8 @@ template <typename T>
 void CHeapBase<T>::PrintHeap() {
 	T item;
 
-	for (int i = 0; i < m_iLastNode; i++) {
-		item << m_pHeap[i];
+	for (int i = 0; i < mLastNode; i++) {
+		item << mHeap[i];
 	}
 }
 
@@ -251,7 +256,22 @@ void CHeapBase<T>::PrintHeap() {
 // Heap의 두개의 데이터를 바꾸는 함수.
 template <typename T>
 void CHeapBase<T>::Swap(int iparent, int ibottom) {
-	T temp = m_pHeap[iparent];
-	m_pHeap[iparent] = m_pHeap[ibottom];
-	m_pHeap[ibottom] = temp;
+	T temp = mHeap[iparent];
+	mHeap[iparent] = mHeap[ibottom];
+	mHeap[ibottom] = temp;
+}
+
+template<typename T>
+int CHeapBase<T>::GetLeftChildIndex(int parent) {
+	return parent * 2 + 1;
+}
+
+template<typename T>
+int CHeapBase<T>::GetRightChildIndex(int parent) {
+	return parent * 2 + 2;
+}
+
+template<typename T>
+int CHeapBase<T>::GetParentIndex(int child) {
+	return (child - 1) / 2;
 }

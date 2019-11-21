@@ -65,24 +65,91 @@ CMinHeap<T>::CMinHeap() {}
 
 // 생성자 - 배열의 최대 길이.
 template <typename T>
-CMinHeap<T>::CMinHeap(int size) {}
+CMinHeap<T>::CMinHeap(int size) {
+	this->mMaxSize = size;
+	this->mHeap = new T[this->mMaxSize];
+}
 
 
-// 위에서 아래로 내려오면서 Heap 크기를 비교하여 정렬하는 가상함수
+// 위에서 아래로 내려오면서 Heap 크기를 비교하여 정렬하는 가상함수.
 template <typename T>
-void CMinHeap<T>::ReheapDown(int iparent, int ibottom) {}
+void CMinHeap<T>::ReheapDown(int iparent, int ibottom) {
+	int minChild; // 배열의 현재 위치 인덱스
+	int leftChild; // 왼쪽 자식데이터 인덱스
+	int rightChild; // 오른족 자식데이터 인덱스
+
+	leftChild = this->GetLeftChildIndex(iparent);
+	rightChild = this->GetRightChildIndex(iparent);
+
+	if (leftChild <= ibottom) {
+		if (leftChild == ibottom)
+			minChild = leftChild;
+		else {
+			if (this->mHeap[leftChild] < this->mHeap[rightChild])
+				minChild = leftChild;
+			else
+				minChild = rightChild;
+		}
+		if (this->mHeap[iparent] > this->mHeap[minChild]) {
+			this->Swap(iparent, minChild); // 두 데이터의 위치를 바꾼다
+			ReheapDown(minChild, ibottom); // 아래로 내려가 다시 정렬
+		}
+	}
+}
 
 
 // 아래에서 위로 올라가면서 Heap 크기를 비교하여 정렬하는 가상함수.
 template <typename T>
-void CMinHeap<T>::ReheapUp(int iroot, int ibottom) {}
+void CMinHeap<T>::ReheapUp(int iroot, int ibottom) {
+	int iparent; // 부모데이터
+	if (ibottom < iroot) {
+		iparent = this->GetParentIndex(ibottom);
+		if (this->mHeap[iparent] > this->mHeap[ibottom]) {
+			this->Swap(iparent, ibottom); // 두 데이터의 위치를 바꾼다
+			ReheapUp(iroot, iparent); // 위로 올라가 다시 정렬
+		}
+	}
+}
 
 
 // Heap의 데이터를 삭제하는 가상함수.
 template <typename T>
-void CMinHeap<T>::Delete(T item, bool &found, int iparent) {}
+void CMinHeap<T>::Delete(T item, bool &found, int iparent) {
+	int leftChild; // 왼쪽 자식데이터 인덱스
+	int rightChild; // 오른쪽 자식데이터 인덱스
+
+	leftChild = this->GetLeftChildIndex(iparent);
+	rightChild = this->GetRightChildIndex(iparent);
+
+	if (this->mHeap[iparent] == item) // 삭제하려는 데이터 발견
+	{
+		this->mHeap[iparent] = this->mHeap[this->mLastNode - 1];
+		ReheapDown(iparent, this->mLastNode - 2); // 데이터 정렬
+		found = true;
+	}
+	if (leftChild < this->mLastNode && !found)
+		Delete(item, found, leftChild); // 왼쪽으로 검색
+	if (rightChild < this->mLastNode && !found)
+		Delete(item, found, rightChild); // 오른쪽으로 검색
+}
 
 
 // Heap의 데이터를 검색하는 가상함수.
 template <typename T>
-void CMinHeap<T>::Retrieve(T &item, bool &found, int iparent) {}
+void CMinHeap<T>::Retrieve(T &item, bool &found, int iparent) {
+	int leftChild; // 왼쪽 자식데이터 인덱스
+	int rightChild; // 오른쪽 자식데이터 인덱스
+
+	leftChild = this->GetLeftChildIndex(iparent);
+	rightChild = this->GetRightChildIndex(iparent);
+
+	if (this->mHeap[iparent] == item) // 검색하려는 데이터 발견
+	{
+		item = this->mHeap[iparent];
+		found = true;
+	}
+	if (leftChild < this->mLastNode && !found)
+		Retrieve(item, found, leftChild); // 왼쪽으로 검색
+	if (rightChild < this->mLastNode && !found)
+		Retrieve(item, found, rightChild); // 왼쪽으로 검색
+}
