@@ -1,16 +1,13 @@
-#ifndef _MINHEAP_H
-#define _MINHEAP_H
+#pragma once
 
 #include "CHeapBase.h"
-
 
 /**
 *	CMinHeap 클래스.
 */
 template <typename T>
-class CMinHeap : public CHeapBase<T>
-{
-public :
+class CMinHeap : public CHeapBase<T> {
+public:
 	/**
 	*	생성자.
 	*/
@@ -63,44 +60,29 @@ public :
 
 // 생성자
 template <typename T>
-CMinHeap<T>::CMinHeap()
-{
-}
+CMinHeap<T>::CMinHeap() {}
 
 
 // 생성자 - 배열의 최대 길이.
 template <typename T>
-CMinHeap<T>::CMinHeap(int size)
-{
-}
+CMinHeap<T>::CMinHeap(int size) {}
 
 
 // 위에서 아래로 내려오면서 Heap 크기를 비교하여 정렬하는 가상함수
 template <typename T>
-void CMinHeap<T>::ReheapDown(int iparent, int ibottom)
-{
-}
+void CMinHeap<T>::ReheapDown(int iparent, int ibottom) {}
 
 
 // 아래에서 위로 올라가면서 Heap 크기를 비교하여 정렬하는 가상함수.
 template <typename T>
-void CMinHeap<T>::ReheapUp(int iroot, int ibottom)
-{
-}
+void CMinHeap<T>::ReheapUp(int iroot, int ibottom) {}
 
 
 // Heap의 데이터를 삭제하는 가상함수.
 template <typename T>
-void CMinHeap<T>::Delete(T item, bool &found, int iparent)
-{
-}
+void CMinHeap<T>::Delete(T item, bool &found, int iparent) {}
 
 
 // Heap의 데이터를 검색하는 가상함수.
 template <typename T>
-void CMinHeap<T>::Retrieve(T &item, bool &found, int iparent)
-{
-}
-
-
-#endif	// _MINHEAP_H
+void CMinHeap<T>::Retrieve(T &item, bool &found, int iparent) {}

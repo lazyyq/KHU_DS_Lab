@@ -1,16 +1,11 @@
-#ifndef _HEAPBASE_H
-#define _HEAPBASE_H
-
-#include "ItemType.h"
-
+#pragma once
 
 /**
 *	CHeapBase 클래스.
 */
 template <typename T>
-class CHeapBase
-{
-public :
+class CHeapBase {
+public:
 	/**
 	*	생성자.
 	*/
@@ -141,7 +136,7 @@ public :
 	*/
 	void Swap(int iparent, int ibottom);
 
-protected :
+protected:
 	T *m_pHeap;			// 배열
 	int m_iLastNode;	// 배열의 끝
 	int m_nMaxSize;		// 배열의 최대길이
@@ -150,61 +145,54 @@ protected :
 
 // 생성자
 template <typename T>
-CHeapBase<T>::CHeapBase()
-{
+CHeapBase<T>::CHeapBase() {
 	m_iLastNode = 0;
 }
 
 
 // 소멸자
 template <typename T>
-CHeapBase<T>::~CHeapBase()
-{
+CHeapBase<T>::~CHeapBase() {
 	MakeEmpty();
 }
 
 
 // Heap가 Empty인지 아닌지 확인하는 함수.
 template <typename T>
-bool CHeapBase<T>::IsEmpty()
-{
-	if(m_iLastNode == 0)
+bool CHeapBase<T>::IsEmpty() {
+	if (m_iLastNode == 0)
 		return 1;
-	else 
+	else
 		return 0;
 }
 
 
 template <typename T>
-bool CHeapBase<T>::IsFull()
-{
-	if(m_iLastNode == m_nMaxSize)
+bool CHeapBase<T>::IsFull() {
+	if (m_iLastNode == m_nMaxSize)
 		return 1;
-	else 
+	else
 		return 0;
 }
 
 
 // Heap가 Full인지 아닌지 확인하는 함수.
 template <typename T>
-int CHeapBase<T>::GetLength() const
-{
+int CHeapBase<T>::GetLength() const {
 	return m_iLastNode;
 }
 
 
 // Heap를 초기화 하는 함수.
 template <typename T>
-void CHeapBase<T>::MakeEmpty()
-{
-	delete [] m_pHeap;
+void CHeapBase<T>::MakeEmpty() {
+	delete[] m_pHeap;
 }
 
 
 // Heap에 새로운 데이터를 추가하는 가상함수
 template <typename T>
-int CHeapBase<T>::Add(T item)
-{
+int CHeapBase<T>::Add(T item) {
 	m_pHeap[m_iLastNode] = item; // 새 데이터 추가
 
 	ReheapUp(0, m_iLastNode); // 데이터 정렬
@@ -217,13 +205,12 @@ int CHeapBase<T>::Add(T item)
 
 // Heap의 데이터를 삭제하는 가상함수.
 template <typename T>
-int CHeapBase<T>::Delete(T item)
-{
+int CHeapBase<T>::Delete(T item) {
 	bool found = false;
 
 	Delete(item, found, 0); // 데이터 삭제
 
-	if(found)
+	if (found)
 		m_iLastNode--; // 데이터 수 감소
 	else
 		return 0;
@@ -234,8 +221,7 @@ int CHeapBase<T>::Delete(T item)
 
 // Heap의 첫번째 데이터를 삭제하는 가상함수.
 template <typename T>
-T CHeapBase<T>::Dequeue()
-{
+T CHeapBase<T>::Dequeue() {
 	T item = m_pHeap[0];
 
 	Delete(item); // 첫번째 데이터 삭제
@@ -246,20 +232,17 @@ T CHeapBase<T>::Dequeue()
 
 // Heap의 데이터를 검색하는 가상함수.
 template <typename T>
-void CHeapBase<T>::RetrieveItem(T &item, bool &found)
-{
+void CHeapBase<T>::RetrieveItem(T &item, bool &found) {
 	Retrieve(item, found, 0); // 데이터 검색
 }
 
 
 // Heap의 데이터를 출력하는 가상함수.
 template <typename T>
-void CHeapBase<T>::PrintHeap()
-{
+void CHeapBase<T>::PrintHeap() {
 	T item;
 
-	for(int i=0; i<m_iLastNode; i++)
-	{
+	for (int i = 0; i < m_iLastNode; i++) {
 		item << m_pHeap[i];
 	}
 }
@@ -267,13 +250,8 @@ void CHeapBase<T>::PrintHeap()
 
 // Heap의 두개의 데이터를 바꾸는 함수.
 template <typename T>
-void CHeapBase<T>::Swap(int iparent, int ibottom)
-{
+void CHeapBase<T>::Swap(int iparent, int ibottom) {
 	T temp = m_pHeap[iparent];
 	m_pHeap[iparent] = m_pHeap[ibottom];
-	 m_pHeap[ibottom] = temp;
+	m_pHeap[ibottom] = temp;
 }
-
-
-
-#endif	// _HEAPBASE_H
