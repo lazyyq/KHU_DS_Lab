@@ -177,6 +177,7 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="CHeapBase.h" />
+    <ClInclude Include="CMaxHeap.h" />
     <ClInclude Include="CMinHeap.h" />
     <ClInclude Include="dialog\DialogUtils.h" />
     <ClInclude Include="DoublyIterator.h" />
