@@ -66,6 +66,13 @@ public:
 	virtual int Delete(T item);
 
 	/**
+	*	@brief	Heap의 데이터를 교체하는 가상 함수.
+	*	@param	item	교체할 데이터
+	*	@return	1 on success, 0 on failure.
+	*/
+	virtual int ReplaceItem(T item);
+
+	/**
 	*	@brief	Heap의 첫번째 데이터를 삭제하는 가상함수.
 	*	@pre	Heap가 초기화되어야한다.
 	*	@post	Heap의 첫번째 데이터를 삭제한다.
@@ -89,6 +96,7 @@ public:
 	*/
 	virtual void PrintHeap();
 
+protected:
 	/**
 	*	@brief	위에서 아래로 내려오면서 Heap 크기를 비교하여 정렬하는 순수가상함수.
 	*	@pre	Heap가 초기화되어야한다.
@@ -118,6 +126,14 @@ public:
 	virtual void Delete(T item, bool &found, int iparent) = 0;
 
 	/**
+	*	@brief	Heap의 데이터를 교체하는 순수가상함수.
+	*	@param	item	ItemType형의 검색 할 데이터.
+	*	@param	found	검색할 데이터를 찾았는지 아닌지 확인.
+	*	@param	ibottom	검색 중인 배열 위치.
+	*/
+	virtual void Replace(T item, bool &found, int iparent) = 0;
+
+	/**
 	*	@brief	Heap의 데이터를 검색하는 순수가상함수.
 	*	@pre	Heap가 초기화되어야한다.
 	*	@post	Heap의 데이터를 검색한다.
@@ -134,15 +150,19 @@ public:
 	*	@param	iparent	바꿀 위 데이터.
 	*	@param	ibottom	바꿀 아래 데이터.
 	*/
-	void Swap(int iparent, int ibottom);
+	virtual void Swap(int iparent, int ibottom);
 
-protected:
 	T *mHeap;			// 배열
 	int mLastNode;	// 배열의 끝
 	int mMaxSize;		// 배열의 최대길이
 
+	// Get index of left child
 	virtual int GetLeftChildIndex(int parent);
+
+	// Get index of right child
 	virtual int GetRightChildIndex(int parent);
+
+	// Get index of parent
 	virtual int GetParentIndex(int child);
 };
 
@@ -191,6 +211,7 @@ int CHeapBase<T>::GetLength() const {
 template <typename T>
 void CHeapBase<T>::MakeEmpty() {
 	delete[] mHeap;
+	mHeap = new T[mMaxSize];
 	mLastNode = 0;
 }
 
@@ -223,6 +244,17 @@ int CHeapBase<T>::Delete(T item) {
 	return 1;
 }
 
+// 아이템 교체
+template<typename T>
+int CHeapBase<T>::ReplaceItem(T item) {
+	bool found = false;
+	Replace(item, found, 0);
+	if (found)
+		return 1;
+	else
+		return 0;
+}
+
 
 // Heap의 첫번째 데이터를 삭제하는 가상함수.
 template <typename T>
@@ -245,10 +277,8 @@ void CHeapBase<T>::RetrieveItem(T &item, bool &found) {
 // Heap의 데이터를 출력하는 가상함수.
 template <typename T>
 void CHeapBase<T>::PrintHeap() {
-	T item;
-
 	for (int i = 0; i < mLastNode; i++) {
-		item << mHeap[i];
+		std::cout << mHeap[i];
 	}
 }
 
@@ -261,16 +291,19 @@ void CHeapBase<T>::Swap(int iparent, int ibottom) {
 	mHeap[ibottom] = temp;
 }
 
+// 왼쪽 child의 인덱스 구하기
 template<typename T>
 int CHeapBase<T>::GetLeftChildIndex(int parent) {
 	return parent * 2 + 1;
 }
 
+// 오른쪽 child의 인덱스 구하기
 template<typename T>
 int CHeapBase<T>::GetRightChildIndex(int parent) {
 	return parent * 2 + 2;
 }
 
+// 부모 노드의 인덱스 구하기
 template<typename T>
 int CHeapBase<T>::GetParentIndex(int child) {
 	return (child - 1) / 2;

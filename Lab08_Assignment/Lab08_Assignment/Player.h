@@ -1,5 +1,6 @@
 #pragma once
 
+#include "CMinHeap.h"
 #include "LyricsManager.h"
 #include "MusicItem.h"
 #include "PlaylistItem.h"
@@ -11,7 +12,7 @@ public:
 	/**
 	*	Constructor
 	*/
-	Player(SortedList<MusicItem> &inList);
+	Player(CHeapBase<MusicItem> *inList);
 
 	/**
 	*	Destructor
@@ -100,7 +101,7 @@ public:
 
 private:
 	int mInsertOrder;					// Insert order of music in playlist
-	SortedList<MusicItem> &mMusicList;	// 음악 마스터리스트
+	CHeapBase<MusicItem> *mMusicList;	// 음악 마스터리스트
 	SortedDoublyLinkedList<PlaylistItem> mPlaylist;	// music playlist
 	LyricsManager mLyricsManager;		// Manages lyrics & lyrics files
 };

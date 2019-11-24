@@ -27,6 +27,8 @@ Application::Application()
 	ReadMusicListFromFile(); // Load music list
 	ReadArtistListFromFile(); // Load artist list
 	ReadGenreListFromFile(); // Load genre list
+
+	mMasterList = new CMinHeap<MusicItem>(100);
 }
 
 // Destructor
@@ -34,6 +36,8 @@ Application::~Application() {
 	// Clean linked lists
 	mSingerList.MakeEmpty();
 	mGenreList.MakeEmpty();
+
+	mMasterList->MakeEmpty();
 }
 
 // Create directories (if not exist) required for running program
@@ -59,16 +63,21 @@ void Application::Run() {
 
 // Save music list, playlist, etc.
 void Application::Save() {
+	// TODO: Fix for Heap :(
 	// Save lists
-	SaveMusicListToFile();
-	SaveArtistListToFile();
-	SaveGenreListToFile();
-	mPlayer.SavePlaylistToFile();
+	//SaveMusicListToFile();
+	//SaveArtistListToFile();
+	//SaveGenreListToFile();
+	//mPlayer.SavePlaylistToFile();
 }
 
 // Add new record into list.
 int Application::AddMusic(const MusicItem &data) {
-	int result = mMasterList.Add(data);
+	if (mMasterList->IsFull()) {
+		return 0;
+	}
+
+	int result = mMasterList->Add(data);
 	if (result != 1) { // Add failed
 		cout << "\n\tFailed to add " << data.GetName() << ". Probably duplicate?\n";
 		return 0;
@@ -190,15 +199,21 @@ int Application::AddMusicFromFolder() {
 
 // Delete music from list.
 void Application::DeleteMusic() {
+	if (mMasterList->IsEmpty()) {
+		return;
+	}
+
 	MusicItem data; // Temporary variable to hold info
 	data.SetIdFromKB(); // Get id to delete
 
-	if (mMasterList.Retrieve(data) != -1) {
+	bool found = false;
+	mMasterList->RetrieveItem(data, found);
+	if (found) {
 		// 곡이 마스터리스트에 존재하면 삭제
 		// 굳이 존재여부를 먼저 확인하는 이유는
 		// Retrieve를 통해 곡의 완전한 정보를 받아와
 		// 가수 리스트와 장르 리스트에서도 삭제하기 위한 것
-		mMasterList.Delete(data);
+		mMasterList->Delete(data);
 	} else { // Failed
 		cout << "\n\n\tNo such data in our list.\n";
 		return;
@@ -234,12 +249,17 @@ void Application::DeleteMusic() {
 
 // Replace music with input.
 void Application::ReplaceMusic() {
+	if (mMasterList->IsEmpty()) {
+		return;
+	}
+
 	MusicItem data; // Temporary variable to hold info
 
 	data.SetIdFromKB(); // Get id to search
 	cin >> data; // Get the rest info to search
 
-	if (mMasterList.Replace(data) == 1) { // Success
+	int result = mMasterList->ReplaceItem(data);
+	if (result) { // Success
 		cout << "\n\n\tSuccessfully replaced data.\n";
 	} else { // Failed
 		cout << "\n\n\tFailed to replace data.\n";
@@ -252,8 +272,9 @@ void Application::SearchById() {
 	data.SetIdFromKB(); // Get id to search in list
 
 	// Search in list
-	int result = mMasterList.Retrieve(data);
-	if (result != -1) { // Found
+	bool found = false;
+	mMasterList->RetrieveItem(data, found);
+	if (found) { // Found
 		cout << "\n\t---------------------------------------\n\n";
 		cout << data;
 		cout << "\n\t---------------------------------------\n";
@@ -262,156 +283,158 @@ void Application::SearchById() {
 	}
 }
 
-// Search music with name
-void Application::SearchByName() {
-	MusicItem data;// Temporary variable to hold info
-	data.SetNameFromKB(); // Get name to search
+//// Search music with name
+//void Application::SearchByName() {
+//	MusicItem data;// Temporary variable to hold info
+//	data.SetNameFromKB(); // Get name to search
+//
+//	bool found = false; // Remember whether we've found at least one
+//
+//	// Object to hold data from list
+//	MusicItem dataFromList;
+//	// Iterate through list
+//	mMasterList.ResetIterator();
+//	int curIndex = mMasterList.GetNextItem(dataFromList);
+//	while (curIndex > -1) {
+//		// Check if input data's name property is
+//		// substring of retrieved item's.
+//		if (dataFromList.GetName().find(data.GetName())
+//			!= std::string::npos) {
+//			cout << "\n\t---------------------------------------\n\n";
+//			cout << dataFromList; // Display song info
+//			cout << "\n\t---------------------------------------\n";
+//
+//			found = true;
+//		}
+//		curIndex = mMasterList.GetNextItem(dataFromList);
+//	}
+//
+//	if (!found) {
+//		cout << "\n\n\tFailed to find data.\n";
+//	}
+//}
 
-	bool found = false; // Remember whether we've found at least one
+//// Search music with artist
+//void Application::SearchByArtist() {
+//	// Get singer name to search
+//	Singer singer;
+//	singer.SetNameFromKB();
+//
+//	// Get singer from singer list
+//	if (!mSingerList.Get(singer)) {
+//		// Singer does not exist in singer list
+//		cout << "\n\n\tNo such singer in singer list.\n";
+//		return;
+//	}
+//
+//	// Check if song list is empty
+//	if (singer.GetSongList().IsEmpty()) {
+//		// Empty
+//		cout << "\n\n\t" << singer.GetName() << " has no songs.\n";
+//		return;
+//	}
+//
+//	SimpleItem song; // Temporary variable to hold info from song list
+//	MusicItem music; // Temporary variable to hold info from music master list
+//
+//	// Iterate through singer's song list
+//	SortedDoublyIterator<SimpleItem> iter(singer.GetSongList());
+//	song = iter.Next();
+//	while (iter.NextNotNull()) {
+//		// Display info for each song in the singer's song list
+//		music.SetId(song.GetId());
+//		if (mMasterList.Retrieve(music) != -1) {
+//			// Music found in master list, display info on screen
+//			cout << "\n\t---------------------------------------\n\n";
+//			cout << music; // Display song info
+//			cout << "\n\t---------------------------------------\n";
+//		} else {
+//			// Music not found
+//			cout << "\n\n\tSong " << music.GetName() << " not found in music list.\n";
+//		}
+//		song = iter.Next();
+//	}
+//}
 
-	// Object to hold data from list
-	MusicItem dataFromList;
-	// Iterate through list
-	mMasterList.ResetIterator();
-	int curIndex = mMasterList.GetNextItem(dataFromList);
-	while (curIndex > -1) {
-		// Check if input data's name property is
-		// substring of retrieved item's.
-		if (dataFromList.GetName().find(data.GetName())
-			!= std::string::npos) {
-			cout << "\n\t---------------------------------------\n\n";
-			cout << dataFromList; // Display song info
-			cout << "\n\t---------------------------------------\n";
-
-			found = true;
-		}
-		curIndex = mMasterList.GetNextItem(dataFromList);
-	}
-
-	if (!found) {
-		cout << "\n\n\tFailed to find data.\n";
-	}
-}
-
-// Search music with artist
-void Application::SearchByArtist() {
-	// Get singer name to search
-	Singer singer;
-	singer.SetNameFromKB();
-
-	// Get singer from singer list
-	if (!mSingerList.Get(singer)) {
-		// Singer does not exist in singer list
-		cout << "\n\n\tNo such singer in singer list.\n";
-		return;
-	}
-
-	// Check if song list is empty
-	if (singer.GetSongList().IsEmpty()) {
-		// Empty
-		cout << "\n\n\t" << singer.GetName() << " has no songs.\n";
-		return;
-	}
-
-	SimpleItem song; // Temporary variable to hold info from song list
-	MusicItem music; // Temporary variable to hold info from music master list
-
-	// Iterate through singer's song list
-	SortedDoublyIterator<SimpleItem> iter(singer.GetSongList());
-	song = iter.Next();
-	while (iter.NextNotNull()) {
-		// Display info for each song in the singer's song list
-		music.SetId(song.GetId());
-		if (mMasterList.Retrieve(music) != -1) {
-			// Music found in master list, display info on screen
-			cout << "\n\t---------------------------------------\n\n";
-			cout << music; // Display song info
-			cout << "\n\t---------------------------------------\n";
-		} else {
-			// Music not found
-			cout << "\n\n\tSong " << music.GetName() << " not found in music list.\n";
-		}
-		song = iter.Next();
-	}
-}
-
-// Search music with genre name
-void Application::SearchByGenre() {
-	// Get genre name to search
-	Genre genre;
-	genre.SetNameFromKB();
-
-	// Get genre from genre list
-	if (!mGenreList.Get(genre)) {
-		// Genre does not exist in genre list
-		cout << "\n\n\tNo such genre in genre list.\n";
-		return;
-	}
-
-	// Check if song list is empty
-	if (genre.GetSongList().IsEmpty()) {
-		// Empty
-		cout << "\n\n\t" << genre.GetName() << " has no songs.\n";
-		return;
-	}
-
-	SimpleItem song; // Temporary variable to hold info from song list
-	MusicItem music; // Temporary variable to hold info from music master list
-
-	// Iterate through song list
-	SortedDoublyIterator<SimpleItem> iter(genre.GetSongList());
-	song = iter.Next();
-	while (iter.NextNotNull()) {
-		// Display info for each song in the genre's song list
-		music.SetId(song.GetId());
-		if (mMasterList.Retrieve(music) != -1) {
-			// Music found in master list, display info on screen
-			cout << "\n\t---------------------------------------\n\n";
-			cout << music; // Display song info
-			cout << "\n\t---------------------------------------\n";
-		} else {
-			// Music not found
-			cout << "\n\n\tSong " << music.GetName() << " not found in music list.\n";
-		}
-		song = iter.Next();
-	}
-}
+//// Search music with genre name
+//void Application::SearchByGenre() {
+//	// Get genre name to search
+//	Genre genre;
+//	genre.SetNameFromKB();
+//
+//	// Get genre from genre list
+//	if (!mGenreList.Get(genre)) {
+//		// Genre does not exist in genre list
+//		cout << "\n\n\tNo such genre in genre list.\n";
+//		return;
+//	}
+//
+//	// Check if song list is empty
+//	if (genre.GetSongList().IsEmpty()) {
+//		// Empty
+//		cout << "\n\n\t" << genre.GetName() << " has no songs.\n";
+//		return;
+//	}
+//
+//	SimpleItem song; // Temporary variable to hold info from song list
+//	MusicItem music; // Temporary variable to hold info from music master list
+//
+//	// Iterate through song list
+//	SortedDoublyIterator<SimpleItem> iter(genre.GetSongList());
+//	song = iter.Next();
+//	while (iter.NextNotNull()) {
+//		// Display info for each song in the genre's song list
+//		music.SetId(song.GetId());
+//		if (mMasterList.Retrieve(music) != -1) {
+//			// Music found in master list, display info on screen
+//			cout << "\n\t---------------------------------------\n\n";
+//			cout << music; // Display song info
+//			cout << "\n\t---------------------------------------\n";
+//		} else {
+//			// Music not found
+//			cout << "\n\n\tSong " << music.GetName() << " not found in music list.\n";
+//		}
+//		song = iter.Next();
+//	}
+//}
 
 // Display all records in the list on screen.
 void Application::DisplayAllMusic() {
 	MusicItem data; // Temporary variable to hold info
 
-	if (mMasterList.IsEmpty()) {
+	if (mMasterList->IsEmpty()) {
 		cout << "\n\n\tThere's nothing in the list!\n";
 		return;
 	}
 
-	// Display current list capacity
-	cout << "\n\n\tTotal items: " << mMasterList.GetLength() << endl;
-	cout << "\n\t=======================================\n";
+	mMasterList->PrintHeap();
 
-	// Print all data in list
-	mMasterList.ResetIterator(); // Reset pointer
-	int curIndex = mMasterList.GetNextItem(data);
-	if (curIndex > -1) { // Print first item
-		cout << "\n\tMusic #" << (curIndex + 1) << "\n\n";
-		cout << data;
-		curIndex = mMasterList.GetNextItem(data);
-	}
-	while (curIndex > -1) { // Print rest
-		cout << "\n\t---------------------------------------\n";
-		cout << "\n\tMusic #" << (curIndex + 1) << "\n\n";
-		cout << data;
-		curIndex = mMasterList.GetNextItem(data);
-	}
+	//// Display current list capacity
+	//cout << "\n\n\tTotal items: " << mMasterList.GetLength() << endl;
+	//cout << "\n\t=======================================\n";
 
-	cout << "\n\t=======================================\n";
+	//// Print all data in list
+	//mMasterList.ResetIterator(); // Reset pointer
+	//int curIndex = mMasterList.GetNextItem(data);
+	//if (curIndex > -1) { // Print first item
+	//	cout << "\n\tMusic #" << (curIndex + 1) << "\n\n";
+	//	cout << data;
+	//	curIndex = mMasterList.GetNextItem(data);
+	//}
+	//while (curIndex > -1) { // Print rest
+	//	cout << "\n\t---------------------------------------\n";
+	//	cout << "\n\tMusic #" << (curIndex + 1) << "\n\n";
+	//	cout << data;
+	//	curIndex = mMasterList.GetNextItem(data);
+	//}
+
+	//cout << "\n\t=======================================\n";
 }
 
 // Make list empty
 void Application::MakeEmpty() {
 	// linkedlist 초기화
-	mMasterList.MakeEmpty();
+	mMasterList->MakeEmpty();
 	mSingerList.MakeEmpty();
 	mGenreList.MakeEmpty();
 	mPlayer.MakeEmpty();
@@ -458,7 +481,7 @@ int Application::ReadMusicListFromFile() {
 	mInFile >> root; // Read json data from file
 	for (auto &value : root) {
 		value >> data;
-		mMasterList.Add(data);
+		mMasterList->Add(data);
 	}
 
 	mInFile.close();
@@ -479,13 +502,14 @@ int Application::SaveMusicListToFile() {
 	Json::Value root; // Root of json to store music info
 	MusicItem data; // Store item from list
 
+	// TOOD: Fix for Heap :(
 	// Add each music data to json
-	mMasterList.ResetIterator();
-	int curIndex = mMasterList.GetNextItem(data);
-	while (curIndex > -1) {
-		root << data;
-		curIndex = mMasterList.GetNextItem(data);
-	}
+	//mMasterList.ResetIterator();
+	//int curIndex = mMasterList.GetNextItem(data);
+	//while (curIndex > -1) {
+	//	root << data;
+	//	curIndex = mMasterList.GetNextItem(data);
+	//}
 	mOutFile << root; // Write to file
 
 	mOutFile.close();

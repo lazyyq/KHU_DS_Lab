@@ -111,12 +111,12 @@ void Application::MenuSearch() {
 		switch (menu.GetSelection()) {
 		case 1:
 			SearchById(); Pause(); break; // ID로 곡 검색
-		case 2:
-			SearchByName(); Pause(); break; // 곡 이름으로 검색
-		case 3:
-			SearchByArtist(); Pause(); break; // 가수 이름으로 검색
-		case 4:
-			SearchByGenre(); Pause(); break; // 장르 이름으로 검색
+		//case 2:
+		//	SearchByName(); Pause(); break; // 곡 이름으로 검색
+		//case 3:
+		//	SearchByArtist(); Pause(); break; // 가수 이름으로 검색
+		//case 4:
+		//	SearchByGenre(); Pause(); break; // 장르 이름으로 검색
 		case 6:
 			return;
 		}

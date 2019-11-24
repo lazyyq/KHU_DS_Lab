@@ -128,17 +128,17 @@ public:
 	/**
 	*	@brief	Search and display music whose name contains input name from list.
 	*/
-	void SearchByName();
+	//void SearchByName();
 
 	/**
 	*	@brief	가수 목록에서 가수를 찾아 해당 가수가 부른 모든 곡의 정보를 표시함.
 	*/
-	void SearchByArtist();
+	//void SearchByArtist();
 
 	/**
 	*	@brief	장르 목록에서 장르를 찾아 해당 장르의 모든 곡의 정보를 표시함.
 	*/
-	void SearchByGenre();
+	//void SearchByGenre();
 
 	/**
 	*	@brief	모든 곡의 정보를 화면에 표시함.
@@ -221,7 +221,7 @@ public:
 private:
 	ifstream mInFile;					// input file descriptor
 	ofstream mOutFile;					// output file descriptor
-	SortedList<MusicItem> mMasterList;	// music item list
+	CHeapBase<MusicItem> *mMasterList;	// music item list
 	SortedDoublyLinkedList<Singer> mSingerList;	// Singer list
 	SortedDoublyLinkedList<Genre> mGenreList;	// Genre list
 	Player mPlayer;						// Playlist manager

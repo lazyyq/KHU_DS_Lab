@@ -18,6 +18,10 @@ public:
 	*/
 	CMaxHeap(int size);
 
+	// Destructor
+	~CMaxHeap();
+
+protected:
 	/**
 	*	@brief	위에서 아래로 내려오면서 Heap 크기를 비교하여 정렬하는 가상함수.
 	*	@pre	Heap가 초기화되어야한다.
@@ -47,6 +51,14 @@ public:
 	virtual void Delete(T item, bool &found, int iparent);
 
 	/**
+	*	@brief	Heap의 데이터를 교체하는 가상함수.
+	*	@param	item	ItemType형의 삭제 할 데이터.
+	*	@param	found	삭제할 데이터를 찾았는지 아닌지 확인.
+	*	@param	ibottom	검색 중인 배열 위치.
+	*/
+	virtual void Replace(T item, bool &found, int iparent);
+
+	/**
 	*	@brief	Heap의 데이터를 검색하는 가상함수.
 	*	@pre	Heap가 초기화되어야한다.
 	*	@post	Heap의 데이터를 검색한다.
@@ -68,6 +80,11 @@ template <typename T>
 CMaxHeap<T>::CMaxHeap(int size) {
 	this->mMaxSize = size;
 	this->mHeap = new T[this->mMaxSize];
+}
+
+template<typename T>
+CMaxHeap<T>::~CMaxHeap() {
+	delete[] this->mHeap;
 }
 
 
@@ -131,6 +148,25 @@ void CMaxHeap<T>::Delete(T item, bool &found, int iparent) {
 		Delete(item, found, leftChild); // 왼쪽으로 검색
 	if (rightChild < this->mLastNode && !found)
 		Delete(item, found, rightChild); // 오른쪽으로 검색
+}
+
+template<typename T>
+void CMaxHeap<T>::Replace(T item, bool &found, int iparent) {
+	int leftChild; // 왼쪽 자식데이터 인덱스
+	int rightChild; // 오른쪽 자식데이터 인덱스
+
+	leftChild = this->GetLeftChildIndex(iparent);
+	rightChild = this->GetRightChildIndex(iparent);
+
+	if (this->mHeap[iparent] == item) // 교체하려는 데이터 발견
+	{
+		this->mHeap[iparent] = item; // 데이터 교체
+		found = true;
+	}
+	if (leftChild < this->mLastNode && !found)
+		Replace(item, found, leftChild); // 왼쪽으로 검색
+	if (rightChild < this->mLastNode && !found)
+		Replace(item, found, rightChild); // 오른쪽으로 검색
 }
 
 
