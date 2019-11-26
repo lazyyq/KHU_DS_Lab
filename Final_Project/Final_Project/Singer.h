@@ -139,7 +139,7 @@ public:
 	/**
 	*	@brief	Write record to JSON.
 	*/
-	friend Json::Value &operator<<(Json::Value &root, const Singer &item);
+	friend Json::Value &operator<<(Json::Value &value, const Singer &item);
 
 private:
 	std::string mName; // Singer name

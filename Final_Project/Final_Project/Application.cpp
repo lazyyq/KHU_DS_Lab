@@ -451,16 +451,7 @@ int Application::ReadMusicListFromFile() {
 		return 0;
 	}
 
-	Json::Value root; // Root of json to store music info
-	MusicItem data; // Store item from list
-
-	// Convert each json value to music data
-	mInFile >> root; // Read json data from file
-	for (auto &value : root) {
-		value >> data;
-		mMasterList.Add(data);
-	}
-
+	mInFile >> mMasterList;
 	mInFile.close();
 
 	return 1;
@@ -476,18 +467,7 @@ int Application::SaveMusicListToFile() {
 
 	cout << "\n\tSaving music list..\n";
 
-	Json::Value root; // Root of json to store music info
-	MusicItem data; // Store item from list
-
-	// Add each music data to json
-	mMasterList.ResetIterator();
-	int curIndex = mMasterList.GetNextItem(data);
-	while (curIndex > -1) {
-		root << data;
-		curIndex = mMasterList.GetNextItem(data);
-	}
-	mOutFile << root; // Write to file
-
+	mOutFile << mMasterList;
 	mOutFile.close();
 
 	return 1;
@@ -501,16 +481,7 @@ int Application::ReadArtistListFromFile() {
 		return 0;
 	}
 
-	Json::Value root; // Root of json to store artist info
-	Singer singer; // Store item from list
-
-	// Convert each json value to artist data
-	mInFile >> root; // Read json data from file
-	for (auto &value : root) {
-		value >> singer;
-		mSingerList.Add(singer);
-	}
-
+	mInFile >> mSingerList;
 	mInFile.close(); // Close file
 
 	return 1;
@@ -526,16 +497,7 @@ int Application::SaveArtistListToFile() {
 
 	cout << "\n\tSaving artist list..\n";
 
-	Json::Value root; // Root of json to store singer info
-
-	// Add each singer data to json
-	SortedDoublyIterator<Singer> iter(mSingerList);
-	for (Singer singer = iter.Next();
-		iter.NextNotNull(); singer = iter.Next()) {
-		root << singer;
-	}
-	mOutFile << root; // Write to file
-
+	mOutFile << mSingerList;
 	mOutFile.close();
 
 	return 1;
@@ -549,16 +511,7 @@ int Application::ReadGenreListFromFile() {
 		return 0;
 	}
 
-	Json::Value root; // Root of json to store genre info
-	Genre genre; // Store item from list
-
-	// Convert each json value to genre data
-	mInFile >> root; // Read json data from file
-	for (auto &value : root) {
-		value >> genre;
-		mGenreList.Add(genre);
-	}
-
+	mInFile >> mGenreList;
 	mInFile.close(); // Close file
 
 	return 1;
@@ -574,16 +527,7 @@ int Application::SaveGenreListToFile() {
 
 	cout << "\n\tSaving genre list..\n";
 
-	Json::Value root; // Root of json to store genre info
-
-	// Add each genre data to json
-	SortedDoublyIterator<Genre> iter(mGenreList);
-	for (Genre genre = iter.Next();
-		iter.NextNotNull(); genre = iter.Next()) {
-		root << genre;
-	}
-	mOutFile << root; // Write to file
-
+	mOutFile << mGenreList;
 	mOutFile.close();
 
 	return 1;

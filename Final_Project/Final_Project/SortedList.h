@@ -7,6 +7,18 @@
 #define SORTEDLIST_INIT_SIZE	20
 #define SORTEDLIST_EXPAND_SIZE	20
 
+template <typename T>
+class SortedList;
+
+template <typename T>
+std::ifstream &operator>>(std::ifstream &ifs, SortedList<T> &list);
+template <typename T>
+std::ofstream &operator<<(std::ofstream &ofs, const SortedList<T> &list);
+template <typename T>
+Json::Value &operator>>(Json::Value &root, SortedList<T> &list);
+template <typename T>
+Json::Value &operator<<(Json::Value &root, const SortedList<T> &list);
+
 /**
 *	Array 기반의 SortedList.
 *	그러나 리스트가 꽉 차면 자동으로 확장하고
@@ -107,6 +119,30 @@ public:
 	*	@return	index of current iterator's item if is not end of list, oterwise return -1.
 	*/
 	int GetNextItem(T &data);
+
+	/**
+	*	@brief	Read record from file written in JSON format.
+	*/
+	friend std::ifstream &operator>> <>(std::ifstream &ifs,
+		SortedList<T> &list);
+
+	/**
+	*	@brief	Write record to file in JSON format.
+	*/
+	friend std::ofstream &operator<< <>(std::ofstream &ofs,
+		const SortedList<T> &list);
+
+	/**
+	*	@brief	Read record from JSON.
+	*/
+	friend Json::Value &operator>> <>(Json::Value &root,
+		SortedList<T> &list);
+
+	/**
+	*	@brief	Write record to JSON.
+	*/
+	friend Json::Value &operator<< <>(Json::Value &root,
+		const SortedList<T> &list);
 
 private:
 	T *mArray;			///< Pointer for list array.
@@ -332,6 +368,52 @@ int SortedList<T>::GetNextItem(T &inData) {
 	inData = mArray[mCurPointer];	// 현재 list pointer의 레코드를 복사
 
 	return mCurPointer;
+}
+
+// JSON 형식의 파일로부터 아이템들을 읽어들임
+template <typename T>
+std::ifstream &operator>>(std::ifstream &ifs, SortedList<T> &list) {
+	Json::Value root;
+	ifs >> root;
+	root >> list;
+
+	return ifs;
+}
+
+// 파일에 JSON 형식으로 아이템들을 기록함
+template <typename T>
+std::ofstream &operator<<(std::ofstream &ofs, const SortedList<T> &list) {
+	Json::Value root;
+	root << list;
+	ofs << root;
+
+	return ofs;
+}
+
+// JSON으로부터 아이템들을 읽어들임
+template <typename T>
+Json::Value &operator>>(Json::Value &root, SortedList<T> &list) {
+	// JSON root의 각 아이템을 리스트에 추가
+	for (auto &e : root) {
+		T item;
+		e >> item;
+		list.Add(item);
+	}
+
+	return root;
+}
+
+// JSON에 아이템들을 기록함
+template <typename T>
+Json::Value &operator<<(Json::Value &root, const SortedList<T> &list) {
+	// 새 JSON value를 만들어 리스트의 아이템을 추가한 뒤 root에 추가
+	for (int i = 0; i < list.mLength; ++i) {
+		Json::Value value;
+		value << list.mArray[i];
+		root.append(value);
+	}
+
+	return root;
 }
 
 template<typename T>

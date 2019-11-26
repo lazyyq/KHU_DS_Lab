@@ -95,12 +95,10 @@ Json::Value &operator>>(Json::Value &value, SimpleItem &item) {
 }
 
 // Write record to JSON
-Json::Value &operator<<(Json::Value &root, const SimpleItem &item) {
-	Json::Value newValue;
-	newValue[JSON_ATTR_ID] = AnsiToUtf8(item.mId);
-	newValue[JSON_ATTR_TITLE] = AnsiToUtf8(item.mName);
-	newValue[JSON_ATTR_ARTIST] = AnsiToUtf8(item.mArtist);
-	root.append(newValue); // Add to array
+Json::Value &operator<<(Json::Value &value, const SimpleItem &item) {
+	value[JSON_ATTR_ID] = AnsiToUtf8(item.mId);
+	value[JSON_ATTR_TITLE] = AnsiToUtf8(item.mName);
+	value[JSON_ATTR_ARTIST] = AnsiToUtf8(item.mArtist);
 
-	return root;
+	return value;
 }

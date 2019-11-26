@@ -1,10 +1,25 @@
 #pragma once
 
+#include <fstream>
+#include <json/json.h>
+
 #include "DoublyNodeType.h"
 #include "DoublyIterator.h"
 
 template<typename T>
 class DoublyIterator;
+
+template <typename T>
+class DoublyLinkedList;
+
+template<typename T>
+std::ifstream &operator>>(std::ifstream &ifs, DoublyLinkedList<T> &list);
+template<typename T>
+std::ofstream &operator<<(std::ofstream &ofs, const DoublyLinkedList<T> &list);
+template<typename T>
+Json::Value &operator>>(Json::Value &out, DoublyLinkedList<T> &list);
+template<typename T>
+Json::Value &operator<<(Json::Value &out, const DoublyLinkedList<T> &list);
 
 /**
 *	정렬된 더블연결리스트 클래스
@@ -93,6 +108,30 @@ public:
 	*	@return	일치하는 데이터를 찾으면 1, 그렇지 않으면 0을 반환.
 	*/
 	int Get(T &item) const;
+
+	/**
+	*	@brief	Read record from file written in JSON format.
+	*/
+	friend std::ifstream &operator>> <>(std::ifstream &ifs,
+		DoublyLinkedList<T> &list);
+
+	/**
+	*	@brief	Write record to file in JSON format.
+	*/
+	friend std::ofstream &operator<< <>(std::ofstream &ofs,
+		const DoublyLinkedList<T> &list);
+
+	/**
+	*	@brief	Read record from JSON.
+	*/
+	friend Json::Value &operator>> <>(Json::Value &root,
+		DoublyLinkedList<T> &list);
+
+	/**
+	*	@brief	Write record to JSON.
+	*/
+	friend Json::Value &operator<< <>(Json::Value &root,
+		const DoublyLinkedList<T> &list);
 
 private:
 	DoublyNodeType<T> *mFirst; // 리스트의 맨 처음.
@@ -338,4 +377,55 @@ int DoublyLinkedList<T>::Get(T &item) const {
 	}
 
 	return 0; // 일치하지 않으면 0을 반환.
+}
+
+// JSON 형식의 파일로부터 아이템들을 읽어들임
+template <typename T>
+std::ifstream &operator>>(std::ifstream &ifs,
+	DoublyLinkedList<T> &list) {
+	Json::Value root;
+	ifs >> root;
+	root >> list;
+
+	return ifs;
+}
+
+// 파일에 JSON 형식으로 아이템들을 기록함
+template <typename T>
+std::ofstream &operator<<(std::ofstream &ofs,
+	const DoublyLinkedList<T> &list) {
+	Json::Value root;
+	root << list;
+	ofs << root;
+
+	return ofs;
+}
+
+// JSON으로부터 아이템들을 읽어들임
+template <typename T>
+Json::Value &operator>>(Json::Value &root,
+	DoublyLinkedList<T> &list) {
+	// JSON root의 각 아이템을 리스트에 추가
+	for (auto &e : root) {
+		T item;
+		e >> item;
+		list.Add(item);
+	}
+
+	return root;
+}
+
+// JSON에 아이템들을 기록함
+template <typename T>
+Json::Value &operator<<(Json::Value &root,
+	const DoublyLinkedList<T> &list) {
+	// 새 JSON value를 만들어 리스트의 아이템을 추가한 뒤 root에 추가
+	DoublyIterator<T> iter(list);
+	for (T item = iter.Next(); iter.NextNotNull(); item = iter.Next()) {
+		Json::Value value;
+		value << item;
+		root.append(value);
+	}
+
+	return root;
 }

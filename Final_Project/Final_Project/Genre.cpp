@@ -4,7 +4,6 @@
 #include <string>
 #include <iomanip>
 #include <fstream>
-#include <json/json.h>
 
 #include "utils/StringUtils.h"
 
@@ -88,30 +87,15 @@ bool Genre::operator>=(const Genre &that) const {
 // Read record from JSON
 Json::Value &operator>>(Json::Value &value, Genre &item) {
 	item.mName = Utf8ToAnsi(value.get(JSON_ATTR_GENRE, JSON_VALUE_STR_UNKNOWN).asString());
-	// Get song list
-	Json::Value songs = value[JSON_ATTR_SONGLIST];
-	SimpleItem simple;
-	for (auto &i : songs) {
-		i >> simple;
-		item.mSongList.Add(simple);
-	}
+	value[JSON_ATTR_SONGLIST] >> item.mSongList;
 
 	return value;
 }
 
 // Write record to JSON
-Json::Value &operator<<(Json::Value &root, const Genre &item) {
-	Json::Value newValue;
-	newValue[JSON_ATTR_GENRE] = AnsiToUtf8(item.mName);
-	// Add song list
-	Json::Value songs;
-	SortedDoublyIterator<SimpleItem> iter(item.mSongList);
-	for (SimpleItem simple = iter.Next();
-		iter.NextNotNull();	simple = iter.Next()) {
-		songs << simple;
-	}
-	newValue[JSON_ATTR_SONGLIST] = songs;
-	root.append(newValue);
+Json::Value &operator<<(Json::Value &value, const Genre &item) {
+	value[JSON_ATTR_GENRE] = AnsiToUtf8(item.mName);
+	value[JSON_ATTR_SONGLIST] << item.mSongList;
 
-	return root;
+	return value;
 }

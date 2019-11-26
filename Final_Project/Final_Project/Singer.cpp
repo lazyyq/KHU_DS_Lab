@@ -152,32 +152,17 @@ Json::Value &operator>>(Json::Value &value, Singer &item) {
 	item.mName = Utf8ToAnsi(value.get(JSON_ATTR_SINGER, JSON_VALUE_STR_UNKNOWN).asString());
 	item.mAge = value.get(JSON_ATTR_AGE, JSON_VALUE_INT_UNKNOWN).asInt();
 	item.mSex = value.get(JSON_ATTR_SEX, JSON_VALUE_CHAR_UNKNOWN).asInt();
-	// Get song list
-	Json::Value songs = value[JSON_ATTR_SONGLIST];
-	SimpleItem simple;
-	for (auto &i : songs) {
-		i >> simple;
-		item.mSongList.Add(simple);
-	}
+	value[JSON_ATTR_SONGLIST] >> item.mSongList;
 
 	return value;
 }
 
 // Write record to JSON
-Json::Value &operator<<(Json::Value &root, const Singer &item) {
-	Json::Value newValue;
-	newValue[JSON_ATTR_SINGER] = AnsiToUtf8(item.mName);
-	newValue[JSON_ATTR_AGE] = item.mAge;
-	newValue[JSON_ATTR_SEX] = item.mSex;
-	// Add song list
-	Json::Value songs;
-	SortedDoublyIterator<SimpleItem> iter(item.mSongList);
-	for (SimpleItem simple = iter.Next();
-		iter.NextNotNull();	simple = iter.Next()) {
-		songs << simple;
-	}
-	newValue[JSON_ATTR_SONGLIST] = songs;
-	root.append(newValue);
+Json::Value &operator<<(Json::Value &value, const Singer &item) {
+	value[JSON_ATTR_SINGER] = AnsiToUtf8(item.mName);
+	value[JSON_ATTR_AGE] = item.mAge;
+	value[JSON_ATTR_SEX] = item.mSex;
+	value[JSON_ATTR_SONGLIST] << item.mSongList;
 
-	return root;
+	return value;
 }

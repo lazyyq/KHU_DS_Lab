@@ -257,15 +257,7 @@ int Player::SavePlaylistToFile() {
 
 	cout << "\n\tSaving playlist..\n";
 
-	// Put each data to JSON
-	Json::Value root;
-	SortedDoublyIterator<PlaylistItem> iter(mPlaylist);
-	for (PlaylistItem data = iter.Next();
-		iter.NextNotNull(); data = iter.Next()) {
-		root << data;
-	}
-	ofs << root; // Write to file
-
+	ofs << mPlaylist;
 	ofs.close();
 
 	return 1;
@@ -281,13 +273,7 @@ int Player::ReadPlaylistFromFile() {
 	Json::Value root;
 	PlaylistItem data;
 
-	// Convert each value to PlaylistItem
-	ifs >> root;
-	for (auto &value : root) {
-		value >> data;
-		mPlaylist.Add(data);
-	}
-
+	ifs >> mPlaylist;
 	ifs.close();
 
 	return 1;

@@ -76,7 +76,7 @@ public:
 	/**
 	*	@brief	Write record to JSON.
 	*/
-	friend Json::Value &operator<<(Json::Value &root, const PlaylistItem &item);
+	friend Json::Value &operator<<(Json::Value &value, const PlaylistItem &item);
 
 private:
 	std::string mId;			// Primary key of music

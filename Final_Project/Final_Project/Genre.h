@@ -1,9 +1,9 @@
 #pragma once
 
+#include <json/json.h>
+
 #include "SortedDoublyLinkedList.h"
 #include "SimpleItem.h"
-
-using namespace std;
 
 class Genre {
 public:
@@ -11,7 +11,7 @@ public:
 	*	Constructors
 	*/
 	Genre();
-	Genre(const string &inName);
+	Genre(const std::string &inName);
 
 	/**
 	*	Destructor
@@ -24,7 +24,7 @@ public:
 	*	@post	None.
 	*	@return	Name of genre.
 	*/
-	string GetName();
+	std::string GetName();
 
 	/**
 	*	@brief	Set name of genre.
@@ -32,7 +32,7 @@ public:
 	*	@post	Name is set.
 	*	@param	inName	Name to set.
 	*/
-	void SetName(string &inName);
+	void SetName(std::string &inName);
 
 	/**
 	*	@brief	Set name of genre from keyboard input.
@@ -85,10 +85,10 @@ public:
 	/**
 	*	@brief	Write record to JSON.
 	*/
-	friend Json::Value &operator<<(Json::Value &root, const Genre &item);
+	friend Json::Value &operator<<(Json::Value &value, const Genre &item);
 
 private:
-	string mName; // Genre name
+	std::string mName; // Genre name
 	SortedDoublyLinkedList<SimpleItem> mSongList; // Song list
 
 	static const int attrIndentSize = 25; // 정보 표시할 때 들여쓰기 칸 수

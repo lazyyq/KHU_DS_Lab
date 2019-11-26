@@ -287,7 +287,7 @@ public:
 	/**
 	*	@brief	Write record to JSON.
 	*/
-	friend Json::Value &operator<<(Json::Value &root, const MusicItem &item);
+	friend Json::Value &operator<<(Json::Value &value, const MusicItem &item);
 
 protected:
 	string mId;			///< Music ID.

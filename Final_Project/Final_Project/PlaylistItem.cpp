@@ -108,14 +108,12 @@ Json::Value &operator>>(Json::Value &value, PlaylistItem &item) {
 }
 
 // Write record to JSON
-Json::Value &operator<<(Json::Value &root, const PlaylistItem &item) {
-	Json::Value newValue;
-	newValue[JSON_ATTR_ID] = AnsiToUtf8(item.mId);
-	newValue[JSON_ATTR_PLAYEDTIMES] = item.mPlayedTimes;
-	newValue[JSON_ATTR_INSERTEDTIME] = AnsiToUtf8(item.mInsertedTime);
-	root.append(newValue); // Add to array
+Json::Value &operator<<(Json::Value &value, const PlaylistItem &item) {
+	value[JSON_ATTR_ID] = AnsiToUtf8(item.mId);
+	value[JSON_ATTR_PLAYEDTIMES] = item.mPlayedTimes;
+	value[JSON_ATTR_INSERTEDTIME] = AnsiToUtf8(item.mInsertedTime);
 
-	return root;
+	return value;
 }
 
 string PlaylistItem::GetCurrentTime() {

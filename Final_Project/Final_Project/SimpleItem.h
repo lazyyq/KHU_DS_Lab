@@ -90,7 +90,7 @@ public:
 	/**
 	*	@brief	Write record to JSON.
 	*/
-	friend Json::Value &operator<<(Json::Value &root, const SimpleItem &item);
+	friend Json::Value &operator<<(Json::Value &value, const SimpleItem &item);
 
 private:
 	std::string mId; // Music id

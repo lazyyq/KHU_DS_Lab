@@ -260,14 +260,12 @@ Json::Value &operator>>(Json::Value &value, MusicItem &item) {
 }
 
 // Write record to JSON
-Json::Value &operator<<(Json::Value &root, const MusicItem &item) {
-	Json::Value newValue;
-	newValue[JSON_ATTR_ID] = AnsiToUtf8(item.mId);
-	newValue[JSON_ATTR_TITLE] = AnsiToUtf8(item.mName);
-	newValue[JSON_ATTR_COMPOSER] = AnsiToUtf8(item.mMelodizer);
-	newValue[JSON_ATTR_ARTIST] = AnsiToUtf8(item.mArtist);
-	newValue[JSON_ATTR_GENRE] = AnsiToUtf8(item.mGenre);
-	root.append(newValue); // Add to array
+Json::Value &operator<<(Json::Value &value, const MusicItem &item) {
+	value[JSON_ATTR_ID] = AnsiToUtf8(item.mId);
+	value[JSON_ATTR_TITLE] = AnsiToUtf8(item.mName);
+	value[JSON_ATTR_COMPOSER] = AnsiToUtf8(item.mMelodizer);
+	value[JSON_ATTR_ARTIST] = AnsiToUtf8(item.mArtist);
+	value[JSON_ATTR_GENRE] = AnsiToUtf8(item.mGenre);
 
-	return root;
+	return value;
 }
