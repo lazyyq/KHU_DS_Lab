@@ -8,6 +8,9 @@ using namespace utils;
 
 // Main menu
 void Application::MenuMain() {
+	string loginInfo = "Now logged in as " + mId;
+	if (mIsAdmin) loginInfo += " (Admin)";
+
 	const string title = "Main Menu";
 	const string menus[] = {
 		"Manage music",
@@ -15,7 +18,9 @@ void Application::MenuMain() {
 		"Play & Manage playlists",
 		"",
 		"Save music data",
-		"Save and quit",
+		"Save and logout",
+		"",
+		loginInfo
 	};
 
 	MenuScreen menu(title, begin(menus), end(menus));
@@ -144,19 +149,19 @@ void Application::MenuPlaylists() {
 	while (true) {
 		switch (menu.GetSelection()) {
 		case 1:
-			mPlayer.ListPlaylist(); Pause(); break; // 플레이리스트의 곡 정보 다 표시
+			mPlayer->ListPlaylist(); Pause(); break; // 플레이리스트의 곡 정보 다 표시
 		case 3:
-			mPlayer.ChooseAndPlay(); Pause(); break; // 플레이리스트에서 골라서 재생
+			mPlayer->ChooseAndPlay(); Pause(); break; // 플레이리스트에서 골라서 재생
 		case 4:
-			mPlayer.PlayInInsertOrder(); Pause(); break; // 맨 처음 곡부터 재생
+			mPlayer->PlayInInsertOrder(); Pause(); break; // 맨 처음 곡부터 재생
 		case 5:
-			mPlayer.Shuffle(); Pause(); break; // 랜덤으로 섞어서 재생
+			mPlayer->Shuffle(); Pause(); break; // 랜덤으로 섞어서 재생
 		case 7:
-			mPlayer.AddToPlaylist(); Pause(); break; // 플레이리스트에 곡 추가
+			mPlayer->AddToPlaylist(); Pause(); break; // 플레이리스트에 곡 추가
 		case 8:
-			mPlayer.DeleteFromPlaylist(); Pause(); break; // 플레이리스트에서 곡 삭제
+			mPlayer->DeleteFromPlaylist(); Pause(); break; // 플레이리스트에서 곡 삭제
 		case 9:
-			mPlayer.MakeEmpty(); Pause(); break; // 플레이리스트 초기화
+			mPlayer->MakeEmpty(); Pause(); break; // 플레이리스트 초기화
 		case 11:
 			return;
 		}

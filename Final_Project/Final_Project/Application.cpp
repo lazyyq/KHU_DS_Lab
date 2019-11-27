@@ -11,18 +11,16 @@
 #include "dialog/DialogUtils.h"
 #include "id3/ID3Tag.h"
 
-#define CONSOLE_COLOR			"70"
-#define MUSIC_LIST_FILENAME		"files/list_music.json"
-#define ARTIST_LIST_FILENAME	"files/list_artist.json"
-#define GENRE_LIST_FILENAME		"files/list_genre.json"
+#define MUSIC_LIST_FILENAME		"data/common/list_music.json"
+#define ARTIST_LIST_FILENAME	"data/common/list_artist.json"
+#define GENRE_LIST_FILENAME		"data/common/list_genre.json"
 
 using namespace std;
 using namespace utils;
 namespace ID3 = MetadataInfo::ID3;
 
 // Constructor
-Application::Application()
-	: mPlayer(mMasterList) {
+Application::Application() {
 	InitDirectories(); // Create necessary directories
 	ReadMusicListFromFile(); // Load music list
 	ReadArtistListFromFile(); // Load artist list
@@ -34,36 +32,38 @@ Application::~Application() {
 	// Clean linked lists
 	mSingerList.MakeEmpty();
 	mGenreList.MakeEmpty();
+	delete mPlayer;
 }
 
 // Create directories (if not exist) required for running program
 void Application::InitDirectories() {
-	// files: where music list, singer list, playlist... are stored.
-	string directories[] = { "files" };
-	for (string directory : directories) {
-		filesystem::create_directory(directory);
-	}
-}
-
-// Set cmd window color scheme
-void Application::SetConsoleColor() {
-	system("color " CONSOLE_COLOR);
+	// data/common: where music list, singer list, playlist... are stored.
+	filesystem::create_directories("data/common");
 }
 
 // Program driver.
-void Application::Run() {
+void Application::Run(const string &_id, const bool _isAdmin) {
 	setlocale(LC_ALL, "");
-	SetConsoleColor(); // Set color
+	mId = _id;
+	mIsAdmin = _isAdmin;
+	InitDirectories();
+	ReadMusicListFromFile(); // Load music list
+	ReadArtistListFromFile(); // Load artist list
+	ReadGenreListFromFile(); // Load genre list
+	mPlayer = new Player(mId, mMasterList);
 	MenuMain(); // Show main menu
 }
 
 // Save music list, playlist, etc.
 void Application::Save() {
 	// Save lists
-	SaveMusicListToFile();
-	SaveArtistListToFile();
-	SaveGenreListToFile();
-	mPlayer.SavePlaylistToFile();
+	if (mIsAdmin) {
+		SaveMusicListToFile();
+		SaveArtistListToFile();
+		SaveGenreListToFile();
+	} else {
+		mPlayer->SavePlaylistToFile();
+	}
 }
 
 // Add new record into list.
@@ -414,7 +414,7 @@ void Application::MakeEmpty() {
 	mMasterList.MakeEmpty();
 	mSingerList.MakeEmpty();
 	mGenreList.MakeEmpty();
-	mPlayer.MakeEmpty();
+	mPlayer->MakeEmpty();
 
 	cout << "\n\n\tEmptied list.\n";
 }

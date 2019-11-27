@@ -11,7 +11,7 @@ public:
 	/**
 	*	Constructor
 	*/
-	Player(SortedList<MusicItem> &inList);
+	Player(const std::string id, SortedList<MusicItem> &inList);
 
 	/**
 	*	Destructor
@@ -103,4 +103,5 @@ private:
 	SortedList<MusicItem> &mMusicList;	// 음악 마스터리스트
 	SortedDoublyLinkedList<PlaylistItem> mPlaylist;	// music playlist
 	LyricsManager mLyricsManager;		// Manages lyrics & lyrics files
+	std::string mFilenamePlaylist;		// Playlist filename
 };

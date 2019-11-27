@@ -30,16 +30,13 @@ public:
 	void InitDirectories();
 
 	/**
-	*	@brief	현재 CMD창의 color scheme을 변경함
-	*/
-	void SetConsoleColor();
-
-	/**
 	*	@brief	Program driver.
 	*	@pre	program is started.
 	*	@post	program is finished.
+	*	@param	_id			User ID
+	*			_isAdmin	Is this user an admin?
 	*/
-	void Run();
+	void Run(const std::string &_id, const bool _isAdmin);
 
 	/**
 	*	@brief	음악리스트, 가수리스트, 플레이리스트 등을 파일로 저장함.
@@ -217,10 +214,15 @@ public:
 
 
 private:
+	std::string mId; // User id
+	bool mIsAdmin = false; // Is this user an admin?
 	ifstream mInFile;					// input file descriptor
 	ofstream mOutFile;					// output file descriptor
 	SortedList<MusicItem> mMasterList;	// music item list
 	SortedDoublyLinkedList<Singer> mSingerList;	// Singer list
 	SortedDoublyLinkedList<Genre> mGenreList;	// Genre list
-	Player mPlayer;						// Playlist manager
+	Player *mPlayer;						// Playlist manager
+	std::string mFilenameMasterList; // Masterlist filename
+	std::string mFilenameArtistList; // Singer list filename
+	std::string mFilenameGenreList; // Genre list filename
 };

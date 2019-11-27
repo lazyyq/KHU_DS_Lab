@@ -31,6 +31,12 @@
     <Filter Include="소스 파일\utils">
       <UniqueIdentifier>{0f07fba5-5e65-474b-930e-5a307b31d7be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\launcher">
+      <UniqueIdentifier>{6b0b79f6-bf57-4051-9d73-c13da5ae3a02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\launcher">
+      <UniqueIdentifier>{02cb2e5f-59d9-43c7-95e1-b42818e24e53}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlaylistItem.h">
@@ -144,6 +150,9 @@
     <ClInclude Include="utils\StringUtils.h">
       <Filter>헤더 파일\utils</Filter>
     </ClInclude>
+    <ClInclude Include="Launcher.h">
+      <Filter>헤더 파일\launcher</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlaylistItem.cpp">
@@ -232,6 +241,9 @@
     </ClCompile>
     <ClCompile Include="utils\StringUtils.cpp">
       <Filter>소스 파일\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Launcher.cpp">
+      <Filter>소스 파일\launcher</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

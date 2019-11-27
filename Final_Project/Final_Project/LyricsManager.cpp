@@ -8,7 +8,7 @@
 #include "GeniusLyricsFetcher.h"
 #include "utils/Utils.h"
 
-#define LYRICS_FOLDERNAME	"lyrics"
+#define LYRICS_FOLDERNAME	"data/lyrics"
 
 using namespace std;
 using namespace utils;

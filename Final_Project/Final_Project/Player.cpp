@@ -7,13 +7,12 @@
 
 #include "utils/Utils.h"
 
-#define PLAYLIST_FILENAME	"files/list_playlist.json"
-
 using namespace std;
 using namespace utils;
 
 // 생성사
-Player::Player(SortedList<MusicItem> &inList) :
+Player::Player(const string id, SortedList<MusicItem> &inList) :
+	mFilenamePlaylist("data/user/" + id + "/list_playlist.json"),
 	mInsertOrder(0), mMusicList(inList) {
 	ReadPlaylistFromFile(); // 파일로부터 읽어오기
 }
@@ -250,7 +249,7 @@ void Player::DeleteFromPlaylist() {
 
 // 플레이리스트 파일로 저장
 int Player::SavePlaylistToFile() {
-	ofstream ofs(PLAYLIST_FILENAME); //Open file
+	ofstream ofs(mFilenamePlaylist); //Open file
 	if (!ofs) {
 		return 0;
 	}
@@ -265,7 +264,7 @@ int Player::SavePlaylistToFile() {
 
 // 파일로부터 플레이리스트 읽기
 int Player::ReadPlaylistFromFile() {
-	ifstream ifs(PLAYLIST_FILENAME);
+	ifstream ifs(mFilenamePlaylist);
 	if (!ifs) {
 		return 0;
 	}

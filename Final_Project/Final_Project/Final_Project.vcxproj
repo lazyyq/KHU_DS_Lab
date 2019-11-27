@@ -198,6 +198,7 @@
     <ClInclude Include="id3\ID3v24Reader.h" />
     <ClInclude Include="id3\ID3v2Reader.h" />
     <ClInclude Include="id3\MetaInfo.h" />
+    <ClInclude Include="Launcher.h" />
     <ClInclude Include="LyricsItem.h" />
     <ClInclude Include="LyricsManager.h" />
     <ClInclude Include="menu\CursorManager.h" />
@@ -231,6 +232,7 @@
     <ClCompile Include="id3\ID3v23Reader.cpp" />
     <ClCompile Include="id3\ID3v24Reader.cpp" />
     <ClCompile Include="id3\ID3v2Reader.cpp" />
+    <ClCompile Include="Launcher.cpp" />
     <ClCompile Include="LyricsItem.cpp" />
     <ClCompile Include="LyricsManager.cpp" />
     <ClCompile Include="main.cpp" />
