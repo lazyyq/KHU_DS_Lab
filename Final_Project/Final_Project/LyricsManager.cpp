@@ -119,6 +119,9 @@ void LyricsManager::ReadLyricsListFromFile() {
 	for (const auto &file : filesystem::directory_iterator(LYRICS_FOLDERNAME)) {
 		ifs.open(file.path());
 		if (ifs && ifs.peek() != EOF) {
+			if (ifs.is_open()) {
+				ifs.close();
+			}
 			getline(ifs, name); // First line : music title
 			getline(ifs, artist); // Second line : artist
 			// Rest of the file is the actual lyrics

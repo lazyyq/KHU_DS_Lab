@@ -166,6 +166,9 @@ bool GeniusLyricsFetcher::ParseLyricsFromHTML(const string &fileName,
 	// HTML 소스가 담긴 파일 열기
 	ifstream ifs(fileName);
 	if (!ifs || ifs.peek() == EOF) {
+		if (ifs.is_open()) {
+			ifs.close();
+		}
 		return false;
 	}
 

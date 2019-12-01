@@ -32,6 +32,9 @@ int LyricsItem::GetLyrics(string &lyrics) {
 	// 가사가 담긴 파일 열기
 	ifstream ifs(mFileName);
 	if (!ifs || ifs.peek() == EOF) {
+		if (ifs.is_open()) {
+			ifs.close();
+		}
 		return 0;
 	}
 
