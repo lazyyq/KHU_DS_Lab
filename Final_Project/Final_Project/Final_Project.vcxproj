@@ -181,8 +181,8 @@
     <ClInclude Include="DoublyLinkedList.h" />
     <ClInclude Include="DoublyNodeType.h" />
     <ClInclude Include="GeniusAccessToken.h" />
-    <ClInclude Include="GeniusLyricsFetcher.h" />
     <ClInclude Include="Genre.h" />
+    <ClInclude Include="http\HttpRequest.h" />
     <ClInclude Include="id3\Encoding.h" />
     <ClInclude Include="id3\ID3DefaultReaderFactory.h" />
     <ClInclude Include="id3\ID3InvalidReader.h" />
@@ -218,8 +218,8 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="ApplicationMenu.cpp" />
     <ClCompile Include="dialog\DialogUtils.cpp" />
-    <ClCompile Include="GeniusLyricsFetcher.cpp" />
     <ClCompile Include="Genre.cpp" />
+    <ClCompile Include="http\HttpRequest.cpp" />
     <ClCompile Include="id3\Encoding.cpp" />
     <ClCompile Include="id3\ID3DefaultReaderFactory.cpp" />
     <ClCompile Include="id3\ID3InvalidReader.cpp" />

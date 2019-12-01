@@ -37,6 +37,12 @@
     <Filter Include="소스 파일\launcher">
       <UniqueIdentifier>{02cb2e5f-59d9-43c7-95e1-b42818e24e53}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\http">
+      <UniqueIdentifier>{18f8c9ce-8c2a-4015-9b04-adface4813cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\http">
+      <UniqueIdentifier>{30782bac-d5df-4a77-8e27-8579351cf80f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlaylistItem.h">
@@ -58,9 +64,6 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="DoublyIterator.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="GeniusLyricsFetcher.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Genre.h">
@@ -153,6 +156,9 @@
     <ClInclude Include="Launcher.h">
       <Filter>헤더 파일\launcher</Filter>
     </ClInclude>
+    <ClInclude Include="http\HttpRequest.h">
+      <Filter>헤더 파일\http</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PlaylistItem.cpp">
@@ -168,9 +174,6 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="ApplicationMenu.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="GeniusLyricsFetcher.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Genre.cpp">
@@ -244,6 +247,9 @@
     </ClCompile>
     <ClCompile Include="Launcher.cpp">
       <Filter>소스 파일\launcher</Filter>
+    </ClCompile>
+    <ClCompile Include="http\HttpRequest.cpp">
+      <Filter>소스 파일\http</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

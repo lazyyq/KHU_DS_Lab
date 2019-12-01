@@ -37,4 +37,8 @@ private:
 	SortedDoublyLinkedList<LyricsItem> mLyricsList; // 가사 리스트
 
 	void ReadLyricsListFromFile(); // 파일로부터 가사를 읽어옴
+
+	// 웹에서 가사 가져오기
+	static int GetLyricsFromGenius(const std::string &name,
+		const std::string &artist, std::string &lyrics);
 };
