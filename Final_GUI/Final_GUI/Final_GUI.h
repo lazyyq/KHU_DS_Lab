@@ -3,8 +3,7 @@
 #include <QtWidgets/QMainWindow>
 #include "ui_Final_GUI.h"
 
-class Final_GUI : public QMainWindow
-{
+class Final_GUI : public QMainWindow {
 	Q_OBJECT
 
 public:

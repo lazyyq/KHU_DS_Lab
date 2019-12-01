@@ -23,6 +23,30 @@
       <Extensions>qrc;*</Extensions>
       <ParseFiles>false</ParseFiles>
     </Filter>
+    <Filter Include="Source Files\utils">
+      <UniqueIdentifier>{291c41e3-2db0-4e81-8e61-7116150023f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\utils">
+      <UniqueIdentifier>{ccad9222-6f4a-4222-844d-814925059d5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\id3">
+      <UniqueIdentifier>{93f2a088-051e-4327-bf24-8bfe57b2c146}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\id3">
+      <UniqueIdentifier>{20047d6e-2e32-4e43-9f61-a6970c9c59e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\dialog">
+      <UniqueIdentifier>{37bec1a6-d543-4f7d-bd7f-4c36d828a545}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\dialog">
+      <UniqueIdentifier>{540ae947-26c2-4c4b-b712-13f69554385b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\http">
+      <UniqueIdentifier>{a1e97eb4-53b8-4825-aa67-0b5feaf3bae6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\http">
+      <UniqueIdentifier>{e2be351a-c0f5-46a2-b8ad-a889211d069f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -31,9 +55,114 @@
     <ClCompile Include="Final_GUI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ClickableLabel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QtAddMusicManually.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QtLoginWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QtMainWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\StringUtils.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\Utils.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="id3\ID3v11ExtReader.cpp">
+      <Filter>Source Files\id3</Filter>
+    </ClCompile>
+    <ClCompile Include="id3\ID3v11Reader.cpp">
+      <Filter>Source Files\id3</Filter>
+    </ClCompile>
+    <ClCompile Include="id3\ID3v22Reader.cpp">
+      <Filter>Source Files\id3</Filter>
+    </ClCompile>
+    <ClCompile Include="id3\ID3v23Reader.cpp">
+      <Filter>Source Files\id3</Filter>
+    </ClCompile>
+    <ClCompile Include="id3\ID3v24Reader.cpp">
+      <Filter>Source Files\id3</Filter>
+    </ClCompile>
+    <ClCompile Include="id3\Encoding.cpp">
+      <Filter>Source Files\id3</Filter>
+    </ClCompile>
+    <ClCompile Include="id3\ID3DefaultReaderFactory.cpp">
+      <Filter>Source Files\id3</Filter>
+    </ClCompile>
+    <ClCompile Include="id3\ID3InvalidReader.cpp">
+      <Filter>Source Files\id3</Filter>
+    </ClCompile>
+    <ClCompile Include="id3\ID3Reader.cpp">
+      <Filter>Source Files\id3</Filter>
+    </ClCompile>
+    <ClCompile Include="id3\ID3ReaderFactory.cpp">
+      <Filter>Source Files\id3</Filter>
+    </ClCompile>
+    <ClCompile Include="id3\ID3Tag.cpp">
+      <Filter>Source Files\id3</Filter>
+    </ClCompile>
+    <ClCompile Include="id3\ID3v2Reader.cpp">
+      <Filter>Source Files\id3</Filter>
+    </ClCompile>
+    <ClCompile Include="dialog\DialogUtils.cpp">
+      <Filter>Source Files\dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="Genre.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LyricsItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LyricsManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MusicItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaylistItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Singer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="http\HttpRequest.cpp">
+      <Filter>Source Files\http</Filter>
+    </ClCompile>
+    <ClCompile Include="QtSearchMusicWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Final_GUI.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ClickableLabel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="QtAddMusicManually.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="QtLoginWindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="QtMainWindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="QtSearchMusicWindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -41,10 +170,129 @@
     <QtUic Include="Final_GUI.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+    <QtUic Include="QtLoginWindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="QtMainWindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="QtAddMusicManually.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="QtSearchMusicWindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="Final_GUI.qrc">
       <Filter>Resource Files</Filter>
     </QtRcc>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="utils\StringUtils.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\Utils.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="id3\ID3v1.h">
+      <Filter>Header Files\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="id3\ID3v2.h">
+      <Filter>Header Files\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="id3\ID3v2Reader.h">
+      <Filter>Header Files\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="id3\ID3v11ExtReader.h">
+      <Filter>Header Files\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="id3\ID3v11Reader.h">
+      <Filter>Header Files\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="id3\ID3v22Reader.h">
+      <Filter>Header Files\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="id3\ID3v23Reader.h">
+      <Filter>Header Files\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="id3\ID3v24Reader.h">
+      <Filter>Header Files\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="id3\MetaInfo.h">
+      <Filter>Header Files\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="id3\Encoding.h">
+      <Filter>Header Files\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="id3\ID3DefaultReaderFactory.h">
+      <Filter>Header Files\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="id3\ID3InvalidReader.h">
+      <Filter>Header Files\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="id3\ID3Reader.h">
+      <Filter>Header Files\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="id3\ID3ReaderFactory.h">
+      <Filter>Header Files\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="id3\ID3Tag.h">
+      <Filter>Header Files\id3</Filter>
+    </ClInclude>
+    <ClInclude Include="dialog\DialogUtils.h">
+      <Filter>Header Files\dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="DoublyLinkedList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DoublyNodeType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Genre.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LyricsItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LyricsManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MusicItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaylistItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Singer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SortedDoublyIterator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SortedDoublyLinkedList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SortedList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DoublyIterator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="http\HttpRequest.h">
+      <Filter>Header Files\http</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Final_Project\Final_Project\GeniusAccessToken.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

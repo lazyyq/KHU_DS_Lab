@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QtAddMusicManually</class>
+ <widget class="QWidget" name="QtAddMusicManually">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>231</width>
+    <height>201</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>QtAddMusicManually</string>
+  </property>
+  <widget class="QLabel" name="label_title">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>20</y>
+     <width>71</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>곡명</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_artist">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>50</y>
+     <width>71</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>아티스트</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_genre">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>80</y>
+     <width>71</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>장르</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_composer">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>110</y>
+     <width>71</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>작곡가</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_title">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>20</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_artist">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>50</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_genre">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>80</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_composer">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>110</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_add">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>150</y>
+     <width>91</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>추가</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_cancel">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>150</y>
+     <width>91</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>취소</string>
+   </property>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>btn_add</sender>
+   <signal>clicked()</signal>
+   <receiver>QtAddMusicManually</receiver>
+   <slot>AddDone()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>72</x>
+     <y>164</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>66</x>
+     <y>140</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_cancel</sender>
+   <signal>clicked()</signal>
+   <receiver>QtAddMusicManually</receiver>
+   <slot>AddCancel()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>147</x>
+     <y>173</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>146</x>
+     <y>192</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_title</sender>
+   <signal>returnPressed()</signal>
+   <receiver>QtAddMusicManually</receiver>
+   <slot>AddDone()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>107</x>
+     <y>24</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>60</x>
+     <y>10</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_artist</sender>
+   <signal>returnPressed()</signal>
+   <receiver>QtAddMusicManually</receiver>
+   <slot>AddDone()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>192</x>
+     <y>60</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>218</x>
+     <y>57</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_genre</sender>
+   <signal>returnPressed()</signal>
+   <receiver>QtAddMusicManually</receiver>
+   <slot>AddDone()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>181</x>
+     <y>84</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>221</x>
+     <y>88</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_composer</sender>
+   <signal>returnPressed()</signal>
+   <receiver>QtAddMusicManually</receiver>
+   <slot>AddDone()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>182</x>
+     <y>117</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>221</x>
+     <y>120</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>AddDone()</slot>
+  <slot>AddCancel()</slot>
+ </slots>
+</ui>

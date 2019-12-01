@@ -67,12 +67,22 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(Qt_INCLUDEPATH_);$(ProjectDir)\include;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(Qt_LIBS_);jsoncpp.lib;libcurl-d.lib;zlibd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(Qt_LIBPATH_);$(ProjectDir)\lib\$(Configuration)\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y "$(ProjectDir)\dll\$(Configuration)\$(PlatformTarget)\*.dll" "$(OutDir)"</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copying required DLLs to output directory...</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -80,25 +90,119 @@
       <DebugInformationFormat />
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(Qt_INCLUDEPATH_);$(ProjectDir)\include;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>false</GenerateDebugInformation>
+      <AdditionalDependencies>$(Qt_LIBS_);jsoncpp.lib;libcurl.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(Qt_LIBPATH_);$(ProjectDir)\lib\$(Configuration)\$(PlatformTarget);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y "$(ProjectDir)\dll\$(Configuration)\$(PlatformTarget)\*.dll" "$(OutDir)"</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copying required DLLs to output directory...</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application.cpp" />
+    <ClCompile Include="ClickableLabel.cpp" />
+    <ClCompile Include="dialog\DialogUtils.cpp" />
     <ClCompile Include="Final_GUI.cpp" />
+    <ClCompile Include="Genre.cpp" />
+    <ClCompile Include="http\HttpRequest.cpp" />
+    <ClCompile Include="id3\Encoding.cpp" />
+    <ClCompile Include="id3\ID3DefaultReaderFactory.cpp" />
+    <ClCompile Include="id3\ID3InvalidReader.cpp" />
+    <ClCompile Include="id3\ID3Reader.cpp" />
+    <ClCompile Include="id3\ID3ReaderFactory.cpp" />
+    <ClCompile Include="id3\ID3Tag.cpp" />
+    <ClCompile Include="id3\ID3v11ExtReader.cpp" />
+    <ClCompile Include="id3\ID3v11Reader.cpp" />
+    <ClCompile Include="id3\ID3v22Reader.cpp" />
+    <ClCompile Include="id3\ID3v23Reader.cpp" />
+    <ClCompile Include="id3\ID3v24Reader.cpp" />
+    <ClCompile Include="id3\ID3v2Reader.cpp" />
+    <ClCompile Include="LyricsItem.cpp" />
+    <ClCompile Include="LyricsManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MusicItem.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlaylistItem.cpp" />
+    <ClCompile Include="QtAddMusicManually.cpp" />
+    <ClCompile Include="QtLoginWindow.cpp" />
+    <ClCompile Include="QtMainWindow.cpp" />
+    <ClCompile Include="QtSearchMusicWindow.cpp" />
+    <ClCompile Include="SimpleItem.cpp" />
+    <ClCompile Include="Singer.cpp" />
+    <ClCompile Include="utils\StringUtils.cpp" />
+    <ClCompile Include="utils\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Final_GUI.h" />
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="Final_GUI.ui" />
+    <QtUic Include="QtAddMusicManually.ui" />
+    <QtUic Include="QtLoginWindow.ui" />
+    <QtUic Include="QtMainWindow.ui" />
+    <QtUic Include="QtSearchMusicWindow.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="Final_GUI.qrc" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ClickableLabel.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="QtAddMusicManually.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="QtLoginWindow.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="QtMainWindow.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Final_Project\Final_Project\GeniusAccessToken.h" />
+    <ClInclude Include="Application.h" />
+    <ClInclude Include="dialog\DialogUtils.h" />
+    <ClInclude Include="DoublyIterator.h" />
+    <ClInclude Include="DoublyLinkedList.h" />
+    <ClInclude Include="DoublyNodeType.h" />
+    <ClInclude Include="Genre.h" />
+    <ClInclude Include="http\HttpRequest.h" />
+    <ClInclude Include="id3\Encoding.h" />
+    <ClInclude Include="id3\ID3DefaultReaderFactory.h" />
+    <ClInclude Include="id3\ID3InvalidReader.h" />
+    <ClInclude Include="id3\ID3Reader.h" />
+    <ClInclude Include="id3\ID3ReaderFactory.h" />
+    <ClInclude Include="id3\ID3Tag.h" />
+    <ClInclude Include="id3\ID3v1.h" />
+    <ClInclude Include="id3\ID3v11ExtReader.h" />
+    <ClInclude Include="id3\ID3v11Reader.h" />
+    <ClInclude Include="id3\ID3v2.h" />
+    <ClInclude Include="id3\ID3v22Reader.h" />
+    <ClInclude Include="id3\ID3v23Reader.h" />
+    <ClInclude Include="id3\ID3v24Reader.h" />
+    <ClInclude Include="id3\ID3v2Reader.h" />
+    <ClInclude Include="id3\MetaInfo.h" />
+    <ClInclude Include="LyricsItem.h" />
+    <ClInclude Include="LyricsManager.h" />
+    <ClInclude Include="MusicItem.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="PlaylistItem.h" />
+    <QtMoc Include="QtSearchMusicWindow.h" />
+    <ClInclude Include="SimpleItem.h" />
+    <ClInclude Include="Singer.h" />
+    <ClInclude Include="SortedDoublyIterator.h" />
+    <ClInclude Include="SortedDoublyLinkedList.h" />
+    <ClInclude Include="SortedList.h" />
+    <ClInclude Include="utils\StringUtils.h" />
+    <ClInclude Include="utils\Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

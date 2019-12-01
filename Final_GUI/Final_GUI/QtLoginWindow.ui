@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QtLoginWindow</class>
+ <widget class="QMainWindow" name="QtLoginWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>387</width>
+    <height>338</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>QtLoginWindow</string>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>false</bool>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>30</y>
+      <width>281</width>
+      <height>191</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>로그인</string>
+    </property>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>40</y>
+       <width>56</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>ID</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>70</y>
+       <width>56</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Password</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_login">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>120</y>
+       <width>111</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>로그인</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btn_register">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>150</y>
+       <width>111</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>회원가입</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_ID">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>40</y>
+       <width>111</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="echoMode">
+      <enum>QLineEdit::Normal</enum>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_PW">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>70</y>
+       <width>111</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="echoMode">
+      <enum>QLineEdit::Password</enum>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="btn_exit">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>240</y>
+      <width>111</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>종료</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>lineEdit_ID</tabstop>
+  <tabstop>lineEdit_PW</tabstop>
+  <tabstop>btn_login</tabstop>
+  <tabstop>btn_register</tabstop>
+  <tabstop>btn_exit</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>btn_login</sender>
+   <signal>clicked()</signal>
+   <receiver>QtLoginWindow</receiver>
+   <slot>LoginClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>253</x>
+     <y>165</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>366</x>
+     <y>175</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_register</sender>
+   <signal>clicked()</signal>
+   <receiver>QtLoginWindow</receiver>
+   <slot>RegisterClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>254</x>
+     <y>190</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>367</x>
+     <y>224</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_exit</sender>
+   <signal>clicked()</signal>
+   <receiver>QtLoginWindow</receiver>
+   <slot>ExitClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>252</x>
+     <y>259</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>275</x>
+     <y>310</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_ID</sender>
+   <signal>returnPressed()</signal>
+   <receiver>QtLoginWindow</receiver>
+   <slot>LoginClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>243</x>
+     <y>80</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>359</x>
+     <y>78</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_PW</sender>
+   <signal>returnPressed()</signal>
+   <receiver>QtLoginWindow</receiver>
+   <slot>LoginClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>243</x>
+     <y>110</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>355</x>
+     <y>116</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>LoginClicked()</slot>
+  <slot>RegisterClicked()</slot>
+  <slot>ExitClicked()</slot>
+ </slots>
+</ui>
