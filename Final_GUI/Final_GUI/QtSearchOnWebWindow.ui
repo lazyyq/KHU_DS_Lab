@@ -14,17 +14,17 @@
    <string>QtSearchOnWebWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QLineEdit" name="lineEdit_title">
+   <widget class="QLineEdit" name="lineEdit_searchQuery">
     <property name="geometry">
      <rect>
       <x>90</x>
       <y>20</y>
-      <width>151</width>
+      <width>301</width>
       <height>31</height>
      </rect>
     </property>
     <property name="placeholderText">
-     <string>Title</string>
+     <string>Search query (title, artist, lyrics, etc...)</string>
     </property>
    </widget>
    <widget class="QTableWidget" name="table">
@@ -79,22 +79,6 @@
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_artist">
-    <property name="geometry">
-     <rect>
-      <x>250</x>
-      <y>20</y>
-      <width>151</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="placeholderText">
-     <string>Artist</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="btn_search">
     <property name="geometry">
      <rect>
@@ -112,8 +96,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
-  <tabstop>lineEdit_title</tabstop>
-  <tabstop>lineEdit_artist</tabstop>
+  <tabstop>lineEdit_searchQuery</tabstop>
   <tabstop>btn_search</tabstop>
   <tabstop>table</tabstop>
  </tabstops>
@@ -136,7 +119,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>lineEdit_title</sender>
+   <sender>lineEdit_searchQuery</sender>
    <signal>returnPressed()</signal>
    <receiver>QtSearchOnWebWindow</receiver>
    <slot>SearchClicked()</slot>
@@ -148,22 +131,6 @@
     <hint type="destinationlabel">
      <x>45</x>
      <y>35</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>lineEdit_artist</sender>
-   <signal>returnPressed()</signal>
-   <receiver>QtSearchOnWebWindow</receiver>
-   <slot>SearchClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>297</x>
-     <y>35</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>278</x>
-     <y>10</y>
     </hint>
    </hints>
   </connection>

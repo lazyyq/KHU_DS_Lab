@@ -31,8 +31,8 @@ QtSearchOnWebWindow::~QtSearchOnWebWindow() {}
 
 void QtSearchOnWebWindow::SearchClicked() {
 	// Check if input is empty
-	if (ui.lineEdit_title->text().length() == 0) {
-		QMessageBox::critical(this, "Error", "Title field cannot be empty!");
+	if (ui.lineEdit_searchQuery->text().length() == 0) {
+		QMessageBox::critical(this, "Error", "Search query cannot be empty!");
 		return;
 	}
 
@@ -41,16 +41,14 @@ void QtSearchOnWebWindow::SearchClicked() {
 	ui.table->setRowCount(0);
 
 	// Get input info
-	const QString qTitle = ui.lineEdit_title->text(),
-		qArtist = ui.lineEdit_artist->text();
-	const std::string title = qTitle.toLocal8Bit().toStdString(),
-		artist = qArtist.toLocal8Bit().toStdString();
+	const QString qQuery = ui.lineEdit_searchQuery->text();
+	const std::string query = qQuery.toLocal8Bit().toStdString();
 
 	// Send request to genius
 	HttpRequest req;
 	const std::string searchApi = "https://api.genius.com/search";
 	req.SetUrl(searchApi);
-	req.AddParam("q", artist + " " + title);
+	req.AddParam("q", query);
 	req.AddParam("access_token", GENIUS_ACCESS_TOKEN);
 
 	std::string result;
