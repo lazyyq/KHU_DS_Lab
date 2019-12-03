@@ -136,6 +136,7 @@
     <ClCompile Include="QtLoginWindow.cpp" />
     <ClCompile Include="QtMainWindow.cpp" />
     <ClCompile Include="QtSearchMusicWindow.cpp" />
+    <ClCompile Include="QtSearchOnWebWindow.cpp" />
     <ClCompile Include="SimpleItem.cpp" />
     <ClCompile Include="Singer.cpp" />
     <ClCompile Include="utils\StringUtils.cpp" />
@@ -150,6 +151,7 @@
     <QtUic Include="QtLoginWindow.ui" />
     <QtUic Include="QtMainWindow.ui" />
     <QtUic Include="QtSearchMusicWindow.ui" />
+    <QtUic Include="QtSearchOnWebWindow.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="Final_GUI.qrc" />
@@ -196,6 +198,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlaylistItem.h" />
     <QtMoc Include="QtSearchMusicWindow.h" />
+    <QtMoc Include="QtSearchOnWebWindow.h" />
     <ClInclude Include="SimpleItem.h" />
     <ClInclude Include="Singer.h" />
     <ClInclude Include="SortedDoublyIterator.h" />

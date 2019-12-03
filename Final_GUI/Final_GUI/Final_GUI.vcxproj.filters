@@ -145,6 +145,9 @@
     <ClCompile Include="QtSearchMusicWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="QtSearchOnWebWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Final_GUI.h">
@@ -165,6 +168,9 @@
     <QtMoc Include="QtSearchMusicWindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="QtSearchOnWebWindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="Final_GUI.ui">
@@ -180,6 +186,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="QtSearchMusicWindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="QtSearchOnWebWindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

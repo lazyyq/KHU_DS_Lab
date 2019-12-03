@@ -2,6 +2,7 @@
 #include "QtLoginWindow.h"
 #include "QtAddMusicManually.h"
 #include "QtSearchMusicWindow.h"
+#include "QtSearchOnWebWindow.h"
 #include <QCloseEvent>
 #include <QMenu>
 #include <QWidgetAction>
@@ -416,6 +417,8 @@ void QtMainWindow::AddFromFolderClicked() {
 }
 
 void QtMainWindow::SearchOnWebClicked() {
+	QtSearchOnWebWindow *window = new QtSearchOnWebWindow(this);
+	window->show();
 
 }
 
