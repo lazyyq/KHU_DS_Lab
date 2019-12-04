@@ -3,10 +3,12 @@
 #include "QtAddMusicManually.h"
 #include "QtSearchMusicWindow.h"
 #include "QtSearchOnWebWindow.h"
+#include "QtSelectPlaylistWindow.h"
 #include <QCloseEvent>
 #include <QMenu>
 #include <QWidgetAction>
 #include <QString>
+#include <QMessageBox>
 
 #include <string>
 
@@ -14,6 +16,7 @@
 #include "PlaylistItem.h"
 #include "DoublyIterator.h"
 #include "SortedDoublyIterator.h"
+#include "utils/StringUtils.h"
 
 #define WINDOW_SIZE_LYRICS_SHOWN	1591, 627
 #define WINDOW_SIZE_LYRICS_HIDDEN	1220, 627
@@ -31,9 +34,9 @@
 using namespace std;
 
 QtMainWindow::QtMainWindow(QWidget *parent, const string &id,
-	const bool isAdmin)
-	: QMainWindow(parent), mId(id), mIsAdmin(isAdmin), isLyricsShown(false),
-	mCurPlaylistIter(nullptr) {
+	const bool isAdmin, const bool isPlaylistLocked)
+	: QMainWindow(parent), mId(id), mIsAdmin(isAdmin), mIsPlaylistLocked(isPlaylistLocked),
+	isLyricsShown(false), mCurPlaylistIter(nullptr) {
 	ui.setupUi(this);
 	// Disable resizing
 	this->statusBar()->setSizeGripEnabled(false);
@@ -102,6 +105,14 @@ QtMainWindow::QtMainWindow(QWidget *parent, const string &id,
 		ui.btn_playlist_play->setMenu(menu);
 	}
 
+	// Set playlist lock button
+	connect(ui.btn_lockPlaylist, SIGNAL(clicked()), this, SLOT(LockPlaylistClicked()));
+	if (mIsPlaylistLocked) {
+		ui.btn_lockPlaylist->setPixmap(QPixmap("images/baseline_lock_black_24dp.png"));
+	} else {
+		ui.btn_lockPlaylist->setPixmap(QPixmap("images/baseline_lock_open_black_24dp.png"));
+	}
+
 	// Display login info
 	if (mIsAdmin) {
 		ui.label_loginInfo->setText(QString::fromLocal8Bit(
@@ -112,7 +123,11 @@ QtMainWindow::QtMainWindow(QWidget *parent, const string &id,
 	}
 
 	// Run app
-	mApp.Run(mId, mIsAdmin);
+	mApp.Run(mId, mIsAdmin, mIsPlaylistLocked);
+
+	// Set playlist
+	mPlaylist = &mApp.mPlayer->mPlaylist;
+	mMyPlaylist = true;
 
 	// Display music master list
 	RefreshMusicList();
@@ -148,6 +163,21 @@ void QtMainWindow::AddMusicToList(const QString &qTitle, const QString &qArtist,
 	qTableMusicList->setItem(mMusicListRowCount, MUSIC_LIST_COL_GENRE, new QTableWidgetItem(genre));
 	qTableMusicList->setItem(mMusicListRowCount, MUSIC_LIST_COL_COMPOSER, new QTableWidgetItem(composer));
 	++mMusicListRowCount;*/
+}
+
+void QtMainWindow::SetPlaylist(const std::string &username) {
+	// Load playlist
+	ifstream ifs("data/user/" + username + "/list_playlist.json");
+	if (!ifs) {
+		QMessageBox::critical(this, "Error", "Error while loading playlist!");
+	}
+	Json::Value json;
+	ifs >> json;
+	ifs.close();
+	mPlaylist = new SortedDoublyLinkedList<PlaylistItem>;
+	json >> *mPlaylist;
+
+	SetPlaylistState(false);
 }
 
 void QtMainWindow::closeEvent(QCloseEvent *event) {
@@ -199,7 +229,7 @@ void QtMainWindow::RefreshPlaylist() {
 	int rowCount = 0;
 
 	// Add items
-	SortedDoublyIterator<PlaylistItem> iter(mApp.mPlayer->mPlaylist);
+	SortedDoublyIterator<PlaylistItem> iter(*mPlaylist);
 	for (PlaylistItem item = iter.Next(); iter.NextNotNull(); item = iter.Next()) {
 		qTablePlaylist->setRowCount(rowCount + 1);
 		// Get music with playlistitem info
@@ -273,9 +303,9 @@ void QtMainWindow::Play(PlaylistItem &item, const int index) {
 	ui.btn_saveLyrics->setEnabled(false);
 
 	// Update original playlist
-	mApp.mPlayer->mPlaylist.Get(item);
+	mPlaylist->Get(item);
 	item.IncreasePlayedTimes();
-	mApp.mPlayer->mPlaylist.Replace(item);
+	mPlaylist->Replace(item);
 	RefreshPlaylist();
 }
 
@@ -319,6 +349,36 @@ void QtMainWindow::PlayNext() {
 	Play(item, mCurPlaylistIndex);
 }
 
+void QtMainWindow::SetPlaylistState(const bool isOurs) {
+	// Empty current playlist first
+	mCurPlaylist.MakeEmpty();
+	RefreshCurPlaylist();
+	if (isOurs) {
+		mMyPlaylist = true;
+		if (mPlaylist) {
+			delete mPlaylist;
+		}
+		mPlaylist = &mApp.mPlayer->mPlaylist;
+		// Playlist lock button
+		ui.btn_lockPlaylist->setEnabled(true);
+		ui.btn_lockPlaylist->setVisible(true);
+		// Disable playlist remove button
+		ui.btn_playlist_remove->setEnabled(true);
+		// Update explore playlist button
+		ui.btn_playlist_explore->setText("Explore");
+	} else {
+		mMyPlaylist = false;
+		// Playlist lock button
+		ui.btn_lockPlaylist->setEnabled(false);
+		ui.btn_lockPlaylist->setVisible(false);
+		// Disable playlist remove button
+		ui.btn_playlist_remove->setEnabled(false);
+		// Update explore playlist button
+		ui.btn_playlist_explore->setText("Back to mine");
+	}
+	RefreshPlaylist();
+}
+
 void QtMainWindow::LogoutClicked() {
 	mQuitProgram = false;
 	this->close();
@@ -329,7 +389,14 @@ void QtMainWindow::AddMusicPopup() {
 	a->show();
 }
 
+// Add selected music in music list to playlist.
 void QtMainWindow::MusicCellDoubleClicked(int row, int col) {
+	// Perform this operation only if this is our playlist.
+	// We're not supposed to modify other's, aren't we?
+	if (!mMyPlaylist) {
+		return;
+	}
+
 	// Get id of music in chosen row
 	const QString qId = qTableMusicList->item(row, MUSIC_LIST_COL_ID)->text();
 	const string id = qId.toLocal8Bit().toStdString();
@@ -352,7 +419,7 @@ void QtMainWindow::MusicCellDoubleClicked(int row, int col) {
 void QtMainWindow::PlaylistCellDoubleClicked(int row, int col) {
 	//// row > 0
 	//// Get selected playlist item from playlist
-	//SortedDoublyIterator<PlaylistItem> iter(mApp.mPlayer->mPlaylist);
+	//SortedDoublyIterator<PlaylistItem> iter(*mPlaylist);
 	//PlaylistItem item = iter.Next();
 	//for (int i = 0; i < row; ++i) {
 	//	item = iter.Next();
@@ -470,10 +537,10 @@ void QtMainWindow::RemoveFromMusicListClicked() {
 			}
 		}
 
-		SortedDoublyIterator<PlaylistItem> iter(mApp.mPlayer->mPlaylist);
+		SortedDoublyIterator<PlaylistItem> iter(*mPlaylist);
 		for (PlaylistItem item = iter.Next(); iter.NextNotNull(); item = iter.Next()) {
 			if (item.GetId().compare(music.GetId()) == 0) {
-				mApp.mPlayer->mPlaylist.Delete(item);
+				mPlaylist->Delete(item);
 				mCurPlaylist.Delete(item);
 				iter.ResetPointer();
 			}
@@ -492,8 +559,8 @@ void QtMainWindow::RemoveFromPlaylistClicked() {
 		// Delete items in selected rows
 		int row = selection.at(i).row();
 		PlaylistItem item;
-		mApp.mPlayer->mPlaylist.GetItemAt(item, row);
-		mApp.mPlayer->mPlaylist.Delete(item);
+		mPlaylist->GetItemAt(item, row);
+		mPlaylist->Delete(item);
 		mCurPlaylist.DeleteAll(item);
 	}
 	RefreshPlaylist();
@@ -501,7 +568,7 @@ void QtMainWindow::RemoveFromPlaylistClicked() {
 }
 
 void QtMainWindow::PlayFromStartClicked() {
-	if (mApp.mPlayer->mPlaylist.IsEmpty()) {
+	if (mPlaylist->IsEmpty()) {
 		return;
 	}
 
@@ -509,7 +576,7 @@ void QtMainWindow::PlayFromStartClicked() {
 
 	// Add playlist items to current playlist in order
 	{
-		SortedDoublyIterator<PlaylistItem> iter(mApp.mPlayer->mPlaylist);
+		SortedDoublyIterator<PlaylistItem> iter(*mPlaylist);
 		for (PlaylistItem item = iter.Next(); iter.NextNotNull(); item = iter.Next()) {
 			mCurPlaylist.Add(item);
 		}
@@ -527,7 +594,7 @@ void QtMainWindow::PlayFromStartClicked() {
 }
 
 void QtMainWindow::PlayInFreqOrderClicked() {
-	if (mApp.mPlayer->mPlaylist.IsEmpty()) {
+	if (mPlaylist->IsEmpty()) {
 		return;
 	}
 
@@ -535,7 +602,7 @@ void QtMainWindow::PlayInFreqOrderClicked() {
 
 	// Get most played count
 	int played = 0;
-	SortedDoublyIterator<PlaylistItem> iter(mApp.mPlayer->mPlaylist);
+	SortedDoublyIterator<PlaylistItem> iter(*mPlaylist);
 	for (PlaylistItem item = iter.Next(); iter.NextNotNull(); item = iter.Next()) {
 		if (played < item.GetPlayedTimes()) {
 			played = item.GetPlayedTimes();
@@ -566,14 +633,14 @@ void QtMainWindow::PlayInFreqOrderClicked() {
 }
 
 void QtMainWindow::PlayShuffleClicked() {
-	if (mApp.mPlayer->mPlaylist.IsEmpty()) {
+	if (mPlaylist->IsEmpty()) {
 		return;
 	}
 
 	mCurPlaylist.MakeEmpty();
 
 	// Add items from playlist to current playlist
-	const int totalItems = mApp.mPlayer->mPlaylist.GetLength();
+	const int totalItems = mPlaylist->GetLength();
 	SortedDoublyLinkedList<PlaylistItem> temp(mApp.mPlayer->mPlaylist);
 	srand(time(0));
 	for (int i = 0; i < totalItems; ++i) {
@@ -595,7 +662,6 @@ void QtMainWindow::PlayShuffleClicked() {
 	RefreshCurPlaylist();
 }
 
-#include "utils/StringUtils.h"
 void QtMainWindow::SearchForLyricsClicked() {
 	// Get currently playing music
 	PlaylistItem item;
@@ -634,4 +700,26 @@ void QtMainWindow::SaveLyricsClicked() {
 	mLyricsManager.SaveLyrics(music, mCurLyrics);
 	// Disable save button
 	ui.btn_saveLyrics->setEnabled(false);
+}
+
+void QtMainWindow::LockPlaylistClicked() {
+	// Set icon & update state
+	if (mIsPlaylistLocked) {
+		ui.btn_lockPlaylist->setPixmap(QPixmap("images/baseline_lock_open_black_24dp.png"));
+		mIsPlaylistLocked = false;
+		mApp.SetPlaylistLocked(false);
+	} else {
+		ui.btn_lockPlaylist->setPixmap(QPixmap("images/baseline_lock_black_24dp.png"));
+		mIsPlaylistLocked = true;
+		mApp.SetPlaylistLocked(true);
+	}
+}
+
+void QtMainWindow::ExplorePlaylistClicked() {
+	if (mMyPlaylist) {
+		QtSelectPlaylistWindow *window = new QtSelectPlaylistWindow(this, mId, mPlaylist);
+		window->show();
+	} else {
+		SetPlaylistState(true);
+	}
 }

@@ -14,11 +14,13 @@ class QtMainWindow : public QMainWindow {
 
 public:
 	QtMainWindow(QWidget *parent, const std::string &id,
-		const bool isAdmin);
+		const bool isAdmin, const bool isPlaylistLocked);
 	~QtMainWindow();
 
 	void AddMusicToList(const QString &qTitle, const QString &qArtist,
 		const QString &qGenre, const QString &qComposer);
+
+	void SetPlaylist(const std::string &username);
 
 signals:
 	void closed();
@@ -37,6 +39,10 @@ private:
 	// Current playlist => Items that are currently on play queue.
 	DoublyLinkedList<PlaylistItem> mCurPlaylist;
 
+	// Playlist. Might be current user's, or other user's playlist if we're
+	// exploring other users' playlists.
+	SortedDoublyLinkedList<PlaylistItem> *mPlaylist;
+
 	std::string mId;
 	bool mIsAdmin = false;
 
@@ -48,9 +54,13 @@ private:
 	// Iterator for current playlist. Used to track which music we're playing right now.
 	DoublyIterator<PlaylistItem> *mCurPlaylistIter;
 
+	bool mIsPlaylistLocked; // Is our playlist invisible to others?
 	bool isLyricsShown;
 
 	std::string mCurLyrics; // Lyrics fetched from web.
+
+	// Are we listening to our own playlist, or is it someone else's?
+	bool mMyPlaylist = true;
 
 	void closeEvent(QCloseEvent *event);
 
@@ -74,6 +84,11 @@ private:
 
 	// Play next music
 	void PlayNext();
+
+	// Set if we're using our playlist, or other user's playlist.
+	// true for ours, false if not.
+	// If false, disable certain functionalities that may modify the playlist.
+	void SetPlaylistState(const bool isOurs);
 
 private slots:
 	void LogoutClicked();
@@ -113,4 +128,10 @@ private slots:
 	void SearchForLyricsClicked();
 	// Save fetched lyrics to file
 	void SaveLyricsClicked();
+
+	// Lock/unlock user playlist
+	void LockPlaylistClicked();
+
+	// Explore playlist / Get back to our playlist
+	void ExplorePlaylistClicked();
 };

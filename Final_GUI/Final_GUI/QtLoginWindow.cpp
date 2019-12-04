@@ -12,6 +12,7 @@
 #define SETTINGS_FILENAME		"data/settings.json"
 #define KEY_IS_FIRST_LAUNCH		"IsFirstLaunch"
 #define KEY_IS_ADMIN			"IsAdmin"
+#define KEY_IS_PLAYLIST_LOCKED	"IsPlaylistLocked"
 #define KEY_USER_ID				"ID"
 #define KEY_USER_PW				"PW"
 
@@ -58,8 +59,8 @@ bool QtLoginWindow::IsFirstLaunch() const {
 }
 
 // Check user id and password
-bool QtLoginWindow::Authorize(const string &inputId,
-	const string &inputPw, bool &isAdmin) const {
+bool QtLoginWindow::Authorize(const string &inputId, const string &inputPw,
+	bool &isAdmin, bool &isPlaylistLocked) const {
 	// Get user account info 
 	const string path = "data/user/" + inputId + "/accountinfo.json";
 	ifstream ifs(path);
@@ -78,6 +79,7 @@ bool QtLoginWindow::Authorize(const string &inputId,
 	// Compare id & password
 	if (inputId.compare(id) == 0 && inputPw.compare(pw) == 0) {
 		isAdmin = value.get(KEY_IS_ADMIN, false).asBool();
+		isPlaylistLocked = value.get(KEY_IS_PLAYLIST_LOCKED, true).asBool();
 		return true;
 	}
 	return false;
@@ -97,12 +99,12 @@ void QtLoginWindow::LoginClicked() {
 
 	QString qid = ui.lineEdit_ID->text(), qpw = ui.lineEdit_PW->text();
 	string id = qid.toLocal8Bit().toStdString(), pw = qpw.toLocal8Bit().toStdString();
-	bool isAdmin = false;
+	bool isAdmin = false, isPlaylistLocked = true;
 	// Check if id and pw match
-	if (Authorize(id, pw, isAdmin)) {
+	if (Authorize(id, pw, isAdmin, isPlaylistLocked)) {
 		// Start program
 		mQuitProgram = false;
-		mainWindow = new QtMainWindow(this, id, isAdmin);
+		mainWindow = new QtMainWindow(this, id, isAdmin, isPlaylistLocked);
 		mainWindow->show();
 		this->close();
 	} else {

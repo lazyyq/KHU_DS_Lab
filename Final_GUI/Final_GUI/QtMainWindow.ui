@@ -482,6 +482,35 @@ p, li { white-space: pre-wrap; }
      <bool>true</bool>
     </property>
    </widget>
+   <widget class="ClickableLabel" name="btn_lockPlaylist">
+    <property name="geometry">
+     <rect>
+      <x>810</x>
+      <y>35</y>
+      <width>21</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="pixmap">
+     <pixmap>images/baseline_lock_black_24dp.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_playlist_explore">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>560</y>
+      <width>141</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Explore</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
@@ -671,6 +700,22 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btn_playlist_explore</sender>
+   <signal>clicked()</signal>
+   <receiver>QtMainWindow</receiver>
+   <slot>ExplorePlaylistClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>935</x>
+     <y>583</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>935</x>
+     <y>598</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>Logout()</slot>
@@ -686,5 +731,6 @@ p, li { white-space: pre-wrap; }
   <slot>SaveLyricsClicked()</slot>
   <slot>RemoveFromPlaylistClicked()</slot>
   <slot>RemoveFromMusicListClicked()</slot>
+  <slot>ExplorePlaylistClicked()</slot>
  </slots>
 </ui>

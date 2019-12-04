@@ -36,8 +36,9 @@ public:
 	*	@post	program is finished.
 	*	@param	_id			User ID
 	*			_isAdmin	Is this user an admin?
+	*			_isPlaylistLocked	Is this user's playlist invisible to others?
 	*/
-	void Run(const std::string &_id, const bool _isAdmin);
+	void Run(const std::string &_id, const bool _isAdmin, const bool _isPlaylistLocked);
 
 	/**
 	*	@brief	음악리스트, 가수리스트, 플레이리스트 등을 파일로 저장함.
@@ -185,10 +186,20 @@ public:
 	*/
 	int SaveGenreListToFile();
 
+	// 유저의 플레이리스트가 잠겨있는지 여부를 저장함.
+	void SavePlaylistLockState();
+
+	// 유저의 플레이리스트가 잠겨있는지 여부를 반환함.
+	bool IsPlaylistLocked() const;
+
+	// 유저의 플레이리스트 잠김 여부를 설정함.
+	void SetPlaylistLocked(const bool locked);
+
 
 private:
 	std::string mId; // User id
 	bool mIsAdmin = false; // Is this user an admin?
+	bool mIsPlaylistLocked = true; // Is this user's playlist invisible to others?
 	ifstream mInFile;					// input file descriptor
 	ofstream mOutFile;					// output file descriptor
 	SortedList<MusicItem> mMasterList;	// music item list

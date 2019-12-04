@@ -42,10 +42,11 @@ void Application::InitDirectories() {
 }
 
 // Program driver.
-void Application::Run(const string &_id, const bool _isAdmin) {
+void Application::Run(const string &_id, const bool _isAdmin, const bool _isPlaylistLocked) {
 	setlocale(LC_ALL, "");
 	mId = _id;
 	mIsAdmin = _isAdmin;
+	mIsPlaylistLocked = _isPlaylistLocked;
 	InitDirectories();
 	mPlayer = new Player(mId, mMasterList);
 }
@@ -59,6 +60,7 @@ void Application::Save() {
 		SaveGenreListToFile();
 	}
 	mPlayer->SavePlaylistToFile();
+	SavePlaylistLockState();
 }
 
 // Add new record into list.
@@ -526,4 +528,32 @@ int Application::SaveGenreListToFile() {
 	mOutFile.close();
 
 	return 1;
+}
+
+// 플레이리스트 잠김 여부를 유저 정보에 저장
+void Application::SavePlaylistLockState() {
+	const string settingsFile = "data/user/" + mId + "/accountinfo.json";
+	// Read from settings file
+	ifstream ifs(settingsFile);
+	Json::Value json;
+	if (ifs) {
+		ifs >> json;
+		ifs.close();
+	}
+
+	// Write value to json
+	json["IsPlaylistLocked"] = mIsPlaylistLocked;
+
+	// Write back to settings file
+	ofstream ofs(settingsFile);
+	ofs << json;
+	ofs.close();
+}
+
+bool Application::IsPlaylistLocked() const {
+	return mIsPlaylistLocked;
+}
+
+void Application::SetPlaylistLocked(const bool locked) {
+	mIsPlaylistLocked = locked;
 }

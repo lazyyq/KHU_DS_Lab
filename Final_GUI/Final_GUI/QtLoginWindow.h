@@ -24,8 +24,8 @@ private:
 	bool IsFirstLaunch() const;
 
 	// 주어진 아이디와 비번으로 사용자가 존재하는지, 관리자인지 확인
-	bool Authorize(const std::string &inputId,
-		const std::string &inputPw, bool &isAdmin) const;
+	bool Authorize(const std::string &inputId, const std::string &inputPw,
+		bool &isAdmin, bool &isPlaylistLocked) const;
 
 
 private slots:
