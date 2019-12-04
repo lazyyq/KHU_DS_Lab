@@ -78,7 +78,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Now logged in as:</string>
+     <string>Logged in as:</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -440,7 +440,7 @@ p, li { white-space: pre-wrap; }
      </font>
     </property>
     <property name="text">
-     <string>▶ Currently playing</string>
+     <string>▶ Now playing</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_4">

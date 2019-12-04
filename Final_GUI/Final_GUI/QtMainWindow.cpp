@@ -105,10 +105,10 @@ QtMainWindow::QtMainWindow(QWidget *parent, const string &id,
 	// Display login info
 	if (mIsAdmin) {
 		ui.label_loginInfo->setText(QString::fromLocal8Bit(
-			std::string("Now logged in as: " + mId + " (ADMIN)").c_str()));
+			std::string("Logged in as: " + mId + " (ADMIN)").c_str()));
 	} else {
 		ui.label_loginInfo->setText(QString::fromLocal8Bit(
-			std::string("Now logged in as: " + mId).c_str()));
+			std::string("Logged in as: " + mId).c_str()));
 	}
 
 	// Run app
