@@ -100,15 +100,19 @@ QtMainWindow::QtMainWindow(QWidget *parent, const string &id,
 		QAction *act0 = new QAction("Play from start", this);
 		QAction *act1 = new QAction("Play in frequency order", this);
 		QAction *act2 = new QAction("Shuffle", this);
+		QAction *act3 = new QAction("Recommend", this);
 		act0->setObjectName("act0");
 		act1->setObjectName("act1");
 		act2->setObjectName("act2");
+		act3->setObjectName("act3");
 		connect(act0, SIGNAL(triggered()), this, SLOT(PlayFromStartClicked()));
 		connect(act1, SIGNAL(triggered()), this, SLOT(PlayInFreqOrderClicked()));
 		connect(act2, SIGNAL(triggered()), this, SLOT(PlayShuffleClicked()));
+		connect(act3, SIGNAL(triggered()), this, SLOT(PlayRecommendClicked()));
 		menu->addAction(act0);
 		menu->addAction(act1);
 		menu->addAction(act2);
+		menu->addAction(act3);
 		ui.btn_playlist_play->setMenu(menu);
 	}
 
@@ -684,6 +688,110 @@ void QtMainWindow::PlayShuffleClicked() {
 		mCurPlaylist.Add(item);
 		temp.Delete(item);
 	}
+	// Play first item, if exist
+	{
+		if (!mCurPlaylistIter) {
+			mCurPlaylistIter = new DoublyIterator<PlaylistItem>(mCurPlaylist);
+		}
+		mCurPlaylistIter->ResetPointer();
+		PlaylistItem firstItem = mCurPlaylistIter->Next();
+		Play(firstItem, 0);
+	}
+	RefreshCurPlaylist();
+}
+
+void QtMainWindow::PlayRecommendClicked() {
+	// Play recommended songs first.
+	// From top most played songs (upper 20%) in playlist,
+	// get the songs' artists and genres and put them in list first.
+
+	const int count = mPlaylist->GetLength() / 5;
+
+	if (mPlaylist->IsEmpty()) {
+		return;
+	}
+
+	mCurPlaylist.MakeEmpty();
+
+	// Order songs in most frequently played order first
+	DoublyLinkedList<PlaylistItem> freqOrder;
+	{
+		// Get most played count
+		SortedDoublyIterator<PlaylistItem> iter(*mPlaylist);
+		int played = 0;
+		for (PlaylistItem item = iter.Next(); iter.NextNotNull(); item = iter.Next()) {
+			if (played < item.GetPlayedTimes()) {
+				played = item.GetPlayedTimes();
+			}
+		}
+
+		// Add to playlist
+		// Iterate through list and get items with current most played count
+		while (played >= 0) {
+			iter.ResetPointer();
+			for (PlaylistItem item = iter.Next(); iter.NextNotNull(); item = iter.Next()) {
+				if (item.GetPlayedTimes() == played) {
+					freqOrder.Add(item);
+				}
+			}
+			--played;
+		}
+	}
+
+	// Add first few items in freq order list to current playlist
+	{
+		DoublyIterator<PlaylistItem> iter(freqOrder);
+		PlaylistItem item = iter.Next();
+		for (int i = 0; i < count; ++i) {
+			mCurPlaylist.Add(item);
+			item = iter.Next();
+		}
+	}
+
+	// Begin adding to current playlist
+	{
+		// From most frequently played list, add items to current playlist
+		// whose artist or genre matches that of top most played songs.
+		DoublyIterator<PlaylistItem> iter(freqOrder);
+		PlaylistItem item = iter.Next();
+		// Iterate for top most played songs, get artist and genre
+		for (int i = 0; i < count; ++i) {
+			MusicItem music;
+			music.SetId(item.GetId());
+			if (mApp.mMasterList.Retrieve(music) == -1) {
+				continue;
+			}
+			// Get artist and genre of top most played song
+			string curArtist = music.GetArtist(), curGenre = music.GetGenre();
+
+			// Check for music that has the same artist or genre as the top most played songs
+			DoublyIterator<PlaylistItem> tempiter(freqOrder);
+			for (PlaylistItem tempItem = tempiter.Next(); tempiter.NextNotNull();
+				tempItem = tempiter.Next()) {
+				MusicItem tempMusic;
+				tempMusic.SetId(tempItem.GetId());
+				if (mApp.mMasterList.Retrieve(tempMusic) == -1) {
+					continue;
+				}
+				if (!mCurPlaylist.Get(tempItem) &&
+					(tempMusic.GetArtist() == curArtist || tempMusic.GetGenre() == curGenre)) {
+					mCurPlaylist.Add(tempItem); // Found, add to current playlist
+				}
+			}
+			item = iter.Next();
+		}
+	}
+
+	// There might be some music that might not have been added to current playlist,
+	// since neither of their artist and genre matched the top played songs'.
+	// Add them altogether.
+	DoublyIterator<PlaylistItem> freqIter(freqOrder);
+	for (PlaylistItem item = freqIter.Next(); freqIter.NextNotNull(); item = freqIter.Next()) {
+		if (!mCurPlaylist.Get(item)) {
+			mCurPlaylist.Add(item);
+		}
+	}
+
 	// Play first item, if exist
 	{
 		if (!mCurPlaylistIter) {

@@ -128,6 +128,8 @@ private slots:
 	void PlayInFreqOrderClicked();
 	// Shuffle
 	void PlayShuffleClicked();
+	// Recommend
+	void PlayRecommendClicked();
 
 	// Get lyrics from web
 	void SearchForLyricsClicked();
