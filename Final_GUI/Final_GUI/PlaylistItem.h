@@ -78,7 +78,7 @@ public:
 	*/
 	friend Json::Value &operator<<(Json::Value &value, const PlaylistItem &item);
 
-protected:
+private:
 	std::string mId;			// Primary key of music
 	int mPlayedTimes;		// How many times it has been played
 	std::string mInsertedTime;		// Primary key. When it was inserted to the playlist.
@@ -89,4 +89,7 @@ protected:
 	*	Get current date & time for mInsertedTime
 	*/
 	static std::string GetCurrentTime();
+
+	static std::string mLastInsertTime; // Last playlistitem inserted time.
+	static int mLastInsertBit; // Extra bit that was appended to inserted time before.
 };

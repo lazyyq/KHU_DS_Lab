@@ -18,8 +18,8 @@
 #include "SortedDoublyIterator.h"
 #include "utils/StringUtils.h"
 
-#define WINDOW_SIZE_LYRICS_SHOWN	1591, 627
-#define WINDOW_SIZE_LYRICS_HIDDEN	1220, 627
+#define WINDOW_SIZE_LYRICS_SHOWN	1631, 627
+#define WINDOW_SIZE_LYRICS_HIDDEN	1260, 627
 
 #define MUSIC_LIST_COL_TITLE		0
 #define MUSIC_LIST_COL_ARTIST		1
@@ -51,15 +51,20 @@ QtMainWindow::QtMainWindow(QWidget *parent, const string &id,
 	if (!mIsAdmin) {
 		ui.btn_musicList_add->setEnabled(false);
 		ui.btn_musicList_remove->setEnabled(false);
+		ui.table_musiclist->setEditTriggers(QAbstractItemView::NoEditTriggers);
 	}
 
 	// Set music list column size
 	qTableMusicList->horizontalHeader()->setDefaultSectionSize(
-		(qTableMusicList->size().width() - 20) / qTableMusicList->columnCount());
+		(qTableMusicList->size().width() - 20) / (qTableMusicList->columnCount() - 1));
 	qTablePlaylist->horizontalHeader()->setDefaultSectionSize(
 		(qTablePlaylist->size().width() - 20) / qTablePlaylist->columnCount());
 	qTableCurPlaylist->horizontalHeader()->setDefaultSectionSize(
 		(qTableCurPlaylist->size().width() - 20) / qTableCurPlaylist->columnCount());
+
+	// Hide last column in music list table,
+	// since that's for showing ids and unnecessary for end users.
+	qTableMusicList->setColumnHidden(MUSIC_LIST_COL_ID, true);
 
 	// Play button
 	connect(ui.btn_player_play, SIGNAL(clicked()), this, SLOT(PlayerPlayClicked()));
@@ -213,11 +218,15 @@ void QtMainWindow::RefreshMusicList() {
 		QString qGenre = QString::fromLocal8Bit(data.GetGenre().c_str());
 		QString qComposer = QString::fromLocal8Bit(data.GetMelodizer().c_str());
 		QString qId = QString::fromLocal8Bit(data.GetId().c_str());
+		// Block signals before settings items to table,
+		// since we need to distinguish between user edits on table and setItem's.
+		qTableMusicList->blockSignals(true);
 		qTableMusicList->setItem(curIndex, MUSIC_LIST_COL_TITLE, new QTableWidgetItem(qTitle));
 		qTableMusicList->setItem(curIndex, MUSIC_LIST_COL_ARTIST, new QTableWidgetItem(qArtist));
 		qTableMusicList->setItem(curIndex, MUSIC_LIST_COL_GENRE, new QTableWidgetItem(qGenre));
 		qTableMusicList->setItem(curIndex, MUSIC_LIST_COL_COMPOSER, new QTableWidgetItem(qComposer));
 		qTableMusicList->setItem(curIndex, MUSIC_LIST_COL_ID, new QTableWidgetItem(qId));
+		qTableMusicList->blockSignals(false);
 		curIndex = mApp.mMasterList.GetNextItem(data);
 	}
 }
@@ -389,32 +398,6 @@ void QtMainWindow::AddMusicPopup() {
 	a->show();
 }
 
-// Add selected music in music list to playlist.
-void QtMainWindow::MusicCellDoubleClicked(int row, int col) {
-	// Perform this operation only if this is our playlist.
-	// We're not supposed to modify other's, aren't we?
-	if (!mMyPlaylist) {
-		return;
-	}
-
-	// Get id of music in chosen row
-	const QString qId = qTableMusicList->item(row, MUSIC_LIST_COL_ID)->text();
-	const string id = qId.toLocal8Bit().toStdString();
-
-	// Add to player
-	mApp.mPlayer->AddToPlaylist(id);
-	RefreshPlaylist();
-
-	/*qTableMusicList_2->setRowCount(tmp_musicrow + 1);
-	for (int i = 0, len = qTableMusicList_2->columnCount(); i < len; ++i) {
-		if (qTableMusicList->item(row, i)) {
-			QString qstr = qTableMusicList->item(row, i)->text();
-			qTableMusicList_2->setItem(tmp_musicrow, i, new QTableWidgetItem(qstr));
-		}
-	}
-	++tmp_musicrow;*/
-}
-
 // ????
 void QtMainWindow::PlaylistCellDoubleClicked(int row, int col) {
 	//// row > 0
@@ -456,6 +439,32 @@ void QtMainWindow::ShowLyricsClicked() {
 	}
 }
 
+void QtMainWindow::MusicListCellChanged(int row, int col) {
+	// Get id of changed music
+	QString qId = qTableMusicList->item(row, MUSIC_LIST_COL_ID)->text();
+	string id = qId.toLocal8Bit().toStdString();
+
+	// Get new music info
+	QString qTitle = qTableMusicList->item(row, MUSIC_LIST_COL_TITLE)->text();
+	string title = qTitle.toLocal8Bit().toStdString();
+	QString qArtist = qTableMusicList->item(row, MUSIC_LIST_COL_ARTIST)->text();
+	string artist = qArtist.toLocal8Bit().toStdString();
+	QString qGenre = qTableMusicList->item(row, MUSIC_LIST_COL_GENRE)->text();
+	string genre = qGenre.toLocal8Bit().toStdString();
+	QString qComposer = qTableMusicList->item(row, MUSIC_LIST_COL_COMPOSER)->text();
+	string composer = qComposer.toLocal8Bit().toStdString();
+	MusicItem music;
+	music.SetRecord(id, title, composer, artist, genre);
+
+	// Insert new info
+	mApp.mMasterList.Replace(music);
+
+	// Refresh tables
+	RefreshMusicList();
+	RefreshPlaylist();
+	RefreshCurPlaylist();
+}
+
 void QtMainWindow::PlayerPlayClicked() {
 	if (mCurPlaylist.IsEmpty()) {
 		return;
@@ -471,6 +480,29 @@ void QtMainWindow::PlayerPrevClicked() {
 
 void QtMainWindow::PlayerNextClicked() {
 	PlayNext();
+}
+
+void QtMainWindow::MusicListToPlaylistClicked() {
+	// Perform this operation only if this is our playlist.
+	// We're not supposed to modify other's, aren't we?
+	if (!mMyPlaylist) {
+		return;
+	}
+
+	// Iterate through selected rows in music list
+	QModelIndexList selection = qTableMusicList->selectionModel()->selectedRows();
+	for (const auto &i : selection) {
+		const int row = i.row();
+
+		// Get id of music in chosen row
+		const QString qId = qTableMusicList->item(row, MUSIC_LIST_COL_ID)->text();
+		const string id = qId.toLocal8Bit().toStdString();
+
+		// Add to playlist
+		mApp.mPlayer->AddToPlaylist(id);
+	}
+	// Refresh playlist
+	RefreshPlaylist();
 }
 
 void QtMainWindow::AddFromFileClicked() {

@@ -93,14 +93,19 @@ private:
 private slots:
 	void LogoutClicked();
 	void AddMusicPopup();
-	void MusicCellDoubleClicked(int row, int col);
 	void PlaylistCellDoubleClicked(int row, int col);
 	void CurPlaylistCellDoubleClicked(int row, int col);
 	void ShowLyricsClicked();
 
+	// Music list cell has changed(Music updated)
+	void MusicListCellChanged(int row, int col);
+
 	void PlayerPlayClicked();
 	void PlayerPrevClicked();
 	void PlayerNextClicked();
+
+	// Add music from music list to playlist
+	void MusicListToPlaylistClicked();
 
 	// Add music from file
 	void AddFromFileClicked();

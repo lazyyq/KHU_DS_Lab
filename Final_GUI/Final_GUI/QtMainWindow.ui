@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1591</width>
+    <width>1631</width>
     <height>627</height>
    </rect>
   </property>
@@ -17,7 +17,7 @@
    <widget class="QPushButton" name="btn_logout">
     <property name="geometry">
      <rect>
-      <x>1100</x>
+      <x>1140</x>
       <y>10</y>
       <width>75</width>
       <height>23</height>
@@ -35,9 +35,6 @@
       <width>441</width>
       <height>491</height>
      </rect>
-    </property>
-    <property name="editTriggers">
-     <set>QAbstractItemView::NoEditTriggers</set>
     </property>
     <property name="selectionBehavior">
      <enum>QAbstractItemView::SelectRows</enum>
@@ -71,7 +68,7 @@
    <widget class="QLabel" name="label_loginInfo">
     <property name="geometry">
      <rect>
-      <x>810</x>
+      <x>850</x>
       <y>10</y>
       <width>261</width>
       <height>21</height>
@@ -87,7 +84,7 @@
    <widget class="QSlider" name="horizontalSlider">
     <property name="geometry">
      <rect>
-      <x>870</x>
+      <x>910</x>
       <y>180</y>
       <width>301</width>
       <height>22</height>
@@ -100,7 +97,7 @@
    <widget class="ClickableLabel" name="btn_player_prev">
     <property name="geometry">
      <rect>
-      <x>900</x>
+      <x>940</x>
       <y>220</y>
       <width>61</width>
       <height>61</height>
@@ -119,7 +116,7 @@
    <widget class="ClickableLabel" name="btn_player_play">
     <property name="geometry">
      <rect>
-      <x>990</x>
+      <x>1030</x>
       <y>220</y>
       <width>61</width>
       <height>61</height>
@@ -138,7 +135,7 @@
    <widget class="ClickableLabel" name="btn_player_next">
     <property name="geometry">
      <rect>
-      <x>1080</x>
+      <x>1120</x>
       <y>220</y>
       <width>61</width>
       <height>61</height>
@@ -157,7 +154,7 @@
    <widget class="QLabel" name="label_playerAlbum">
     <property name="geometry">
      <rect>
-      <x>860</x>
+      <x>900</x>
       <y>60</y>
       <width>91</width>
       <height>91</height>
@@ -195,7 +192,7 @@
    <widget class="QTableWidget" name="table_playlist_current">
     <property name="geometry">
      <rect>
-      <x>850</x>
+      <x>890</x>
       <y>320</y>
       <width>341</width>
       <height>231</height>
@@ -221,7 +218,7 @@
    <widget class="QLabel" name="label_playerTitle">
     <property name="geometry">
      <rect>
-      <x>980</x>
+      <x>1020</x>
       <y>70</y>
       <width>171</width>
       <height>31</height>
@@ -241,7 +238,7 @@
    <widget class="QLabel" name="label_playerArtist">
     <property name="geometry">
      <rect>
-      <x>980</x>
+      <x>1020</x>
       <y>100</y>
       <width>171</width>
       <height>31</height>
@@ -254,7 +251,7 @@
    <widget class="QTextBrowser" name="text_lyrics">
     <property name="geometry">
      <rect>
-      <x>1230</x>
+      <x>1270</x>
       <y>60</y>
       <width>331</width>
       <height>491</height>
@@ -271,7 +268,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="btn_showLyrics">
     <property name="geometry">
      <rect>
-      <x>1070</x>
+      <x>1110</x>
       <y>560</y>
       <width>121</width>
       <height>31</height>
@@ -284,7 +281,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="btn_searchLyrics">
     <property name="geometry">
      <rect>
-      <x>1440</x>
+      <x>1480</x>
       <y>560</y>
       <width>121</width>
       <height>31</height>
@@ -310,7 +307,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QTableWidget" name="table_playlist">
     <property name="geometry">
      <rect>
-      <x>490</x>
+      <x>530</x>
       <y>60</y>
       <width>341</width>
       <height>491</height>
@@ -341,7 +338,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="btn_playlist_remove">
     <property name="geometry">
      <rect>
-      <x>800</x>
+      <x>840</x>
       <y>560</y>
       <width>31</width>
       <height>31</height>
@@ -354,7 +351,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QToolButton" name="btn_playlist_play">
     <property name="geometry">
      <rect>
-      <x>640</x>
+      <x>680</x>
       <y>560</y>
       <width>151</width>
       <height>31</height>
@@ -373,7 +370,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="btn_saveLyrics">
     <property name="geometry">
      <rect>
-      <x>1310</x>
+      <x>1350</x>
       <y>560</y>
       <width>121</width>
       <height>31</height>
@@ -406,7 +403,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>490</x>
+      <x>530</x>
       <y>30</y>
       <width>341</width>
       <height>31</height>
@@ -426,7 +423,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>850</x>
+      <x>890</x>
       <y>290</y>
       <width>341</width>
       <height>31</height>
@@ -446,7 +443,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>1230</x>
+      <x>1270</x>
       <y>30</y>
       <width>331</width>
       <height>31</height>
@@ -485,7 +482,7 @@ p, li { white-space: pre-wrap; }
    <widget class="ClickableLabel" name="btn_lockPlaylist">
     <property name="geometry">
      <rect>
-      <x>810</x>
+      <x>850</x>
       <y>35</y>
       <width>21</width>
       <height>21</height>
@@ -501,7 +498,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QPushButton" name="btn_playlist_explore">
     <property name="geometry">
      <rect>
-      <x>490</x>
+      <x>530</x>
       <y>560</y>
       <width>141</width>
       <height>31</height>
@@ -509,6 +506,19 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="text">
      <string>Explore</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_musicListToPlaylist">
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>260</y>
+      <width>41</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&gt;&gt;</string>
     </property>
    </widget>
   </widget>
@@ -531,7 +541,7 @@ p, li { white-space: pre-wrap; }
    <slot>LogoutClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1100</x>
+     <x>1140</x>
      <y>32</y>
     </hint>
     <hint type="destinationlabel">
@@ -557,29 +567,13 @@ p, li { white-space: pre-wrap; }
    </hints>
   </connection>
   <connection>
-   <sender>table_musiclist</sender>
-   <signal>cellDoubleClicked(int,int)</signal>
-   <receiver>QtMainWindow</receiver>
-   <slot>MusicCellDoubleClicked(int,int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>301</x>
-     <y>158</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>374</x>
-     <y>39</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>btn_showLyrics</sender>
    <signal>clicked()</signal>
    <receiver>QtMainWindow</receiver>
    <slot>ShowLyricsClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1102</x>
+     <x>1142</x>
      <y>574</y>
     </hint>
     <hint type="destinationlabel">
@@ -643,7 +637,7 @@ p, li { white-space: pre-wrap; }
    <slot>SearchForLyricsClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1477</x>
+     <x>1517</x>
      <y>575</y>
     </hint>
     <hint type="destinationlabel">
@@ -659,7 +653,7 @@ p, li { white-space: pre-wrap; }
    <slot>SaveLyricsClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1330</x>
+     <x>1370</x>
      <y>570</y>
     </hint>
     <hint type="destinationlabel">
@@ -675,7 +669,7 @@ p, li { white-space: pre-wrap; }
    <slot>RemoveFromPlaylistClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>815</x>
+     <x>855</x>
      <y>575</y>
     </hint>
     <hint type="destinationlabel">
@@ -707,12 +701,44 @@ p, li { white-space: pre-wrap; }
    <slot>ExplorePlaylistClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>935</x>
+     <x>670</x>
      <y>583</y>
     </hint>
     <hint type="destinationlabel">
      <x>935</x>
      <y>598</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>table_musiclist</sender>
+   <signal>cellChanged(int,int)</signal>
+   <receiver>QtMainWindow</receiver>
+   <slot>MusicListCellChanged(int,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>160</x>
+     <y>488</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>145</x>
+     <y>579</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_musicListToPlaylist</sender>
+   <signal>clicked()</signal>
+   <receiver>QtMainWindow</receiver>
+   <slot>MusicListToPlaylistClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>500</x>
+     <y>287</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>500</x>
+     <y>378</y>
     </hint>
    </hints>
   </connection>
@@ -732,5 +758,7 @@ p, li { white-space: pre-wrap; }
   <slot>RemoveFromPlaylistClicked()</slot>
   <slot>RemoveFromMusicListClicked()</slot>
   <slot>ExplorePlaylistClicked()</slot>
+  <slot>MusicListCellChanged(int,int)</slot>
+  <slot>MusicListToPlaylistClicked()</slot>
  </slots>
 </ui>

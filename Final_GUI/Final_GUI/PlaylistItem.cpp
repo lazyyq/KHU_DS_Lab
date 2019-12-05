@@ -4,6 +4,7 @@
 #include <string>
 #include <iomanip>
 #include <fstream>
+#include <sstream>
 
 #include "utils/StringUtils.h"
 
@@ -17,6 +18,9 @@
 
 using namespace std;
 using namespace stringutils;
+
+string PlaylistItem::mLastInsertTime = "0";
+int PlaylistItem::mLastInsertBit = 0;
 
 // Constructors
 PlaylistItem::PlaylistItem() {
@@ -124,5 +128,19 @@ string PlaylistItem::GetCurrentTime() {
 	// String of format yymmdd-HHMMSS.
 	// ex) 2019/10/20 13:03:28 -> 191020-130328
 	strftime(ch, sizeof(ch), "%y%m%d-%H%M%S", &timeinfo);
-	return ch;
+	string str = ch;
+
+	// Since our smallest time unit is 1 second, we can only add 1 song per sec.
+	// Resolve this by adding an extra 4 bits of integers to the end.
+	if (str > mLastInsertTime) {
+		// New current time is bigger than the last value, we're good to go.
+		// Reset bit to 0 and last inserted time to current time.
+		mLastInsertBit = 0;
+		mLastInsertTime = str;
+	}
+	// Insert last bit to prevent duplicate time
+	stringstream ss;
+	ss << setw(4) << setfill('0') << mLastInsertBit++; // ex) 0001, 0003
+	str += ss.str();
+	return str;
 }
