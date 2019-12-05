@@ -84,7 +84,7 @@ QtMainWindow::QtMainWindow(QWidget *parent, const string &id,
 		QAction *act2 = new QAction("Search on web", this);
 		act0->setObjectName("act0");
 		act1->setObjectName("act1");
-		act1->setObjectName("act2");
+		act2->setObjectName("act2");
 		connect(act0, SIGNAL(triggered()), this, SLOT(AddFromFileClicked()));
 		connect(act1, SIGNAL(triggered()), this, SLOT(AddFromFolderClicked()));
 		connect(act2, SIGNAL(triggered()), this, SLOT(SearchOnWebClicked()));
@@ -102,7 +102,7 @@ QtMainWindow::QtMainWindow(QWidget *parent, const string &id,
 		QAction *act2 = new QAction("Shuffle", this);
 		act0->setObjectName("act0");
 		act1->setObjectName("act1");
-		act1->setObjectName("act2");
+		act2->setObjectName("act2");
 		connect(act0, SIGNAL(triggered()), this, SLOT(PlayFromStartClicked()));
 		connect(act1, SIGNAL(triggered()), this, SLOT(PlayInFreqOrderClicked()));
 		connect(act2, SIGNAL(triggered()), this, SLOT(PlayShuffleClicked()));
