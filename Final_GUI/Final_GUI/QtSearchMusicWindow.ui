@@ -36,6 +36,9 @@
       <height>361</height>
      </rect>
     </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::NoEditTriggers</set>
+    </property>
     <column>
      <property name="text">
       <string>곡명</string>
@@ -56,22 +59,6 @@
       <string>작곡가</string>
      </property>
     </column>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>170</x>
-      <y>440</y>
-      <width>391</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Hint: Double click to add to playlist!</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-    </property>
    </widget>
    <widget class="QToolButton" name="btn_search">
     <property name="geometry">
