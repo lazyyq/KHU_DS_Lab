@@ -27,7 +27,7 @@
      </rect>
     </property>
     <property name="title">
-     <string>로그인</string>
+     <string>Login</string>
     </property>
     <widget class="QLabel" name="label">
      <property name="geometry">
@@ -65,7 +65,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>로그인</string>
+      <string>Login</string>
      </property>
     </widget>
     <widget class="QPushButton" name="btn_register">
@@ -78,7 +78,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>회원가입</string>
+      <string>Register</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="lineEdit_ID">
@@ -118,7 +118,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>종료</string>
+     <string>Exit</string>
     </property>
    </widget>
   </widget>

@@ -41,27 +41,27 @@
     </property>
     <column>
      <property name="text">
-      <string>곡명</string>
+      <string>Title</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>아티스트</string>
+      <string>Artist</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>장르</string>
+      <string>Genre</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>작곡가</string>
+      <string>Composer</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>곡 ID</string>
+      <string>ID</string>
      </property>
     </column>
    </widget>
@@ -206,12 +206,12 @@
     </property>
     <column>
      <property name="text">
-      <string>곡명</string>
+      <string>Title</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>아티스트</string>
+      <string>Artist</string>
      </property>
     </column>
    </widget>
@@ -232,7 +232,7 @@
      </font>
     </property>
     <property name="text">
-     <string>대충 노래 제목</string>
+     <string>Title</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_playerArtist">
@@ -245,7 +245,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>대충 가수명</string>
+     <string>Artist</string>
     </property>
    </widget>
    <widget class="QTextBrowser" name="text_lyrics">
@@ -321,17 +321,17 @@ p, li { white-space: pre-wrap; }
     </property>
     <column>
      <property name="text">
-      <string>곡명</string>
+      <string>Title</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>아티스트</string>
+      <string>Artist</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>재생 횟수</string>
+      <string>Played</string>
      </property>
     </column>
    </widget>
