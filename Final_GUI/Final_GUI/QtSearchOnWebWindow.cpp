@@ -19,6 +19,8 @@ QtSearchOnWebWindow::QtSearchOnWebWindow(QWidget *parent)
 	: QMainWindow(parent) {
 	ui.setupUi(this);
 
+	// Set window title
+	this->setWindowTitle("Search on web");
 	// Disable resizing
 	this->setFixedSize(this->size());
 

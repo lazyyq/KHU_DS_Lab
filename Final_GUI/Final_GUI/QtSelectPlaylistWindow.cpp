@@ -18,6 +18,8 @@ QtSelectPlaylistWindow::QtSelectPlaylistWindow(QWidget *parent,
 	: QMainWindow(parent), mPlaylist(playlist) {
 	ui.setupUi(this);
 
+	// Set window title
+	this->setWindowTitle("Select a playlist");
 	// Disable resizing
 	this->setFixedSize(this->size());
 

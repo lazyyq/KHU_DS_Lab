@@ -5,6 +5,8 @@
 QtAddMusicManually::QtAddMusicManually(QWidget *parent)
 	: QMainWindow(parent) {
 	ui.setupUi(this);
+	// Set window title
+	this->setWindowTitle("Add a music");
 	// Disable resizing
 	//this->statusBar()->setSizeGripEnabled(false);
 	this->setFixedSize(this->size());

@@ -20,6 +20,8 @@ QtSearchMusicWindow::QtSearchMusicWindow(QWidget *parent, SortedList<MusicItem> 
 
 	qTable = ui.table;
 
+	// Set window title
+	this->setWindowTitle("Search");
 	// Disable resizing
 	this->setFixedSize(this->size());
 

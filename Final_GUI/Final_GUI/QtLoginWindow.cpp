@@ -23,6 +23,8 @@ using namespace stringutils;
 QtLoginWindow::QtLoginWindow(QWidget *parent)
 	: QMainWindow(parent) {
 	ui.setupUi(this);
+	// Set window title
+	this->setWindowTitle("Login");
 	// Disable resizing
 	this->statusBar()->setSizeGripEnabled(false);
 	this->setFixedSize(this->size());

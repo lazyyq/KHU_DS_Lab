@@ -38,6 +38,8 @@ QtMainWindow::QtMainWindow(QWidget *parent, const string &id,
 	: QMainWindow(parent), mId(id), mIsAdmin(isAdmin), mIsPlaylistLocked(isPlaylistLocked),
 	isLyricsShown(false), mCurPlaylistIter(nullptr) {
 	ui.setupUi(this);
+	// Set window title
+	this->setWindowTitle("Music player");
 	// Disable resizing
 	this->statusBar()->setSizeGripEnabled(false);
 	this->setFixedSize(WINDOW_SIZE_LYRICS_HIDDEN);
