@@ -7,7 +7,7 @@ QtAddMusicManually::QtAddMusicManually(QWidget *parent)
 	ui.setupUi(this);
 	// Disable resizing
 	//this->statusBar()->setSizeGripEnabled(false);
-	//this->setFixedSize(this->size());
+	this->setFixedSize(this->size());
 }
 
 QtAddMusicManually::~QtAddMusicManually() {}
