@@ -673,7 +673,7 @@ void QtMainWindow::PlayShuffleClicked() {
 
 	// Add items from playlist to current playlist
 	const int totalItems = mPlaylist->GetLength();
-	SortedDoublyLinkedList<PlaylistItem> temp(mApp.mPlayer->mPlaylist);
+	SortedDoublyLinkedList<PlaylistItem> temp(*mPlaylist);
 	srand(time(0));
 	for (int i = 0; i < totalItems; ++i) {
 		int random = rand() % (totalItems - i);
