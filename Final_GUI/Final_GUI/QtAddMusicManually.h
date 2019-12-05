@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include "ui_QtAddMusicManually.h"
 
+// Add music window
 class QtAddMusicManually : public QMainWindow {
 	Q_OBJECT
 

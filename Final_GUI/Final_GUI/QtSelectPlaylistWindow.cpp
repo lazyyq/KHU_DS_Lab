@@ -15,7 +15,7 @@ namespace fs = std::filesystem;
 
 QtSelectPlaylistWindow::QtSelectPlaylistWindow(QWidget *parent,
 	const std::string &_id, SortedDoublyLinkedList<PlaylistItem> *playlist)
-	: QMainWindow(parent), mPlaylist(playlist) {
+	: QMainWindow(parent) {
 	ui.setupUi(this);
 
 	// Set window title

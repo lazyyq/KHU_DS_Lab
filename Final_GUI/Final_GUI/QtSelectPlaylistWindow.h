@@ -17,8 +17,6 @@ public:
 private:
 	Ui::QtSelectPlaylistWindow ui;
 
-	SortedDoublyLinkedList<PlaylistItem> *mPlaylist;
-
 private slots:
-	void PlaylistSelected(int row, int col);
+	void PlaylistSelected(int row, int col); // on playlist select
 };

@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <Qt>
 
+// QLabel that emits clicked signal on click.
 class ClickableLabel : public QLabel {
 	Q_OBJECT
 

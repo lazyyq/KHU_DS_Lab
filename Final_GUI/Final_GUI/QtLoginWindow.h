@@ -5,6 +5,7 @@
 
 #include "QtMainWindow.h"
 
+// Login window
 class QtLoginWindow : public QMainWindow {
 	Q_OBJECT
 

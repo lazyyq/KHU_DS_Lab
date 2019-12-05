@@ -9,6 +9,7 @@
 #include "DoublyLinkedList.h"
 #include "PlaylistItem.h"
 
+// Main program window
 class QtMainWindow : public QMainWindow {
 	Q_OBJECT
 
@@ -17,9 +18,11 @@ public:
 		const bool isAdmin, const bool isPlaylistLocked);
 	~QtMainWindow();
 
+	// Add music to music list based on input data
 	void AddMusicToList(const QString &qTitle, const QString &qArtist,
 		const QString &qGenre, const QString &qComposer);
 
+	// Set playlist to given user's
 	void SetPlaylist(const std::string &username);
 
 signals:
@@ -32,7 +35,7 @@ private:
 	// UI components
 	QTableWidget *qTableMusicList, *qTablePlaylist, *qTableCurPlaylist;
 
-	Application mApp;
+	Application mApp; // Main application
 	LyricsManager mLyricsManager;
 	// Current playlist.
 	// Playlist         => User's collection of music to play.
@@ -43,8 +46,8 @@ private:
 	// exploring other users' playlists.
 	SortedDoublyLinkedList<PlaylistItem> *mPlaylist;
 
-	std::string mId;
-	bool mIsAdmin = false;
+	std::string mId; // User id
+	bool mIsAdmin = false; // Is user an admin?
 
 	//int mMusicListRowCount = 0; // Music list max row
 	//int mPlaylistRowCount = 0; // Playlist max row
@@ -55,7 +58,7 @@ private:
 	DoublyIterator<PlaylistItem> *mCurPlaylistIter;
 
 	bool mIsPlaylistLocked; // Is our playlist invisible to others?
-	bool isLyricsShown;
+	bool isLyricsShown; // Is lyrics panel open?
 
 	std::string mCurLyrics; // Lyrics fetched from web.
 
@@ -91,15 +94,16 @@ private:
 	void SetPlaylistState(const bool isOurs);
 
 private slots:
-	void LogoutClicked();
-	void AddMusicPopup();
-	void PlaylistCellDoubleClicked(int row, int col);
-	void CurPlaylistCellDoubleClicked(int row, int col);
-	void ShowLyricsClicked();
+	void LogoutClicked(); // Logout
+	void AddMusicPopup(); // Add music popup
+	void PlaylistCellDoubleClicked(int row, int col); // Playlist cell double clicked
+	void CurPlaylistCellDoubleClicked(int row, int col); // Current playlist cell double clicked
+	void ShowLyricsClicked(); // Show/Hide lyrics button clicked
 
 	// Music list cell has changed(Music updated)
 	void MusicListCellChanged(int row, int col);
 
+	// Player buttons
 	void PlayerPlayClicked();
 	void PlayerPrevClicked();
 	void PlayerNextClicked();

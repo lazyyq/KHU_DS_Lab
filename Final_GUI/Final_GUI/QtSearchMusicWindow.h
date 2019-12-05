@@ -20,8 +20,9 @@ public:
 
 private:
 	Ui::QtSearchMusicWindow ui;
-	QTableWidget *qTable;
+	QTableWidget *qTable; // Display search result
 
+	// Lists to search music from
 	SortedList<MusicItem> *mMasterList;
 	SortedDoublyLinkedList<Singer> *mSingerList;
 	SortedDoublyLinkedList<Genre> *mGenreList;
@@ -29,7 +30,6 @@ private:
 private slots:
 	// Search button clicked
 	void SearchClicked();
-
 	void SearchByArtistClicked();
 	void SearchByGenreClicked();
 };

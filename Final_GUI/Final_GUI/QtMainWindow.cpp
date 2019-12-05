@@ -154,11 +154,12 @@ QtMainWindow::~QtMainWindow() {
 
 void QtMainWindow::AddMusicToList(const QString &qTitle, const QString &qArtist,
 	const QString &qGenre, const QString &qComposer) {
-	// Add to list
+	// Get strings
 	string title = qTitle.toLocal8Bit().toStdString();
 	string artist = qArtist.toLocal8Bit().toStdString();
 	string genre = qGenre.toLocal8Bit().toStdString();
 	string composer = qComposer.toLocal8Bit().toStdString();
+	// Add to list
 	MusicItem data;
 	data.SetRecord("", title, composer, artist, genre);
 	string id = MusicItem::GenerateMusicId(data);
@@ -185,6 +186,7 @@ void QtMainWindow::SetPlaylist(const std::string &username) {
 	Json::Value json;
 	ifs >> json;
 	ifs.close();
+	// Set playlist
 	mPlaylist = new SortedDoublyLinkedList<PlaylistItem>;
 	json >> *mPlaylist;
 
@@ -195,6 +197,8 @@ void QtMainWindow::closeEvent(QCloseEvent *event) {
 	event->accept();
 	FinishProgram();
 	if (!mQuitProgram) {
+		// We're not actually closing program right now,
+		// we're only logging out, so load login window instead of quitting.
 		mQuitProgram = true;
 		((QtLoginWindow *)parent())->show();
 	} else {
@@ -210,15 +214,16 @@ void QtMainWindow::RefreshMusicList() {
 	// Clear table first
 	qTableMusicList->clearContents();
 	qTableMusicList->setRowCount(0);
-	int mMusicListRowCount = 0;
+	int row = 0;
 
 	// Add music items from master list
 	MusicItem data;
 	mApp.mMasterList.ResetIterator(); // Reset pointer
 	int curIndex = mApp.mMasterList.GetNextItem(data);
+	// Set items to table
 	while (curIndex > -1) {
-		++mMusicListRowCount;
-		qTableMusicList->setRowCount(mMusicListRowCount);
+		++row;
+		qTableMusicList->setRowCount(row);
 		QString qTitle = QString::fromLocal8Bit(data.GetName().c_str());
 		QString qArtist = QString::fromLocal8Bit(data.GetArtist().c_str());
 		QString qGenre = QString::fromLocal8Bit(data.GetGenre().c_str());
@@ -254,6 +259,7 @@ void QtMainWindow::RefreshPlaylist() {
 			// Music not found in master list
 			continue;
 		}
+		// Set table
 		QString qTitle = QString::fromLocal8Bit(music.GetName().c_str());
 		QString qArtist = QString::fromLocal8Bit(music.GetArtist().c_str());
 		QString qPlayedTimes = QString::number(item.GetPlayedTimes());
@@ -281,6 +287,7 @@ void QtMainWindow::RefreshCurPlaylist() {
 			// Music not found in master list
 			continue;
 		}
+		// Set table
 		QString qTitle = QString::fromLocal8Bit(music.GetName().c_str());
 		QString qArtist = QString::fromLocal8Bit(music.GetArtist().c_str());
 		qTableCurPlaylist->setItem(rowCount, PLAYLIST_COL_TITLE, new QTableWidgetItem(qTitle));
@@ -290,7 +297,7 @@ void QtMainWindow::RefreshCurPlaylist() {
 }
 
 void QtMainWindow::Play(PlaylistItem &item, const int index) {
-	mCurPlaylistIndex = index;
+	mCurPlaylistIndex = index; // Set which item in current playlist we're playing
 	MusicItem music;
 	music.SetId(item.GetId());
 	if (mApp.mMasterList.Retrieve(music) == -1) {
@@ -421,10 +428,12 @@ void QtMainWindow::PlaylistCellDoubleClicked(int row, int col) {
 
 void QtMainWindow::CurPlaylistCellDoubleClicked(int row, int col) {
 	// Get selected playlist item from current playlist
+	// Reset iterator
 	if (!mCurPlaylistIter) {
 		mCurPlaylistIter = new DoublyIterator<PlaylistItem>(mCurPlaylist);
 	}
 	mCurPlaylistIter->ResetPointer();
+	// Forward iterator to the item we're trying to play
 	PlaylistItem item = mCurPlaylistIter->Next();
 	for (int i = 0; i < row; ++i) {
 		item = mCurPlaylistIter->Next();
@@ -435,10 +444,12 @@ void QtMainWindow::CurPlaylistCellDoubleClicked(int row, int col) {
 
 void QtMainWindow::ShowLyricsClicked() {
 	if (isLyricsShown) {
+		// New state: hidden
 		isLyricsShown = false;
 		ui.btn_showLyrics->setText("Show lyrics >>");
 		this->setFixedSize(WINDOW_SIZE_LYRICS_HIDDEN);
 	} else {
+		// New state: shown
 		isLyricsShown = true;
 		ui.btn_showLyrics->setText("Hide lyrics <<");
 		this->setFixedSize(WINDOW_SIZE_LYRICS_SHOWN);
@@ -549,32 +560,30 @@ void QtMainWindow::RemoveFromMusicListClicked() {
 
 		// Delete from other lists as well, code copied from Application.cpp
 		{
-			SimpleItem simple; // ���� ����Ʈ�� �帣 ����Ʈ �˻���
+			SimpleItem simple; // Simple item for use to search in singer & genre list
 			string id = music.GetId(), artistName = music.GetArtist(),
 				genreName = music.GetGenre();;
 			simple.SetId(id);
 
-			// ������ ���� ���� �̸� �޾ƿ���
+			// Search in singer list
 			Singer singer;
 			singer.SetName(artistName);
-
-			// �ش� ������ �� ����Ʈ������ ����
 			if (mApp.mSingerList.Get(singer)) {
 				singer.RemoveSong(simple);
 				mApp.mSingerList.Replace(singer);
 			}
 
-			// ������ ���� �帣 �̸� �޾ƿ���
+			// Search in genre list
 			Genre genre;
 			genre.SetName(genreName);
-
-			// �ش� ������ �帣 ����Ʈ������ ����
 			if (mApp.mGenreList.Get(genre)) {
 				genre.RemoveSong(simple);
 				mApp.mGenreList.Replace(genre);
 			}
 		}
 
+		// If the removed item exists in playlist,
+		// remove it as well from playlist and current playlist
 		SortedDoublyIterator<PlaylistItem> iter(*mPlaylist);
 		for (PlaylistItem item = iter.Next(); iter.NextNotNull(); item = iter.Next()) {
 			if (item.GetId().compare(music.GetId()) == 0) {
@@ -583,6 +592,8 @@ void QtMainWindow::RemoveFromMusicListClicked() {
 				iter.ResetPointer();
 			}
 		}
+
+		// Refresh tables
 		RefreshMusicList();
 		RefreshPlaylist();
 		RefreshCurPlaylist();
@@ -679,14 +690,15 @@ void QtMainWindow::PlayShuffleClicked() {
 
 	// Add items from playlist to current playlist
 	const int totalItems = mPlaylist->GetLength();
+	// Create copy of playlist to get random item from
 	SortedDoublyLinkedList<PlaylistItem> temp(*mPlaylist);
-	srand(time(0));
+	srand(time(0)); // Set seed
 	for (int i = 0; i < totalItems; ++i) {
-		int random = rand() % (totalItems - i);
+		int random = rand() % (totalItems - i); // Get a random index
 		PlaylistItem item;
-		temp.GetItemAt(item, random);
-		mCurPlaylist.Add(item);
-		temp.Delete(item);
+		temp.GetItemAt(item, random); // Get item from playlist in random index
+		mCurPlaylist.Add(item); // Add the item to current playlist
+		temp.Delete(item); // Remove the item from playlist, so we won't get the same item next time
 	}
 	// Play first item, if exist
 	{
@@ -859,9 +871,11 @@ void QtMainWindow::LockPlaylistClicked() {
 
 void QtMainWindow::ExplorePlaylistClicked() {
 	if (mMyPlaylist) {
+		// We're currently on our playlist, let's go choose other user's.
 		QtSelectPlaylistWindow *window = new QtSelectPlaylistWindow(this, mId, mPlaylist);
 		window->show();
 	} else {
+		// We're currently looking at another user's playlist. Let's get back to our own.
 		SetPlaylistState(true);
 	}
 }

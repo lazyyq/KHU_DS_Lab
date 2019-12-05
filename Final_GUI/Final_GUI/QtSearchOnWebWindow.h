@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include "ui_QtSearchOnWebWindow.h"
 
+// Search on web window
 class QtSearchOnWebWindow : public QMainWindow {
 	Q_OBJECT
 
