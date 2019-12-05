@@ -532,6 +532,23 @@ p, li { white-space: pre-wrap; }
    <header>ClickableLabel.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>btn_logout</tabstop>
+  <tabstop>table_musiclist</tabstop>
+  <tabstop>btn_musicListToPlaylist</tabstop>
+  <tabstop>btn_musicList_add</tabstop>
+  <tabstop>btn_musicList_remove</tabstop>
+  <tabstop>table_playlist</tabstop>
+  <tabstop>btn_playlist_explore</tabstop>
+  <tabstop>btn_playlist_play</tabstop>
+  <tabstop>btn_playlist_remove</tabstop>
+  <tabstop>horizontalSlider</tabstop>
+  <tabstop>table_playlist_current</tabstop>
+  <tabstop>btn_showLyrics</tabstop>
+  <tabstop>text_lyrics</tabstop>
+  <tabstop>btn_saveLyrics</tabstop>
+  <tabstop>btn_searchLyrics</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
